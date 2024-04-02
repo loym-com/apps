@@ -7,6 +7,7 @@
     "author": "Henrik Norlin, Odoo Community Association (OCA)",
     "category": "",
     "data": [
+        "views/point_of_sale_assets.xml",
         "views/pos_payment_method_views.xml",
     ],
     "depends": [
@@ -14,9 +15,7 @@
     ],
     "license": "AGPL-3",
     "maintainers": ["norlinhenrik"],
+    "qweb": [],
     "version": "14.0.1.0.0",
     "website": "https://github.com/",
-    "qweb": [
-        # "static/src/xml/OrderReceipt.xml",
-    ]
 }

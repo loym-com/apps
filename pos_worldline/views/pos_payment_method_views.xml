@@ -8,8 +8,8 @@
         <field name="arch" type="xml">
             <sheet position="inside">
                 <group>
-                    <field name="worldline_host" invisible="[('use_payment_terminal', '!=', 'worldline')]" />
-                    <field name="worldline_key" invisible="[('use_payment_terminal', '!=', 'worldline')]" />
+                    <field name="worldline_host" attrs="{'invisible': [('use_payment_terminal', '!=', 'worldline')]}" />
+                    <field name="worldline_key" attrs="{'invisible': [('use_payment_terminal', '!=', 'worldline')]}" />
                 </group>
             </sheet>
         </field>
