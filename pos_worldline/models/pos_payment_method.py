@@ -38,7 +38,11 @@ class PosPaymentMethod(models.Model):
         }
         # return test_response
 
-        req = requests.post(endpoint, json=data, timeout=TIMEOUT)
+        req = requests.post(
+            endpoint,
+            json=data,
+            # timeout=TIMEOUT,
+        )
 
         # Authentication error doesn't return JSON
         if req.status_code == 401:
