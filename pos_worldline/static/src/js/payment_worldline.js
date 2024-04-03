@@ -58,7 +58,7 @@ odoo.define('pos_worldline.payment', function (require) {
                 // When a payment terminal is disconnected it may take Worldline
                 // a while to return an error (Adyen: ~6s). So wait 10 seconds
                 // before concluding Odoo is unreachable.
-                timeout: 10000,
+                timeout: 30000, // Wait longer for immediate payment (not async)
                 shadow: true,
             }).catch(this._handle_odoo_connection_failure.bind(this));
         },
@@ -92,7 +92,8 @@ odoo.define('pos_worldline.payment', function (require) {
                 "payload": {
                     "amounts": {
                         "currencySymbol": this.pos.currency.name,
-                        "base": Math.round(line.amount * pow) / pow,
+                        // "base": Math.round(line.amount * pow) / pow,
+                        "base": line.amount
                     }
                 }
             }
@@ -260,7 +261,7 @@ odoo.define('pos_worldline.payment', function (require) {
                 return Promise.resolve();
             } else if (operation == "Payments") {
                 // Approved
-                line.ticket = response.customer.plain // or escpos
+                line.ticket = response.receipt.customer.plain // or escpos
                 return true // What to return?
             // } else if (operation == "PaymentsAsync") {
             //     // Approved
@@ -289,15 +290,15 @@ odoo.define('pos_worldline.payment', function (require) {
         //     return res;
         // },
 
-        // _show_error: function (msg, title) {
-        //     if (!title) {
-        //         title =  _t('Worldline Error');
-        //     }
-        //     Gui.showPopup('ErrorPopup',{
-        //         'title': title,
-        //         'body': msg,
-        //     });
-        // },
+        _show_error: function (msg, title) {
+            if (!title) {
+                title =  _t('Worldline Error');
+            }
+            Gui.showPopup('ErrorPopup',{
+                'title': title,
+                'body': msg,
+            });
+        },
     });
 
     return PaymentWorldline;

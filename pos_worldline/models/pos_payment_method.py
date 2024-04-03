@@ -23,7 +23,7 @@ class PosPaymentMethod(models.Model):
 
         _logger.info('request to worldline\n%s', pprint.pformat(data))
 
-        if operation == "Payment":
+        if operation == "Payments":
             # Fredheim
             endpoint = "{}/pay".format(self.worldline_host)
         else:
