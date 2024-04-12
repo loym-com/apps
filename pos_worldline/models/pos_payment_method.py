@@ -1,6 +1,9 @@
+import json
 import logging
+import os
 import pprint
 import requests
+import urllib3
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -19,42 +22,31 @@ class PosPaymentMethod(models.Model):
 
     def proxy_worldline_request(self, data, operation):
         self.ensure_one()
-        TIMEOUT = 30
+        json_payload = json.dumps(data["payload"])
 
-        _logger.info('request to worldline\n%s', pprint.pformat(data))
+        _logger.info('request to worldline\n%s', pprint.pformat(json_payload))
 
-        if operation == "Payments":
-            # Fredheim
-            endpoint = "{}/pay".format(self.worldline_host)
-        else:
-            endpoint = "{}/api/v1/{}".format(self.worldline_host, operation)
-
-        test_response = {
-            "transactionOutcome": "Approved",
-            "customer": {
-                "plain": "Plain response",
-                "escpos": "Escpos response",
-            }
+        headers = {
+            'content-type': 'application/json; charset=utf-8',
+            'Integration-Key': self.worldline_key,
+            'User-Agent' : 'MyECR 1.0',
+            'Content-Length': str(len(json_payload))
         }
-        # return test_response
 
-        req = requests.post(
-            endpoint,
-            json=data,
-            # timeout=TIMEOUT,
+        dir_name = os.path.dirname(__file__)
+        cert_relative_path = "ECR-REST.crt"
+        cert_absolute_path = os.path.join(dir_name, cert_relative_path)
+
+        pool = urllib3.HTTPSConnectionPool(
+            self.worldline_host,
+            assert_hostname=False, # Setting assert_hostname to False disables the hostname verification because URL will not match certificate.
+            ca_certs=cert_absolute_path,
         )
+        req = pool.urlopen('POST', '/api/v1/Payments', body=json_payload, headers=headers)
+        req_json = json.loads(req.data)
 
-        # Authentication error doesn't return JSON
-        if req.status_code == 401:
-            return {
-                'error': {
-                    'status_code': req.status_code,
-                    'message': req.text
-                }
-            }
-
-        # if req.text == 'ok':
-        #     return True
-
-        return req.json()
-
+        transactionOutcome = req_json["transactionOutcome"]
+        if transactionOutcome == "Approved":
+            return req_json
+        else:
+            raise UserError("The transaction was {}.".format(transactionOutcome))
