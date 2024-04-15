@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_account_tag_view_form" model="ir.ui.view">
+        <field name="name">account.account.tag.view.form (in mis_builder_budget_compute)</field>
+        <field name="model">account.account.tag</field>
+        <field name="inherit_id" ref="account.account_tag_view_form" />
+        <field name="arch" type="xml">
+            <group position="inside">
+                <group>
+                    <group>
+                        <field name="budget_percent" widget="percentage" />
+                    </group>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
