@@ -2,8 +2,8 @@ from odoo import _, api, fields, models
 
 
 class AccountAccountTag(models.Model):
-    _name = "account.account.tag.budget.input"
-    _description = "Account Tag input for action_compute_budget_items()"
+    _name = "mis.budget.by.account.input"
+    _description = "Input for action_compute_budget_items()"
 
     # This model is used by mis.budget.by.account action_compute_budget_items().
 

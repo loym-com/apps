@@ -5,6 +5,7 @@ class AccountAccountTag(models.Model):
     _inherit = "account.account.tag"
 
     budget_input_ids = fields.One2many(
-        "account.account.tag.budget.input",
+        "mis.budget.by.account.input",
         "account_tag_id",
+        string="Input for Budget by Account",
     )

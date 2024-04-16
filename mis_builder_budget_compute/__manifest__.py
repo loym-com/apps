@@ -12,6 +12,7 @@
         "account_menu", # 16.0 account_usability
         "base_set_record_values_mixin",
         "mis_builder_budget",
+        "web_widget_x2many_2d_matrix",
     ],
     "data": [
         "security/ir.model.access.csv",
