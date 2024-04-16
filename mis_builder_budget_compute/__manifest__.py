@@ -14,6 +14,7 @@
         "mis_builder_budget",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "views/account_account_tag_views.xml",
         "views/mis_budget_by_account_views.xml",
         "views/mis_budget_by_account_item_views.xml",

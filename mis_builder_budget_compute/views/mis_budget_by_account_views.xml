@@ -5,14 +5,19 @@
         <field name="model">mis.budget.by.account</field>
         <field name="inherit_id" ref="mis_builder_budget.mis_budget_by_account_form_view" />
         <field name="arch" type="xml">
-            <header position="inside">
-                <button
-                    name="action_compute_budget_items"
-                    string="Compute budget items"
-                    type="object"
-                    attrs="{'invisible': [('state', '!=', 'draft')]}"
-                />
-            </header>
+            <data>
+                <header position="inside">
+                    <button
+                        name="action_compute_budget_items"
+                        string="Compute budget items"
+                        type="object"
+                        attrs="{'invisible': [('state', '!=', 'draft')]}"
+                    />
+                </header>
+                <field name="date_range_id" position="before">
+                    <field name="compute_date_ranges" widget="many2many_tags" />
+                </field>
+            </data>
         </field>
     </record>
 </odoo>

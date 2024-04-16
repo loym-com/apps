@@ -6,6 +6,7 @@
         <field name="inherit_id" ref="mis_builder_budget.mis_budget_by_account_item_tree_view" />
         <field name="arch" type="xml">
             <field name="account_id" position="before">
+                <field name="computed" />
                 <field name="account_tag_ids" optional="show" widget="many2many_tags" />
             </field>
         </field>

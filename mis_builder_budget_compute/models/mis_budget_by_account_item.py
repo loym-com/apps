@@ -8,3 +8,4 @@ class MisBudgetByAccountItem(models.Model):
         "account.account.tag",
         related="account_id.tag_ids",
     )
+    computed = fields.Boolean(readonly=True)
