@@ -16,6 +16,7 @@
     "data": [
         "views/account_account_tag_views.xml",
         "views/mis_budget_by_account_views.xml",
+        "views/mis_budget_by_account_item_views.xml",
         # "views/mis_budget_by_account_item_views.xml",
     ],
     "maintainers": ["norlinhenrik"],
