@@ -10,6 +10,7 @@
     "category": "Localization",
     "depends": [
         "account_menu", # 16.0 account_usability
+        "base_set_record_values_mixin",
         "mis_builder_budget",
     ],
     "data": [
