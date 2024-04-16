@@ -17,7 +17,7 @@ class AccountAccountTag(models.Model):
     )
 
     @api.onchange("budget_kpi_old", "budget_percent")
-    def _get_budget_new_api(self):
+    def _get_budget_kpi_new(self):
         for record in self:
             if record.budget_kpi_old:
                 record.budget_kpi_new = record.budget_kpi_old * (1 + record.budget_percent)
