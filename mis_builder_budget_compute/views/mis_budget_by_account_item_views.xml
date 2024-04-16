@@ -5,9 +5,9 @@
         <field name="model">mis.budget.by.account.item</field>
         <field name="inherit_id" ref="mis_builder_budget.mis_budget_by_account_item_tree_view" />
         <field name="arch" type="xml">
-            <tree position="inside">
+            <field name="account_id" position="before">
                 <field name="account_tag_ids" optional="show" widget="many2many_tags" />
-            </tree>
+            </field>
         </field>
     </record>
 </odoo>
