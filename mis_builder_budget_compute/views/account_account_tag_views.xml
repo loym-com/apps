@@ -9,9 +9,23 @@
                 <group>
                     <group>
                         <field name="budget_percent" widget="percentage" />
+                        <field name="budget_kpi_old" />
+                        <field name="budget_kpi_new" />
                     </group>
                 </group>
             </group>
+        </field>
+    </record>
+    <record id="account_account_tag_view_tree" model="ir.ui.view">
+        <field name="name">account.account.tag.view.tree (in mis_builder_budget_compute)</field>
+        <field name="model">account.account.tag</field>
+        <field name="inherit_id" ref="account.account_tag_view_tree" />
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="budget_percent" optional="show" widget="percentage" />
+                <field name="budget_kpi_old" optional="show" />
+                <field name="budget_kpi_new" optional="show" />
+            </tree>
         </field>
     </record>
 </odoo>
