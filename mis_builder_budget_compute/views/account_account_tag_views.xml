@@ -10,9 +10,9 @@
                     <tree editable="bottom">
                         <field name="account_tag_id" invisible="1" />
                         <field name="date_range_id" />
-                        <field name="budget_percent" widget="percentage" />
-                        <field name="budget_kpi_old" />
-                        <field name="budget_kpi_new" />
+                        <field name="percent" widget="percentage" />
+                        <field name="kpi_old" />
+                        <field name="kpi_new" />
                     </tree>
                 </field>
             </sheet>

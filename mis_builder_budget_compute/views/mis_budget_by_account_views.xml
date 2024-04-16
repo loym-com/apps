@@ -15,7 +15,7 @@
                     />
                 </header>
                 <field name="date_range_id" position="before">
-                    <field name="compute_date_ranges" widget="many2many_tags" />
+                    <field name="date_range_ids" widget="many2many_tags" />
                 </field>
             </data>
         </field>

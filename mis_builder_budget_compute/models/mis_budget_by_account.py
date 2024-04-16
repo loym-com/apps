@@ -6,7 +6,7 @@ class MisBudgetByAccount(models.Model):
     _name = "mis.budget.by.account"
     _inherit = ["mis.budget.by.account", "base.set.record.values.mixin"]
 
-    compute_date_ranges = fields.Many2many("date.range", string="Compute Ranges")
+    date_range_ids = fields.Many2many("date.range", string="Compute Ranges")
 
     def action_compute_budget_items(self):
         # Compute last year's Profit/Loss * budget_percent change in each account.tag
@@ -15,7 +15,7 @@ class MisBudgetByAccount(models.Model):
         accounts = self.env["account.account"].search(
             [("internal_group", "in", ["income", "expense"])]
         )
-        for range in self.compute_date_ranges:
+        for range in self.date_range_ids:
             account_entries = self.env['account.move.line'].search(
                 [
                     ('date', '>=', range.date_start.replace(year=self.date_from.year-1)),
@@ -45,7 +45,9 @@ class MisBudgetByAccount(models.Model):
             for account, total in account_totals.items():
                 # Multiplication based on account tags
                 for tag in account.tag_ids:
-                    percent = tag.budget_input_ids.filtered(lambda i: i.date_range_id == range).budget_percent
+                    percent = tag.budget_input_ids.filtered(
+                        lambda i: i.date_range_id == range
+                    ).percent
                     total *= (1.0 + percent)
                 # TODO: Re-use the budget items domain above?
                 domain = [

@@ -3,7 +3,7 @@ from odoo import _, api, fields, models
 
 class AccountAccountTag(models.Model):
     _name = "account.account.tag.budget.input"
-    _description = "Account or Tag input for action_compute_budget_items()"
+    _description = "Account Tag input for action_compute_budget_items()"
 
     # This model is used by mis.budget.by.account action_compute_budget_items().
 
@@ -13,28 +13,28 @@ class AccountAccountTag(models.Model):
     # account_id = fields.Many2one("account.account")
 
     date_range_id = fields.Many2one("date.range")
-    budget_kpi_old = fields.Float()
-    budget_kpi_new = fields.Float(
-        compute='_get_budget_kpi_new',
+    kpi_old = fields.Float()
+    kpi_new = fields.Float(
+        compute='_get_kpi_new',
         readonly=False,
         store=True,
     )
-    budget_percent = fields.Float(
-        compute='_get_budget_percent',
+    percent = fields.Float(
+        compute='_get_percent',
         readonly=False,
         store=True,
         help="Percent increase (New KPI / Old KPI - 1)"
     )
 
-    @api.onchange("budget_kpi_old", "budget_percent")
-    def _get_budget_kpi_new(self):
+    @api.onchange("kpi_old", "percent")
+    def _get_kpi_new(self):
         for record in self:
-            if record.budget_kpi_old:
-                record.budget_kpi_new = record.budget_kpi_old * (1 + record.budget_percent)
+            if record.kpi_old:
+                record.kpi_new = record.kpi_old * (1 + record.percent)
 
-    @api.onchange("budget_kpi_old", "budget_kpi_new")
-    def _get_budget_percent(self):
+    @api.onchange("kpi_old", "kpi_new")
+    def _get_percent(self):
         for record in self:
-            if record.budget_kpi_old:
-                if record.budget_kpi_old and record.budget_kpi_new:
-                    record.budget_percent = record.budget_kpi_new / record.budget_kpi_old - 1
+            if record.kpi_old:
+                if record.kpi_old and record.kpi_new:
+                    record.percent = record.kpi_new / record.kpi_old - 1
