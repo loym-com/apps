@@ -36,7 +36,7 @@
         "security/ir.model.access.csv",
         "templates/portal.xml",
         "views/calendar_event_views.xml",
-        "views/mail_activity_views.xml",
+        # "views/mail_activity_views.xml", # error in 14.0
         "views/res_partner_views.xml",
         "views/resource_booking_combination_views.xml",
         "views/resource_booking_type_views.xml",

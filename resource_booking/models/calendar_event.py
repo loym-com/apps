@@ -9,6 +9,9 @@ from odoo.exceptions import ValidationError
 class CalendarEvent(models.Model):
     _inherit = "calendar.event"
 
+    # Missing in Odoo 14.0
+    videocall_location = fields.Char('Meeting URL')
+
     # One2one field, actually
     resource_booking_ids = fields.One2many(
         comodel_name="resource.booking",
