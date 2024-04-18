@@ -58,7 +58,7 @@ class ProductProduct(models.Model):
         }
         # depends on partner_product_price
         if "partner_id" in self._fields:
-            action["context"]["default_partner_id"] = self.partner_id.id
+            action["context"]["default_partner_ids"] = [self.partner_id.id]
         return action
 
     def create(self, vals_list):

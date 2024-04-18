@@ -28,6 +28,7 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_product_tree_view" />
         <field name="arch" type="xml">
+            <!-- 16.0 <field name="product_template_variant_value_ids" position="after"></field> -->
             <field name="product_template_attribute_value_ids" position="after">
                 <field name="resource_booking_type_id" invisible="1" />
                 <button

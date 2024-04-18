@@ -31,17 +31,10 @@
         <field name="inherit_id" ref="product.product_template_search_view" />
         <field name="arch" type="xml">
             <search position="inside">
-                <!-- 16.0
                 <filter
                     string="Booking Type"
                     name="resource_booking_type"
                     domain="[('product_variant_ids.resource_booking_type_id', 'not in', [False, None])]"
-                    groups="resource_booking.group_user"
-                /> -->
-                <filter
-                    string="Booking Type"
-                    name="resource_booking_type"
-                    domain="[('product_variant_ids.resource_booking_type_id', '>', -1)]"
                     groups="resource_booking.group_user"
                 />
             </search>

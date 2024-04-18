@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Sell resource bookings",
+    "name": "Sell Resource Bookings",
     "summary": "Link resource bookings with sales",
     "version": "16.0.1.0.0",
     "development_status": "Beta",
