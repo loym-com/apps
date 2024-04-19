@@ -395,16 +395,16 @@
 
     <!--
         PRODUCTS FOR PERIODS
-        pa = product.attribute (room type)
-        pav = product.attribute.value (single room type, double room type)
+        pa = product.attribute (room option)
+        pav = product.attribute.value (single room option, double room option)
         pt = product.template (newstart silver)
-        ptal = product.template.attribute.line (newstart silver room type)
-        ptav = product.template.attribute.value (newstart silver single room type, newstart silver double room type)
+        ptal = product.template.attribute.line (newstart silver room option)
+        ptav = product.template.attribute.value (newstart silver single room option, newstart silver double room option)
         pp = product.product (newstart silver single room, newstart silver double room)
         ppl = product.pack.line
     -->
     <record id="room_type_id" model="product.attribute">
-        <field name="name">Room Type</field>
+        <field name="name">Room option</field>
         <field name="sequence">10</field>
     </record>
     <record id="single_room_type_pav" model="product.attribute.value">
