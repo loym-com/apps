@@ -21,6 +21,7 @@
                     />
                 </header>
                 <field name="date_range_id" position="before">
+                    <field name="percent" widget="percentage" />
                     <field name="date_range_ids" widget="many2many_tags" />
                 </field>
             </data>

@@ -8,6 +8,7 @@ class MisBudgetByAccount(models.Model):
 
     date_range_ids = fields.Many2many("date.range", string="Compute Ranges")
     budget_input_ids = fields.Many2many("mis.budget.by.account.input")
+    percent = fields.Float("Percent Increase")
 
     def action_compute_budget_items(self):
         # Compute last year's Profit/Loss * budget_percent change in each account.tag
@@ -57,6 +58,8 @@ class MisBudgetByAccount(models.Model):
             self._set_budget_item(range, account, total)
 
     def _set_budget_item(self, range, account, total):
+        # Multiplication based on the budget
+        total *= (1.0 + self.percent)
         # Multiplication based on account tags
         for tag in account.tag_ids:
             percent = tag.budget_input_ids.filtered(
