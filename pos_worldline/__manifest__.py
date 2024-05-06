@@ -15,7 +15,9 @@
     ],
     "license": "AGPL-3",
     "maintainers": ["norlinhenrik"],
-    "qweb": [],
+    "qweb": [
+        "static/src/xml/OrderReceipt.xml"
+    ],
     "version": "14.0.1.0.0",
     "website": "https://github.com/",
 }
