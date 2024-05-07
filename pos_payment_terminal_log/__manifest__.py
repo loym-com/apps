@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "POS Payment TerminalLog",
+    "name": "POS Payment Terminal Log",
     "summary": "",
     "author": "Henrik Norlin, Odoo Community Association (OCA)",
     "category": "Administration",

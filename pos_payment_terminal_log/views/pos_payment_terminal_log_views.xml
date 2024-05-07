@@ -5,8 +5,9 @@
         <field name="model">pos.payment.terminal.log</field>
         <field name="arch" type="xml">
             <tree create="0" edit="0">
-                <field name="create_date" />
+                <field name="timestamp" />
                 <field name="description" />
+                <field name="log" />
             </tree>
         </field>
     </record>
@@ -17,7 +18,7 @@
             <form create="0" edit="0">
                 <sheet>
                     <group>
-                        <field name="create_date" />
+                        <field name="timestamp" />
                         <field name="description" />
                         <field name="log" />
                     </group>
@@ -29,13 +30,22 @@
         <field name="name">Payment Log</field>
         <field name="res_model">pos.payment.terminal.log</field>
         <field name="view_mode">tree,form</field>
+        <field name="groups_id" eval="[(4, ref('point_of_sale.group_pos_manager'))]" />
     </record>
     <menuitem
         id="pos_payment_terminal_log_menuitem"
         name="Payment Terminal Log"
-        sequence="20"
+        sequence="100"
         parent="point_of_sale.menu_point_config_product"
-        groups="point_of_sale.group_pos_manager"
+        groups="base.group_no_one"
         action="pos_payment_terminal_log_action"
     />
+
+    <record id="export" model="ir.actions.server">
+        <field name="name">Export Log</field>
+        <field name="model_id" ref="model_pos_payment_terminal_log" />
+        <field name="binding_model_id" ref="model_pos_payment_terminal_log" />
+        <field name="state">code</field>
+        <field name="code">records.action_export_log()</field>
+    </record>
 </odoo>
