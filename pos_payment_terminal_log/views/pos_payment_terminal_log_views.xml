@@ -5,9 +5,21 @@
         <field name="model">pos.payment.terminal.log</field>
         <field name="arch" type="xml">
             <tree create="0" edit="0">
-                <field name="timestamp" />
-                <field name="description" />
-                <field name="log" />
+                <field name="create_date" />
+                <field name="create_uid" optional="hide" />
+                <field
+                    name="company_id"
+                    optional="hide"
+                    groups="base.group_multi_company"
+                />
+                <field name="url" />
+                <field name="direction" />
+                <field name="host" optional="hide" />
+                <field name="status" />
+                <field name="client_id" />
+                <field name="receipt_no" />
+                <field name="receipt_total" />
+                <field name="log" optional="hide" />
             </tree>
         </field>
     </record>
@@ -18,8 +30,16 @@
             <form create="0" edit="0">
                 <sheet>
                     <group>
-                        <field name="timestamp" />
-                        <field name="description" />
+                        <field name="create_date" />
+                        <field name="create_uid" />
+                        <field name="company_id" />
+                        <field name="url" />
+                        <field name="direction" />
+                        <field name="host" />
+                        <field name="status" />
+                        <field name="client_id" />
+                        <field name="receipt_no" />
+                        <field name="receipt_total" />
                         <field name="log" />
                     </group>
                 </sheet>
@@ -40,12 +60,4 @@
         groups="base.group_no_one"
         action="pos_payment_terminal_log_action"
     />
-
-    <record id="export" model="ir.actions.server">
-        <field name="name">Export Log</field>
-        <field name="model_id" ref="model_pos_payment_terminal_log" />
-        <field name="binding_model_id" ref="model_pos_payment_terminal_log" />
-        <field name="state">code</field>
-        <field name="code">records.action_export_log()</field>
-    </record>
 </odoo>

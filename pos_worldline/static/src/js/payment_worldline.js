@@ -49,11 +49,11 @@ odoo.define('pos_worldline.payment', function (require) {
             return Promise.reject(data); // prevent subsequent onFullFilled's from being called
         },
 
-        _call_worldline: function (data, operation) {
+        _call_worldline: function (payment_data) {
             return rpc.query({
                 model: 'pos.payment.method',
-                method: 'proxy_worldline_request',
-                args: [[this.payment_method.id], data, operation],
+                method: 'worldline_do_payment',
+                args: [[this.payment_method.id], payment_data],
             }, {
                 // When a payment terminal is disconnected it may take Worldline
                 // a while to return an error (Adyen: ~6s). So wait 10 seconds
@@ -83,19 +83,21 @@ odoo.define('pos_worldline.payment', function (require) {
         //     };
         // },
 
-        _worldline_pay_data: function () {
+        _worldline_pay_data: function (cid) {
             var order = this.pos.get_order();
             var config = this.pos.config;
             var line = order.selected_paymentline;
             var pow = Math.pow(10, this.pos.currency.decimal_places);
             var data = {
-                "payload": {
-                    "amounts": {
-                        "currencySymbol": this.pos.currency.name,
-                        // "base": Math.round(line.amount * pow) / pow,
-                        "base": line.amount
-                    }
-                }
+                "amounts": {
+                    "currencySymbol": this.pos.currency.name,
+                    // "base": Math.round(line.amount * pow) / pow,
+                    "base": line.amount
+                },
+                "cashierId": config.id,
+                "customData": {
+                    "client_id": cid,
+                },
             }
             return data;
         },
@@ -114,9 +116,9 @@ odoo.define('pos_worldline.payment', function (require) {
                 return self._worldline_handle_response({});
             }
 
-            var data = this._worldline_pay_data();
+            var data = this._worldline_pay_data(cid);
             var line = order.paymentlines.find(paymentLine => paymentLine.cid === cid);
-            return this._call_worldline(data, "Payments").then(function (data) {
+            return this._call_worldline(data).then(function (data) {
                 return self._worldline_handle_response(data, "Payments");
             });
         },
