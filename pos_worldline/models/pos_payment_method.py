@@ -19,6 +19,12 @@ class PosPaymentMethod(models.Model):
     def _get_payment_terminal_selection(self):
         return super(PosPaymentMethod, self)._get_payment_terminal_selection() + [("worldline", "Worldline")]
 
+    def worldline_do_capture(self):
+        """ Test 3.6 Capture / End of day """
+        self.ensure_one()
+        response = self._worldline_do_request("POST", "/api/v1/Captures", None, None)
+        # TODO: print receipt
+
     def worldline_do_payment(self, payment):
         self.ensure_one()
         client_id = payment["customData"]["client_id"]
