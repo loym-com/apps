@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import requests
 import urllib3
 
 from odoo import _, api, fields, models
@@ -21,21 +22,59 @@ class PosPaymentMethod(models.Model):
     def _get_payment_terminal_selection(self):
         return super(PosPaymentMethod, self)._get_payment_terminal_selection() + [("worldline", "Worldline")]
 
-    def worldline_do_capture(self):
+    def worldline_do_capture(self, session):
         """ Test 3.6 Capture / End of day """
         self.ensure_one()
         # Send Capture request to terminal
         response = self._worldline_do_request("POST", "/api/v1/Captures", None, None)
         # Print receipt
+        """
+        point_of_sale printers.js
+        data["receipt"] should be an image! js converts html to image.
+        """
         response_json = json.loads(response.data)
-        data_json = {
+        data = {
             "action": "print_receipt",
             "receipt": response_json["receipt"]["merchant"]["escpos"], # plain / escpos
         }
-        data = json.dumps(data_json)
-        # with self.env.cr.savepoint():
-        #     printer_controller = PrinterController()
-        #     printer_controller.default_printer_action(data)
+        data_json = json.dumps(data)
+        headers = {
+            "Content-Type": "application/json",
+        }
+        url = "http://{}:8069/hw_proxy/default_printer_action".format(
+            session.config_id.proxy_ip
+        )
+        # response = requests.post(url, json=data_json, headers=headers)
+        # raise UserError(str(response.status_code) + response.reason + response.text)
+        # 400BAD REQUESTInvalid JSON-RPC data
+
+        """
+        w3schools
+
+        Parse JSON - Convert from JSON to Python
+
+        my_json = '{ "name":"John", "age":30, "city":"New York"}'
+        my_dict = json.loads(my_json)
+
+
+        Convert from Python to JSON
+
+        my_dict = {
+        "name": "John",
+        "age": 30,
+        "city": "New York"
+        }
+        my_json = json.dumps(my_dict)
+
+
+        """
+
+        # try:
+        #     response = requests.post(url, data=data_json)
+        #     # You can process the response here if needed
+        #     return response.text
+        # except requests.exceptions.RequestException as e:
+        #     return f"Error: {e}"
 
     def worldline_do_payment(self, payment):
         self.ensure_one()

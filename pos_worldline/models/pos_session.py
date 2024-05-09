@@ -9,5 +9,5 @@ class PosSession(models.Model):
         self.ensure_one()
         for payment_method in self.payment_method_ids:
             if payment_method.use_payment_terminal == "worldline":
-                payment_method.worldline_do_capture()
+                payment_method.worldline_do_capture(self)
         return super()._validate_session()
