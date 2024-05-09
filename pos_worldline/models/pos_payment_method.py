@@ -7,6 +7,8 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.http import request
 
+# from odoo.addons.hw_drivers.iot_handlers.drivers.PrinterDriver import PrinterController
+
 _logger = logging.getLogger(__name__)
 
 
@@ -22,8 +24,18 @@ class PosPaymentMethod(models.Model):
     def worldline_do_capture(self):
         """ Test 3.6 Capture / End of day """
         self.ensure_one()
+        # Send Capture request to terminal
         response = self._worldline_do_request("POST", "/api/v1/Captures", None, None)
-        # TODO: print receipt
+        # Print receipt
+        response_json = json.loads(response.data)
+        data_json = {
+            "action": "print_receipt",
+            "receipt": response_json["receipt"]["merchant"]["escpos"], # plain / escpos
+        }
+        data = json.dumps(data_json)
+        # with self.env.cr.savepoint():
+        #     printer_controller = PrinterController()
+        #     printer_controller.default_printer_action(data)
 
     def worldline_do_payment(self, payment):
         self.ensure_one()
@@ -35,7 +47,7 @@ class PosPaymentMethod(models.Model):
 
         if response.status == 404:
             # First payment since "Dagsavslutt"
-            log_exists = False
+            do_payment = True
         else:
             log_exists = bool(
                 self.env["pos.payment.terminal.log"].search_count(
@@ -47,8 +59,8 @@ class PosPaymentMethod(models.Model):
                     ]
                 )
             )
-        if log_exists:
-            # No payment has happened during a loss of connection.
+            do_payment = log_exists # No payment happened during a loss of connection.
+        if do_payment:
             response = self._worldline_do_request("POST", "/api/v1/Payments", payment, client_id)
             response_json = json.loads(response.data)
 
@@ -126,10 +138,12 @@ class PosPaymentMethod(models.Model):
             "log_json": response_json,
         }
         if url in ("/api/v1/Payments", "/api/v1/Payments/latest"):
-            # response_json is missing if previous payment is still going on.
-            assert response_json
-            values["receipt_no"] = response_json["receiptNumber"]
-            values["receipt_total"] = response_json["amounts"]["total"]
+            _json = response_json
+            if _json:
+                if _json.get("receiptNumber"):
+                    values["receipt_no"] = _json["receiptNumber"]
+                if _json.get("amounts") and _json["amounts"].get("total"):
+                    values["receipt_total"] = _json["amounts"]["total"]
         self._create_log(values)
         return response
 
