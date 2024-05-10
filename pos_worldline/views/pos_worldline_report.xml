@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- used from POS UI, no need to be in print menu -->
+    <record id="pos_capture_report" model="ir.actions.report">
+        <field name="name">Capture / End of day</field>
+        <field name="model">pos.session</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">pos_worldline.report_capture</field>
+    </record>
+
+    <template id="report_capture">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                <div><t t-esc="o.company_id.vat"/></div>
+                <h2><t t-esc="o.name"/></h2>
+                <br/>
+                <div class="pos-payment-terminal-receipt">
+                    <t t-set="print_lines" t-value="o.worldline_print.split('\n')"/>
+                    <t t-foreach="print_lines" t-as="print_line">
+                        <span t-raw="print_line"/>
+                        <br/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -9,6 +9,7 @@
     "data": [
         "views/point_of_sale_assets.xml",
         "views/pos_payment_method_views.xml",
+        "views/pos_worldline_report.xml",
     ],
     "depends": [
         "point_of_sale",
