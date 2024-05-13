@@ -46,6 +46,28 @@
             </form>
         </field>
     </record>
+    <record id="pos_payment_terminal_log_view_search" model="ir.ui.view">
+        <field name="name">Payment terminal log search</field>
+        <field name="model">pos.payment.terminal.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="create_date" string="Create Date" date="create_date" />
+                <filter name="request" string="Request" domain="[('direction', '=', 'request')]" />
+                <filter name="response" string="Response" domain="[('direction', '=', 'response')]" />
+                <field name="create_uid"/>
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="url" />
+                <field name="direction" />
+                <field name="host" />
+                <field name="status" />
+                <field name="client_id" />
+                <field name="receipt_no" />
+                <field name="receipt_total" />
+                <field name="log" />
+                <filter name="groupby_create_date" string="Creation Date" context="{'group_by': 'create_date'}"/>
+            </search>
+        </field>
+    </record>
     <record id="pos_payment_terminal_log_action" model="ir.actions.act_window">
         <field name="name">Payment Log</field>
         <field name="res_model">pos.payment.terminal.log</field>
