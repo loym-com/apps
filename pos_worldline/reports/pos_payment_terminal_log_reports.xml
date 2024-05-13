@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="pos_payment_terminal_log_template_receipt">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                <t t-if="o.log and o.log[:1] == '{'">
+                    <t t-set="log" t-value="json.loads(o.log)"/>
+                    <t t-set="receipt" t-value="log.get('receipt')"/>
+                    <t t-set="customer" t-value="receipt.get('customer')"/>
+                    <t t-set="plain" t-value="customer.get('plain')"/>
+                    <t t-set="print_lines" t-value="plain.split('\n')"/>
+                    <div class="pos-payment-terminal-receipt">
+                        <t t-foreach="print_lines" t-as="print_line">
+                            <span t-raw="print_line"/>
+                            <br/>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="pos_payment_terminal_log_report_receipt" model="ir.actions.report">
+        <field name="name">Pos Payment Terminal Log Receipt</field>
+        <field name="model">pos.payment.terminal.log</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">pos_worldline.pos_payment_terminal_log_template_receipt</field>
+        <field name="binding_model_id" ref="pos_payment_terminal_log.model_pos_payment_terminal_log" />
+    </record>
+    <record id="pos_payment_terminal_log_action_print_latest_receipt" model="ir.actions.server">
+        <field name="name">Print latest receipt</field>
+        <field name="model_id" ref="pos_payment_terminal_log.model_pos_payment_terminal_log"/>
+        <field name="state">code</field>
+        <field name="code">
+latest_receipt = model.search([], order="create_date desc", limit=1)
+report = env.ref("pos_worldline.pos_payment_terminal_log_report_receipt")
+action = report.report_action(docids = latest_receipt)
+action["res_id"] = model.search([], order="create_date desc", limit=1).id
+        </field>
+    </record>
+    <menuitem
+        id="pos_payment_terminal_log_menuitem_print_latest_receipt"
+        name="Print latest receipt"
+        sequence="101"
+        parent="point_of_sale.menu_point_config_product"
+        action="pos_payment_terminal_log_action_print_latest_receipt"
+    />
+</odoo>

@@ -7,9 +7,10 @@
     "author": "Henrik Norlin, Odoo Community Association (OCA)",
     "category": "",
     "data": [
+        "reports/pos_payment_terminal_log_reports.xml",
+        "reports/pos_session_reports.xml",
         "views/point_of_sale_assets.xml",
         "views/pos_payment_method_views.xml",
-        "views/pos_worldline_report.xml",
     ],
     "depends": [
         "point_of_sale",
