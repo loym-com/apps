@@ -3,6 +3,12 @@
     <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
         <xpath expr="//div[@class='pos-payment-terminal-receipt']" position="replace">
             <div class="pos-payment-terminal-receipt">
+                <p>KVITTERING FOR KJØP</p>
+                <br/>
+                <br/>
+                <p>------------------------------------------------</p>
+                <br/>
+                <br/>
                 <t t-set="ticket_lines" t-value="line.ticket.split('\n')" />
                 <t t-foreach="ticket_lines" t-as="ticket_line">
                     <span t-esc="ticket_line"/>

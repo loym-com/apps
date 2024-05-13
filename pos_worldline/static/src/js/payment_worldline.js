@@ -243,11 +243,11 @@ odoo.define('pos_worldline.payment', function (require) {
         _worldline_handle_response: function (response, operation) {
             var line = this.pending_worldline_line();
 
-            if (response.error && response.error.status_code == 401) {
-                this._show_error(_t('Authentication failed. Please check your Worldline credentials.'));
-                line.set_payment_status('force_done');
-                return Promise.resolve();
-            }
+            // if (response.error && response.error.status_code == 401) {
+            //     // this._show_error(_t("Authentication failed. Please check your Worldline credentials."));
+            //     line.set_payment_status('force_done');
+            //     return Promise.resolve();
+            // }
 
             if (response && response.transactionOutcome in ["Declined", "Cancelled"]) {
                 console.error('error from Worldline', response);

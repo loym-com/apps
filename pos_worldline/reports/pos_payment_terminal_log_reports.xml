@@ -6,16 +6,20 @@
                 <t t-set="o" t-value="o.with_context(lang=lang)"/>
                 <t t-if="o.log and o.log[:1] == '{'">
                     <t t-set="log" t-value="json.loads(o.log)"/>
-                    <t t-set="receipt" t-value="log.get('receipt')"/>
-                    <t t-set="customer" t-value="receipt.get('customer')"/>
-                    <t t-set="plain" t-value="customer.get('plain')"/>
-                    <t t-set="print_lines" t-value="plain.split('\n')"/>
-                    <div class="pos-payment-terminal-receipt">
-                        <t t-foreach="print_lines" t-as="print_line">
-                            <span t-raw="print_line"/>
-                            <br/>
-                        </t>
-                    </div>
+                    <t t-set="customer" t-value="log['receipt']['customer']"/>
+                    <t t-set="merchant" t-value="log['receipt']['merchant']"/>
+                    <t t-foreach="[customer, merchant]" t-as="receipt">
+                        <div
+                            t-if="receipt['shouldPrint']"
+                            style="page-break-before: always;"
+                        >
+                            <t t-set="print" t-value="receipt['plain'].split('\n')"/>
+                            <t t-foreach="print" t-as="print_line">
+                                <span t-raw="print_line"/>
+                                <br/>
+                            </t>
+                        </div>
+                    </t>
                 </t>
             </t>
         </t>
