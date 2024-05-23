@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import requests
+# import signal # TODO: Set timeout and error messages, e.g. in _check_worldline()
 import urllib3
 
 from odoo import _, api, fields, models
@@ -48,8 +49,8 @@ class PosPaymentMethod(models.Model):
         - The user cannot close the session.
         - The user cannot fix the worldline payment method.
         """
-        def field(field_name, value=None):
-            # Create / Write: Get the value after saving.
+        def field(field_name):
+            # Create / Write: Get the updated field value (what it will be after saving).
             if field_name in values:
                 return values[field_name]
             else:

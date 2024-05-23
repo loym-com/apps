@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<templates>
-    <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_worldline.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[@class='pos-payment-terminal-receipt']" position="replace">
             <div class="pos-payment-terminal-receipt">
                 <p>KVITTERING FOR KJØP</p>

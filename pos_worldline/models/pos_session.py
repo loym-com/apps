@@ -9,7 +9,7 @@ class PosSession(models.Model):
 
     worldline_print = fields.Text()
 
-    def _validate_session(self):
+    def _validate_session(self, balancing_account=False, amount_to_balance=0, bank_payment_method_diffs=None):
         self.ensure_one()
         worldline = self.payment_method_ids.filtered(
             lambda pm: pm.use_payment_terminal == "worldline"
@@ -17,7 +17,7 @@ class PosSession(models.Model):
         if worldline:
             worldline.ensure_one()
             self._worldline_do_capture(worldline)
-        return super()._validate_session()
+        return super()._validate_session(balancing_account, amount_to_balance, bank_payment_method_diffs)
 
     def _worldline_do_capture(self, payment_method):
         """ Test 3.6 Capture / End of day """

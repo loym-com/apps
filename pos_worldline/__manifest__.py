@@ -8,17 +8,15 @@
     "category": "",
     'assets': {
         "point_of_sale.assets": [
-            # "static/src/js/models.js"
-            # "static/src/js/payment_worldline.js",
-
-            "static/src/xml/OrderReceipt.xml",
+            "pos_worldline/static/src/js/models.js"
+            "pos_worldline/static/src/js/payment_worldline.js",
+            "pos_worldline/static/src/xml/OrderReceipt.xml",
         ],
     },
     "data": [
         "reports/pos_payment_terminal_log_reports.xml",
         "reports/pos_session_reports.xml",
         "views/pos_payment_method_views.xml",
-        # "views/point_of_sale_assets.xml",
     ],
     "depends": [
         "point_of_sale",
