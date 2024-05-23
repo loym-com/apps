@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
+    <t t-name="my_ticket_lines" owl="1">
+        <div class="pos-payment-terminal-receipt">
+            <p>hei</p>
+        </div>
+    </t>
+
     <t t-name="pos_worldline.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[@class='pos-payment-terminal-receipt']" position="replace">
             <div class="pos-payment-terminal-receipt">
@@ -10,11 +16,7 @@
                 <p>------------------------------------------------</p>
                 <br/>
                 <br/>
-                <t t-set="ticket_lines" t-value="line.ticket.split('\n')" />
-                <t t-foreach="ticket_lines" t-as="ticket_line">
-                    <span t-esc="ticket_line"/>
-                    <br/>
-                </t>
+                <t t-call="my_ticket_lines"/>
             </div>
         </xpath>
     </t>
