@@ -6,19 +6,12 @@ import requests
 import urllib3
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError, Warning
+from odoo.exceptions import UserError
 from odoo.http import request
 
 # from odoo.addons.hw_drivers.iot_handlers.drivers.PrinterDriver import PrinterController
 
 _logger = logging.getLogger(__name__)
-
-STATUS = {
-    400: "Bad request. Please check your Worldline credentials.",
-    401: "Authentication failed. Please check your Worldline credentials.",
-    # """ Test 3.5 Terminal Busy """
-    503: "The terminal was busy and did not process your request. Please try again.",
-}
 
 class PosPaymentMethod(models.Model):
     _inherit = "pos.payment.method"
@@ -69,19 +62,25 @@ class PosPaymentMethod(models.Model):
 
         """ Test 3.7 No Connection """
         response = self._worldline_do_request("GET", "/api/v1/Payments/latest", None, client_id, ignore=[404])
-        if response.data:
-            response_json = json.loads(response.data)
+
+        if response.status not in [200, 404]:
+            return json.dumps(
+                {
+                    'status_code': response.status,
+                    'message': response.data.decode('utf-8')
+                }
+            )
 
         # do_payment ?
         if response.status == 404:
-            # First payment since "Dagsavslutt"
+            # 404: /Payments/latest not found; first payment since "Dagsavslutt"
             do_payment = True
         else:
+            response_json = json.loads(response.data)
             log_exists = bool(
                 self.env["pos.payment.terminal.log"].search_count(
                     [
                         ("url", "in", ["/api/v1/Payments", "/api/v1/Payments/latest"]),
-                        ("status", "=", "Approved"),
                         ("client_id", "!=", payment["customData"]["client_id"]),
                         ("receipt_no", "=", response_json["receiptNumber"]),
                     ]
@@ -92,23 +91,7 @@ class PosPaymentMethod(models.Model):
             response = self._worldline_do_request("POST", "/api/v1/Payments", payment, client_id)
             response_json = json.loads(response.data)
 
-        # ### TEST
-        # response_json = {
-        #     "transactionOutcome": "Approved",
-        #     "receipt": {
-        #         "customer": {
-        #             "plain": '\tFIQ - Test\n\tBergmannsveien 600\n\t3614 Kongsberg\n\tTfn: 123456789\n\tORG.NR: 825541012\n\nTERMINAL:\t\t203217333011101018149856\nBUTIKK:\t\t123456789 65842345\nDATO:2024-05-06\t\tTID:15:59\n\t\n\tKJØP\n\tGODKJENT\n\n\tIKKE KVITTERING FOR KJØP\n\n\nBELØP\t\tNOK 50,00\nTOTAL\t\tNOK 50,00\n\nContactless chip\nBankAxept\n**************1203\t\tPSN:02\n\n\tSAM K/1 3 000 DUM 786 911066\nKVITTERING:033206\t\tREF:307711749141\n\nATC:00103  AED:230201\t\t\nAID:D5780000021010\nTVR:8000008000\nARQC:0625FD24CA6EC896\n\n\tTA VARE PÅ KVITTERING, KUNDENS KOPI\n\n'
-        #         }
-        #     }
-        # }
-
-        transactionOutcome = response_json["transactionOutcome"]
-        if transactionOutcome == "Approved":
-            """ Test 3.2 Approved Payment  """
-            return response_json
-        else:
-            """ Test 3.3 Declined Payment  """
-            raise Warning("The transaction was {}.".format(transactionOutcome))
+        return response_json
 
     def _worldline_do_request(self, method, url, body, client_id, host=None, key=None, ignore=[]):
         """ Test 3.4 Communication Log """
@@ -144,6 +127,7 @@ class PosPaymentMethod(models.Model):
             body=body_json,
             headers=headers,
         )
+        """ Test 3.4 Communication Log """
         response_json = {}
         if response.data:
             response_json = json.loads(response.data)
@@ -152,7 +136,6 @@ class PosPaymentMethod(models.Model):
         else:
             status = "{} {}".format(response.status, response.reason)
 
-        """ Test 3.4 Communication Log """
         values = {
             "url": url,
             "direction": "response",
@@ -170,13 +153,6 @@ class PosPaymentMethod(models.Model):
                     values["receipt_total"] = _json["amounts"]["total"]
         self._create_log(values)
 
-        status = response.status
-        ignore.append(200)
-        if status not in ignore:
-            if status in STATUS:
-                raise Warning(STATUS[status])
-            else:
-                raise Warning("{} {}".format(status, response.reason))
         return response
 
     def _create_log(self, values):

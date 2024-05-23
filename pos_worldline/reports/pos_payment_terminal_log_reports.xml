@@ -36,6 +36,7 @@
         <field name="model_id" ref="pos_payment_terminal_log.model_pos_payment_terminal_log"/>
         <field name="state">code</field>
         <field name="code">
+# Configure your document layout first, otherwise that action will be returned.
 latest_receipt = model.search([], order="create_date desc", limit=1)
 report = env.ref("pos_worldline.pos_payment_terminal_log_report_receipt")
 action = report.report_action(docids = latest_receipt)

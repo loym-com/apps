@@ -79,7 +79,6 @@
         name="Payment Terminal Log"
         sequence="100"
         parent="point_of_sale.menu_point_config_product"
-        groups="base.group_no_one"
         action="pos_payment_terminal_log_action"
     />
 </odoo>

@@ -8,7 +8,7 @@
     "category": "",
     'assets': {
         "point_of_sale.assets": [
-            "pos_worldline/static/src/js/models.js"
+            "pos_worldline/static/src/js/models.js",
             "pos_worldline/static/src/js/payment_worldline.js",
             "pos_worldline/static/src/xml/OrderReceipt.xml",
         ],

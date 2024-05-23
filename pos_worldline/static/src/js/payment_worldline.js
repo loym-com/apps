@@ -8,16 +8,17 @@ odoo.define('pos_worldline.payment', function (require) {
 
     var _t = core._t;
 
+    // BASED ON PaymentAdyen
     var PaymentWorldline = PaymentInterface.extend({
         send_payment_request: function (cid) {
             this._super.apply(this, arguments);
             this._reset_state();
             return this._worldline_pay(cid);
         },
-        send_payment_cancel: function (order, cid) {
-            this._super.apply(this, arguments);
-            return this._worldline_cancel();
-        },
+        // send_payment_cancel: function (order, cid) {
+        //     this._super.apply(this, arguments);
+        //     return this._worldline_cancel();
+        // },
         close: function () {
             this._super.apply(this, arguments);
         },
@@ -38,29 +39,33 @@ odoo.define('pos_worldline.payment', function (require) {
             clearTimeout(this.polling);
         },
 
-        _handle_odoo_connection_failure: function (data) {
+        _handle_odoo_connection_failure: function (response) {
             // handle timeout
             var line = this.pending_worldline_line();
             if (line) {
                 line.set_payment_status('retry');
             }
+
             this._show_error(_t('Could not connect to the Odoo server, please check your internet connection and try again.'));
 
             return Promise.reject(data); // prevent subsequent onFullFilled's from being called
         },
 
-        _call_worldline: function (payment_data) {
+        _call_worldline: function (data) {
             return rpc.query({
                 model: 'pos.payment.method',
                 method: 'worldline_do_payment',
-                args: [[this.payment_method.id], payment_data],
+                args: [[this.payment_method.id], data],
             }, {
                 // When a payment terminal is disconnected it may take Worldline
                 // a while to return an error (Adyen: ~6s). So wait 10 seconds
                 // before concluding Odoo is unreachable.
-                timeout: 30000, // Wait longer for immediate payment (not async)
+                // FIXME: Timeout ERROR -> must delete the POS order and register again.
+                timeout: 60000,
                 shadow: true,
-            }).catch(this._handle_odoo_connection_failure.bind(this));
+            }).catch(
+                this._handle_odoo_connection_failure.bind(this)
+            );
         },
 
         _worldline_get_sale_id: function () {
@@ -68,37 +73,20 @@ odoo.define('pos_worldline.payment', function (require) {
             return _.str.sprintf('%s (ID: %s)', config.display_name, config.id);
         },
 
-        // _worldline_common_message_header: function () {
-        //     var config = this.pos.config;
-        //     this.most_recent_service_id = Math.floor(Math.random() * Math.pow(2, 64)).toString(); // random ID to identify request/response pairs
-        //     this.most_recent_service_id = this.most_recent_service_id.substring(0, 10); // max length is 10
-
-        //     return {
-        //         'ProtocolVersion': '3.0',
-        //         'MessageClass': 'Service',
-        //         'MessageType': 'Request',
-        //         'SaleID': this._worldline_get_sale_id(config),
-        //         'ServiceID': this.most_recent_service_id,
-        //         'POIID': this.payment_method.worldline_terminal_identifier
-        //     };
-        // },
-
         _worldline_pay_data: function (cid) {
             var order = this.pos.get_order();
             var config = this.pos.config;
             var line = order.selected_paymentline;
-            var pow = Math.pow(10, this.pos.currency.decimal_places);
             var data = {
                 "amounts": {
                     "currencySymbol": this.pos.currency.name,
-                    // "base": Math.round(line.amount * pow) / pow,
                     "base": line.amount
                 },
                 "cashierId": config.id,
                 "customData": {
                     "client_id": cid,
                 },
-            }
+            };
             return data;
         },
 
@@ -123,134 +111,40 @@ odoo.define('pos_worldline.payment', function (require) {
             });
         },
 
-        // _worldline_cancel: function (ignore_error) {
-        //     var self = this;
-        //     var config = this.pos.config;
-        //     var previous_service_id = this.most_recent_service_id;
-        //     var header = _.extend(this._worldline_common_message_header(), {
-        //         'MessageCategory': 'Abort',
-        //     });
+        _worldline_handle_response: function (responseJSON, operation) {
+            var response = JSON.parse(responseJSON);
 
-        //     var data = {};
-
-        //     return this._call_worldline(data, OPERATION).then(function (data) {
-        //         // Only valid response is a 200 OK HTTP response which is
-        //         // represented by true.
-        //         if (! ignore_error && data !== true) {
-        //             self._show_error(_t('Cancelling the payment failed. Please cancel it manually on the payment terminal.'));
-        //             self.was_cancelled = !!self.polling;
-        //         }
-        //     });
-        // },
-
-        // _convert_receipt_info: function (output_text) {
-        //     return output_text.reduce(function (acc, entry) {
-        //         var params = new URLSearchParams(entry.Text);
-
-        //         if (params.get('name') && !params.get('value')) {
-        //             return acc + _.str.sprintf('<br/>%s', params.get('name'));
-        //         } else if (params.get('name') && params.get('value')) {
-        //             return acc + _.str.sprintf('<br/>%s: %s', params.get('name'), params.get('value'));
-        //         }
-
-        //         return acc;
-        //     }, '');
-        // },
-
-        // _poll_for_response: function (resolve, reject) {
-        //     var self = this;
-        //     if (this.was_cancelled) {
-        //         resolve(false);
-        //         return Promise.resolve();
-        //     }
-
-        //     return rpc.query({
-        //         model: 'pos.payment.method',
-        //         method: 'get_latest_worldline_status',
-        //         args: [[this.payment_method.id], this._worldline_get_sale_id()],
-        //     }, {
-        //         timeout: 5000,
-        //         shadow: true,
-        //     }).catch(function (data) {
-        //         if (self.remaining_polls != 0) {
-        //             self.remaining_polls--;
-        //         } else {
-        //             reject();
-        //             self.poll_error_order = self.pos.get_order();
-        //             return self._handle_odoo_connection_failure(data);
-        //         }
-        //         // This is to make sure that if 'data' is not an instance of Error (i.e. timeout error),
-        //         // this promise don't resolve -- that is, it doesn't go to the 'then' clause.
-        //         return Promise.reject(data);
-        //     }).then(function (status) {
-        //         var notification = status.latest_response;
-        //         var order = self.pos.get_order();
-        //         var line = self.pending_worldline_line() || resolve(false);
-
-        //         if (notification && notification.SaleToPOIResponse.MessageHeader.ServiceID == line.terminalServiceId) {
-        //             var response = notification.SaleToPOIResponse.PaymentResponse.Response;
-        //             var additional_response = new URLSearchParams(response.AdditionalResponse);
-
-        //             if (response.Result == 'Success') {
-        //                 var config = self.pos.config;
-        //                 var payment_response = notification.SaleToPOIResponse.PaymentResponse;
-        //                 var payment_result = payment_response.PaymentResult;
-
-        //                 var cashier_receipt = payment_response.PaymentReceipt.find(function (receipt) {
-        //                     return receipt.DocumentQualifier == 'CashierReceipt';
-        //                 });
-
-        //                 if (cashier_receipt) {
-        //                     line.set_cashier_receipt(self._convert_receipt_info(cashier_receipt.OutputContent.OutputText));
-        //                 }
-
-        //                 var customer_receipt = payment_response.PaymentReceipt.find(function (receipt) {
-        //                     return receipt.DocumentQualifier == 'CustomerReceipt';
-        //                 });
-
-        //                 if (customer_receipt) {
-        //                     line.set_receipt_info(self._convert_receipt_info(customer_receipt.OutputContent.OutputText));
-        //                 }
-
-        //                 var tip_amount = payment_result.AmountsResp.TipAmount;
-        //                 if (config.worldline_ask_customer_for_tip && tip_amount > 0) {
-        //                     order.set_tip(tip_amount);
-        //                     line.set_amount(payment_result.AmountsResp.AuthorizedAmount);
-        //                 }
-
-        //                 line.transaction_id = additional_response.get('pspReference');
-        //                 line.card_type = additional_response.get('cardType');
-        //                 line.cardholder_name = additional_response.get('cardHolderName') || '';
-        //                 resolve(true);
-        //             } else {
-        //                 var message = additional_response.get('message');
-        //                 self._show_error(_.str.sprintf(_t('Message from Worldline: %s'), message));
-
-        //                 // this means the transaction was cancelled by pressing the cancel button on the device
-        //                 if (message.startsWith('108 ')) {
-        //                     resolve(false);
-        //                 } else {
-        //                     line.set_payment_status('retry');
-        //                     reject();
-        //                 }
-        //             }
-        //         } else {
-        //             line.set_payment_status('waitingCard')
-        //         }
-        //     });
-        // },
-
-        _worldline_handle_response: function (response, operation) {
             var line = this.pending_worldline_line();
 
-            // if (response.error && response.error.status_code == 401) {
-            //     // this._show_error(_t("Authentication failed. Please check your Worldline credentials."));
-            //     line.set_payment_status('force_done');
-            //     return Promise.resolve();
-            // }
+            if ('status_code' in response) {
+                if (response.status_code == 400) {
+                    this._show_error(_t("Bad request. Please check your Worldline credentials."));
+                    line.set_payment_status('retry');
+                    return Promise.resolve();
+                }
+                else if (response.status_code == 401) {
+                    this._show_error(_t("Authentication failed. Please check your Worldline credentials."));
+                    line.set_payment_status('retry');
+                    return Promise.resolve();
+                }
+                // else if (response.status_code == 404) {
+                //     // Payments/latest first time after "dagsoppgjør"
+                // }
+                else if (response.status_code == 503) {
+                    this._show_error(_t("The terminal was busy and did not process your request. Please try again."));
+                    line.set_payment_status('retry');
+                    return Promise.resolve();
+                }
+                else {
+                    this._show_error(_t(response.error.status_code + ' ' + response.error.message));
+                    line.set_payment_status('retry');
+                    return Promise.resolve();
+                }
+            }
 
-            if (response && response.transactionOutcome in ["Declined", "Cancelled"]) {
-                console.error('error from Worldline', response);
+            // Response 200 OK
+
+            if (response && ["Declined", "Cancelled"].includes(response.transactionOutcome)) {
 
                 this._show_error(_.str.sprintf(
                     _t('The transaction was %s'),
@@ -265,32 +159,8 @@ odoo.define('pos_worldline.payment', function (require) {
                 // Approved
                 line.ticket = response.receipt.customer.plain // or escpos
                 return true // What to return?
-            // } else if (operation == "PaymentsAsync") {
-            //     // Approved
-            //     line.set_payment_status('waitingCard');
-            //     return this.start_get_status_polling()
             }
         },
-
-        // start_get_status_polling() {
-        //     var self = this;
-        //     var res = new Promise(function (resolve, reject) {
-        //         // clear previous intervals just in case, otherwise
-        //         // it'll run forever
-        //         clearTimeout(self.polling);
-        //         self._poll_for_response(resolve, reject);
-        //         self.polling = setInterval(function () {
-        //             self._poll_for_response(resolve, reject);
-        //         }, 5500);
-        //     });
-
-        //     // make sure to stop polling when we're done
-        //     res.finally(function () {
-        //         self._reset_state();
-        //     });
-
-        //     return res;
-        // },
 
         _show_error: function (msg, title) {
             if (!title) {
