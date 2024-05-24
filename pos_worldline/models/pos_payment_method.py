@@ -58,49 +58,52 @@ class PosPaymentMethod(models.Model):
 
     def worldline_do_payment(self, payment):
         self.ensure_one()
-        client_id = payment["customData"]["client_id"]
+        # client_id = payment["customData"]["client_id"]
 
-        """ Test 3.7 No Connection """
-        response = self._worldline_do_request("GET", "/api/v1/Payments/latest", None, client_id, ignore=[404])
+        # """ Test 3.7 No Connection """
+        # response = self._worldline_do_request("GET", "/api/v1/Payments/latest", None, client_id, ignore=[404])
 
+        # if response.status not in [200, 404]:
+        #     return {
+        #         'status_code': response.status,
+        #         'message': response.reason,
+        #     }
+
+        # # DO PAYMENT? OR IS PAYMENT ALREADY DONE?
+        # if response.status == 404:
+        #     # 404: /Payments/latest not found; first payment since "Dagsavslutt"
+        #     do_payment = True
+        # else:
+        #     response_dict = json.loads(response.data)
+        #     log_exists = bool(
+        #         self.env["pos.payment.terminal.log"].search_count(
+        #             [
+        #                 ("url", "in", ["/api/v1/Payments", "/api/v1/Payments/latest"]),
+        #                 # ("client_id", "!=", payment["customData"]["client_id"]),
+        #                 ("receipt_no", "=", response_dict["receiptNumber"]),
+        #             ]
+        #         )
+        #     )
+        #     do_payment = log_exists # No payment happened during a loss of connection.
+        # if do_payment:
+
+        response = self._worldline_do_request("POST", "/api/v1/Payments", payment)
         if response.status not in [200, 404]:
-            return json.dumps(
-                {
-                    'status_code': response.status,
-                    'message': response.data.decode('utf-8')
-                }
-            )
-
-        # do_payment ?
-        if response.status == 404:
-            # 404: /Payments/latest not found; first payment since "Dagsavslutt"
-            do_payment = True
+            return {
+                'status_code': response.status,
+                'message': response.reason,
+            }
         else:
-            response_json = json.loads(response.data)
-            log_exists = bool(
-                self.env["pos.payment.terminal.log"].search_count(
-                    [
-                        ("url", "in", ["/api/v1/Payments", "/api/v1/Payments/latest"]),
-                        ("client_id", "!=", payment["customData"]["client_id"]),
-                        ("receipt_no", "=", response_json["receiptNumber"]),
-                    ]
-                )
-            )
-            do_payment = log_exists # No payment happened during a loss of connection.
-        if do_payment:
-            response = self._worldline_do_request("POST", "/api/v1/Payments", payment, client_id)
-            response_json = json.loads(response.data)
+            return json.loads(response.data)
 
-        return response_json
-
-    def _worldline_do_request(self, method, url, body, client_id, host=None, key=None, ignore=[]):
+    def _worldline_do_request(self, method, url, body, host=None, key=None):
         """ Test 3.4 Communication Log """
         self._create_log(
             {
                 "url": url,
                 "direction": "request",
                 "host": request.httprequest.environ["HTTP_HOST"],
-                "client_id": client_id,
+                # "client_id": client_id,
                 "log_json": body,
             }
         )
@@ -140,7 +143,7 @@ class PosPaymentMethod(models.Model):
             "url": url,
             "direction": "response",
             "host": self.worldline_host,
-            "client_id": client_id,
+            # "client_id": client_id,
             "status": status,
             "log_json": response_json,
         }

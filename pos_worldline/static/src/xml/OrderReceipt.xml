@@ -4,7 +4,7 @@
     <t t-name="pos_worldline.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
         <xpath expr="//t[@t-out='line.ticket']" position="before">
             <div class="pos-payment-terminal-receipt">
-                <p style="font-size: 12px;">
+                <p style="font-size: 24px;">
                     KVITTERING FOR KJØP
                     <br/>
                     <br/>

@@ -39,7 +39,7 @@ odoo.define('pos_worldline.payment', function (require) {
             clearTimeout(this.polling);
         },
 
-        _handle_odoo_connection_failure: function (response) {
+        _handle_odoo_connection_failure: function (data) {
             // handle timeout
             var line = this.pending_worldline_line();
             if (line) {
@@ -56,16 +56,18 @@ odoo.define('pos_worldline.payment', function (require) {
                 model: 'pos.payment.method',
                 method: 'worldline_do_payment',
                 args: [[this.payment_method.id], data],
-            }, {
-                // When a payment terminal is disconnected it may take Worldline
-                // a while to return an error (Adyen: ~6s). So wait 10 seconds
-                // before concluding Odoo is unreachable.
-                // FIXME: Timeout ERROR -> must delete the POS order and register again.
-                timeout: 60000,
-                shadow: true,
-            }).catch(
-                this._handle_odoo_connection_failure.bind(this)
-            );
+            });
+            // SYNCRONIOUS method cannot have timeout
+            // , {
+            //     // When a payment terminal is disconnected it may take Worldline
+            //     // a while to return an error (Adyen: ~6s). So wait 10 seconds
+            //     // before concluding Odoo is unreachable.
+            //     // FIXME: Timeout ERROR -> must delete the POS order and register again.
+            //     timeout: 60000,
+            //     shadow: true,
+            // }).catch(
+            //     this._handle_odoo_connection_failure.bind(this)
+            // );
         },
 
         _worldline_get_sale_id: function () {
@@ -111,8 +113,7 @@ odoo.define('pos_worldline.payment', function (require) {
             });
         },
 
-        _worldline_handle_response: function (responseJSON, operation) {
-            var response = JSON.parse(responseJSON);
+        _worldline_handle_response: function (response, operation) {
 
             var line = this.pending_worldline_line();
 

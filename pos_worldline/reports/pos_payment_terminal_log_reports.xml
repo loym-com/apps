@@ -31,18 +31,27 @@
         <field name="report_name">pos_worldline.pos_payment_terminal_log_template_receipt</field>
         <field name="binding_model_id" ref="pos_payment_terminal_log.model_pos_payment_terminal_log" />
     </record>
+</odoo>
+<odoo noupdate="1">
     <record id="pos_payment_terminal_log_action_print_latest_receipt" model="ir.actions.server">
         <field name="name">Print latest receipt</field>
         <field name="model_id" ref="pos_payment_terminal_log.model_pos_payment_terminal_log"/>
         <field name="state">code</field>
         <field name="code">
 # Configure your document layout first, otherwise that action will be returned.
+
+host = ""
+key = ""
+response = env["pos.payment.method"]._worldline_do_request("GET", "/api/v1/Payments/latest", None, host, key)
+
 latest_receipt = model.search([], order="create_date desc", limit=1)
 report = env.ref("pos_worldline.pos_payment_terminal_log_report_receipt")
 action = report.report_action(docids = latest_receipt)
 action["res_id"] = model.search([], order="create_date desc", limit=1).id
         </field>
     </record>
+</odoo>
+<oodo>
     <menuitem
         id="pos_payment_terminal_log_menuitem_print_latest_receipt"
         name="Print latest receipt"
