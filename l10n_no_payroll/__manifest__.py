@@ -22,16 +22,15 @@
         "views/menus.xml",
     ],
     "demo": [
-        # "demo/hr_contribution_register_data.xml",
-        "demo/hr_salary_rule_category_data.xml",
-        "demo/hr_salary_rule_data.xml",
-        "demo/hr_payroll_structure_data.xml",
+        "demo/hr_salary_rule_demo.xml",
+        "demo/hr_payroll_structure_demo.xml",
+        "demo/res_company_demo.xml",
     ],
     "depends": [
         "base_import",  # l10n_no_job_code
         "base_sparse_field",
         "hr_contract_leave",
-        "l10n_no_oca",
+        "l10n_no",
         "payroll_account_analytic",
     ],
     "external_dependencies": {"python": ["xsdata-pydantic"]},

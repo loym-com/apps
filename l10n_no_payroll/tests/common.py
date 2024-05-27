@@ -19,12 +19,12 @@ class TestNoPayrollBase(TransactionCase):
                 "l10n_no_fp_prosent": 10.2,
                 "l10n_no_fp_prosent_senior": 12.5,
                 "l10n_no_pensjonsinnretning": "958995369",
-                "l10n_no_aga_konto": self.env.ref("l10n_no_oca.account_5400").id,
-                "l10n_no_aga_motkonto": self.env.ref("l10n_no_oca.account_2770").id,
-                "l10n_no_fp_konto": self.env.ref("l10n_no_oca.account_5092").id,
-                "l10n_no_fp_motkonto": self.env.ref("l10n_no_oca.account_2940").id,
-                "l10n_no_aga_fp_konto": self.env.ref("l10n_no_oca.account_5405").id,
-                "l10n_no_aga_fp_motkonto": self.env.ref("l10n_no_oca.account_2785").id,
+                "l10n_no_aga_konto": self.env.ref("l10n_no.1_chart5400").id,
+                "l10n_no_aga_motkonto": self.env.ref("l10n_no.1_chart2770").id,
+                "l10n_no_fp_konto": self.env.ref("l10n_no.1_chart5092").id,
+                "l10n_no_fp_motkonto": self.env.ref("l10n_no.1_chart2940").id,
+                "l10n_no_aga_fp_konto": self.env.ref("l10n_no.1_chart5405").id,
+                "l10n_no_aga_fp_motkonto": self.env.ref("l10n_no.1_chart2785").id,
                 "l10n_no_loennsart_fp_i_aar": self.env.ref(
                     "l10n_no_payroll.rule_fp_i_aar"
                 ).id,

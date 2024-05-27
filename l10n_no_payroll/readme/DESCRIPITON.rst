@@ -8,7 +8,10 @@ Hints how to develop the amelding:
 
 OCA Days 2021 https://www.youtube.com/watch?v=6gFOe7Wh8uA
 
-python3.10 -m pip install xsdata[cli]==23.8
+python3.10 -m pip install xsdata[cli]
+python3.10 -m pip install xsdata-pydantic[cli]
+
+Not relevant because we are not using xsdata-odoo:
 The version should be from the same time when https://github.com/akretion/xsdata-odoo was last updated.
 
 linux:
