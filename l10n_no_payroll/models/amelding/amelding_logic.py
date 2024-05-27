@@ -133,36 +133,22 @@ class AmeldingLogikk:
 
     def melding_xml(self):
         m = self.melding()
-        # raise UserError(m)
-        # Melding(leveranse=None)
 
-        myxml = m.toxml("utf-8")
-        myetree = etree.fromstring(myxml)
-
-        no_of_times = 5  # Do a few times to remove nested empty nodes
-        for i in range(0, no_of_times):
-            for element in myetree.xpath("//*[not(node())]"):
-                element.getparent().remove(element)
-
-        mypretty = etree.tostring(myetree, pretty_print=True)
-        return mypretty
+        config = SerializerConfig(pretty_print=True)
+        serializer = XmlSerializer(config=config)
+        return serializer.render(m)
 
     def melding(self):
         m = a.EdagM()
         m.leveranse = self.Leveranse()
-
-        config = SerializerConfig(pretty_print=True)
-        serializer = XmlSerializer(config=config)
-        _logger.info(serializer.render(m))
-
         return m
 
     def Leveranse(self):
         lev = a.Leveranse()
 
-        # lev.leveringstidspunkt = self.amelding_record.leveringstidspunkt
-        lev.leveringstidspunkt = datetime.now()
-
+        lev.leveringstidspunkt = self.amelding_record.leveringstidspunkt.strftime(
+            "%Y-%m-%dT%H:%M:%S.%f"
+        )
         lev.kalendermaaned = self._get(
             self.amelding_record, "kalendermaaned"
         )  #'2018-01' #required
