@@ -9,10 +9,9 @@ __NAMESPACE__ = "urn:ske:fastsetting:innsamling:a-meldingen:v2_2"
 
 @dataclass
 class Arbeidsgiveravgiftsgrunnlag:
-    beregningskode_for_arbeidsgiveravgift: Optional[str] = field(
+    beregningskodeForArbeidsgiveravgift: Optional[str] = field(
         default=None,
         metadata={
-            "name": "beregningskodeForArbeidsgiveravgift",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -26,19 +25,17 @@ class Arbeidsgiveravgiftsgrunnlag:
             "required": True,
         }
     )
-    avgiftsgrunnlag_beloep: Optional[Decimal] = field(
+    avgiftsgrunnlagBeloep: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "avgiftsgrunnlagBeloep",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
         }
     )
-    prosentsats_for_avgiftsberegning: Optional[Decimal] = field(
+    prosentsatsForAvgiftsberegning: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "prosentsatsForAvgiftsberegning",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -48,34 +45,30 @@ class Arbeidsgiveravgiftsgrunnlag:
 
 @dataclass
 class Betalingsinformasjon:
-    sum_forskuddstrekk: Optional[int] = field(
+    sumForskuddstrekk: Optional[int] = field(
         default=None,
         metadata={
-            "name": "sumForskuddstrekk",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    sum_arbeidsgiveravgift: Optional[int] = field(
+    sumArbeidsgiveravgift: Optional[int] = field(
         default=None,
         metadata={
-            "name": "sumArbeidsgiveravgift",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    sum_finansskatt_loenn: Optional[int] = field(
+    sumFinansskattLoenn: Optional[int] = field(
         default=None,
         metadata={
-            "name": "sumFinansskattLoenn",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    sum_utleggstrekk: Optional[int] = field(
+    sumUtleggstrekk: Optional[int] = field(
         default=None,
         metadata={
-            "name": "sumUtleggstrekk",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -84,18 +77,16 @@ class Betalingsinformasjon:
 
 @dataclass
 class BetalingsinformasjonForForenkletOrdning:
-    sum_forskuddstrekk: Optional[int] = field(
+    sumForskuddstrekk: Optional[int] = field(
         default=None,
         metadata={
-            "name": "sumForskuddstrekk",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    sum_arbeidsgiveravgift: Optional[int] = field(
+    sumArbeidsgiveravgift: Optional[int] = field(
         default=None,
         metadata={
-            "name": "sumArbeidsgiveravgift",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -112,34 +103,30 @@ class BetalingsinformasjonForForenkletOrdning:
 
 @dataclass
 class BilOgBaat:
-    antall_kilometer: Optional[Decimal] = field(
+    antallKilometer: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "antallKilometer",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    antall_reiser: Optional[int] = field(
+    antallReiser: Optional[int] = field(
         default=None,
         metadata={
-            "name": "antallReiser",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    herav_antall_kilometer_mellom_hjem_og_arbeid: Optional[Decimal] = field(
+    heravAntallKilometerMellomHjemOgArbeid: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "heravAntallKilometerMellomHjemOgArbeid",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    listepris_for_bil: Optional[Decimal] = field(
+    listeprisForBil: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "listeprisForBil",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -152,34 +139,30 @@ class BilOgBaat:
             "max_length": 255,
         }
     )
-    er_bilpool: Optional[bool] = field(
+    erBilpool: Optional[bool] = field(
         default=None,
         metadata={
-            "name": "erBilpool",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    er_annen_bil: Optional[bool] = field(
+    erAnnenBil: Optional[bool] = field(
         default=None,
         metadata={
-            "name": "erAnnenBil",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    er_bil_utenfor_standardregelen: Optional[bool] = field(
+    erBilUtenforStandardregelen: Optional[bool] = field(
         default=None,
         metadata={
-            "name": "erBilUtenforStandardregelen",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    personklassifisering_av_bilbruker: Optional[str] = field(
+    personklassifiseringAvBilbruker: Optional[str] = field(
         default=None,
         metadata={
-            "name": "personklassifiseringAvBilbruker",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -188,10 +171,9 @@ class BilOgBaat:
 
 @dataclass
 class BonusFraForsvaret:
-    aaret_utbetalingen_gjelder_for: Optional[XmlPeriod] = field(
+    aaretUtbetalingenGjelderFor: Optional[XmlPeriod] = field(
         default=None,
         metadata={
-            "name": "aaretUtbetalingenGjelderFor",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -199,23 +181,18 @@ class BonusFraForsvaret:
 
 
 @dataclass
-class DagmammaIegenBolig:
-    class Meta:
-        name = "DagmammaIEgenBolig"
-
-    antall_barn: Optional[int] = field(
+class DagmammaIEgenBolig:
+    antallBarn: Optional[int] = field(
         default=None,
         metadata={
-            "name": "antallBarn",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
         }
     )
-    antall_maaneder: Optional[int] = field(
+    antallMaaneder: Optional[int] = field(
         default=None,
         metadata={
-            "name": "antallMaaneder",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -291,14 +268,10 @@ class Fradrag:
 
 
 @dataclass
-class FradragIgrunnlaget:
-    class Meta:
-        name = "FradragIGrunnlaget"
-
-    beregningskode_for_arbeidsgiveravgift: Optional[str] = field(
+class FradragIGrunnlaget:
+    beregningskodeForArbeidsgiveravgift: Optional[str] = field(
         default=None,
         metadata={
-            "name": "beregningskodeForArbeidsgiveravgift",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -312,19 +285,17 @@ class FradragIgrunnlaget:
             "required": True,
         }
     )
-    avgiftsfradrag_beloep: Optional[Decimal] = field(
+    avgiftsfradragBeloep: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "avgiftsfradragBeloep",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
         }
     )
-    prosentsats_for_avgiftsberegning: Optional[Decimal] = field(
+    prosentsatsForAvgiftsberegning: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "prosentsatsForAvgiftsberegning",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -333,23 +304,18 @@ class FradragIgrunnlaget:
 
 
 @dataclass
-class FradragIgrunnlagetForUtenlandsk:
-    class Meta:
-        name = "FradragIGrunnlagetForUtenlandsk"
-
-    avgiftsfradrag_beloep: Optional[Decimal] = field(
+class FradragIGrunnlagetForUtenlandsk:
+    avgiftsfradragBeloep: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "avgiftsfradragBeloep",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
         }
     )
-    prosentsats_for_avgiftsberegning: Optional[Decimal] = field(
+    prosentsatsForAvgiftsberegning: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "prosentsatsForAvgiftsberegning",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -417,10 +383,9 @@ class InternasjonalIdentifikator:
 
 @dataclass
 class Livrente:
-    totalt_utbetalt_beloep: Optional[Decimal] = field(
+    totaltUtbetaltBeloep: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "totaltUtbetaltBeloep",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -430,10 +395,9 @@ class Livrente:
 
 @dataclass
 class LottOgPartInnenFiske:
-    antall_dager: Optional[int] = field(
+    antallDager: Optional[int] = field(
         default=None,
         metadata={
-            "name": "antallDager",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -442,10 +406,9 @@ class LottOgPartInnenFiske:
 
 @dataclass
 class OppholdPaaSvalbardJanMayenOgBilandene:
-    oppholds_id: Optional[str] = field(
+    oppholdsId: Optional[str] = field(
         default=None,
         metadata={
-            "name": "oppholdsId",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -480,10 +443,9 @@ class OppholdPaaSvalbardJanMayenOgBilandene:
 
 @dataclass
 class Opplysningspliktig:
-    norsk_identifikator: Optional[str] = field(
+    norskIdentifikator: Optional[str] = field(
         default=None,
         metadata={
-            "name": "norskIdentifikator",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -549,10 +511,9 @@ class Permisjon:
             "required": True,
         }
     )
-    permisjon_id: Optional[str] = field(
+    permisjonId: Optional[str] = field(
         default=None,
         metadata={
-            "name": "permisjonId",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -579,10 +540,9 @@ class ReiseKostOgLosji:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    antall_reiser: Optional[int] = field(
+    antallReiser: Optional[int] = field(
         default=None,
         metadata={
-            "name": "antallReiser",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -591,18 +551,16 @@ class ReiseKostOgLosji:
 
 @dataclass
 class SjoefolksrelatertInformasjon:
-    antall_doegn_ombord: Optional[int] = field(
+    antallDoegnOmbord: Optional[int] = field(
         default=None,
         metadata={
-            "name": "antallDoegnOmbord",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    antall_doegn_ombord_uten_dekkede_smaautgifter: Optional[int] = field(
+    antallDoegnOmbordUtenDekkedeSmaautgifter: Optional[int] = field(
         default=None,
         metadata={
-            "name": "antallDoegnOmbordUtenDekkedeSmaautgifter",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -611,10 +569,9 @@ class SjoefolksrelatertInformasjon:
 
 @dataclass
 class Spesifikasjon:
-    skattemessig_bosatt_iland: Optional[str] = field(
+    skattemessigBosattILand: Optional[str] = field(
         default=None,
         metadata={
-            "name": "skattemessigBosattILand",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -626,18 +583,16 @@ class Spesifikasjon:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    er_opptjent_paa_hjelpefartoey: Optional[bool] = field(
+    erOpptjentPaaHjelpefartoey: Optional[bool] = field(
         default=None,
         metadata={
-            "name": "erOpptjentPaaHjelpefartoey",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    er_opptjent_paa_kontinentalsokkel: Optional[bool] = field(
+    erOpptjentPaaKontinentalsokkel: Optional[bool] = field(
         default=None,
         metadata={
-            "name": "erOpptjentPaaKontinentalsokkel",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -668,10 +623,9 @@ class UtenlandskArtist:
             "required": True,
         }
     )
-    trukket_artistskatt: Optional[int] = field(
+    trukketArtistskatt: Optional[int] = field(
         default=None,
         metadata={
-            "name": "trukketArtistskatt",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -681,19 +635,17 @@ class UtenlandskArtist:
 
 @dataclass
 class UtenlandskeMedFastAvgiftsbeloep:
-    antall_avgiftsgrunnlag_personer: Optional[int] = field(
+    antallAvgiftsgrunnlagPersoner: Optional[int] = field(
         default=None,
         metadata={
-            "name": "antallAvgiftsgrunnlagPersoner",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
         }
     )
-    beloepssats_for_avgiftsberegning: Optional[Decimal] = field(
+    beloepssatsForAvgiftsberegning: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "beloepssatsForAvgiftsberegning",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -703,19 +655,17 @@ class UtenlandskeMedFastAvgiftsbeloep:
 
 @dataclass
 class UtenlandskeMedSaerskiltProsentsats:
-    avgiftsgrunnlag_beloep: Optional[Decimal] = field(
+    avgiftsgrunnlagBeloep: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "avgiftsgrunnlagBeloep",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
         }
     )
-    prosentsats_for_avgiftsberegning: Optional[Decimal] = field(
+    prosentsatsForAvgiftsberegning: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "prosentsatsForAvgiftsberegning",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -773,10 +723,9 @@ class AldersUfoereEtterlatteAvtalefestetOgKrigspensjon:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    herav_etterlattepensjon: Optional[Decimal] = field(
+    heravEtterlattepensjon: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "heravEtterlattepensjon",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -792,20 +741,18 @@ class AldersUfoereEtterlatteAvtalefestetOgKrigspensjon:
 
 @dataclass
 class Arbeidsforhold:
-    arbeidsforhold_id: Optional[str] = field(
+    arbeidsforholdId: Optional[str] = field(
         default=None,
         metadata={
-            "name": "arbeidsforholdId",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "max_length": 150,
             "pattern": r"([0-9a-zA-Z_.-])*",
         }
     )
-    type_arbeidsforhold: Optional[str] = field(
+    typeArbeidsforhold: Optional[str] = field(
         default=None,
         metadata={
-            "name": "typeArbeidsforhold",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -825,10 +772,9 @@ class Arbeidsforhold:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    antall_timer_per_uke_som_en_full_stilling_tilsvarer: Optional[Decimal] = field(
+    antallTimerPerUkeSomEnFullStillingTilsvarer: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "antallTimerPerUkeSomEnFullStillingTilsvarer",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -861,10 +807,9 @@ class Arbeidsforhold:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    siste_loennsendringsdato: Optional[XmlDate] = field(
+    sisteLoennsendringsdato: Optional[XmlDate] = field(
         default=None,
         metadata={
-            "name": "sisteLoennsendringsdato",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -898,26 +843,23 @@ class Arbeidsforhold:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    siste_dato_for_stillingsprosentendring: Optional[XmlDate] = field(
+    sisteDatoForStillingsprosentendring: Optional[XmlDate] = field(
         default=None,
         metadata={
-            "name": "sisteDatoForStillingsprosentendring",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    aarsak_til_sluttdato: Optional[str] = field(
+    aarsakTilSluttdato: Optional[str] = field(
         default=None,
         metadata={
-            "name": "aarsakTilSluttdato",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    form_for_ansettelse: Optional[str] = field(
+    formForAnsettelse: Optional[str] = field(
         default=None,
         metadata={
-            "name": "formForAnsettelse",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -926,50 +868,44 @@ class Arbeidsforhold:
 
 @dataclass
 class Arbeidsgiveravgift:
-    loenn_og_godtgjoerelse: List[Arbeidsgiveravgiftsgrunnlag] = field(
+    loennOgGodtgjoerelse: List[Arbeidsgiveravgiftsgrunnlag] = field(
         default_factory=list,
         metadata={
-            "name": "loennOgGodtgjoerelse",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    tilskudd_og_premie_til_pensjon: List[Arbeidsgiveravgiftsgrunnlag] = field(
+    tilskuddOgPremieTilPensjon: List[Arbeidsgiveravgiftsgrunnlag] = field(
         default_factory=list,
         metadata={
-            "name": "tilskuddOgPremieTilPensjon",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    utenlandske_med_saerskilt_prosentsats: Optional[UtenlandskeMedSaerskiltProsentsats] = field(
+    utenlandskeMedSaerskiltProsentsats: Optional[UtenlandskeMedSaerskiltProsentsats] = field(
         default=None,
         metadata={
-            "name": "utenlandskeMedSaerskiltProsentsats",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    utenlandske_med_fast_avgiftsbeloep: Optional[UtenlandskeMedFastAvgiftsbeloep] = field(
+    utenlandskeMedFastAvgiftsbeloep: Optional[UtenlandskeMedFastAvgiftsbeloep] = field(
         default=None,
         metadata={
-            "name": "utenlandskeMedFastAvgiftsbeloep",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    fradrag_igrunnlaget_for_sone: List[FradragIgrunnlaget] = field(
+    fradragIGrunnlagetForSone: List[FradragIGrunnlaget] = field(
         default_factory=list,
         metadata={
-            "name": "fradragIGrunnlagetForSone",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    fradrag_igrunnlaget_for_utenlandsk: Optional[FradragIgrunnlagetForUtenlandsk] = field(
+    fradragIGrunnlagetForUtenlandsk: Optional[FradragIGrunnlagetForUtenlandsk] = field(
         default=None,
         metadata={
-            "name": "fradragIGrunnlagetForUtenlandsk",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -992,10 +928,9 @@ class Nettoloennsordning:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    betalt_skattebeloep_iutlandet: Optional[Decimal] = field(
+    betaltSkattebeloepIUtlandet: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "betaltSkattebeloepIUtlandet",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1011,10 +946,9 @@ class NorskKontinentalsokkel:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    gjelder_loenn_foerste60_dager: Optional[bool] = field(
+    gjelderLoennFoerste60Dager: Optional[bool] = field(
         default=None,
         metadata={
-            "name": "gjelderLoennFoerste60Dager",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1023,18 +957,16 @@ class NorskKontinentalsokkel:
 
 @dataclass
 class Tilleggsinformasjon:
-    bil_og_baat: Optional[BilOgBaat] = field(
+    bilOgBaat: Optional[BilOgBaat] = field(
         default=None,
         metadata={
-            "name": "bilOgBaat",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    dagmamma_iegen_bolig: Optional[DagmammaIegenBolig] = field(
+    dagmammaIEgenBolig: Optional[DagmammaIEgenBolig] = field(
         default=None,
         metadata={
-            "name": "dagmammaIEgenBolig",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1046,10 +978,9 @@ class Tilleggsinformasjon:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    inntekt_paa_norsk_kontinentalsokkel: Optional[NorskKontinentalsokkel] = field(
+    inntektPaaNorskKontinentalsokkel: Optional[NorskKontinentalsokkel] = field(
         default=None,
         metadata={
-            "name": "inntektPaaNorskKontinentalsokkel",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1068,10 +999,9 @@ class Tilleggsinformasjon:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    lott_og_part: Optional[LottOgPartInnenFiske] = field(
+    lottOgPart: Optional[LottOgPartInnenFiske] = field(
         default=None,
         metadata={
-            "name": "lottOgPart",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1090,26 +1020,23 @@ class Tilleggsinformasjon:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    reise_kost_og_losji: Optional[ReiseKostOgLosji] = field(
+    reiseKostOgLosji: Optional[ReiseKostOgLosji] = field(
         default=None,
         metadata={
-            "name": "reiseKostOgLosji",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    utenlandsk_artist: Optional[UtenlandskArtist] = field(
+    utenlandskArtist: Optional[UtenlandskArtist] = field(
         default=None,
         metadata={
-            "name": "utenlandskArtist",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    bonus_fra_forsvaret: Optional[BonusFraForsvaret] = field(
+    bonusFraForsvaret: Optional[BonusFraForsvaret] = field(
         default=None,
         metadata={
-            "name": "bonusFraForsvaret",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1208,26 +1135,23 @@ class YtelseFraOffentlige:
 
 @dataclass
 class Inntekt:
-    skatte_og_avgiftsregel: Optional[str] = field(
+    skatteOgAvgiftsregel: Optional[str] = field(
         default=None,
         metadata={
-            "name": "skatteOgAvgiftsregel",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    startdato_opptjeningsperiode: Optional[XmlDate] = field(
+    startdatoOpptjeningsperiode: Optional[XmlDate] = field(
         default=None,
         metadata={
-            "name": "startdatoOpptjeningsperiode",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    sluttdato_opptjeningsperiode: Optional[XmlDate] = field(
+    sluttdatoOpptjeningsperiode: Optional[XmlDate] = field(
         default=None,
         metadata={
-            "name": "sluttdatoOpptjeningsperiode",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1240,19 +1164,17 @@ class Inntekt:
             "required": True,
         }
     )
-    utloeser_arbeidsgiveravgift: Optional[bool] = field(
+    utloeserArbeidsgiveravgift: Optional[bool] = field(
         default=None,
         metadata={
-            "name": "utloeserArbeidsgiveravgift",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
         }
     )
-    inngaar_igrunnlag_for_trekk: Optional[bool] = field(
+    inngaarIGrunnlagForTrekk: Optional[bool] = field(
         default=None,
         metadata={
-            "name": "inngaarIGrunnlagForTrekk",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -1266,10 +1188,9 @@ class Inntekt:
             "required": True,
         }
     )
-    arbeidsforhold_id: Optional[str] = field(
+    arbeidsforholdId: Optional[str] = field(
         default=None,
         metadata={
-            "name": "arbeidsforholdId",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "max_length": 150,
@@ -1283,18 +1204,16 @@ class Inntekt:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    ytelse_fra_offentlige: Optional[YtelseFraOffentlige] = field(
+    ytelseFraOffentlige: Optional[YtelseFraOffentlige] = field(
         default=None,
         metadata={
-            "name": "ytelseFraOffentlige",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    pensjon_eller_trygd: Optional[PensjonEllerTrygd] = field(
+    pensjonEllerTrygd: Optional[PensjonEllerTrygd] = field(
         default=None,
         metadata={
-            "name": "pensjonEllerTrygd",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1310,26 +1229,23 @@ class Inntekt:
 
 @dataclass
 class Inntektsmottaker:
-    norsk_identifikator: Optional[str] = field(
+    norskIdentifikator: Optional[str] = field(
         default=None,
         metadata={
-            "name": "norskIdentifikator",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    internasjonal_identifikator: List[InternasjonalIdentifikator] = field(
+    internasjonalIdentifikator: List[InternasjonalIdentifikator] = field(
         default_factory=list,
         metadata={
-            "name": "internasjonalIdentifikator",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    identifiserende_informasjon: Optional[IdentifiserendeInformasjon] = field(
+    identifiserendeInformasjon: Optional[IdentifiserendeInformasjon] = field(
         default=None,
         metadata={
-            "name": "identifiserendeInformasjon",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1362,18 +1278,16 @@ class Inntektsmottaker:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    sjoefolksrelatert_informasjon: Optional[SjoefolksrelatertInformasjon] = field(
+    sjoefolksrelatertInformasjon: Optional[SjoefolksrelatertInformasjon] = field(
         default=None,
         metadata={
-            "name": "sjoefolksrelatertInformasjon",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    opphold_paa_svalbard_jan_mayen_og_bilandene: List[OppholdPaaSvalbardJanMayenOgBilandene] = field(
+    oppholdPaaSvalbardJanMayenOgBilandene: List[OppholdPaaSvalbardJanMayenOgBilandene] = field(
         default_factory=list,
         metadata={
-            "name": "oppholdPaaSvalbardJanMayenOgBilandene",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1389,10 +1303,9 @@ class Inntektsmottaker:
 
 @dataclass
 class Virksomhet:
-    norsk_identifikator: Optional[str] = field(
+    norskIdentifikator: Optional[str] = field(
         default=None,
         metadata={
-            "name": "norskIdentifikator",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -1423,18 +1336,16 @@ class JuridiskEntitet:
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    betalingsinformasjon_for_forenklet_ordning: List[BetalingsinformasjonForForenkletOrdning] = field(
+    betalingsinformasjonForForenkletOrdning: List[BetalingsinformasjonForForenkletOrdning] = field(
         default_factory=list,
         metadata={
-            "name": "betalingsinformasjonForForenkletOrdning",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
     )
-    annen_bagatellmessig_stoette: Optional[Decimal] = field(
+    annenBagatellmessigStoette: Optional[Decimal] = field(
         default=None,
         metadata={
-            "name": "annenBagatellmessigStoette",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1484,20 +1395,18 @@ class Leveranse:
             "max_length": 255,
         }
     )
-    erstatter_meldings_id: Optional[str] = field(
+    erstatterMeldingsId: Optional[str] = field(
         default=None,
         metadata={
-            "name": "erstatterMeldingsId",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "max_length": 150,
             "pattern": r"([0-9a-zA-Z_.-])*",
         }
     )
-    meldings_id: Optional[str] = field(
+    meldingsId: Optional[str] = field(
         default=None,
         metadata={
-            "name": "meldingsId",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -1521,10 +1430,9 @@ class Leveranse:
             "required": True,
         }
     )
-    spraak_for_tilbakemelding: Optional[Spraak] = field(
+    spraakForTilbakemelding: Optional[Spraak] = field(
         default=None,
         metadata={
-            "name": "spraakForTilbakemelding",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
         }
@@ -1532,14 +1440,11 @@ class Leveranse:
 
 
 @dataclass
-class EdagM:
-    class Meta:
-        name = "EDAG_M"
-
+class EDAG_M:
+    # Leveranse -> leveranse
     leveranse: Optional[Leveranse] = field(
         default=None,
         metadata={
-            "name": "Leveranse",
             "type": "Element",
             "namespace": "urn:ske:fastsetting:innsamling:a-meldingen:v2_2",
             "required": True,
@@ -1548,7 +1453,7 @@ class EdagM:
 
 
 @dataclass
-class Melding(EdagM):
+# melding -> Melding
+class Melding(EDAG_M):
     class Meta:
-        name = "melding"
         namespace = "urn:ske:fastsetting:innsamling:a-meldingen:v2_2"

@@ -1,5 +1,5 @@
 {
-    "name": "Sparse Fields",
+    "name": "Sparse Fields including Date",
     "summary": """Implementation of sparse fields.""",
     "author": "Odoo, Ows, Odoo Community Association (OCA)",
     "category": "Hidden",
