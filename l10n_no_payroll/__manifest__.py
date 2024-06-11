@@ -30,7 +30,7 @@
         "base_import",  # l10n_no_job_code
         "base_sparse_field",
         "hr_contract_leave",
-        "l10n_no",
+        # "l10n_no",
         "payroll_account_analytic",
     ],
     "external_dependencies": {"python": ["xsdata-pydantic"]},

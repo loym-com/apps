@@ -4,10 +4,10 @@
 
         <!-- survey.survey -->
 
-        <record model="ir.ui.view" id="view_survey_form">
+        <record model="ir.ui.view" id="survey_survey_view_form">
             <field name="name">Survey Export Answers</field>
             <field name="model">survey.survey</field>
-            <field name="inherit_id" ref="survey.survey_form" />
+            <field name="inherit_id" ref="survey.survey_survey_view_form" />
             <field name="priority" eval="20" />
             <field name="arch" type="xml">
                 <header position="inside">
