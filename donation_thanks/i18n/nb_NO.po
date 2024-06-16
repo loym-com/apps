@@ -1,0 +1,254 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* donation_thanks
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-07 09:44+0000\n"
+"PO-Revision-Date: 2024-03-07 09:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: donation_thanks
+#: model:mail.template,body_html:donation_thanks.mail_template_donation_tax_receipt_norwegian
+msgid ""
+"\n"
+"<div>\n"
+"<p>Kjære ${object.partner_id.name}!</p>\n"
+"<p>Tusen takk for støtten til Granheimstiftelsen! Den verdsettes høyt!</p>\n"
+"<p>Her kommer Matteson Misjonsnytt som jeg håper du vil lese!</p>\n"
+"\n"
+"% if object.partner_id.category_id==False:\n"
+"<p>Vi sender deg gjerne oppdateringer fra Matteson Misjonsskole. <b>Svar på denne eposten</b> hvis du ønsker å fortsette å motta dette nyhetsbrevet.</p>\n"
+"% endif\n"
+"\n"
+"<p>Vennlig hilsen, med ønske om Guds velsignelse,</p>\n"
+"</div>\n"
+"<div>\n"
+"${user.signature | safe}\n"
+"</div>"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_donation_tax_receipt
+msgid ""
+"<br/>\n"
+"                                        Granheimstiftelsen har mottatt fra <br/>"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_donation_tax_receipt
+msgid ""
+"<br/>\n"
+"                                        The Granheim Foundation has received from <br/>"
+msgstr ""
+
+#. module: donation_thanks
+#: model:mail.template,body_html:donation_thanks.mail_template_donation_tax_receipt
+msgid ""
+"<div style=\"font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Dear ${object.partner_id.name},</p>\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Thank you for supporting the work of the Granheim Foundation!</p>\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Please find attached the latest newsletter from Matteson. I hope you will enjoy it.</p>\n"
+"\n"
+"    % if object.env.ref('donation_thanks.res_partner_category_newsletter') not in object.partner_id.category_id.parent_id:\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">We would like to continue sending you updates from Matteson Mission School.\n"
+"        <b style=\"font-weight:bolder;\">Reply to this email</b> if you wish to continue receiving this newsletter.</p>\n"
+"    % endif\n"
+"\n"
+"    <p style=\"margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">Kind  regards,</p>\n"
+"</div>\n"
+"<div style=\"font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"    ${user.signature | safe}\n"
+"</div>"
+msgstr ""
+"\n"
+"<div>\n"
+"<p>Kjære ${object.partner_id.name}!</p>\n"
+"<p>Tusen takk for støtten til Granheimstiftelsen! Den verdsettes høyt!</p>\n"
+"<p>Her kommer Matteson Misjonsnytt som jeg håper du vil lese!</p>\n"
+"\n"
+"    % if object.env.ref('donation_thanks.res_partner_category_newsletter') not in object.partner_id.category_id.parent_id:\n"
+"<p>Vi sender deg gjerne oppdateringer fra Matteson Misjonsskole. <b>Svar på denne eposten</b> hvis du ønsker å fortsette å motta dette nyhetsbrevet.</p>\n"
+"% endif\n"
+"\n"
+"<p>Vennlig hilsen, med ønske om Guds velsignelse,</p>\n"
+"</div>\n"
+"<div>\n"
+"${user.signature | safe}\n"
+"</div>"
+
+#. module: donation_thanks
+#: model:ir.actions.report,name:donation_thanks.action_report_address_sheet_a4
+msgid "Address on A4 sheet"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_donation_tax_receipt
+msgid "Bilde av person"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template__company_id
+msgid "Company"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_address_main
+msgid "DANMARK"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_address_main
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_donation_tax_receipt
+msgid "Demo Icon"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model,name:donation_thanks.model_donation_thanks_template
+msgid "Donation Thanks Letter Template"
+msgstr ""
+
+#. module: donation_thanks
+#: model:res.partner.category,name:donation_thanks.res_partner_category_newsletter_email
+msgid "Email"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.actions.report,name:donation_thanks.action_report_address_envelope_c5
+msgid "Envelope C5"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.actions.report,name:donation_thanks.action_report_address_envelope_dle
+msgid "Envelope DLE (110x220 mm)"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_address_main
+msgid ""
+"Granheimstiftelsen<br/>\n"
+"                                            Postboks 243<br/>\n"
+"                                            1851 Mysen <br/>"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template__id
+msgid "ID"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template__image_height
+msgid "Image Height"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template__image_text
+msgid "Image Text"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template__image_width
+msgid "Image Width"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_donation_tax_receipt
+msgid "Kvittering"
+msgstr ""
+
+#. module: donation_thanks
+#: model:mail.template,report_name:donation_thanks.mail_template_donation_tax_receipt_norwegian
+msgid "Kvittering til ${object.partner_id.name}.pdf"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_address_main
+msgid "NORGE"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_address_main
+msgid "NORWAY"
+msgstr ""
+
+#. module: donation_thanks
+#: model:res.partner.category,name:donation_thanks.res_partner_category_newsletter
+msgid "Newsletter"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_donation_tax_receipt
+msgid "Receipt"
+msgstr ""
+
+#. module: donation_thanks
+#: model:mail.template,report_name:donation_thanks.mail_template_donation_tax_receipt
+msgid "Receipt to ${object.partner_id.name}.pdf"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.report_address_main
+msgid "SVERIGE"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.actions.act_window,name:donation_thanks.action_donation_tax_receipt
+msgid "Send Donation Receipts on Email"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.actions.act_window,name:donation_thanks.action_donation_tax_receipt_norwegian
+msgid "Send Norwegian Donation Receipts on Email"
+msgstr ""
+
+#. module: donation_thanks
+#: model_terms:ir.ui.view,arch_db:donation_thanks.res_partner_view_form
+msgid "Send donation tax receipt to:"
+msgstr ""
+
+#. module: donation_thanks
+#: model:res.partner.category,name:donation_thanks.res_partner_category_newsletter_snailmail
+msgid "Snailmail"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template__text1
+msgid "Text1"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template__text2
+msgid "Text2"
+msgstr ""
+
+#. module: donation_thanks
+#: model:mail.template,subject:donation_thanks.mail_template_donation_tax_receipt
+msgid "Thank you!"
+msgstr "Tusen takk!"
+
+#. module: donation_thanks
+#: model:ir.actions.report,name:donation_thanks.action_report_donation_tax_receipt
+msgid "Thank-you letter"
+msgstr ""
+
+#. module: donation_thanks
+#: model:mail.template,subject:donation_thanks.mail_template_donation_tax_receipt_norwegian
+msgid "Tusen takk!"
+msgstr ""
