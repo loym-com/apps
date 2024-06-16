@@ -4,7 +4,7 @@
 
 {
     "name": "Donation",
-    "version": "14.0.1.3.1",
+    "version": "15.0.1.0.0",
     "category": "Accounting",
     "license": "AGPL-3",
     "summary": "Manage donations",
@@ -27,7 +27,7 @@
         "views/donation_thanks_template.xml",
         "views/res_users.xml",
         "views/res_partner.xml",
-        # "views/account_journal.xml",
+        "views/account_journal.xml",
         "report/donation_report_view.xml",
         "report/donation_thanks_view.xml",
         "report/donation_thanks_report.xml",
