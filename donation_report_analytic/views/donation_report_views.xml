@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="donation_report_view_search" model="ir.ui.view">
+        <field name="name">donation.report.view.search.inherit</field>
+        <field name="model">donation.report</field>
+        <field name="inherit_id" ref="donation.donation_report_search" />
+        <field name="arch" type="xml">
+            <search position="inside">
+                <field name="analytic_account_id" />
+            </search>
+        </field>
+    </record>
+</odoo>

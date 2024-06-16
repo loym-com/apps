@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_analytic_account_view_form" model="ir.ui.view">
+        <field name="name">account.analytic.account.view.form.inherit</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_form" />
+        <field
+            name="groups_id"
+            eval="[(4, ref('donation.group_donation_manager'))]"
+        />
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="donation_description" />
+            </field>
+        </field>
+    </record>
+</odoo>

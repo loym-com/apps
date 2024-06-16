@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="mail_template_donation_tax_receipt" model="mail.template">
+        <field name="name">Donation Tax Receipt</field>
+        <field name="model_id" ref="donation_base.model_donation_tax_receipt" />
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field name="reply_to">${user.login}</field>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="auto_delete" eval="0" />
+        <field name="subject">Thank you!</field>
+        <field
+            name="body_html"
+        ><![CDATA[
+<div>
+    <p>Dear ${object.partner_id.name},</p>
+    <p>Thank you for supporting the work of the Granheim Foundation!</p>
+    <p>Please find attached the latest newsletter from Matteson. I hope you will enjoy it.</p>
+
+    % if object.env.ref('donation_thanks.res_partner_category_newsletter') not in object.partner_id.category_id.parent_id:
+    <p>We would like to continue sending you updates from Matteson Mission School.
+        <b>Reply to this email</b> if you wish to continue receiving this newsletter.</p>
+    % endif
+
+    <p>Kind regards,</p>
+</div>
+<div>
+    ${user.signature | safe}
+</div>]]></field>
+        <field
+            name="report_template"
+            ref="action_report_donation_tax_receipt"
+        />
+        <field name="report_name">Receipt to ${object.partner_id.name}.pdf</field>
+    </record>
+
+    <record id="action_donation_tax_receipt" model="ir.actions.server">
+        <field name="name">Email Tax Receipt Thanks DIRECTLY</field>
+        <field name="model_id" ref="donation_base.model_donation_tax_receipt"/>
+        <field name="binding_model_id" ref="donation_base.model_donation_tax_receipt"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+mail_template = env.ref("donation_thanks.mail_template_donation_tax_receipt")
+
+for tax_receipt in records:
+    mail_template.send_mail(tax_receipt.id)
+
+action = {
+    'type': 'ir.actions.act_window',
+    "name": "Send with Email Queue Manager (Scheduled Action)",
+    "views": [[False, "tree"], [False, "form"]],
+    'res_model': 'mail.mail',
+}
+        ]]></field>
+    </record>
+</odoo>
