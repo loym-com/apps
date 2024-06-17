@@ -17,6 +17,7 @@ class DonationLine(models.Model):
         else:
             self.description = ""
 
+    analytic_account_id = fields.Many2one("account.analytic.account")
     description = fields.Char(
         string="Description",
         default=lambda self: self._default_description(),

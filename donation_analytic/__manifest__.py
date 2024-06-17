@@ -2,12 +2,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Donation Analytic Report",
+    "name": "Donation Analytic",
     "summary": "",
     "author": "Henrik Norlin, Odoo Community Association (OCA)",
     "category": "Accounting & Finance",
     "data": [
-        "views/donation_report_views.xml",
+        "report/donation_report_views.xml",
+        "views/account_analytic_account_views.xml",
+        "views/donation_line_views.xml",
     ],
     "depends": [
         "donation",

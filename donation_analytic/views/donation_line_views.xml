@@ -4,14 +4,17 @@
         <field name="name">donation.line.view.tree.inherit</field>
         <field name="model">donation.line</field>
         <field name="inherit_id" ref="donation.donation_line_tree" />
-        <field
-            name="groups_id"
-            eval="[(4, ref('donation.group_donation_manager'))]"
-        />
         <field name="priority" eval="20" />
         <field name="arch" type="xml">
-            <field name="analytic_account_id" position="after">
-                <field name="description" />
+            <field name="product_id" position="after">
+                <field
+                    name="analytic_account_id"
+                    groups="donation.group_donation_manager"
+                />
+                <field
+                    name="description"
+                    groups="donation.group_donation_manager"
+                />
             </field>
         </field>
     </record>
@@ -19,14 +22,17 @@
         <field name="name">donation.line.view.form.inherit</field>
         <field name="model">donation.line</field>
         <field name="inherit_id" ref="donation.donation_line_form" />
-        <field
-            name="groups_id"
-            eval="[(4, ref('donation.group_donation_manager'))]"
-        />
         <field name="priority" eval="20" />
         <field name="arch" type="xml">
-            <field name="analytic_account_id" position="after">
-                <field name="description" />
+            <field name="product_id" position="after">
+                <field
+                    name="analytic_account_id"
+                    groups="donation.group_donation_manager"
+                />
+                <field
+                    name="description"
+                    groups="donation.group_donation_manager"
+                />
             </field>
         </field>
     </record>
