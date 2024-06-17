@@ -4,13 +4,9 @@
         <field name="name">donation.thanks.template.view.form.inherit</field>
         <field name="model">donation.thanks.template</field>
         <field name="inherit_id" ref="donation.donation_thanks_template_form" />
-        <field
-            name="groups_id"
-            eval="[(4, ref('donation.group_donation_manager'))]"
-        />
         <field name="arch" type="xml">
             <sheet position="inside">
-                <group>
+                <group groups="donation.group_donation_manager">
                     <field name="image_height" />
                     <field name="image_width" />
                     <field name="image_text" />
