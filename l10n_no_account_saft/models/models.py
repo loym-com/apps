@@ -229,7 +229,7 @@ class AuditFile:
         # accounts
 
         opening_balance_records = line_obj.read_group(
-            domain=[("date", "<", self.date_from)],
+            domain=[("date", "<", self.date_from), ("account_id", "!=", False)],
             fields=["account_id", "balance"],
             groupby=["account_id"],
         )
@@ -237,7 +237,7 @@ class AuditFile:
             r["account_id"][0]: r["balance"] for r in opening_balance_records
         }
         closing_balance_records = line_obj.read_group(
-            domain=[("date", "<=", self.date_to)],
+            domain=[("date", "<=", self.date_to), ("account_id", "!=", False)],
             fields=["account_id", "balance"],
             groupby=["account_id"],
         )
