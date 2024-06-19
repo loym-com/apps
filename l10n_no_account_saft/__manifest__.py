@@ -8,7 +8,6 @@
     "author": "Ows, Odoo Community Association (OCA)",
     "category": "Localization",
     "data": [
-        "security/ir.rule.csv",
         "security/ir.model.access.csv",
         "views/views.xml",
     ],
