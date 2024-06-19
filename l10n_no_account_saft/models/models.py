@@ -224,20 +224,34 @@ class AuditFile:
 
     def MasterFiles(self):
         mf = saft.MasterFilesType()
-        line_obj = self.company.env["account.move.line"]
+        Line = self.company.env["account.move.line"]
 
         # accounts
 
-        opening_balance_records = line_obj.read_group(
-            domain=[("date", "<", self.date_from), ("account_id", "!=", False)],
+        balance_accounts = self.company.env["account.account"].search(
+            [("internal_group", "in", ["asset", "equity", "liability"])]
+        )
+
+        opening_balance_records = Line.read_group(
+            domain=[
+                ("date", "<", self.date_from),
+                ("account_id", "!=", False),
+                ("account_id", "in", balance_accounts.ids),
+            ],
             fields=["account_id", "balance"],
             groupby=["account_id"],
         )
         opening_balance = {
             r["account_id"][0]: r["balance"] for r in opening_balance_records
         }
-        closing_balance_records = line_obj.read_group(
-            domain=[("date", "<=", self.date_to), ("account_id", "!=", False)],
+        closing_balance_records = Line.read_group(
+            domain=[
+                ("account_id", "!=", False),
+                ("date", "<=", self.date_to),
+                "|",
+                ("date", ">=", self.date_from), # profit/loss account types
+                ("account_id", "in", balance_accounts.ids),
+            ],
             fields=["account_id", "balance"],
             groupby=["account_id"],
         )
@@ -260,7 +274,7 @@ class AuditFile:
         receivable_accounts = self.company.env["account.account"].search(
             [("internal_type", "=", "receivable")]
         )
-        opening_balance_records = line_obj.read_group(
+        opening_balance_records = Line.read_group(
             domain=[
                 ("date", "<", self.date_from),
                 ("account_id", "in", [r.id for r in receivable_accounts]),
@@ -271,7 +285,7 @@ class AuditFile:
         opening_balance = {
             r["partner_id"][0]: r["balance"] for r in opening_balance_records
         }
-        closing_balance_records = line_obj.read_group(
+        closing_balance_records = Line.read_group(
             domain=[
                 ("date", "<=", self.date_to),
                 ("account_id", "in", [r.id for r in receivable_accounts]),
@@ -301,7 +315,7 @@ class AuditFile:
         payable_accounts = self.company.env["account.account"].search(
             [("internal_type", "=", "payable")]
         )
-        opening_balance_records = line_obj.read_group(
+        opening_balance_records = Line.read_group(
             domain=[
                 ("date", "<", self.date_from),
                 ("account_id", "in", [r.id for r in payable_accounts]),
@@ -312,7 +326,7 @@ class AuditFile:
         opening_balance = {
             r["partner_id"][0]: r["balance"] for r in opening_balance_records
         }
-        closing_balance_records = line_obj.read_group(
+        closing_balance_records = Line.read_group(
             domain=[
                 ("date", "<=", self.date_to),
                 ("account_id", "in", [r.id for r in payable_accounts]),
