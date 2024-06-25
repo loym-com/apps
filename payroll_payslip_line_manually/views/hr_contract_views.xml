@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page name="fields" string="Recurring payslip lines">
-                    <field name="line_manually_ids">
+                    <field name="line_manually_ids" context="{'active_test': False}">
                         <tree editable="bottom">
                             <field
                                 name="salary_rule_id"
