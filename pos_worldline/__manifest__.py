@@ -9,7 +9,7 @@
     "data": [
         "reports/pos_payment_terminal_log_reports.xml",
         "reports/pos_session_reports.xml",
-        "views/point_of_sale_assets.xml",
+        # "views/point_of_sale_assets.xml",
         "views/pos_payment_method_views.xml",
     ],
     "depends": [
