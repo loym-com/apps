@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="pos_session_template_capture">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                <div><t t-esc="o.company_id.vat"/></div>
+                <h2><t t-esc="o.name"/></h2>
+                <br/>
+                <t t-if="o.worldline_print">
+                    <t t-set="print_lines" t-value="o.worldline_print.split('\n')"/>
+                    <div class="pos-payment-terminal-receipt">
+                        <t t-foreach="print_lines" t-as="print_line">
+                            <span t-raw="print_line"/>
+                            <br/>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="pos_session_report_capture" model="ir.actions.report">
+        <field name="name">Capture end of day</field>
+        <field name="model">pos.session</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">pos_worldline.pos_session_template_capture</field>
+        <field name="binding_model_id" ref="model_pos_session" />
+    </record>
+</odoo>
