@@ -9,7 +9,6 @@
     "website": "https://github.com/OCA/account-financial-reporting",
     "category": "Localization",
     "depends": [
-        "account_menu", # 16.0 account_usability
         "base_set_record_values_mixin",
         "mis_builder_budget",
         "web_widget_x2many_2d_matrix",
