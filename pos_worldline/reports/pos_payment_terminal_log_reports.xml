@@ -51,7 +51,7 @@ action["res_id"] = model.search([], order="create_date desc", limit=1).id
         </field>
     </record>
 </odoo>
-<oodo>
+<odoo>
     <menuitem
         id="pos_payment_terminal_log_menuitem_print_latest_receipt"
         name="Print latest receipt"
