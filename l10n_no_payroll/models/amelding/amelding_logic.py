@@ -284,18 +284,18 @@ class AmeldingLogikk:
             if im:
                 v.inntektsmottaker.append(im)  # optional
 
-        # for payslip_run in self.payslip_runs:
-        #     agaplikt_uten_loennsopplysningsplikt = _get(
-        #         payslip_run, "l10n_no_AgapliktUtenLoennsopplysningsplikt"
-        #     )
-        #     if agaplikt_uten_loennsopplysningsplikt:
-        #         self.aga["avgiftsgrunnlagBeloep"] += int(
-        #             agaplikt_uten_loennsopplysningsplikt
-        #         )
+        for payslip_run in self.payslip_runs:
+            agaplikt_uten_loennsopplysningsplikt = _get(
+                payslip_run, "l10n_no_AgapliktUtenLoennsopplysningsplikt"
+            )
+            if agaplikt_uten_loennsopplysningsplikt:
+                self.aga["avgiftsgrunnlagBeloep"] += int(
+                    agaplikt_uten_loennsopplysningsplikt
+                )
 
-        # aga = self.Arbeidsgiveravgift()
-        # if aga:
-        #     v.arbeidsgiveravgift = aga  # optional
+        aga = self.Arbeidsgiveravgift()
+        if aga:
+            v.arbeidsgiveravgift = aga  # optional
 
         return v
 
