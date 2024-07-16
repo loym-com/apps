@@ -163,7 +163,7 @@ class HrPayslip(models.Model):
                                 "name",
                                 "partner_id",
                                 "account_id",
-                                "analytic_account_id",
+                                "analytic_distribution",
                                 "tax_line_id",
                             ]:
                                 if aml[key] != new[key]:
