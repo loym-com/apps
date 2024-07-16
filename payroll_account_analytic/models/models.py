@@ -151,6 +151,7 @@ class HrPayslip(models.Model):
                             "partner_id": new_partner_id,
                             "account_id": new_account.id,
                             "journal_id": slip.journal_id.id,
+                            "analytic_distribution": {},
                             "date": group["date_to"],
                             "amount": new_amount,
                             "tax_line_id": line.salary_rule_id.account_tax_id.id,
