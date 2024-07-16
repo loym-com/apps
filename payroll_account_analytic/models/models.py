@@ -138,7 +138,7 @@ class HrPayslip(models.Model):
                         # group
                         # account_move_lines
                         new_amount = float_round(new_amount, precision_digits=precision)
-                        if new_account.account_type.include_initial_balance:
+                        if new_account.include_initial_balance:
                             new_analytic_account_id = None
                         else:
                             new_analytic_account_id = (
