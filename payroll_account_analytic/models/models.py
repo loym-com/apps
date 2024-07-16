@@ -153,7 +153,7 @@ class HrPayslip(models.Model):
                             "journal_id": slip.journal_id.id,
                             "date": group["date_to"],
                             "amount": new_amount,
-                            "analytic_account_id": new_analytic_account_id,
+                            "analytic_distribution": {str(new_analytic_account_id): 100},
                             "tax_line_id": line.salary_rule_id.account_tax_id.id,
                         }
                         compare = "start"
