@@ -278,7 +278,7 @@ class AuditFile:
             domain=[
                 ("date", "<", self.date_from),
                 ("account_id", "in", [r.id for r in receivable_accounts]),
-                ("partner_id", "!=", None,
+                ("partner_id", "!=", None),
             ],
             fields=["partner_id", "balance"],
             groupby=["partner_id"],
