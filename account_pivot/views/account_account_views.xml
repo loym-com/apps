@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_account_form">
+        <field name="name">account.account.form.account_professional</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form" />
+        <field name="priority" eval="20" />
+        <field name="arch" type="xml">
+            <data>
+                <field name="user_type_id" position="after">
+                    <field name="include_initial_balance" />
+                </field>
+            </data>
+        </field>
+    </record>
+</odoo>

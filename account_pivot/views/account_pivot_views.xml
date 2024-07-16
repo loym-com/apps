@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_pivot_view_pivot" model="ir.ui.view">
+        <field name="name">account.pivot.view.pivot</field>
+        <field name="model">account.pivot</field>
+        <field name="arch" type="xml">
+            <pivot string="Journal Items">
+                <field name="user_type_id" type="row" />
+                <field name="date" type="col" />
+                <field name="balance2" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="account_pivot_view_graph" model="ir.ui.view">
+        <field name="name">account.pivot.view.graph</field>
+        <field name="model">account.pivot</field>
+        <field name="arch" type="xml">
+            <graph type="bar">
+                <field name="date" />
+                <field name="balance2" operator="+" type="measure" />
+            </graph>
+        </field>
+    </record>
+    <record id="view_account_pivot_view_tree" model="ir.ui.view">
+        <field name="name">account.pivot.view.tree</field>
+        <field name="model">account.pivot</field>
+        <field
+            name="groups_id"
+            eval="[(4, ref('account.group_account_manager'))]"
+        />
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date" />
+                <field name="move_id" />
+                <field name="journal_id" />
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="account_id" />
+                <field name="analytic_account_id" />
+                <field name="balance" sum="Total" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
+    <record id="account_pivot_view_form" model="ir.ui.view">
+        <field name="name">account.pivot.view.form</field>
+        <field name="model">account.pivot</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="date" />
+                    <field name="move_id" />
+                    <field name="journal_id" />
+                    <field name="name" />
+                    <field name="partner_id" />
+                    <field name="account_id" />
+                    <field name="analytic_account_id" />
+                    <field name="balance" />
+                    <field name="company_id" groups="base.group_multi_company" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="account_pivot_view_search" model="ir.ui.view">
+        <field name="name">account.pivot.view.search</field>
+        <field name="model">account.pivot</field>
+        <field name="inherit_id" eval="0" />
+        <field name="mode">primary</field>
+        <field name="priority" eval="20" />
+        <field name="arch" type="xml">
+            <search>
+                <field name="analytic_group_id" string="Analytic Group" />
+                <field name="analytic_account_id" string="Analytic Account" />
+                <field name="user_type_id" />
+                <field name="account_id" />
+
+                <filter
+                    string="Posted"
+                    name="posted"
+                    domain="[('parent_state', '=', 'posted')]"
+                />
+                <separator />
+                <filter
+                    string="Profit/Loss"
+                    name="profit_loss"
+                    domain="[('include_initial_balance', '=', False)]"
+                />
+                <!-- <filter string="Profit/Loss + Equity" name="profit_loss_equity"
+                    domain="['|',
+                        '&amp;', ('include_initial_balance', '=' ,False),
+                                 ('date','&gt;=',(context_today()-relativedelta(months=1)).strftime('%Y-01-01')),
+                        '&amp;', ('user_type_id', '=', % ( 'account.data_account_type_equity' ) d),
+                                 ('date','&lt;',(context_today()-relativedelta(months=1)).strftime('%Y-01-01'))]"/> -->
+                <filter
+                    string="Balance"
+                    name="balance"
+                    domain="[('include_initial_balance', '=', True)]"
+                />
+                <separator />
+                <filter
+                    string="Date"
+                    name="date"
+                    date="date"
+                />
+                <separator />
+                <filter
+                    string="Last Month"
+                    name="last_month"
+                    domain="[('month','=',(context_today()-relativedelta(months=1)).strftime('%m'))]"
+                />
+                <filter
+                    string="Until Last Month"
+                    name="until_last_month"
+                    domain="[('month','&lt;=',(context_today()-relativedelta(months=1)).strftime('%m'))]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="action_account_pivot" model="ir.actions.act_window">
+        <field name="name">Journal Items Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.pivot</field>
+        <field name="view_mode">pivot,graph,tree,form</field>
+    </record>
+    <menuitem
+        id="menu_account_pivot"
+        name="Account Pivot"
+        sequence="21"
+        parent="account.account_reports_management_menu"
+        action="action_account_pivot"
+    />
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,groups:id,domain_force,perm_read,perm_write,perm_create,perm_unlink
+account_pivot_adviser_rule,account_pivot adviser,model_account_pivot,account.group_account_manager,"[(1,'=',1)]",1,1,1,1
+account_pivot_analytic_rule,account_pivot analytic manager,model_account_pivot,base.group_user,"[('analytic_account_id.user_id.id','=',[user.id])]",1,1,1,1
+account_pivot_company_rule,account_pivot multi-company,model_account_pivot,,"[('company_id', 'in', company_ids)]",1,1,1,1
