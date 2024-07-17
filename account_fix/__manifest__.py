@@ -1,20 +1,22 @@
-# Copyright 2019 Ows - Henrik Norlin
+# Copyright 2019 Henrik Norlin
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     "name": "Account Fix",
     "summary": "Journal Sequence",
-    "author": "Ows, Odoo Community Association (OCA)",
+    "author": "Henrik Norlin, Odoo Community Association (OCA)",
     "category": "Administration",
     "data": [
-        "views/account.journal.xml",
-        "views/account.move.xml",
-        "views/account.move.line.xml",
-        "views/res.company.xml",
+        "views/account_bank_statement_line.xml",
+        "views/account_journal.xml",
+        "views/account_move.xml",
+        "views/account_move_line.xml",
+        "views/res_company.xml",
     ],
     "depends": [
         "account",
         # "account_financial_report",
+        "account_reconcile_oca",
     ],
     "license": "AGPL-3",
     "maintainers": ["ows-cloud"],
