@@ -1453,7 +1453,6 @@ class EDAG_M:
 
 
 @dataclass
-# melding -> Melding
-class Melding(EDAG_M):
+class melding(EDAG_M):
     class Meta:
         namespace = "urn:ske:fastsetting:innsamling:a-meldingen:v2_2"

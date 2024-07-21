@@ -185,7 +185,7 @@ class AmeldingLogikk:
         return serializer.render(m)
 
     def melding(self):
-        m = a.Melding()
+        m = a.melding()
         m.leveranse = self.Leveranse()
         return m
 
