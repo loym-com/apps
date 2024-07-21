@@ -1367,7 +1367,8 @@ class JuridiskEntitet:
 
 
 @dataclass
-class Leveranse:
+# Leveranse -> leveranse
+class leveranse:
     leveringstidspunkt: Optional[XmlDateTime] = field(
         default=None,
         metadata={
@@ -1441,8 +1442,8 @@ class Leveranse:
 
 @dataclass
 class EDAG_M:
-    # Leveranse -> leveranse
-    leveranse: Optional[Leveranse] = field(
+    # Optional[Leveranse] -> Optional[leveranse]
+    Leveranse: Optional[leveranse] = field(
         default=None,
         metadata={
             "type": "Element",
