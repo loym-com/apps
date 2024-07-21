@@ -190,7 +190,7 @@ class AmeldingLogikk:
         return m
 
     def Leveranse(self):
-        lev = a.Leveranse()
+        lev = a.leveranse()
 
         lev.leveringstidspunkt = self.amelding_record.leveringstidspunkt.strftime(
             "%Y-%m-%dT%H:%M:%S.%f"
