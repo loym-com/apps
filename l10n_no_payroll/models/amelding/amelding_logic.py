@@ -32,11 +32,6 @@ m = Melding
 opphold = OppholdPaaSvalbardJanMayenOgBilandene
 p = Permisjon
 v = Virksomhet
-
-parent = object
-for element in sequence:
-    child, info = f(element)
-    parent.total = _not_None(parent.total) + info['total']
 """
 
 
@@ -55,13 +50,6 @@ def _strftime(date_or_time):
     else:
         return ""
 
-
-def _not_None(variable):
-    if variable is None:
-        return 0
-    else:
-        return variable
-
 # RECORDS
 
 def _get_records(model, domain, record):
@@ -69,22 +57,11 @@ def _get_records(model, domain, record):
     records = record.env[model].with_context(active_test=False).search(domain)
     return records
 
-# def _filtered(records, field, list):  # HOW TO USER LAMBDA WITH VARIABLES? getattr(record, field) == variable ?
-#    if type(record) not in (dict, tuple):
-#        return records.filtered(lambda record: getattr(record, field) in list)
-#    else:
-#        pass
-
-# Get a list of record ids (if field is 'id')
-# Only used for Odoo search domain
 def _mapped(records, field):
     try:
         return records.mapped(field)
     except:
         pass
-        # if len(records) > 0:
-        #    #return (records[0][0], range(0, len(records)))
-        #    return (records[0][0], [r[field] for r in records])
 
 # FIELDS
 
@@ -133,7 +110,6 @@ class AmeldingLogikk:
             self.company,
         )
         self.payslip_runs = self.payslips.mapped("payslip_run_id")
-        # self.salary_rules = _get_records('hr.salary.rule', [], self.company) # hr.payslip.line.salary_rule_id
         self.countries = _get_records("res.country", [], self.company)
         self.jobs = _get_records(
             "hr.job", [("company_id", "=", company_id)], self.company
@@ -150,14 +126,6 @@ class AmeldingLogikk:
             "hr.salary.rule",
             "res.company",
         ]
-        # self.field_values = _get_records(
-        #     "res.field.value",
-        #     [("company_id", "=", company_id), ("model", "in", models)],
-        #     self.company,
-        # )
-        # self.field_selection_values = _get_records(
-        #     "res.field.selection_value", [], self.company
-        # )  # security rule: 1_or_company_id
 
         self.je = {
             "annenBagatellmessigStoette": 0,
@@ -179,7 +147,6 @@ class AmeldingLogikk:
 
     def melding_xml(self):
         m = self.melding()
-
         config = SerializerConfig(pretty_print=True)
         serializer = XmlSerializer(config=config)
         return serializer.render(m)
@@ -193,78 +160,64 @@ class AmeldingLogikk:
 
     def leveranse(self):
         lev = a.leveranse()
-
         lev.leveringstidspunkt = self.amelding_record.leveringstidspunkt.strftime(
             "%Y-%m-%dT%H:%M:%S.%f"
         )
         lev.kalendermaaned = _get(
             self.amelding_record, "kalendermaaned"
-        )  #'2018-01' #required
-        lev.kildesystem = "Odoo"  # string #required
-        # _set(lev, 'erstatterMeldingsId', str(_get(self.amelding_record, 'erstatterMeldingsId'))) #optional
+        )
+        lev.kildesystem = "Odoo"
         erstatterMeldingsId = _get(self.amelding_record, "erstatterMeldingsId")
         if erstatterMeldingsId:
             lev.erstatterMeldingsId = str(erstatterMeldingsId)
-        lev.meldings_id = str(
-            _get(self.amelding_record, "meldingsId")
-        )  # string #required
-        company = _get(self.amelding_record, "company_id")  # required
-        lev.opplysningspliktig = a.Opplysningspliktig()  # required
-        lev.opplysningspliktig.norsk_identifikator = _get(company, "vat")[
-            2:
-        ]  # string #required
+        lev.meldingsId = str(_get(self.amelding_record, "meldingsId"))
+        company = _get(self.amelding_record, "company_id")
+        lev.opplysningspliktig = a.Opplysningspliktig()
+        lev.opplysningspliktig.norskIdentifikator = _get(company, "vat")[2:]
         _set(
             lev, "spraakForTilbakemelding", _get(company, "l10n_no_Spraak")
-        )  # selection #optional
-        lev.oppgave = self.JuridiskEntitet()  # required
+        )
+        lev.oppgave = self.JuridiskEntitet()
         return lev
 
     def JuridiskEntitet(self):
         je = a.JuridiskEntitet()
-        # bi = je.betalingsinformasjon = a.Betalingsinformasjon()
-        # virksomheter
-        for my_id in [1]:  # replace
-            v = self.Virksomhet()
-            je.virksomhet.append(v)  # optional
-            # bi = self.Betalingsinformasjon(bi, **info)
+        # Not implemented: A legal entity may have multiple companies ("virksomheter").
+        v = self.Virksomhet()
+        je.virksomhet.append(v)
         je.betalingsinformasjon = self.Betalingsinformasjon()  # optional
         # betalingsinformasjonForForenkletOrdning
         # for id in []: #replace
         #    bif = self.BetalingsinformasjonForForenkletOrdning()
         #    je.betalingsinformasjonForForenkletOrdning.append(bif) #optional
         # je.annenBagatellmessigStoette = 1000.5 #replace #optional
+
         pensjonsinnretning = _get(self.company, "l10n_no_pensjonsinnretning")
         if pensjonsinnretning:
-            je.pensjonsinnretning.append(pensjonsinnretning)
+            pi = a.Pensjonsinnretning()
+            pi.identifikator = pensjonsinnretning
+            je.pensjonsinnretning.append(pi)
         return je
 
-    # def Betalingsinformasjon(self, bi, sumForskuddstrekk=None, sumArbeidsgiveravgift=None, sumFinansskattLoenn=None, **kwargs):
-    #     if sumForskuddstrekk:
-    #         bi.sumForskuddstrekk = _not_None(bi.sumForskuddstrekk) + int(sumForskuddstrekk) #integer
-    #     if sumArbeidsgiveravgift:
-    #         bi.sumArbeidsgiveravgift = _not_None(bi.sumArbeidsgiveravgift) + int(sumArbeidsgiveravgift) #integer
-    #     if sumFinansskattLoenn:
-    #         bi.sumFinansskattLoenn = _not_None(bi.sumFinansskattLoenn) + int(sumFinansskattLoenn) #integer
-    #     return bi
     def Betalingsinformasjon(self):
         bi = a.Betalingsinformasjon()
         if self.je["sumForskuddstrekk"]:
             bi.sumForskuddstrekk = int(
                 self.je["sumForskuddstrekk"]
-            )  # integer #optional
+            )
             self.amelding_record.sumForskuddstrekk = bi.sumForskuddstrekk
         if self.je["sumArbeidsgiveravgift"]:
             bi.sumArbeidsgiveravgift = int(
                 self.je["sumArbeidsgiveravgift"]
-            )  # integer #optional
+            )
             self.amelding_record.sumArbeidsgiveravgift = bi.sumArbeidsgiveravgift
         if self.je["sumFinansskattLoenn"]:
             bi.sumFinansskattLoenn = int(
                 self.je["sumFinansskattLoenn"]
-            )  # integer #optional
+            )
             self.amelding_record.sumFinansskattLoenn = bi.sumFinansskattLoenn
         if self.je["sumUtleggstrekk"]:
-            bi.sumUtleggstrekk = int(self.je["sumUtleggstrekk"])  # integer #optional
+            bi.sumUtleggstrekk = int(self.je["sumUtleggstrekk"])
             self.amelding_record.sumUtleggstrekk = bi.sumUtleggstrekk
         return bi
 
@@ -277,9 +230,7 @@ class AmeldingLogikk:
 
     def Virksomhet(self):
         v = a.Virksomhet()
-        v.norskIdentifikator = _get(
-            self.company, "l10n_no_virksomhet"
-        )  # string #required
+        v.norskIdentifikator = _get(self.company, "l10n_no_virksomhet")
 
         for employee in self.employees:
             im = self.Inntektsmottaker(employee)
@@ -297,28 +248,28 @@ class AmeldingLogikk:
 
         aga = self.Arbeidsgiveravgift()
         if aga:
-            v.arbeidsgiveravgift = aga  # optional
+            v.arbeidsgiveravgift = aga
 
         return v
 
     def Inntektsmottaker(self, employee):
         use = False
         im = a.Inntektsmottaker()
-        norskIdentifikator = _get(employee, "identification_id")  # string
+        norskIdentifikator = _get(employee, "identification_id")
         ii = self.InternasjonalIdentifikator(employee)
         if ii:
-            im.internasjonalIdentifikator.append(ii)  # optional
+            im.internasjonalIdentifikator.append(ii)
         if norskIdentifikator:
-            im.norskIdentifikator = norskIdentifikator  # optional
-        im.identifiserendeInformasjon = a.IdentifiserendeInformasjon()  # optional
+            im.norskIdentifikator = norskIdentifikator
+        im.identifiserendeInformasjon = a.IdentifiserendeInformasjon()
         im.identifiserendeInformasjon.navn = _get(
             employee, "name"
-        )  # string #required
+        )
         im.identifiserendeInformasjon.foedselsdato = _get(
             employee, "birthday"
-        ).strftime("%Y-%m-%d")  # Birthday is required for employees.
+        ).strftime("%Y-%m-%d")
         # im.identifiserendeInformasjon.ansattnummer = '123' #replace #optional
-        # arbeidsforhold
+
         for contract in _get(employee, "contract_ids").sorted("date_start"):
             newer_period = contract.date_start > self.date_to
             if contract.date_end:
@@ -333,7 +284,7 @@ class AmeldingLogikk:
             if newer_period or (older_period and not changed):
                 continue
             af = self.Arbeidsforhold(contract)
-            im.arbeidsforhold.append(af)  # optional
+            im.arbeidsforhold.append(af)
             use = True
 
         for payslip in [
@@ -363,7 +314,6 @@ class AmeldingLogikk:
                     ft = self.Forskuddstrekk(line, rule)
                     im.forskuddstrekk.append(ft)
                 else:
-                    # aga av pensjon og refusjon sykepenger er ikke tilknyttet noen regeltype. All aga av inntekt er av typen "inntekt og godtgjoerelser".
                     navn = {
                         "loennOgGodtgjoerelse": "avgiftsgrunnlagBeloep",
                         "tilskuddOgPremieTilPensjon": "avgiftsgrunnlagBeloepPensjon",
@@ -390,9 +340,9 @@ class AmeldingLogikk:
         return im
 
     def InternasjonalIdentifikator(self, employee):
-        passIdentifikator = _get(employee, "passport_id")  # string
-        land = _get(employee, "country_id")  # record
-        landkode = _get(land, "code")  # string
+        passIdentifikator = _get(employee, "passport_id")
+        land = _get(employee, "country_id")
+        landkode = _get(land, "code")
         if passIdentifikator and landkode:
             ii = a.InternasjonalIdentifikator()
             ii.identifikatortype = "passnummer"
@@ -428,54 +378,45 @@ class AmeldingLogikk:
         af.arbeidsforholdId = str(contract.id)  # string #optional
         af.typeArbeidsforhold = _get(
             contract, "l10n_no_Arbeidsforholdtype"
-        )  # string #required
+        )
         if af.typeArbeidsforhold != "pensjonOgAndreTyperYtelserUtenAnsettelsesforhold":
-            _set(
-                af, "startdato", _strftime(_get(contract, "date_start"))
-            )  # date #optional
-            _set(
-                af, "sluttdato", _strftime(_get(contract, "date_end"))
-            )  # date #optional
+            _set(af, "startdato", _strftime(_get(contract, "date_start"))
+            _set(af, "sluttdato", _strftime(_get(contract, "date_end")))
             _set(
                 af,
                 "antallTimerPerUkeSomEnFullStillingTilsvarer",
                 _get(
                     contract, "l10n_no_antallTimerPerUkeSomEnFullStillingTilsvarer"
                 ),
-            )  # float #optional
-            # af.avloenningstype = _get(contract, 'avloenningstype') #replace #string #optional #utgaar
+            )
             job = _get(contract, "job_id")
-            test_record = _get(job, "l10n_no_job_code")
-            test_code = test_record.code
-            _set(
-                # af, "yrke", _get(job, "l10n_no_job_code").code
-                af,
-                "yrke",
-                test_code,
-            )  # string #optional
+            _set(af, "yrke", _get(job, "l10n_no_job_code").code)
+            # test_record = _get(job, "l10n_no_job_code")
+            # test_code = test_record.code
+            # _set(af, "yrke", test_code)
             _set(
                 af,
                 "arbeidstidsordning",
                 _get(contract, "l10n_no_Arbeidstidsordning"),
-            )  # selection #optional
+            )
             _set(
                 af, "stillingsprosent", _get(contract, "l10n_no_stillingsprosent")
-            )  # float #optional
+            )
             _set(
                 af,
                 "sisteLoennsendringsdato",
                 _strftime(_get(contract, "l10n_no_sisteLoennsendringsdato")),
-            )  # replace #datestring #optional
+            )
             _set(
                 af,
                 "loennsansiennitet",
                 _strftime(_get(contract, "l10n_no_loennsansiennitet")),
-            )  # datestring #optional
+            )
             _set(
                 af, "loennstrinn", _get(contract, "l10n_no_loennstrinn")
-            )  # string #optional
+            )
             # af.fartoey = self.Fartoey() #optional
-            # permisjon
+
             for leave in _get(contract, "leave_ids").sorted("date_from"):
                 newer_period = leave.date_from.date() > self.date_to
                 older_period = leave.date_to.date() < self.date_from - relativedelta(
@@ -496,17 +437,17 @@ class AmeldingLogikk:
                 _strftime(
                     _get(contract, "l10n_no_sisteDatoForStillingsprosentendring")
                 ),
-            )  # date #optional
+            )
             _set(
                 af,
                 "aarsakTilSluttdato",
                 _get(contract, "l10n_no_AarsakTilSluttdato"),
-            )  # string #optional
+            )
             _set(
                 af,
                 "formForAnsettelse",
                 _get(contract, "l10n_no_FormForAnsettelse"),
-            )  # string #optional
+            )
         return af
 
     # def Fartoey(self):
@@ -537,22 +478,22 @@ class AmeldingLogikk:
         ft = a.Forskuddstrekk()
         _set(
             ft, "beskrivelse", _get(rule, "l10n_no_Forskuddstrekkbeskrivelse")
-        )  # selection #string #optional
+        )
         factor = -1 if line.slip_id.credit_note else 1
-        ft.beloep = factor * _get(line, "total")  # integer #required
-        self.je["sumForskuddstrekk"] += -ft.beloep
+        ft.beloep = factor * _get(line, "total")
+        self.je["sumForskuddstrekk"] += int(-ft.beloep)
         return ft
 
     def Inntekt(self, employee, payslip, line, rule, my_type):
         inn = a.Inntekt()
         _set(
             inn, "skatteOgAvgiftsregel", _get(rule, "l10n_no_SkatteOgAvgiftsregel")
-        )  # selection #string #optional
+        )
         # inn.startdatoOpptjeningsperiode = '2018-01-01' #replace #date #optional
         # inn.sluttdatoOpptjeningsperiode = '2018-01-01' #replace #date #optional
         inn.fordel = _get(rule, "l10n_no_Fordel")  # selection #string #required
         factor = -1 if line.slip_id.credit_note else 1
-        inn.beloep = factor * _get(line, "total")  # float #required
+        inn.beloep = factor * _get(line, "total")
 
         beregnAga = _get(rule, "l10n_no_BeregnAga")
         if beregnAga:
@@ -562,19 +503,13 @@ class AmeldingLogikk:
                 "fradragIGrunnlagetForSone": "avgiftsfradragBeloep",
             }
             self.aga[navn[beregnAga]] += inn.beloep
-            inn.utloeserArbeidsgiveravgift = True  # boolean #required
+            inn.utloeserArbeidsgiveravgift = True
         else:
-            inn.utloeserArbeidsgiveravgift = False  # boolean #required
+            inn.utloeserArbeidsgiveravgift = False
 
         inn.inngaarIGrunnlagForTrekk = bool(
             _get(rule, "l10n_no_BeregnTrekk")
-        )  # boolean #required
-        # beregnTrekk = _get(rule, 'l10n_no_BeregnTrekk')
-        # if beregnTrekk:
-        #    inn.inngaarIGrunnlagForTrekk = True #boolean #required
-        # else:
-        #    inn.inngaarIGrunnlagForTrekk = False #boolean #required
-
+        )
         # inn.arbeidsforholdId = '1' #replace #optional
 
         # choice
@@ -588,7 +523,7 @@ class AmeldingLogikk:
         loenn = a.Loennsinntekt()
         loenn.beskrivelse = _get(
             rule, "l10n_no_Loennsbeskrivelse"
-        )  # replace #string #required
+        )
         # loenn.tilleggsinformasjon = self.Tilleggsinformasjon() #optional
         # loenn.spesifikasjon = self.Spesifikasjon() #optional
         if loenn.beskrivelse in [
@@ -615,7 +550,7 @@ class AmeldingLogikk:
             "timeloenn",
             "yrkebilTjenestligbehovKilometer",
         ]:
-            _set(loenn, "antall", _get(line, "quantity"))  # optional
+            _set(loenn, "antall", _get(line, "quantity"))
         return loenn
 
     # def Tilleggsinformasjon(self):
@@ -758,27 +693,21 @@ class AmeldingLogikk:
 
     def Arbeidsgiveravgift(self):
         aga = a.Arbeidsgiveravgift()
-        # sumArbeidsgiveravgift = 0
         # loennOgGodtgjoerelse
-        for my_id in [1]:  # replace
-            # agag_loenn, arbeidsgiveravgift = self.Arbeidsgiveravgiftsgrunnlag(loennOgGodtgjoerelse)
-            agag_loenn = self.Arbeidsgiveravgiftsgrunnlag(
-                self.aga["avgiftsgrunnlagBeloep"]
-            )
-            aga.loennOgGodtgjoerelse.append(agag_loenn)
-            # sumArbeidsgiveravgift += arbeidsgiveravgift
+        agag_loenn = self.Arbeidsgiveravgiftsgrunnlag(
+            self.aga["avgiftsgrunnlagBeloep"]
+        )
+        aga.loennOgGodtgjoerelse.append(agag_loenn)
         # tilskuddOgPremieTilPensjon
-        for my_id in [1]:  # replace
-            agag_tilskudd = self.Arbeidsgiveravgiftsgrunnlag(
-                self.aga["avgiftsgrunnlagBeloepPensjon"]
-            )
-            aga.tilskuddOgPremieTilPensjon.append(agag_tilskudd)
+        agag_tilskudd = self.Arbeidsgiveravgiftsgrunnlag(
+            self.aga["avgiftsgrunnlagBeloepPensjon"]
+        )
+        aga.tilskuddOgPremieTilPensjon.append(agag_tilskudd)
         # aga.utenlandskeMedSaerskiltProsentsats = self.UtenlandskeMedSaerskiltProsentsats()
         # aga.utenlandskeMedFastAvgiftsbeloep = self.UtenlandskeMedFastAvgiftsbeloep()
         # fradragIGrunnlagetForSone
-        for my_id in [1]:  # replace
-            fraig = self.FradragIGrunnlaget(self.aga["avgiftsfradragBeloep"])
-            aga.fradragIGrunnlagetForSone.append(fraig)
+        fraig = self.FradragIGrunnlaget(self.aga["avgiftsfradragBeloep"])
+        aga.fradragIGrunnlagetForSone.append(fraig)
         # aga.fradragIGrunnlagetForUtenlandsk = self.FradragIGrunnlagetForUtenlandsk()
         return aga
 
@@ -788,7 +717,7 @@ class AmeldingLogikk:
             self.company, "l10n_no_BeregningskodeForArbeidsgiveravgift"
         )
         agag.sone = _get(self.company, "l10n_no_Arbeidsgiveravgiftsone")
-        agag.avgiftsgrunnlagBeloep = beloep  # float
+        agag.avgiftsgrunnlagBeloep = beloep
         agag.prosentsatsForAvgiftsberegning = _get(
             self.company, "l10n_no_Grunnlagsprosent"
         )  # float
@@ -816,10 +745,10 @@ class AmeldingLogikk:
             self.company, "l10n_no_BeregningskodeForArbeidsgiveravgift"
         )
         fraig.sone = _get(self.company, "l10n_no_Arbeidsgiveravgiftsone")
-        fraig.avgiftsfradragBeloep = beloep  # float
+        fraig.avgiftsfradragBeloep = beloep
         fraig.prosentsatsForAvgiftsberegning = _get(
             self.company, "l10n_no_Grunnlagsprosent"
-        )  # float
+        )
         self.je["sumArbeidsgiveravgift"] += (
             fraig.avgiftsfradragBeloep
             * float(fraig.prosentsatsForAvgiftsberegning) / 100
