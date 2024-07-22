@@ -480,8 +480,8 @@ class AmeldingLogikk:
             ft, "beskrivelse", _get(rule, "l10n_no_Forskuddstrekkbeskrivelse")
         )
         factor = -1 if line.slip_id.credit_note else 1
-        ft.beloep = factor * _get(line, "total")
-        self.je["sumForskuddstrekk"] += int(-ft.beloep)
+        ft.beloep = factor * int(_get(line, "total"))
+        self.je["sumForskuddstrekk"] += -ft.beloep
         return ft
 
     def Inntekt(self, employee, payslip, line, rule, my_type):
