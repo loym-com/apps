@@ -186,10 +186,12 @@ class AmeldingLogikk:
 
     def melding(self):
         m = a.melding()
-        m.leveranse = self.Leveranse()
+        # Altinn requires that m.Leveranse has uppercase L.
+        # Therefore, a.leveranse() practically needs lowercase l.
+        m.Leveranse = self.leveranse()
         return m
 
-    def Leveranse(self):
+    def leveranse(self):
         lev = a.leveranse()
 
         lev.leveringstidspunkt = self.amelding_record.leveringstidspunkt.strftime(
