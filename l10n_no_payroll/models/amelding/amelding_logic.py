@@ -380,7 +380,7 @@ class AmeldingLogikk:
             contract, "l10n_no_Arbeidsforholdtype"
         )
         if af.typeArbeidsforhold != "pensjonOgAndreTyperYtelserUtenAnsettelsesforhold":
-            _set(af, "startdato", _strftime(_get(contract, "date_start"))
+            _set(af, "startdato", _strftime(_get(contract, "date_start")))
             _set(af, "sluttdato", _strftime(_get(contract, "date_end")))
             _set(
                 af,
