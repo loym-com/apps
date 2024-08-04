@@ -28,45 +28,27 @@
             <data>
                 <xpath expr="//div[hasclass('row')]" position="replace">
                     <div class="row">
-                        <t t-set="user_id" t-value="request.env.user" />
-                        <t t-set="public_user_id" t-value="request.website.user_id" />
-                        <t
-                            t-if="user_id != public_user_id"
-                            t-set="name"
-                            t-value="request.env.user.name"
-                        /><t t-else="" t-set="name" t-value="" />
-                        <t
-                            t-if="user_id != public_user_id"
-                            t-set="email"
-                            t-value="request.env.user.email"
-                        /><t t-else="" t-set="email" t-value="" />
-                        <t
-                            t-if="user_id != public_user_id"
-                            t-set="phone"
-                            t-value="request.env.user.phone"
-                        /><t t-else="" t-set="phone" t-value="" />
                         <div class="col-lg my-2">
-                            <label>Name</label>
+                            <label>Name *</label>
                             <input
                                 class="form-control"
                                 type="text"
                                 t-attf-name="#{counter}-name"
-                                t-att-value="name"
+                                t-att-value="default_first_attendee.get('name', '') if counter == 1 else ''"
                                 required="This field is required"
                             />
                         </div>
                         <div class="col-lg my-2">
                             <label>Email
-                                <t t-if="not event.require_email">
-                                    <small>(Optional)</small>
-                                </t>
+                                <small t-if="event.require_email">*</small>
+                                <small t-else="">(Optional)</small>
                             </label>
                             <input
                                 t-if="event.require_email"
                                 class="form-control"
                                 type="email"
                                 t-attf-name="#{counter}-email"
-                                t-att-value="email"
+                                t-att-value="default_first_attendee.get('email', '') if counter == 1 else ''"
                                 required="This field is required"
                             />
                             <input
@@ -74,21 +56,20 @@
                                 class="form-control"
                                 type="email"
                                 t-attf-name="#{counter}-email"
-                                t-att-value="email"
+                                t-att-value="default_first_attendee.get('email', '') if counter == 1 else ''"
                             />
                         </div>
                         <div class="col-lg my-2">
                             <label>Phone
-                                <t t-if="not event.require_phone">
-                                    <small>(Optional)</small>
-                                </t>
+                                <small t-if="event.require_phone">*</small>
+                                <small t-else="">(Optional)</small>
                             </label>
                             <input
                                 t-if="event.require_phone"
                                 class="form-control"
                                 type="tel"
                                 t-attf-name="#{counter}-phone"
-                                t-att-value="phone"
+                                t-att-value="default_first_attendee.get('phone', '') if counter == 1 else ''"
                                 required="This field is required"
                             />
                             <input
@@ -96,7 +77,7 @@
                                 class="form-control"
                                 type="tel"
                                 t-attf-name="#{counter}-phone"
-                                t-att-value="phone"
+                                t-att-value="default_first_attendee.get('phone', '') if counter == 1 else ''"
                             />
                         </div>
                         <input
