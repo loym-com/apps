@@ -253,7 +253,7 @@ class HrPayslip(models.Model):
     def confirm_payslip_accounting(self, hr_payslip_run_name=None):
         account_moves = self.test_payslip_accounting(hr_payslip_run_name)
         for move in account_moves:
-            move.post()
+            move.action_post()
         for slip in self:
             slip.write({"state": "done"})
         return account_moves
