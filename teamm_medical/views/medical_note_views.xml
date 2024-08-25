@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="medical_note_view_form" model="ir.ui.view">
+        <field name="name">medical.note.view.form</field>
+        <field name="model">medical.note</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="contact_id" />
+                        <field name="log_ids" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="medical_note_view_tree" model="ir.ui.view">
+        <field name="name">medical.note.view.tree</field>
+        <field name="model">medical.note</field>
+        <field name="arch" type="xml">
+            <tree>
+                        <field name="name" optional="show" />
+                        <field name="contact_id" optional="show" />
+                        <field name="log_ids" optional="show" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+    <record id="medical_note_view_kanban" model="ir.ui.view">
+        <field name="name">medical.note.view.kanban</field>
+        <field name="model">medical.note</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <field name="display_name" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="medical_note_view_pivot" model="ir.ui.view">
+        <field name="name">medical.note.view.pivot</field>
+        <field name="model">medical.note</field>
+        <field name="arch" type="xml">
+            <pivot>
+            </pivot>
+        </field>
+    </record>
+    <record id="medical_note_view_search" model="ir.ui.view">
+        <field name="name">medical.note.view.search</field>
+        <field name="model">medical.note</field>
+        <field name="arch" type="xml">
+            <search>
+                        <field name="name" />
+                        <field name="contact_id" />
+                        <field name="log_ids" />
+                <group string="Group By">
+                    <filter
+                        string="Name"
+                        name="name"
+                        context="{'group_by':'name'}"
+                    />
+                    <filter
+                        string="Contact Id"
+                        name="contact_id"
+                        context="{'group_by':'contact_id'}"
+                    />
+                    <filter
+                        string="Log Ids"
+                        name="log_ids"
+                        context="{'group_by':'log_ids'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="medical_note_action" model="ir.actions.act_window">
+        <field name="name">Medical Note</field>
+        <field name="res_model">medical.note</field>
+        <field name="view_mode">tree,kanban,pivot,form</field>
+    </record>
+</odoo>
