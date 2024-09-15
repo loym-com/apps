@@ -261,7 +261,7 @@ class AuditFile:
 
         mf.GeneralLedgerAccounts = saft.GeneralLedgerAccounts()
         for account in self.company.env["account.account"].search([]):
-            mf.GeneralLedgerAccounts.add_Account(
+            mf.GeneralLedgerAccounts.account.append(
                 self.Account(
                     account,
                     opening_balance.get(account.id, 0),
@@ -304,7 +304,7 @@ class AuditFile:
         for customer in self.company.env["res.partner"].browse(
             [d["partner_id"][0] for d in closing_balance_records]
         ):
-            mf.Customers.add_Customer(
+            mf.Customers.customer.append(
                 self.Customer(
                     customer,
                     opening_balance.get(customer.id, 0),
@@ -347,7 +347,7 @@ class AuditFile:
         for supplier in self.company.env["res.partner"].browse(
             [d["partner_id"][0] for d in closing_balance_records]
         ):
-            mf.Suppliers.add_Supplier(
+            mf.Suppliers.supplier.append(
                 self.Supplier(
                     supplier,
                     opening_balance.get(supplier.id, 0),
@@ -361,11 +361,11 @@ class AuditFile:
         for tax in self.company.env["account.tax"].search(
             [("type_tax_use", "in", ["sale", "purchase"])]
         ):
-            mf.TaxTable.add_TaxTableEntry(self.TaxTableEntry(tax))
+            mf.TaxTable.tax_table_entry.append(self.TaxTableEntry(tax))
 
         mf.AnalysisTypeTable = saft.AnalysisTypeTable()
         for analytic in self.company.env["account.analytic.account"].search([]):
-            mf.AnalysisTypeTable.add_AnalysisTypeTableEntry(
+            mf.AnalysisTypeTable.analysis_type_table_entry.append(
                 self.AnalysisTypeTableEntry(analytic)
             )
 
@@ -401,16 +401,16 @@ class AuditFile:
     def Partner(self, p, partner):
         p.RegistrationNumber = partner.vat and partner.vat[2:] or ""
         p.Name = partner.name  # required
-        p.add_Address(self.Address(partner))  # required
-        p.add_Contact(self.Contact(partner))
+        p.address.append(self.Address(partner))  # required
+        p.contact.append(self.Contact(partner))
         for child in partner.child_ids:
             if child.type == "contact":
-                p.add_Contact(self.Contact(child))
+                p.contact.append(self.Contact(child))
             elif child.zip and child.city:
-                p.add_Address(self.Address(child))
+                p.address.append(self.Address(child))
         if partner.vat:  # then we assume that the partner is VAT registered
-            p.add_TaxRegistration(self.TaxRegistration(partner))
-        # p.add_BankAccount(self.BankAccount(partner))
+            p.tax_registration.append(self.TaxRegistration(partner))
+        # p.bank_account.append(self.BankAccount(partner))
         # p.PartyInfo
         return p
 
@@ -484,7 +484,7 @@ class AuditFile:
         t.Description = "Merverdiavgift"
         tax_details = tax.children_tax_ids or [tax]
         for tax_detail in tax_details:
-            t.add_TaxCodeDetails(
+            t.tax_code_details.append(
                 saft.TaxCodeDetails(
                     TaxCode=tax_detail.id,
                     Description=tax_detail.name,
@@ -519,7 +519,7 @@ class AuditFile:
         e.TotalDebit = decimal_string(sum(line.debit for line in lines))
         e.TotalCredit = decimal_string(sum(line.credit for line in lines))
         for journal in self.company.env["account.journal"].search([]):
-            e.add_Journal(self.Journal(journal))
+            e.journal.append(self.Journal(journal))
         return e
 
     def Journal(self, journal):
@@ -534,7 +534,7 @@ class AuditFile:
                 ("date", "<=", self.date_to),
             ]
         ):
-            j.add_Transaction(self.Transaction(move))
+            j.transaction.append(self.Transaction(move))
         return j
 
     def Transaction(self, move):
@@ -551,7 +551,7 @@ class AuditFile:
         t.GLPostingDate = move.write_date
         # t.SystemID = move.
         for idx, line in enumerate(move.line_ids):
-            t.add_Line(self.Line(idx, line))
+            t.line.append(self.Line(idx, line))
         return t
 
     def Line(self, idx, line):
@@ -561,7 +561,7 @@ class AuditFile:
         if line.analytic_distribution:
             for analytic_id, percent in line.analytic_distribution.items():
                 analytic = line.env["account.analytic.account"].browse(int(analytic_id))
-                l.add_Analysis(
+                l.analysis.append(
                     saft.AnalysisStructure(
                         AnalysisType=str(analytic.plan_id.id),
                         AnalysisID=str(analytic.id),
@@ -580,7 +580,7 @@ class AuditFile:
         else:  # required with debit or credit
             l.CreditAmount = saft.AmountStructure(Amount=line.credit)
         for tax in line.tax_ids:
-            l.add_TaxInformation(self.TaxInformation(line, tax))
+            l.tax_information.append(self.TaxInformation(line, tax))
         # l.ReferenceNumber
         # l.CID
         l.SystemEntryTime = datetime.now()
