@@ -200,7 +200,7 @@ class AuditFile:
         return audit_file
 
     def Header(self):
-        h = saft.HeaderType()
+        h = saft.HeaderStructure()
         h.AuditFileVersion = "1.10"
         h.AuditFileCountry = "NO"
         h.AuditFileDateCreated = datetime.now()
@@ -223,7 +223,7 @@ class AuditFile:
         return self.Partner(p, self.company.partner_id)
 
     def MasterFiles(self):
-        mf = saft.MasterFilesType()
+        mf = saft.MasterFiles()
         Line = self.company.env["account.move.line"]
 
         # accounts
@@ -259,7 +259,7 @@ class AuditFile:
             r["account_id"][0]: r["balance"] for r in closing_balance_records
         }
 
-        mf.GeneralLedgerAccounts = saft.GeneralLedgerAccountsType()
+        mf.GeneralLedgerAccounts = saft.GeneralLedgerAccounts()
         for account in self.company.env["account.account"].search([]):
             mf.GeneralLedgerAccounts.add_Account(
                 self.Account(
@@ -299,7 +299,7 @@ class AuditFile:
             r["partner_id"][0]: r["balance"] for r in closing_balance_records
         }
 
-        mf.Customers = saft.CustomersType()
+        mf.Customers = saft.Customers()
 
         for customer in self.company.env["res.partner"].browse(
             [d["partner_id"][0] for d in closing_balance_records]
@@ -342,7 +342,7 @@ class AuditFile:
             r["partner_id"][0]: r["balance"] for r in closing_balance_records
         }
 
-        mf.Suppliers = saft.SuppliersType()
+        mf.Suppliers = saft.Suppliers()
 
         for supplier in self.company.env["res.partner"].browse(
             [d["partner_id"][0] for d in closing_balance_records]
@@ -357,26 +357,26 @@ class AuditFile:
 
         # other
 
-        mf.TaxTable = saft.TaxTableType()
+        mf.TaxTable = saft.TaxTable()
         for tax in self.company.env["account.tax"].search(
             [("type_tax_use", "in", ["sale", "purchase"])]
         ):
             mf.TaxTable.add_TaxTableEntry(self.TaxTableEntry(tax))
 
-        mf.AnalysisTypeTable = saft.AnalysisTypeTableType()
+        mf.AnalysisTypeTable = saft.AnalysisTypeTable()
         for analytic in self.company.env["account.analytic.account"].search([]):
             mf.AnalysisTypeTable.add_AnalysisTypeTableEntry(
                 self.AnalysisTypeTableEntry(analytic)
             )
 
-        # mf.Owners = saft.OwnersType()
+        # mf.Owners = saft.Owners()
         # for owner in self.company.env[''].browse():
         #     mf.Owners.append(self.Owner(owner))
 
         return mf
 
     def Account(self, account, opening_balance, closing_balance):
-        a = saft.AccountType()
+        a = saft.Account()
         a.AccountID = account.code
         a.AccountDescription = account.name
         a.AccountType = "GL"
@@ -385,14 +385,14 @@ class AuditFile:
         return a
 
     def Customer(self, partner, opening_balance, closing_balance):
-        p = saft.CustomerType()
+        p = saft.Customer()
         p.CustomerID = partner.id
         p.AccountID = partner.property_account_receivable_id.code
         set_balance(p, opening_balance, closing_balance)
         return self.Partner(p, partner)
 
     def Supplier(self, partner, opening_balance, closing_balance):
-        p = saft.SupplierType()
+        p = saft.Supplier()
         p.SupplierID = partner.id
         p.AccountID = partner.property_account_payable_id.code
         set_balance(p, opening_balance, closing_balance)
@@ -464,7 +464,7 @@ class AuditFile:
 
     def PartyInfo(self, partner, partner_type):
         p = saft.PartyInfoStructure()
-        p.PaymentTerms = saft.PaymentTermsType()
+        p.PaymentTerms = saft.PaymentTerms()
         # if partner_type == 'customer':
         #     p.PaymentTerms.Days = partner.property_payment_term_id...
         # elif partner_type == 'supplier':
@@ -479,13 +479,13 @@ class AuditFile:
         return p
 
     def TaxTableEntry(self, tax):
-        t = saft.TaxTableEntryType()
+        t = saft.TaxTableEntry()
         t.TaxType = "MVA"
         t.Description = "Merverdiavgift"
         tax_details = tax.children_tax_ids or [tax]
         for tax_detail in tax_details:
             t.add_TaxCodeDetails(
-                saft.TaxCodeDetailsType(
+                saft.TaxCodeDetails(
                     TaxCode=tax_detail.id,
                     Description=tax_detail.name,
                     TaxPercentage=tax_detail.amount,
@@ -497,7 +497,7 @@ class AuditFile:
         return t
 
     def AnalysisTypeTableEntry(self, analytic):
-        a = saft.AnalysisTypeTableEntryType()
+        a = saft.AnalysisTypeTableEntry()
         a.AnalysisType = str(analytic.plan_id.id)
         a.AnalysisTypeDescription = analytic.plan_id.display_name
         a.AnalysisID = analytic.id
@@ -505,11 +505,11 @@ class AuditFile:
         return a
 
     def Owner(self):
-        o = saft.OwnerType()
+        o = saft.Owner()
         return o
 
     def GeneralLedgerEntries(self):
-        e = saft.GeneralLedgerEntriesType()
+        e = saft.GeneralLedgerEntries()
         e.NumberOfEntries = self.company.env["account.move"].search_count(
             [("date", ">=", self.date_from), ("date", "<=", self.date_to)]
         )
@@ -523,7 +523,7 @@ class AuditFile:
         return e
 
     def Journal(self, journal):
-        j = saft.JournalType()
+        j = saft.Journal()
         j.JournalID = journal.code
         j.Description = journal.name
         j.Type = journal.code  # ?
@@ -538,7 +538,7 @@ class AuditFile:
         return j
 
     def Transaction(self, move):
-        t = saft.TransactionType()
+        t = saft.Transaction()
         t.TransactionID = move.name
         t.Period = int(move.date.strftime("%m"))
         t.PeriodYear = int(move.date.strftime("%Y"))
@@ -555,7 +555,7 @@ class AuditFile:
         return t
 
     def Line(self, idx, line):
-        l = saft.LineType()
+        l = saft.Line()
         l.RecordID = idx + 1
         l.AccountID = line.account_id.code
         if line.analytic_distribution:
