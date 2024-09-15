@@ -272,7 +272,7 @@ class AuditFile:
         # customers
 
         receivable_accounts = self.company.env["account.account"].search(
-            [("internal_type", "=", "receivable")]
+            [("account_type", "=", "asset_receivable")]
         )
         opening_balance_records = Line.read_group(
             domain=[
@@ -315,7 +315,7 @@ class AuditFile:
         # suppliers
 
         payable_accounts = self.company.env["account.account"].search(
-            [("internal_type", "=", "payable")]
+            [("account_type", "=", "asset_payable")]
         )
         opening_balance_records = Line.read_group(
             domain=[
