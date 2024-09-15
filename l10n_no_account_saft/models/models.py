@@ -498,8 +498,8 @@ class AuditFile:
 
     def AnalysisTypeTableEntry(self, analytic):
         a = saft.AnalysisTypeTableEntryType()
-        a.AnalysisType = "A"
-        a.AnalysisTypeDescription = "Analytic Account"
+        a.AnalysisType = str(analytic.plan_id.id)
+        a.AnalysisTypeDescription = analytic.plan_id.display_name
         a.AnalysisID = analytic.id
         a.AnalysisIDDescription = analytic.name
         return a
@@ -558,12 +558,16 @@ class AuditFile:
         l = saft.LineType()
         l.RecordID = idx + 1
         l.AccountID = line.account_id.code
-        if line.analytic_account_id:
-            l.add_Analysis(
-                saft.AnalysisStructure(
-                    AnalysisType="A", AnalysisID=line.analytic_account_id.id
+        if line.analytic_distribution:
+            for analytic_id, percent in line.analytic_distribution.items():
+                analytic = line.env["account.analytic.account"].browse(int(analytic_id))
+                l.add_Analysis(
+                    saft.AnalysisStructure(
+                        AnalysisType=str(analytic.plan_id.id),
+                        AnalysisID=str(analytic.id),
+                        AnalysisAmount=line.balance * percent / 100.0,
+                    )
                 )
-            )
         l.ValueDate = line.move_id.date
         # l.SourceDocumentID
         l.Description = line.name or ""
