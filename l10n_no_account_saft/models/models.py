@@ -1,6 +1,9 @@
 # Copyright 2021 AppsToGROW
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from xsdata.formats.dataclass.serializers import XmlSerializer
+from xsdata.formats.dataclass.serializers.config import SerializerConfig
+
 import base64
 import calendar
 from datetime import datetime
@@ -164,7 +167,9 @@ class SaftWizard(models.TransientModel):
         audit_file_class = AuditFile(record)
         audit_file = audit_file_class.AuditFile()
 
-        record.saft_xml = self._create_xml_generateds(audit_file)
+        config = SerializerConfig(indent="  ")
+        serializer = XmlSerializer(config=config)
+        record.saft_xml = serializer.render(audit_file)
 
         return {
             "type": "ir.actions.act_window",
@@ -173,12 +178,6 @@ class SaftWizard(models.TransientModel):
             "view_mode": "form",
         }
 
-    def _create_xml_generateds(self, audit_file):
-        xml_io = StringIO()
-        audit_file.export(xml_io, level=0)
-        return xml_io.getvalue()
-
-
 class AuditFile:
     def __init__(self, saft_record):
         self.company = saft_record.company_id
@@ -186,36 +185,29 @@ class AuditFile:
         self.date_to = saft_record.date_to
 
     def AuditFile(self):
-        # saft_1_10.py#L1120 AuditFile
-        # def export(self, outfile, level, namespaceprefix_='', namespacedef_='
-        #  xmlns="urn:StandardAuditFile-Taxation-Financial:NO"
-        #  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        #  xsi:schemaLocation="urn:StandardAuditFile-Taxation-Financial:NO
-        #  Norwegian_SAF-T_Financial_Schema_v_1.10.xsd" ',
-        #  name_='AuditFile', pretty_print=True):
         audit_file = saft.AuditFile()
-        audit_file.Header = self.Header()
-        audit_file.MasterFiles = self.MasterFiles()
-        audit_file.GeneralLedgerEntries = self.GeneralLedgerEntries()
+        audit_file.header = self.Header()
+        audit_file.master_files = self.MasterFiles()
+        audit_file.general_ledger_entries = self.GeneralLedgerEntries()
         return audit_file
 
     def Header(self):
         h = saft.HeaderStructure()
-        h.AuditFileVersion = "1.10"
-        h.AuditFileCountry = "NO"
-        h.AuditFileDateCreated = datetime.now()
-        h.SoftwareCompanyName = "Norske Apps2GROW AS"
-        h.SoftwareID = "Odoo"
-        h.SoftwareVersion = "14.0"
-        h.Company = self.Company()
-        h.DefaultCurrencyCode = "NOK"
-        h.SelectionCriteria = saft.SelectionCriteriaStructure()
-        h.SelectionCriteria.PeriodStart = self.date_from.month
-        h.SelectionCriteria.PeriodStartYear = self.date_from.year
-        h.SelectionCriteria.PeriodEnd = self.date_to.month
-        h.SelectionCriteria.PeriodEndYear = self.date_to.year
-        h.HeaderComment = ""
-        h.TaxAccountingBasis = "A"
+        h.audit_file_version = "1.10"
+        h.audit_file_country = "NO"
+        h.audit_file_date_created = datetime.now().strftime("%Y-%m-%d")
+        h.software_company_name = "Norske Apps2GROW AS"
+        h.software_id = "Odoo"
+        h.software_version = "14.0"
+        h.company = self.Company()
+        h.default_currency_code = "NOK"
+        h.selection_criteria = saft.SelectionCriteriaStructure()
+        h.selection_criteria.period_start = self.date_from.month
+        h.selection_criteria.period_start_year = self.date_from.year
+        h.selection_criteria.period_end = self.date_to.month
+        h.selection_criteria.period_end_year = self.date_to.year
+        h.header_comment = ""
+        # h.tax_accounting_basis = "A"
         return h
 
     def Company(self):
@@ -223,7 +215,7 @@ class AuditFile:
         return self.Partner(p, self.company.partner_id)
 
     def MasterFiles(self):
-        mf = saft.MasterFiles()
+        mf = saft.AuditFile.MasterFiles()
         Line = self.company.env["account.move.line"]
 
         # accounts
@@ -259,9 +251,9 @@ class AuditFile:
             r["account_id"][0]: r["balance"] for r in closing_balance_records
         }
 
-        mf.GeneralLedgerAccounts = saft.GeneralLedgerAccounts()
+        mf.general_ledger_accounts = saft.AuditFile.MasterFiles.GeneralLedgerAccounts()
         for account in self.company.env["account.account"].search([]):
-            mf.GeneralLedgerAccounts.account.append(
+            mf.general_ledger_accounts.account.append(
                 self.Account(
                     account,
                     opening_balance.get(account.id, 0),
@@ -299,12 +291,12 @@ class AuditFile:
             r["partner_id"][0]: r["balance"] for r in closing_balance_records
         }
 
-        mf.Customers = saft.Customers()
+        mf.customers = saft.AuditFile.MasterFiles.Customers()
 
         for customer in self.company.env["res.partner"].browse(
             [d["partner_id"][0] for d in closing_balance_records]
         ):
-            mf.Customers.customer.append(
+            mf.customers.customer.append(
                 self.Customer(
                     customer,
                     opening_balance.get(customer.id, 0),
@@ -342,12 +334,12 @@ class AuditFile:
             r["partner_id"][0]: r["balance"] for r in closing_balance_records
         }
 
-        mf.Suppliers = saft.Suppliers()
+        mf.suppliers = saft.AuditFile.MasterFiles.Suppliers()
 
         for supplier in self.company.env["res.partner"].browse(
             [d["partner_id"][0] for d in closing_balance_records]
         ):
-            mf.Suppliers.supplier.append(
+            mf.suppliers.supplier.append(
                 self.Supplier(
                     supplier,
                     opening_balance.get(supplier.id, 0),
@@ -357,50 +349,50 @@ class AuditFile:
 
         # other
 
-        mf.TaxTable = saft.TaxTable()
+        mf.tax_table = saft.AuditFile.MasterFiles.TaxTable()
         for tax in self.company.env["account.tax"].search(
             [("type_tax_use", "in", ["sale", "purchase"])]
         ):
-            mf.TaxTable.tax_table_entry.append(self.TaxTableEntry(tax))
+            mf.tax_table.tax_table_entry.append(self.TaxTableEntry(tax))
 
-        mf.AnalysisTypeTable = saft.AnalysisTypeTable()
+        mf.AnalysisTypeTable = saft.AuditFile.MasterFiles.AnalysisTypeTable()
         for analytic in self.company.env["account.analytic.account"].search([]):
             mf.AnalysisTypeTable.analysis_type_table_entry.append(
                 self.AnalysisTypeTableEntry(analytic)
             )
 
-        # mf.Owners = saft.Owners()
+        # mf.owners = saft.AuditFile.MasterFiles.Owners()
         # for owner in self.company.env[''].browse():
-        #     mf.Owners.append(self.Owner(owner))
+        #     mf.owners.append(self.Owner(owner))
 
         return mf
 
     def Account(self, account, opening_balance, closing_balance):
-        a = saft.Account()
-        a.AccountID = account.code
-        a.AccountDescription = account.name
-        a.AccountType = "GL"
-        a.AccountCreationDate = account.create_date
+        a = saft.AuditFile.MasterFiles.GeneralLedgerAccounts.Account()
+        a.account_id = account.code
+        a.account_description = account.name
+        a.account_type = "GL"
+        a.account_creation_date = account.create_date.strftime("%Y-%m-%d")
         set_balance(a, opening_balance, closing_balance)
         return a
 
     def Customer(self, partner, opening_balance, closing_balance):
-        p = saft.Customer()
-        p.CustomerID = partner.id
-        p.AccountID = partner.property_account_receivable_id.code
+        p = saft.AuditFile.MasterFiles.Customers.Customer()
+        p.customer_id = partner.id
+        p.account_id = partner.property_account_receivable_id.code
         set_balance(p, opening_balance, closing_balance)
         return self.Partner(p, partner)
 
     def Supplier(self, partner, opening_balance, closing_balance):
-        p = saft.Supplier()
-        p.SupplierID = partner.id
-        p.AccountID = partner.property_account_payable_id.code
+        p = saft.AuditFile.MasterFiles.Suppliers.Supplier()
+        p.supplier_id = partner.id
+        p.account_id = partner.property_account_payable_id.code
         set_balance(p, opening_balance, closing_balance)
         return self.Partner(p, partner)
 
     def Partner(self, p, partner):
-        p.RegistrationNumber = partner.vat and partner.vat[2:] or ""
-        p.Name = partner.name  # required
+        p.registration_number = partner.vat and partner.vat[2:] or ""
+        p.name = partner.name  # required
         p.address.append(self.Address(partner))  # required
         p.contact.append(self.Contact(partner))
         for child in partner.child_ids:
@@ -417,35 +409,35 @@ class AuditFile:
     def Address(self, partner):
         a = saft.AddressStructure()
         if partner.street:
-            a.StreetName = partner.street
+            a.street_name = partner.street
         if partner.street2:
-            a.AdditionalAddressDetail = partner.street2
-        a.City = partner.city or "unknown"  # required
-        a.PostalCode = partner.zip or "unknown"  # required
+            a.additional_address_detail = partner.street2
+        a.city = partner.city or "unknown"  # required
+        a.postal_code = partner.zip or "unknown"  # required
         if partner.state_id.name:
-            a.Region = partner.state_id.name
+            a.region = partner.state_id.name
         if partner.country_id.code:
-            a.Country = partner.country_id.code
-        a.AddressType = "PostalAddress"
+            a.country = partner.country_id.code
+        a.address_type = "PostalAddress"
         return a
 
     def Contact(self, partner):
         c = saft.ContactInformationStructure()
-        c.ContactPerson = saft.PersonNameStructure()
-        c.ContactPerson.FirstName = partner.name.split(" ")[0]
-        c.ContactPerson.LastName = partner.name.split(" ")[0]
+        c.contact_person = saft.PersonNameStructure()
+        c.contact_person.first_name = partner.name.split(" ")[0]
+        c.contact_person.last_name = partner.name.split(" ")[0]
         if len(partner.name.split(" ")) >= 2:
-            c.ContactPerson.LastName = partner.name.split(" ")[-1]
-        c.Telephone = partner.phone
-        c.Email = partner.email
-        c.Website = partner.website
-        c.MobilePhone = partner.mobile
+            c.contact_person.last_name = partner.name.split(" ")[-1]
+        c.telephone = partner.phone
+        c.email = partner.email
+        c.website = partner.website
+        c.mobile_phone = partner.mobile
         return c
 
     def TaxRegistration(self, partner):
-        t = saft.TaxIDStructure()
-        t.TaxRegistrationNumber = partner.vat[2:] + "MVA"
-        t.TaxAuthority = "Skatteetaten"
+        t = saft.TaxIdstructure()
+        t.tax_registration_number = partner.vat[2:] + "MVA"
+        t.tax_authority = "Skatteetaten"
         # t.TaxVerificationDate
         # # The date that the tax registration details referred to above were last
         #  checked or when the tax registration was completed in the
@@ -456,77 +448,77 @@ class AuditFile:
         b = saft.BankAccountStructure()
         if partner.bank_ids:
             bank_account = partner.bank_ids[0]
-            b.BankAccountNumber = bank_account.acc_number
-            b.BIC = bank_account.bank_bic
-            b.CurrencyCode = bank_account.currency_id.name
-            # b.GeneralLedgerAccountID
+            b.bank_account_number = bank_account.acc_number
+            b.bic = bank_account.bank_bic
+            b.currency_code = bank_account.currency_id.name
+            # b.general_ledger_account_id
         return b
 
     def PartyInfo(self, partner, partner_type):
         p = saft.PartyInfoStructure()
-        p.PaymentTerms = saft.PaymentTerms()
+        p.payment_terms = saft.PartyInfoStructure.PaymentTerms()
         # if partner_type == 'customer':
-        #     p.PaymentTerms.Days = partner.property_payment_term_id...
+        #     p.payment_terms.days = partner.property_payment_term_id...
         # elif partner_type == 'supplier':
-        #     p.PaymentTerms.Days = partner.property_supplier_payment_term_id...
-        # p.PaymentTerms.CashDiscountDays = partner.
-        # p.PaymentTerms.CashDiscountRate = partner.
-        # p.PaymentTerms.FreeBillingMonth = partner.
-        # p.NaceCode = '63.110'
-        p.CurrencyCode = partner.currency_id.name
-        p.Type = "Company" if partner.is_company else "Private"
-        p.Status = "Active" if partner.active else "Archived"
+        #     p.payment_terms.days = partner.property_supplier_payment_term_id...
+        # p.payment_terms.cash_discount_days = partner.
+        # p.payment_terms.cash_discount_rate = partner.
+        # p.payment_terms.free_billing_month = partner.
+        # p.nace_code = '63.110'
+        p.currency_code = partner.currency_id.name
+        p.type_value = "Company" if partner.is_company else "Private"
+        p.status = "Active" if partner.active else "Archived"
         return p
 
     def TaxTableEntry(self, tax):
-        t = saft.TaxTableEntry()
-        t.TaxType = "MVA"
-        t.Description = "Merverdiavgift"
+        t = saft.AuditFile.MasterFiles.TaxTable.TaxTableEntry()
+        t.tax_type = "MVA"
+        t.description = "Merverdiavgift"
         tax_details = tax.children_tax_ids or [tax]
         for tax_detail in tax_details:
-            t.tax_code_details.append(
-                saft.TaxCodeDetails(
-                    TaxCode=tax_detail.id,
-                    Description=tax_detail.name,
-                    TaxPercentage=tax_detail.amount,
-                    Country="NO",
-                    StandardTaxCode=tax_detail.l10n_no_standard_tax_code,
-                    BaseRate=[100],  # TODO
-                )
-            )
+            t.tax_code_details.append(self.TaxCodeDetails(tax_detail))
         return t
 
+    def TaxCodeDetails(self, tax_detail):
+        d = saft.AuditFile.MasterFiles.TaxTable.TaxTableEntry.TaxCodeDetails()
+        d.tax_code = tax_detail.id
+        d.description = tax_detail.name
+        d.tax_percentage = tax_detail.amount
+        d.country = "NO"
+        d.standard_tax_code = tax_detail.l10n_no_standard_tax_code
+        d.base_rate = [100]  # TODO
+
     def AnalysisTypeTableEntry(self, analytic):
-        a = saft.AnalysisTypeTableEntry()
-        a.AnalysisType = str(analytic.plan_id.id)
-        a.AnalysisTypeDescription = analytic.plan_id.display_name
-        a.AnalysisID = analytic.id
-        a.AnalysisIDDescription = analytic.name
+        a = saft.AuditFile.MasterFiles.AnalysisTypeTable.AnalysisTypeTableEntry()
+        a.analysis_type = str(analytic.plan_id.id)
+        a.analysis_type_description = analytic.plan_id.display_name
+        a.analysis_id = analytic.id
+        a.analysis_iddescription = analytic.name
         return a
 
     def Owner(self):
-        o = saft.Owner()
+        o = saft.AuditFile.MasterFiles.Owners.Owner()
         return o
 
     def GeneralLedgerEntries(self):
-        e = saft.GeneralLedgerEntries()
-        e.NumberOfEntries = self.company.env["account.move"].search_count(
+        e = saft.AuditFile.GeneralLedgerEntries()
+        e.number_of_entries = self.company.env["account.move"].search_count(
             [("date", ">=", self.date_from), ("date", "<=", self.date_to)]
         )
         lines = self.company.env["account.move.line"].search(
             [("date", ">=", self.date_from), ("date", "<=", self.date_to)]
         )
-        e.TotalDebit = decimal_string(sum(line.debit for line in lines))
-        e.TotalCredit = decimal_string(sum(line.credit for line in lines))
+        e.total_debit = decimal_string(sum(line.debit for line in lines))
+        e.total_credit = decimal_string(sum(line.credit for line in lines))
         for journal in self.company.env["account.journal"].search([]):
             e.journal.append(self.Journal(journal))
         return e
 
     def Journal(self, journal):
-        j = saft.Journal()
-        j.JournalID = journal.code
-        j.Description = journal.name
-        j.Type = journal.code  # ?
+        j = saft.AuditFile.GeneralLedgerEntries.Journal()
+        j.journal_id = journal.code
+        j.description = journal.name
+        j.type_value = journal.code  # ?
         for move in self.company.env["account.move"].search(
             [
                 ("journal_id", "=", journal.id),
@@ -538,62 +530,65 @@ class AuditFile:
         return j
 
     def Transaction(self, move):
-        t = saft.Transaction()
-        t.TransactionID = move.name
-        t.Period = int(move.date.strftime("%m"))
-        t.PeriodYear = int(move.date.strftime("%Y"))
-        t.TransactionDate = move.date
-        # t.SourceID = move.
-        # t.TransactionType = move.
-        t.Description = move.ref
-        # t.BatchID = move.
-        t.SystemEntryDate = move.create_date
-        t.GLPostingDate = move.write_date
-        # t.SystemID = move.
+        t = saft.AuditFile.GeneralLedgerEntries.Journal.Transaction()
+        t.transaction_id = move.name
+        t.period = int(move.date.strftime("%m"))
+        t.period_year = int(move.date.strftime("%Y"))
+        t.transaction_date = move.date.strftime("%Y-%m-%d")
+        # t.source_id = move.
+        # t.transaction_type = move.
+        t.description = move.ref
+        # t.batch_id = move.
+        t.system_entry_date = move.create_date.strftime("%Y-%m-%d")
+        t.glposting_date = move.write_date.strftime("%Y-%m-%d")
+        # t.system_id = move.
         for idx, line in enumerate(move.line_ids):
             t.line.append(self.Line(idx, line))
         return t
 
     def Line(self, idx, line):
-        l = saft.Line()
-        l.RecordID = idx + 1
-        l.AccountID = line.account_id.code
+        l = saft.AuditFile.GeneralLedgerEntries.Journal.Transaction.Line()
+        l.record_id = idx + 1
+        l.account_id = line.account_id.code
         if line.analytic_distribution:
             for analytic_id, percent in line.analytic_distribution.items():
                 analytic = line.env["account.analytic.account"].browse(int(analytic_id))
-                l.analysis.append(
-                    saft.AnalysisStructure(
-                        AnalysisType=str(analytic.plan_id.id),
-                        AnalysisID=str(analytic.id),
-                        AnalysisAmount=line.balance * percent / 100.0,
-                    )
-                )
-        l.ValueDate = line.move_id.date
-        # l.SourceDocumentID
-        l.Description = line.name or ""
+                a = saft.AnalysisStructure()
+                a.analysis_type = str(analytic.plan_id.id)
+                a.analysis_id = str(analytic.id)
+                a.analysis_amount = decimal_string(line.balance * percent / 100)
+                l.analysis.append(a)
+        l.value_date = line.move_id.date.strftime("%Y-%m-%d")
+        # l.source_document_id
+        l.description = line.name or ""
         if line.partner_id:
-            l.Description = "{} (partner: {})".format(
-                l.Description, line.partner_id.name
+            l.description = "{} (partner: {})".format(
+                l.description, line.partner_id.name
             ).strip()
         if line.debit:
-            l.DebitAmount = saft.AmountStructure(Amount=line.debit)
+            l.DebitAmount = self.AmountStructure(amount=line.debit)
         else:  # required with debit or credit
-            l.CreditAmount = saft.AmountStructure(Amount=line.credit)
+            l.CreditAmount = self.AmountStructure(amount=line.credit)
         for tax in line.tax_ids:
             l.tax_information.append(self.TaxInformation(line, tax))
-        # l.ReferenceNumber
-        # l.CID
-        l.SystemEntryTime = datetime.now()
-        # l.ownerID
+        # l.reference_number
+        # l.cid
+        l.system_entry_time = datetime.now().strftime("%Y-%m-%d")
+        # l.owner_id
         return l
 
     def TaxInformation(self, line, tax):
         t = saft.TaxInformationStructure()
-        t.TaxType = "MVA"
-        # t.TaxCode
-        t.TaxPercentage = int(tax.amount)
-        t.TaxBase = line.debit + line.credit
-        t.TaxAmount = saft.AmountStructure(
-            Amount=decimal_string(t.TaxBase * tax.amount / 100)
+        t.tax_type = "MVA"
+        # t.tax_code
+        t.tax_percentage = int(tax.amount)
+        t.tax_base = line.debit + line.credit
+        t.tax_amount = self.AmountStructure(
+            amount=decimal_string(t.tax_base * tax.amount / 100)
         )
         return t
+
+    def AmountStructure(self, amount):
+        a = saft.AmountStructure()
+        a.amount = amount
+        return a
