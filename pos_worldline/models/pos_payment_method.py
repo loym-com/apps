@@ -54,7 +54,7 @@ class PosPaymentMethod(models.Model):
             if not (host and key):
                 raise UserError("Worldline host or key is missing.")
             # The next line will raise an error if the connection is wrong.
-            response = self._worldline_do_request("GET", "/api/v1/DeviceInformation", None, None, host, key)
+            response = self._worldline_do_request("GET", "/api/v1/DeviceInformation", None, host, key)
 
     def worldline_do_payment(self, payment):
         self.ensure_one()
