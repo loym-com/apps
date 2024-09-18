@@ -1,8 +1,8 @@
 import json
 import logging
 import os
-import requests
 # import signal # TODO: Set timeout and error messages, e.g. in _check_worldline()
+import ssl
 import urllib3
 
 from odoo import _, api, fields, models
@@ -16,8 +16,22 @@ _logger = logging.getLogger(__name__)
 class PosPaymentMethod(models.Model):
     _inherit = "pos.payment.method"
 
-    worldline_host = fields.Char(help="Format: https://host:port")
-    worldline_key = fields.Char()
+    worldline_host_internal = fields.Char(
+        string="Terminal host",
+        help=(
+            "URL for the terminal from the local network.\n"
+            "Format: host"
+        ),
+    )
+    worldline_host_port_external = fields.Char(
+        string="External host:port",
+        help=(
+            "URL for the terminal from the internet, via a local service.\n"
+            "If empty, run Odoo in the local network.\n"
+            "Format: host:port"
+        )
+    )
+    worldline_key = fields.Char(default="853919076C353385", help="Key for FIQ as")
 
     def _get_payment_terminal_selection(self):
         return super(PosPaymentMethod, self)._get_payment_terminal_selection() + [("worldline", "Worldline")]
@@ -49,24 +63,27 @@ class PosPaymentMethod(models.Model):
             else:
                 return getattr(self, field_name)
         if field("use_payment_terminal") == "worldline":
-            host = field("worldline_host")
+            internal = field("worldline_host_internal")
+            external = field("worldline_host_port_external")
             key = field("worldline_key")
-            if not (host and key):
-                raise UserError("Worldline host or key is missing.")
+            if not (internal and key):
+                raise UserError("Worldline key or internal url is missing.")
             # The next line will raise an error if the connection is wrong.
-            response = self._worldline_do_request("GET", "/api/v1/DeviceInformation", None, host, key)
+            response = self._worldline_do_request(
+                "GET", "/api/v1/DeviceInformation", {}, key, internal, external
+            )
 
     def worldline_do_payment(self, payment):
         self.ensure_one()
         # client_id = payment["customData"]["client_id"]
 
         # """ Test 3.7 No Connection """
-        # response = self._worldline_do_request("GET", "/api/v1/Payments/latest", None, client_id, ignore=[404])
+        # response = self._worldline_do_request("GET", "/api/v1/Payments/latest", {}, client_id, ignore=[404])
 
         # if response.status not in [200, 404]:
         #     return {
-        #         'status_code': response.status,
-        #         'message': response.reason,
+        #         "status_code": response.status,
+        #         "message": response.reason,
         #     }
 
         # # DO PAYMENT? OR IS PAYMENT ALREADY DONE?
@@ -90,17 +107,19 @@ class PosPaymentMethod(models.Model):
         response = self._worldline_do_request("POST", "/api/v1/Payments", payment)
         if response.status not in [200, 404]:
             return {
-                'status_code': response.status,
-                'message': response.reason,
+                "status_code": response.status,
+                "message": response.reason,
             }
         else:
             return json.loads(response.data)
 
-    def _worldline_do_request(self, method, url, body, host=None, key=None):
+    def _worldline_do_request(
+            self, method, path, body={}, key=None, internal_host=None, external_host_port=None
+        ):
         """ Test 3.4 Communication Log """
         self._create_log(
             {
-                "url": url,
+                "url": path,
                 "direction": "request",
                 "host": request.httprequest.environ["HTTP_HOST"],
                 # "client_id": client_id,
@@ -108,31 +127,53 @@ class PosPaymentMethod(models.Model):
             }
         )
 
+        # REQUEST VARIABLES
+        if external_host_port:
+            host, port = external_host_port.split(":")
+            port = int(port)
+            body["internal_host"] = internal_host
+            cert_file = False
+            cert_reqs=ssl.CERT_NONE
+        else:
+            host = internal_host
+            port = 443
+            cert_file = os.path.join(
+                os.path.dirname(__file__),
+                "ECR-REST.crt",
+            )
+            cert_reqs=ssl.CERT_REQUIRED
         body_json= json.dumps(body)
         headers = {
-            'content-type': 'application/json; charset=utf-8',
-            'Integration-Key': key or self.worldline_key,
-            'User-Agent' : 'Odoo 14.0',
-            'Content-Length': str(len(body_json))
+            "content-type": "application/json; charset=utf-8",
+            "Integration-Key": key or self.worldline_key,
+            "User-Agent" : "Odoo 16.0",
+            "Content-Length": str(len(body_json))
         }
-        dir_name = os.path.dirname(__file__)
-        cert_relative_path = "ECR-REST.crt"
-        cert_absolute_path = os.path.join(dir_name, cert_relative_path)
 
+        ####################### Also in app.py ##############################
+        # REQUEST
+        # The request needs to use IP address + "ECR-REST.crt".
+        # urllib3: 2 args: assert_hostname & ca_certs
+        # requests: 1 arg: verify (cannot verify cert only, without hostname)
         pool = urllib3.HTTPSConnectionPool(
-            host or self.worldline_host,
-            assert_hostname=False, # Setting assert_hostname to False disables the hostname verification because URL will not match certificate.
-            ca_certs=cert_absolute_path,
+            host,
+            port=port,
+            assert_hostname=False,
+            ca_certs=cert_file,
+            cert_reqs=cert_reqs,
         )
         response = pool.urlopen(
             method=method,
-            url=url,
+            url=f"https://{host}:{port}{path}",
             body=body_json,
             headers=headers,
         )
+        #####################################################################
+
         """ Test 3.4 Communication Log """
         response_json = {}
         if response.data:
+            # data like "<html>Not found</html>" cannot load
             response_json = json.loads(response.data)
         if response_json.get("transactionOutcome"):
             status = response_json["transactionOutcome"]
@@ -140,14 +181,14 @@ class PosPaymentMethod(models.Model):
             status = "{} {}".format(response.status, response.reason)
 
         values = {
-            "url": url,
+            "url": path,
             "direction": "response",
-            "host": self.worldline_host,
+            "host": host,
             # "client_id": client_id,
             "status": status,
             "log_json": response_json,
         }
-        if url in ("/api/v1/Payments", "/api/v1/Payments/latest"):
+        if path in ("/api/v1/Payments", "/api/v1/Payments/latest"):
             _json = response_json
             if _json:
                 if _json.get("receiptNumber"):

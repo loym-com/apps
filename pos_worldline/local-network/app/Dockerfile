@@ -4,6 +4,13 @@ FROM python:3.8-slim
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
+# Install curl and iputils-ping (for ping)
+RUN apt-get update && apt-get install -y \
+    curl \
+    iputils-ping \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy the current directory contents into the container at the working directory
 COPY . .
 

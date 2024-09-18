@@ -3,7 +3,7 @@ odoo.define('pos_worldline.models', function (require) {
     var PaymentWorldline = require('pos_worldline.payment');
 
     models.register_payment_method('worldline', PaymentWorldline);
-    // models.load_fields('pos.payment.method', 'worldline_host');
+    // models.load_fields('pos.payment.method', 'worldline_host_internal');
     // models.load_fields('pos.payment.method', 'worldline_key');
 
     // const superPaymentline = models.Paymentline.prototype;

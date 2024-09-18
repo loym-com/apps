@@ -20,7 +20,7 @@ COPY nginx/default.conf /etc/nginx/conf.d/
 # COPY static/ /usr/share/nginx/html/
 
 # Expose port 80
-EXPOSE 80
+EXPOSE 666 777
 
 # Start Nginx when the container launches
 CMD ["nginx", "-g", "daemon off;"]

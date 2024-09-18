@@ -24,14 +24,20 @@ def forward_request():
         "ECR-REST.crt"
     )
     cert_reqs=ssl.CERT_REQUIRED
-    path = request.path
-    method = request.method
-    body = request.json
-    host = body.pop("internal_host")
+    # cert_reqs=ssl.CERT_NONE
+    path = "/api/v1/DeviceInformation"
+    method = "GET"
+    key = "853919076C353385"
+    body = {}
+    host = "10.0.1.6"
     port = 443
     body_json = json.dumps(body)
-    headers = dict(request.headers)
-    headers["Content-Length"] = str(len(body_json))
+    headers = {
+        "content-type": "application/json; charset=utf-8",
+        "Integration-Key": key,
+        "User-Agent" : "Odoo 16.0",
+        "Content-Length": str(len(body_json))
+    }
 
     ################## Also in pos_payment_method.py ####################
     # REQUEST
@@ -55,5 +61,7 @@ def forward_request():
     logging.warning(f"python {response.status}")
     return response
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+
+
+response = forward_request()
+print(response.status)

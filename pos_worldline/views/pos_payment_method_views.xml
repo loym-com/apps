@@ -9,14 +9,14 @@
             <sheet position="inside">
                 <group>
                     <field
-                        name="worldline_host"
+                        name="worldline_host_internal"
                         attrs="{'invisible': [('use_payment_terminal', '!=', 'worldline')]}"
                     />
                     <field
-                        name="worldline_key"
+                        name="worldline_host_port_external"
                         attrs="{'invisible': [('use_payment_terminal', '!=', 'worldline')]}"
-                        password="1"
                     />
+                    <field name="worldline_key" invisible="1" />
                 </group>
             </sheet>
         </field>
