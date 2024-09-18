@@ -34,6 +34,7 @@ class PosSession(models.Model):
         except json.JSONDecodeError as e:
             message = f"{self.name} validation: JSON decoding error: {e}"
             _logger.error(message)
+            # This doesn't work, since the UI changes from POS to WEB.
             self.env.user.notify_danger(message=message)
 
 

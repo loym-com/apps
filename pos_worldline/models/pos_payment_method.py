@@ -36,36 +36,22 @@ class PosPaymentMethod(models.Model):
     def _get_payment_terminal_selection(self):
         return super(PosPaymentMethod, self)._get_payment_terminal_selection() + [("worldline", "Worldline")]
 
-    @api.model
-    def create(self, vals_list):
-        if type(vals_list) is dict:
-            vals_list = [vals_list]
-        for values in vals_list:
-            self._check_worldline(values)
-        return super().create(vals_list)
-
-    def write(self, values):
-        for record in self:
-            record._check_worldline(values)
-        return super().write(values)
-
-    def _check_worldline(self, values):
+    @api.constrains(
+        "worldline_key",
+        "worldline_host_internal",
+        "worldline_host_port_external",
+    )
+    def _check_worldline(self):
         """
         Do not save a worldline payment method if the connection fails!
         If the user will start a pos session, and the connection fails:
         - The user cannot close the session.
         - The user cannot fix the worldline payment method.
         """
-        def field(field_name):
-            # Create / Write: Get the updated field value (what it will be after saving).
-            if field_name in values:
-                return values[field_name]
-            else:
-                return getattr(self, field_name)
-        if field("use_payment_terminal") == "worldline":
-            if not field("worldline_host_internal"):
+        if self.use_payment_terminal == "worldline":
+            if not self.worldline_host_internal:
                 raise UserError("Worldline internal host is missing.")
-            if not field("worldline_key"):
+            if not self.worldline_key:
                 raise UserError("Worldline key is missing.")
             # The next line will raise an error if the connection is wrong.
             response = self._worldline_do_request(
@@ -113,6 +99,8 @@ class PosPaymentMethod(models.Model):
             return json.loads(response.data)
 
     def _worldline_do_request(self, method, path, body={}):
+        "Return: response"
+
         """ Test 3.4 Communication Log """
         self._create_log(
             {

@@ -21,6 +21,7 @@
     "depends": [
         "point_of_sale",
         "pos_payment_terminal_log",
+        "web_notify",
     ],
     "license": "AGPL-3",
     "maintainers": ["norlinhenrik"],

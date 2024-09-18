@@ -54,7 +54,7 @@ def forward_request():
     )
     #####################################################################
     # logging.warning(f"python {response.status}")
-    return response.data
+    return (response.data, response.status)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
