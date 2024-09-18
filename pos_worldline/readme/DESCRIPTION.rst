@@ -1,22 +1,64 @@
 This module implements synchronious payment with Worldline terminmal for Norway.
 
-The easiest way is to use a mobile terminal connecting directly to the internet
 
-LANE 3000 is NOT accessible from the internet, only from local network.
-"local-network" has a Docker setup for a web server and python script.
+INSTALL
 
-- In app.py, set the IP address and the Integration Key of the payment terminal.
-- Copy the ECR-REST.crt from the API pages of Worldline.
+Requirements:
 
-The local firewall should forward traffic to the payment terminal and to the IoT box.
+- Odoo dependency: https://github.com/OCA/web/tree/16.0/web_notify
+
+- IoT-box, see separate documentation
+  Create a firewall forwarding of requests from Odoo's IP address to the IoT-box.
+
+- Local docker service to connect from Odoo in the cloud,
+  since the terminal "is NOT compatible with a cloud-native ECR".
+  https://developer.samport.com/getting-started/network-requirements/
+
+  Copy pos_worldline/local-network.
+  cd /path/to/local-network
+  docker compose up -d
+
+  Create a firewall forwarding of requests from Odoo's IP address to the local service.
+  For security reasons, no other IP address should be able to access the local service.
+  The local service listens on port 777.
+
+
+CONFIGURE
+
+0) JOURNAL: Invoicing - Configuration - Accounting - Journals: NEW - BANK journal
+
+1) PAYMENT METHOD: Point of Sale - Configuration - Payment Methods: NEW
+- Journal: Select a bank journal
+- Use a Payment Terminal: Worldline
+- Terminal host: The IP address of the terminal
+- External host:port: Public IP address & port to access the terminal from the internet,
+  via a local service.
+
+2) SETTINGS: Point of Sale - Configuration - Settings
+- Point of Sale - Payment - Payment Methods (add Worldline)
+- Point of Sale - Connected Devices - IoT Box (IP Address: https://x.x.x.x:443)
+- General Settings - Document Layout (select a layout)
+
+
+USE
+
+In the POS UI, the network icon is green if the IoT Box is detected.
+In the payment screen, select the payment method and click the button below.
+If the connection is lost during payment:
+- Keep the POS UI open until it is back.
+  Otherwise there may be a never ending "Request sent", and the order must be deleted.
+- Ask the customer not to pay until the connection is back.
+  If paid during loss of connection and the POS UI is closed:
+  Open the payment method. Click to PRINT LATEST RECEIPT (from terminal, no products).
+
+Close the session by the end of each day.
+Otherwise payments cannot be taken the next day until the session is closed.
+
+Logs: Point of Sale - Configuration - Payment Terminal Logs
 
 
 TODO
 
+- Test with a timeout to prevent a never ending "Request sent".
 - PDF-utskrifter får feil Æ Ø Å.
 - Skriv ut alt på kvitteringsskriver i stedet for PDF.
-
-Payments/latest
-
-- Print latest receipt meny? (Payments/latest) bør ikke trenge host og key i server action.
-- Terminal log listevisning knapp?

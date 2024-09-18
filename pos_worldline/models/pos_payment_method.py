@@ -190,3 +190,14 @@ class PosPaymentMethod(models.Model):
         # The log is important, so save it immediately
         self.env.cr.commit()
         return record
+
+    def action_print_latest_receipt(self):
+        # Get the latest receipt from the terminal
+        response = self._worldline_do_request("GET", "/api/v1/Payments/latest")
+
+        Log = self.env["pos.payment.terminal.log"]
+        latest_receipt = Log.search([], order="create_date desc", limit=1)
+        report = self.env.ref("pos_worldline.pos_payment_terminal_log_report_receipt")
+        action = report.report_action(docids = latest_receipt)
+        action["res_id"] = latest_receipt.id
+        return action

@@ -1,5 +1,4 @@
-# Copyright 2024 Henrik Norlin
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2024 Stiftelsen Hjertegod - Fredheim Livsstilssenter
 
 {
     "name": "Worldline terminal",
@@ -23,8 +22,8 @@
         "pos_payment_terminal_log",
         "web_notify",
     ],
-    "license": "AGPL-3",
+    "license": "Other proprietary",
     "maintainers": ["norlinhenrik"],
     "version": "16.0.1.0.0",
-    "website": "https://github.com/",
+    "website": "https://fredheim.org",
 }
