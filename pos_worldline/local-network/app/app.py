@@ -10,12 +10,13 @@ app = Flask(__name__)
 
 @app.route("/test", methods=["GET"])
 def test():
-    logging.warning(f"PYTHON TEST LOGGING")
+    # logging.warning(f"PYTHON TEST LOGGING")
     return "Hello from pos_worldline local-network app. The test is working.", 200
 
 @app.route("/api/v1/DeviceInformation", methods=["GET"])
 @app.route("/api/v1/Payments/latest", methods=["GET"])
 @app.route("/api/v1/Payments", methods=["POST"])
+@app.route("/api/v1/Captures", methods=["POST"])
 def forward_request():
 
     # REQUEST VARIABLES
@@ -52,8 +53,8 @@ def forward_request():
         headers=headers,
     )
     #####################################################################
-    logging.warning(f"python {response.status}")
-    return response
+    # logging.warning(f"python {response.status}")
+    return response.data
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)

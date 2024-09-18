@@ -63,14 +63,13 @@ class PosPaymentMethod(models.Model):
             else:
                 return getattr(self, field_name)
         if field("use_payment_terminal") == "worldline":
-            internal = field("worldline_host_internal")
-            external = field("worldline_host_port_external")
-            key = field("worldline_key")
-            if not (internal and key):
-                raise UserError("Worldline key or internal url is missing.")
+            if not field("worldline_host_internal"):
+                raise UserError("Worldline internal host is missing.")
+            if not field("worldline_key"):
+                raise UserError("Worldline key is missing.")
             # The next line will raise an error if the connection is wrong.
             response = self._worldline_do_request(
-                "GET", "/api/v1/DeviceInformation", {}, key, internal, external
+                "GET", "/api/v1/DeviceInformation", {}
             )
 
     def worldline_do_payment(self, payment):
@@ -113,9 +112,7 @@ class PosPaymentMethod(models.Model):
         else:
             return json.loads(response.data)
 
-    def _worldline_do_request(
-            self, method, path, body={}, key=None, internal_host=None, external_host_port=None
-        ):
+    def _worldline_do_request(self, method, path, body={}):
         """ Test 3.4 Communication Log """
         self._create_log(
             {
@@ -128,14 +125,14 @@ class PosPaymentMethod(models.Model):
         )
 
         # REQUEST VARIABLES
-        if external_host_port:
-            host, port = external_host_port.split(":")
+        if self.worldline_host_port_external:
+            host, port = self.worldline_host_port_external.split(":")
             port = int(port)
-            body["internal_host"] = internal_host
+            body["internal_host"] = self.worldline_host_internal
             cert_file = False
             cert_reqs=ssl.CERT_NONE
         else:
-            host = internal_host
+            host = self.worldline_host_internal
             port = 443
             cert_file = os.path.join(
                 os.path.dirname(__file__),
@@ -145,7 +142,7 @@ class PosPaymentMethod(models.Model):
         body_json= json.dumps(body)
         headers = {
             "content-type": "application/json; charset=utf-8",
-            "Integration-Key": key or self.worldline_key,
+            "Integration-Key": self.worldline_key,
             "User-Agent" : "Odoo 16.0",
             "Content-Length": str(len(body_json))
         }

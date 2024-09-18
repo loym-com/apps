@@ -1,8 +1,10 @@
 import json
+import logging
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
+_logger = logging.getLogger(__name__)
 
 class PosSession(models.Model):
     _inherit = 'pos.session'
@@ -22,14 +24,17 @@ class PosSession(models.Model):
     def _worldline_do_capture(self, payment_method):
         """ Test 3.6 Capture / End of day """
         # Send Capture request to terminal
-        response = payment_method._worldline_do_request(
-            "POST", "/api/v1/Captures", None, None
-        )
+        response = payment_method._worldline_do_request("POST", "/api/v1/Captures")
         # Print receipt
-        print = json.loads(response.data)["receipt"]["merchant"]["plain"]
-        print = print.replace("\\n", "\n")
-        print = print.replace("\\t", "\t")
-        self.worldline_print = print
+        try:
+            print = json.loads(response.data)["receipt"]["merchant"]["plain"]
+            print = print.replace("\\n", "\n")
+            print = print.replace("\\t", "\t")
+            self.worldline_print = print
+        except json.JSONDecodeError as e:
+            message = f"{self.name} validation: JSON decoding error: {e}"
+            _logger.error(message)
+            self.env.user.notify_danger(message=message)
 
 
 
