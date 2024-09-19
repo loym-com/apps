@@ -13,11 +13,9 @@ class PosSession(models.Model):
 
     def _validate_session(self, balancing_account=False, amount_to_balance=0, bank_payment_method_diffs=None):
         self.ensure_one()
-        worldline = self.payment_method_ids.filtered(
+        for worldline in self.payment_method_ids.filtered(
             lambda pm: pm.use_payment_terminal == "worldline"
-        )
-        if worldline:
-            worldline.ensure_one()
+        ):
             self._worldline_do_capture(worldline)
         return super()._validate_session(balancing_account, amount_to_balance, bank_payment_method_diffs)
 
