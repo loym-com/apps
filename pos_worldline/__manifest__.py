@@ -3,7 +3,7 @@
 {
     "name": "Worldline terminal",
     "summary": "",
-    "author": "Henrik Norlin, Odoo Community Association (OCA)",
+    "author": "Henrik Norlin",
     "category": "",
     'assets': {
         "point_of_sale.assets": [
