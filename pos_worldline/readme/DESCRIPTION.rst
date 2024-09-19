@@ -25,16 +25,20 @@ Requirements:
 
 CONFIGURE
 
-0) JOURNAL: Invoicing - Configuration - Accounting - Journals: NEW - BANK journal
+JOURNAL: Invoicing - Configuration - Accounting - Journals: NEW
 
-1) PAYMENT METHOD: Point of Sale - Configuration - Payment Methods: NEW
+- Type: Bank
+
+PAYMENT METHOD: Point of Sale - Configuration - Payment Methods: NEW
+
 - Journal: Select a bank journal
 - Use a Payment Terminal: Worldline
 - Terminal host: The IP address of the terminal
 - External host:port: Public IP address & port to access the terminal from the internet,
   via a local service.
 
-2) SETTINGS: Point of Sale - Configuration - Settings
+SETTINGS: Point of Sale - Configuration - Settings
+
 - Point of Sale - Payment - Payment Methods (add Worldline)
 - Point of Sale - Connected Devices - IoT Box (IP Address: https://x.x.x.x:443)
 - General Settings - Document Layout (select a layout)
@@ -45,6 +49,7 @@ USE
 In the POS UI, the network icon is green if the IoT Box is detected.
 In the payment screen, select the payment method and click the button below.
 If the connection is lost during payment:
+
 - Keep the POS UI open until it is back.
   Otherwise there may be a never ending "Request sent", and the order must be deleted.
 - Ask the customer not to pay until the connection is back.
