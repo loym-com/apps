@@ -1,10 +1,9 @@
-# Copyright 2019 AppsToGROW - Henrik Norlin
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2024 Stiftelsen Hjertegod - Fredheim Livsstilssenter
 
 {
     "name": "POS Payment Terminal Log",
     "summary": "",
-    "author": "Henrik Norlin, Odoo Community Association (OCA)",
+    "author": "Henrik Norlin",
     "category": "Administration",
     "data": [
         "security/ir.model.access.csv",
@@ -13,8 +12,8 @@
     "depends": [
         "point_of_sale",
     ],
-    "license": "AGPL-3",
+    "license": "Other proprietary",
     "maintainers": ["norlinhenrik"],
     "version": "16.0.1.0.0",
-    "website": "https://github.com/appstogrow/apps",
+    "website": "https://fredheim.org",
 }

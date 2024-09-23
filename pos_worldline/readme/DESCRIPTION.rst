@@ -40,8 +40,13 @@ PAYMENT METHOD: Point of Sale - Configuration - Payment Methods: NEW
 SETTINGS: Point of Sale - Configuration - Settings
 
 - Point of Sale - Payment - Payment Methods (add Worldline)
-- Point of Sale - Connected Devices - IoT Box (IP Address: https://x.x.x.x:443)
+- Point of Sale - Connected Devices - IoT Box (IP Address: https://x.x.x.x:x)
 - General Settings - Document Layout (select a layout)
+
+BROWSER: Do this to accept the self signed certificate
+
+- Go to the IoT Box IP Address https://x.x.x.x:x
+- Click on Advanced - Continue to x.x.x.x (unsafe page)
 
 
 USE

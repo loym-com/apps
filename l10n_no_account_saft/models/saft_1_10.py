@@ -8,6 +8,8 @@ from xsdata.models.datatype import XmlDate, XmlDateTime, XmlTime
 __NAMESPACE__ = "urn:StandardAuditFile-Taxation-Financial:NO"
 
 
+
+
 class AccountAccountType(Enum):
     GL = "GL"
 
