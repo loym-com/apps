@@ -1,3 +1,4 @@
+import concurrent.futures
 import json
 import logging
 
@@ -21,8 +22,17 @@ class PosSession(models.Model):
 
     def _worldline_do_capture(self, payment_method):
         """ Test 3.6 Capture / End of day """
-        # Send Capture request to terminal
-        response = payment_method._worldline_do_request("POST", "/api/v1/Captures")
+
+        # Send Capture request to terminal, handle a case of no response
+        def capture():
+            return payment_method._worldline_do_request("POST", "/api/v1/Captures")
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future = executor.submit(capture)
+            try:
+                response = future.result(timeout=30)  # 30 seconds timeout
+            except concurrent.futures.TimeoutError:
+                _logger.error("No response from /api/v1/Captures")
+
         # Print receipt
         try:
             print = json.loads(response.data)["receipt"]["merchant"]["plain"]
