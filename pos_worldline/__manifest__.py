@@ -20,6 +20,7 @@
     "depends": [
         "point_of_sale",
         "pos_payment_terminal_log",
+        "queue_job",
         "web_notify",
     ],
     "license": "Other proprietary",

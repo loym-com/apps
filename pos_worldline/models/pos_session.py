@@ -1,4 +1,4 @@
-import concurrent.futures
+import asyncio
 import json
 import logging
 
@@ -23,15 +23,21 @@ class PosSession(models.Model):
     def _worldline_do_capture(self, payment_method):
         """ Test 3.6 Capture / End of day """
 
+        self.env['queue.job'].create({
+            'name': '/api/v1/Captures',
+            'func': 'pos_worldline.models.PosSession._worldline_do_capture_async',
+            'args': [self.id, payment_method],
+        })
+
+    async def _worldline_do_capture_async(self, payment_method):
         # Send Capture request to terminal, handle a case of no response
-        def capture(payment_method):
-            return payment_method._worldline_do_request("POST", "/api/v1/Captures")
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(capture, payment_method)
-            try:
-                response = future.result(timeout=30)  # 30 seconds timeout
-            except concurrent.futures.TimeoutError:
-                _logger.error("No response from /api/v1/Captures")
+        try:
+            response = await asyncio.wait_for(
+                payment_method._worldline_do_request("POST", "/api/v1/Captures"),
+                timeout=30,
+            )
+        except asyncio.TimeoutError:
+            _logger.error(f"{self.name}: No response from /api/v1/Captures")
 
         # Print receipt
         try:
