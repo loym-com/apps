@@ -23,27 +23,26 @@ class PosSession(models.Model):
     def _worldline_do_capture(self, payment_method):
         """ Test 3.6 Capture / End of day """
 
-        self.env['queue.job'].create({
-            'name': '/api/v1/Captures',
-            'func': 'pos_worldline.models.PosSession._worldline_do_capture_async',
-            'args': [self.id, payment_method],
-        })
+        self.with_delay()._worldline_do_capture_async(payment_method)
 
     async def _worldline_do_capture_async(self, payment_method):
-        # Send Capture request to terminal, handle a case of no response
+        """ Send Capture request to terminal, handle a case of no response """
         try:
             response = await asyncio.wait_for(
                 payment_method._worldline_do_request("POST", "/api/v1/Captures"),
                 timeout=30,
             )
+            self._handle_capture_response(response)
         except asyncio.TimeoutError:
             _logger.error(f"{self.name}: No response from /api/v1/Captures")
+        except Exception as e:
+            _logger.error(f"{self.name}: An error occurred: {e}")
 
-        # Print receipt
+    def _handle_capture_response(self, response):
+        """ Handle the response from the capture request """
         try:
             print = json.loads(response.data)["receipt"]["merchant"]["plain"]
-            print = print.replace("\\n", "\n")
-            print = print.replace("\\t", "\t")
+            print = print.replace("\\n", "\n").replace("\\t", "\t")
             self.worldline_print = print
         except json.JSONDecodeError as e:
             message = f"{self.name} validation: JSON decoding error: {e}"
