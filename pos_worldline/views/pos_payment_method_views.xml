@@ -16,6 +16,13 @@
                 />
                 <field name="worldline_key" invisible="1" />
                 <button
+                    string="Check connection"
+                    name="action_check_connection"
+                    type="object"
+                    class="btn btn-primary"
+                    attrs="{'invisible': [('use_payment_terminal', '!=', 'worldline')]}"
+                />
+                <button
                     string="Print latest receipt"
                     name="action_print_latest_receipt"
                     type="object"

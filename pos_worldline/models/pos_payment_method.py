@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-# import signal # TODO: Set timeout and error messages, e.g. in _check_worldline()
+# import signal # TODO: Set timeout and error messages, e.g. in action_check_connection()
 import ssl
 import urllib3
 
@@ -41,7 +41,7 @@ class PosPaymentMethod(models.Model):
         "worldline_host_internal",
         "worldline_host_port_external",
     )
-    def _check_worldline(self):
+    def action_check_connection(self):
         """
         Do not save a worldline payment method if the connection fails!
         If the user will start a pos session, and the connection fails:
