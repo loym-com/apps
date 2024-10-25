@@ -9,7 +9,7 @@ class Base(models.AbstractModel):
     import_last_name = fields.Char(string="Import Last Name", sparse="json")
     import_message = fields.Char(string="Import Message", sparse="json")
 
-    def excel_post_import_set_partner(self):
+    def excel_post_import_set_partner(self, force=False):
         Partner = self.env["res.partner"]
         for line in self:
             if not line.partner_name:
@@ -19,7 +19,7 @@ class Base(models.AbstractModel):
                 ).strip()
             if line.partner_name and not line.partner_id:
                 partner = Partner.search([("name", "=", line.partner_name)])
-                if not partner:
+                if force and not partner:
                     partner = Partner.create(
                         {
                             "name": line.partner_name,
