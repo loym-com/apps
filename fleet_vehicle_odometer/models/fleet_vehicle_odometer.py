@@ -13,6 +13,15 @@ class FleetVehicleOdometer(models.Model):
     analytic_account_id = fields.Many2one(
         "account.analytic.account", string="Analytic Account"
     )
+    analytic_account_ids = fields.Many2many(
+        "account.analytic.account", string="Analytic Accounts"
+    )
+    analytic_account_distance = fields.Integer(
+        "Analytic Distance",
+        compute="_compute_analytic_account_distance",
+        store=True,
+        help="Compute how many km for each analytic account"
+    )
     comment = fields.Char("Comment")
     distance = fields.Integer("Distance")
     value_int = fields.Integer("Odometer")
@@ -21,6 +30,17 @@ class FleetVehicleOdometer(models.Model):
     def _onchange_set_value(self):
         for record in self:
             record.value = float(record.value_int)
+
+    @api.depends("analytic_account_ids", "distance")
+    def _compute_analytic_account_distance(self):
+        for record in self:
+            count = len(record.analytic_account_ids)
+            if count:
+                record.analytic_account_distance = (
+                    record.distance / count
+                )
+            else:
+                record.analytic_account_distance = 0
 
     def unlink(self):
         self._recompute_distance_before_unlink()
