@@ -17,6 +17,7 @@ if website_id:
     order = env['website'].browse(website_id).sale_get_order(force_create=1)
     record.write({'order_id': order.id})
 
+# NONE OF THESE ACTIONS WILL TAKE THE USER TO registration_survey_list IN 16.0
 # action = "/event/%s/registration_survey_list" % record.survey_id.event_id.id
 action = {
     "type": "ir.actions.act_url",
