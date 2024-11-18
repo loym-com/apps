@@ -1,5 +1,8 @@
 Successful event survey implementation depends on
 
+0) User Settings
+Manage Event Registration with Survey
+
 1) Survey
 Create the survey
 On the event, select the survey
@@ -25,9 +28,7 @@ Create the SURVEY:
 Create the EVENT:
 - Select registration survey, partner (optional), name, email, phone, ticket.
 - Create tickets. For each ticket, set price = 0 and select a survey ticket.
-- Unselect the registration survey field.
-- Confirm and PUBLISH the event.
-- Select the registration survey field.
+- 16.0: Set state = Advertized (?)
 FYI:
 - The product name and the ticket & event display names are written on the sales order.
 BUGS:

@@ -25,5 +25,15 @@ class Survey2(Survey):
                 )
                 if return_action:
                     return return_action
+                    # Nothing happens with the action
+                    # {
+                    #     "jsonrpc": "2.0",
+                    #     "id": 1,
+                    #     "result": {
+                    #         "type": "ir.actions.act_url",
+                    #         "url": "/event/332/registration_survey_list",
+                    #         "target": "self"
+                    #     }
+                    # }
 
         return super()._prepare_question_html(survey_sudo, answer_sudo, **post)

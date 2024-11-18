@@ -7,7 +7,7 @@ from odoo.addons.http_routing.models.ir_http import slugify
 
 # from odoo.addons.http_routing.models.ir_http import _guess_mimetype
 from odoo.addons.survey_action.controllers.main import (  # don't replace fill_survey
-    SurveyController2 as SurveyController,
+    Survey2 as SurveyController,
 )
 from odoo.addons.website_event_sale.controllers.main import (  # inherits (WebsiteEventController)
     WebsiteEventSaleController,
@@ -16,19 +16,23 @@ from odoo.addons.website_event_sale.controllers.main import (  # inherits (Websi
 _logger = logging.getLogger(__name__)
 
 
-class SurveyController2(SurveyController):
-    @http.route()
-    def survey_start(self, survey, token=None, **post):
+# class SurveyController2(SurveyController):
+#     @http.route()
+#     def survey_start(self, survey_token, **post):
+#         # MOVE TO event_register()?
+#         survey = request.env["survey.survey"].search([("access_token", "=", survey_token)])
+#         if survey.event_id:
 
-        if survey.event_id:
+#             if post.get("answer_token"):
+#                 answer_token = post.pop("answer_token")
+#             else:
+#                 # Create user_input and goto /survey/fill (state != 'new')
+#                 vals = {"survey_id": survey.id, "state": "in_progress"}
+#                 if request.website.user_id != request.env.user:
+#                     vals["partner_id"] = request.env.user.partner_id.id
+#                 answer_token = request.env["survey.user_input"].create(vals).access_token
 
-            # Create user_input and goto /survey/fill (state != 'new')
-            vals = {"survey_id": survey.id, "state": "new_event_registration"}
-            if request.website.user_id != request.env.user:
-                vals["partner_id"] = request.env.user.partner_id.id
-            token = request.env["survey.user_input"].create(vals).token
-
-        return super(SurveyController2, self).start_survey(survey, token, **post)
+#         return super().survey_start(survey_token, answer_token, **post)
 
 
 class EventSurveyController(http.Controller):
@@ -48,19 +52,19 @@ class EventSurveyController(http.Controller):
                     ("user_input_id", "=", user_input.id),
                     ("question_id", "=", event.registration_name_question_id.id),
                 ]
-            ).value_text
+            ).value_char_box
             email = InputLine.search(
                 [
                     ("user_input_id", "=", user_input.id),
                     ("question_id", "=", event.registration_email_question_id.id),
                 ]
-            ).value_text
+            ).value_char_box
             phone = InputLine.search(
                 [
                     ("user_input_id", "=", user_input.id),
                     ("question_id", "=", event.registration_phone_question_id.id),
                 ]
-            ).value_text
+            ).value_char_box
 
             ticket = {}
             ticket_question = event.registration_ticket_question_id
@@ -76,7 +80,7 @@ class EventSurveyController(http.Controller):
                 ), "There must be exactly one answer to the question %s" % (
                     ticket_question.question
                 )
-                ticket_survey_label = ticket_answer.value_suggested
+                ticket_survey_label = ticket_answer.suggested_answer_id
                 assert ticket_survey_label.id > 0, (
                     "The question '%s' must be of type 'Multiple choice: only one answer'."
                     % (ticket_question.question)
@@ -102,13 +106,13 @@ class EventSurveyController(http.Controller):
             # Prepare products, order by survey label sequence
             # (order by doesn't make so much sense when multiple questions have products)
             user_input_lines = user_input.user_input_line_ids.filtered(
-                lambda x: x.value_suggested.product_id
+                lambda x: x.suggested_answer_id.product_id
             )
             product_sequence_price = [
                 [
-                    l.value_suggested.sudo().product_id,
-                    l.value_suggested.sequence,
-                    l.value_suggested.sudo().product_id.list_price,
+                    l.suggested_answer_id.sudo().product_id,
+                    l.suggested_answer_id.sequence,
+                    l.suggested_answer_id.sudo().product_id.list_price,
                 ]
                 for l in user_input_lines
             ]
@@ -229,7 +233,7 @@ class EventSurveyController(http.Controller):
         website=True,
     )
     def edit(self, survey, token, **post):
-        domain = [("token", "=", token), ("survey_id", "=", survey.id)]
+        domain = [("access_token", "=", token), ("survey_id", "=", survey.id)]
         user_input = request.env["survey.user_input"].search(domain)
         if user_input:
             user_input.ensure_one()
@@ -248,7 +252,7 @@ class EventSurveyController(http.Controller):
         website=True,
     )
     def delete(self, survey, token, **post):
-        domain = [("token", "=", token), ("survey_id", "=", survey.id)]
+        domain = [("access_token", "=", token), ("survey_id", "=", survey.id)]
         user_input = request.env["survey.user_input"].search(domain)
         for myinput in user_input:
             if myinput.sudo().order_id.state == "draft":
@@ -266,10 +270,10 @@ class WebsiteEventSaleController2(WebsiteEventSaleController):
         if event.registration_survey_id:
 
             # Start survey
-            controller = SurveyController2()
-            return controller.start_survey(event.registration_survey_id, **post)
+            controller = SurveyController()
+            return controller.survey_start(event.registration_survey_id.access_token, **post)
 
-        return super(WebsiteEventSaleController2, self).event_register(event, **post)
+        return super().event_register(event, **post)
 
     # from website_event_sale
     @http.route()

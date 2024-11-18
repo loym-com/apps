@@ -128,9 +128,9 @@ class SurveyUserInput(models.Model):
     order_id = fields.Many2one(
         "sale.order", "Sales Order", help="Do multiple surveys before "
     )
-    state = fields.Selection(
-        selection_add=[("new_event_registration", "New Event Registration")]
-    )
+    # state = fields.Selection(
+    #     selection_add=[("new_event_registration", "New Event Registration")]
+    # )
 
     # Was used when the event registration came BEFORE the survey.
     # @api.one
@@ -147,7 +147,7 @@ class SurveyUserInput(models.Model):
         for record in self:
             record.answers_url = "/survey/print/%s/%s" % (
                 slugify(self.survey_id),
-                self.token,
+                self.access_token,
             )
 
 

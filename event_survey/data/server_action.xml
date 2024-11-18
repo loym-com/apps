@@ -17,7 +17,12 @@ if website_id:
     order = env['website'].browse(website_id).sale_get_order(force_create=1)
     record.write({'order_id': order.id})
 
-action = '/event/%s/registration_survey_list' % record.survey_id.event_id.id
+# action = "/event/%s/registration_survey_list" % record.survey_id.event_id.id
+action = {
+    "type": "ir.actions.act_url",
+    "url": "/event/%s/registration_survey_list" % record.survey_id.event_id.id,
+    "target": "self",
+}
             ]]></field>
         </record>
 

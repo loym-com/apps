@@ -12,7 +12,7 @@
             <field name="arch" type="xml">
                 <data>
                     <page name="event_communication" position="before">
-                        <page name="registration_survey" string="Registration Survey" groups="group_event_survey">
+                        <page name="registration_survey" string="Registration Survey" groups="event_survey.group_event_survey">
                             <p><br />Set <b
                                 >web?debug</b> in the URL and hover the fields to see details.
                                <br />Create <b
@@ -102,7 +102,7 @@
             <field name="priority" eval="20" />
             <field name="arch" type="xml">
                 <group name="event" position="inside">
-                    <field name="survey_user_input_print_url" widget="url" groups="group_event_survey" />
+                    <field name="survey_user_input_print_url" widget="url" groups="event_survey.group_event_survey" />
                 </group>
             </field>
         </record>
@@ -123,7 +123,7 @@
                             name="survey_label_id"
                             domain="[('question_id','=',survey_question_id)]"
                             options="{'no_create_edit':True}"
-                            groups="group_event_survey"
+                            groups="event_survey.group_event_survey"
                         />
                     </tree>
             </field>
@@ -141,8 +141,8 @@
                     expr="//field[@name='suggested_answer_ids']/tree"
                     position="inside"
                 >
-                    <field name="product_id" groups="group_event_survey" />
-                    <field name="product_list_price" readonly="1" groups="group_event_survey" />
+                    <field name="product_id" groups="event_survey.group_event_survey" />
+                    <field name="product_list_price" readonly="1" groups="event_survey.group_event_survey" />
                 </xpath>
             </field>
         </record>
@@ -156,7 +156,7 @@
             <field name="priority" eval="20" />
             <field name="arch" type="xml">
                 <xpath expr="//notebook" position="inside">
-                    <page string="Event settings" groups="group_event_survey">
+                    <page string="Event settings" groups="event_survey.group_event_survey">
                         <group>
                             <group>
                                 <field name="event_id" />
