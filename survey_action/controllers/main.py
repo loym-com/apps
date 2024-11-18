@@ -15,7 +15,7 @@ class Survey2(Survey):
         if answer_sudo.state == 'done':
             action = survey_sudo.server_action_id
             if action:
-                return_action = (
+                redirect_url = (
                     action.with_context(
                         active_id=answer_sudo.id,
                         active_model="survey.user_input",
@@ -23,17 +23,17 @@ class Survey2(Survey):
                     )
                     .run()
                 )
-                if return_action:
-                    return return_action
-                    # Nothing happens with the action
-                    # {
-                    #     "jsonrpc": "2.0",
-                    #     "id": 1,
-                    #     "result": {
-                    #         "type": "ir.actions.act_url",
-                    #         "url": "/event/332/registration_survey_list",
-                    #         "target": "self"
-                    #     }
-                    # }
-
+                if redirect_url:
+                    post["redirect_url"] = redirect_url
         return super()._prepare_question_html(survey_sudo, answer_sudo, **post)
+
+    def _prepare_survey_data(survey_sudo, answer_sudo, **post):
+        data = super()._prepare_survey_data(survey_sudo, answer_sudo, **post)
+        data["redirect_url"] = post["redirect_url"]
+        return data
+
+    # TODO
+    # Override QWeb 'survey.survey_fill_form_done' to include "redirect_url".
+    # - survey_templates.xml
+    # Use javascript to get the redirect_url and redirect to that url.
+    # - How?
