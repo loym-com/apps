@@ -13,7 +13,7 @@
     ],
     "depends": [
         "donation",
-        "partner_address_ok",
+        "partner_valid_postal_address",
     ],
     "development_status": "Alpha",
     "license": "AGPL-3",

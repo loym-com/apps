@@ -4,8 +4,8 @@ from odoo import _, api, fields, models
 class DonationTaxReceipt(models.Model):
     _inherit = "donation.tax.receipt"
 
-    partner_address_ok = fields.Boolean(
-        related="partner_id.address_ok",
+    partner_valid_postal_address = fields.Boolean(
+        related="partner_id.is_valid_postal_address",
         string="Donor address OK",
     )
     partner_email = fields.Char(

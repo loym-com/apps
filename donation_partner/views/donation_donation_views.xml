@@ -5,12 +5,12 @@
         <field name="model">donation.donation</field>
         <field name="inherit_id" ref="donation.donation_form" />
         <field name="arch" type="xml">
-            <field name="partner_id" position="after">
-                <field name="partner_address_ok" />
+            <group name="other-right" position="inside">
+                <field name="partner_valid_postal_address" />
                 <field name="partner_email" />
                 <field name="partner_lang" />
                 <field name="partner_tag_ids" widget="many2many_tags" />
-            </field>
+            </group>
         </field>
     </record>
 
@@ -20,7 +20,7 @@
         <field name="inherit_id" ref="donation.donation_tree" />
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <field name="partner_address_ok" optional="hide" />
+                <field name="partner_valid_postal_address" optional="hide" />
                 <field name="partner_email" optional="hide" />
                 <field name="partner_lang" optional="hide" />
                 <field name="partner_tag_ids" widget="many2many_tags" optional="hide" />
