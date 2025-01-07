@@ -4,7 +4,8 @@
         <xpath expr="//form/div[2]/div" position="inside">
             <h6>
                 <t t-if="product.is_donation">
-                    <t t-set="total" t-value="product.sales_count + product.qty_available + product.incoming_qty - product.outgoing_qty"/>
+                    <!-- product.sales_count days according to system parameter. -->
+                    <t t-set="total" t-value="product.sales_count + product.virtual_available"/>
                     <span t-field="product.sales_count" t-options='{"widget": "integer"}' />
                     of
                     <span t-esc="total" t-options='{"widget": "integer"}' />

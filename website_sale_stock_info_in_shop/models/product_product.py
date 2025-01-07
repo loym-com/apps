@@ -23,9 +23,11 @@ class ProductProduct(models.Model):
         self.sales_count = 0
         # if not self.user_has_groups('sales_team.group_sale_salesman'):
         #     return r
-        date_from = fields.Datetime.to_string(fields.datetime.combine(fields.datetime.now() - timedelta(days=365),
+        # NEW
+        days = int(self.env["ir.config_parameter"].sudo().get_param("product.sales_count__days"))
+        date_from = fields.Datetime.to_string(fields.datetime.combine(fields.datetime.now() - timedelta(days=days),
                                                                       time.min))
-
+        # END
         done_states = self.env['sale.report']._get_done_states()
 
         domain = [

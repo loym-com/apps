@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="sales_count__days" model="ir.config_parameter">
+        <field name="key">product.sales_count__days</field>
+        <field name="value">365</field>
+    </record>
+</odoo>
