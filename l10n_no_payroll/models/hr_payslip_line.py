@@ -1,6 +1,6 @@
 import logging
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, date
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -71,7 +71,7 @@ class HrPayslipLine(models.Model):
 
         # Get info from the payslip lines into dictinary 'd'
         d = defaultdict(dict)
-        payslip_lines = self.search([])
+        payslip_lines = self.search([("date_from", "<", date(2024, 1, 1))])
         for line in payslip_lines:
             employee_id = line.employee_id.id
             rule = line.salary_rule_id

@@ -34,7 +34,7 @@
         "hr_contract_leave",
         "l10n_no_oca",
         "payroll_account_analytic",
-        "payroll_custom_info",
+        # "payroll_custom_info",
     ],
     "external_dependencies": {"python": ["pyxb"]},
     "license": "AGPL-3",
