@@ -1,3 +1,0 @@
-id,name,model_id:id,groups:id,domain_force,perm_read,perm_write,perm_create,perm_unlink
-donation_fundrace_partner_company_id_rule,donation_fundrace_partner multi-company,model_donation_fundrace_partner,,"[('company_id','child_of',[user.company_id.id])]",1,1,1,1
-donation_fundrace_sponsorship_company_id_rule,donation_fundrace_sponsorship multi-company,model_donation_fundrace_sponsorship,,"[('company_id','child_of',[user.company_id.id])]",1,1,1,1

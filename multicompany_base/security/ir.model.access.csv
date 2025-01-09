@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_ir_module_module_user,ir.module.module for base.group_user,base.model_ir_module_module,base.group_user,1,0,0,0
-access_ir_ui_view_public,ir.ui.view for base.group_public,base.model_ir_ui_view,base.group_public,1,0,0,0
-access_multicompany_config,multicompany.config for base.group_system,model_multicompany_config,base.group_system,1,1,1,1
-access_multicompany_security,multicompany.security for base.group_system,model_multicompany_security,base.group_system,1,1,1,1

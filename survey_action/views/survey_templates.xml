@@ -1,9 +1,0 @@
-<odoo>
-<data>
-    <template id="survey_fill_form_done" inherit_id="survey.survey_fill_form_done">
-        <xpath expr="//div[@class='wrap']" position="replace">
-            <h1><span t-esc="redirect_url"/></h1>
-        </xpath>
-    </template>
-</data>
-</odoo>

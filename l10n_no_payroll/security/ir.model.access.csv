@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_l10n_no_amelding,l10n.no.amelding,model_l10n_no_amelding,payroll.group_payroll_user,1,1,1,1
-access_l10n_no_amelding_wizard,l10n.no.amelding.wizard,model_l10n_no_amelding_wizard,payroll.group_payroll_user,1,1,1,1
-access_l10n_no_job_code_read,l10n.no.job.code read,model_l10n_no_job_code,payroll.group_payroll_user,1,0,0,0
-access_l10n_no_job_code_edit,l10n.no.job.code edit,model_l10n_no_job_code,base.group_system,1,1,1,1
-access_l10n_no_tabelltrekk_read,l10n.no.tabelltrekk read,model_l10n_no_tabelltrekk,payroll.group_payroll_user,1,0,0,0
-access_l10n_no_tabelltrekk_edit,l10n.no.tabelltrekk edit,model_l10n_no_tabelltrekk,base.group_system,1,1,1,1

@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_donation_fundrace_partner,donation.fundrace.partner,model_donation_fundrace_partner,group_donation_fundrace,1,1,1,1
-access_donation_fundrace_sponsorship,donation.fundrace.sponsorship,model_donation_fundrace_sponsorship,group_donation_fundrace,1,1,1,1

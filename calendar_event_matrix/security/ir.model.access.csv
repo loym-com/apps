@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_calendar_attendee_report_matrix_group,calendar.attendee.report,model_calendar_attendee_report,calendar_event_matrix_group,1,1,1,1
-access_calendar_event_matrix_matrix_group,calendar.event.matrix,model_calendar_event_matrix,calendar_event_matrix_group,1,1,1,1
-access_calendar_event_matrix_row_matrix_group,calendar.event.matrix.row,model_calendar_event_matrix_row,calendar_event_matrix_group,1,1,1,1
