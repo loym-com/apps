@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+    <record id="teamm_alias_view_tree" model="ir.ui.view">
+        <field name="name">teamm.alias.view.tree</field>
+        <field name="model">teamm.alias</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="teamm_id" />
+                <field name="note" />
+                <field name="name" />
+                <field name="aliases" />
+            </tree>
+        </field>
+    </record>
+    <record id="teamm_alias_view_search" model="ir.ui.view">
+        <field name="name">teamm.alias.view.search</field>
+        <field name="model">teamm.alias</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="teamm_id" />
+                <field name="note" />
+                <field name="name" />
+                <field name="aliases" />
+            </search>
+        </field>
+    </record>
+    <record id="teamm_alias_action" model="ir.actions.act_window">
+        <field name="name">Team M Alias</field>
+        <field name="res_model">teamm.alias</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem
+        id="teamm_alias_menu"
+        parent="teamm_main_menu"
+        name="Team M Alias"
+        action="teamm_alias_action"
+        sequence="20"
+    />
+</data>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="registration_attendee_details_inherit"
+        inherit_id="website_event.registration_attendee_details"
+    >
+        <xpath expr="//t[@name='attendee_loop']//*[hasclass('modal-body')]" position="inside">
+            <t t-if="event.product_tmpl_ids">
+                <script type="text/javascript">
+                    function updateCombinations(product_id) {
+                        const event_id = "<t t-esc="event.id"/>";
+                        const endpoint = `/event/get_available_combinations?event_id=${event_id}&amp;product_id=${product_id}`;
+                    
+                        // Use the Fetch API to call the endpoint
+                        fetch(endpoint)
+                            .then(response => {
+                                // Check if the response is ok (status in the range 200-299)
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json(); // Parse the JSON response
+                            })
+                            .then(data => {
+                                // Get the select element for resource_booking_combination_id
+                                const combinationSelect = document.getElementById('resource_booking_combination_id');
+                    
+                                // Clear any existing options
+                                combinationSelect.innerHTML = '<option value="">Select a combination</option>';
+                    
+                                // Populate the select element with new options from the API response
+                                data.forEach(combination => {
+                                    const option = document.createElement('option');
+                                    option.value = combination.id; // Assuming the combination object has an 'id' property
+                                    option.textContent = combination.name; // Assuming the combination object has a 'name' property
+                                    combinationSelect.appendChild(option);
+                                });
+                            })
+                            .catch(error => {
+                                console.error('There was a problem with the fetch operation:', error);
+                                // Optionally, you can handle errors here (e.g., show an alert or message to the user)
+                            });
+                    }
+                </script>
+                <h5 class="mt-1 pb-2 border-bottom">Booking Options</h5>
+                <div class="row">
+                    <div class="col-lg my-2">
+                        <label for="product_id">Booking Type *</label>
+                        <select class="form-control" t-attf-name="#{counter}-product_id" id="product_id" onchange="updateCombinations(this.value)" required="This field is required">
+                            <option value="">Select a booking type</option>
+                            <t t-foreach="event.get_available_products()" t-as="product">
+                                <option
+                                    t-att-value="product.id"
+                                    t-esc="product.resource_booking_type_id.name + ' +' + str(int(product.price_extra))"
+                                />
+                            </t>
+                        </select>
+                    </div>
+                    <div class="col-lg my-2">
+                        <label for="resource_booking_combination_id">Booking Item *</label>
+                        <select class="form-control" t-attf-name="#{counter}-resource_booking_combination_id" id="resource_booking_combination_id" required="This field is required">
+                            <option value="">Select a booking</option>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

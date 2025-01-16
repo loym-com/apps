@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- FORM VIEW DOESN'T WORK WHEN id IS A STRING -->
+
+    <record id="website_event_booking_combination_view_tree" model="ir.ui.view">
+        <field name="name">website.event.booking.combination.view.tree</field>
+        <field name="model">website.event.booking.combination</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="event_id" />
+                <field name="date_begin" optional="show" />
+                <field name="date_end" optional="show"/>
+                <field name="product_tmpl_id" />
+                <field name="product_id" optional="hide"/>
+                <field name="product_attribute_value_ids" optional="hide" widget="many2many_tags" />
+                <field name="resource_booking_type_id" />
+                <field name="combination_id" />
+                <field name="available" optional="show" />
+                <field name="resource_group_tag_ids" optional="hide" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+    <record id="website_event_booking_combination_view_search" model="ir.ui.view">
+        <field name="name">website.event.booking.combination.view.search</field>
+        <field name="model">website.event.booking.combination</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="event_id" />
+                <field name="product_tmpl_id" />
+                <field name="product_id" />
+                <field name="product_attribute_value_ids" />
+                <field name="resource_booking_type_id" />
+                <field name="combination_id" />
+                <field name="resource_group_tag_ids" />
+                <filter
+                    name="available"
+                    string="Available"
+                    domain="[('available', '=', True)]"
+                />
+                <filter
+                    name="booked"
+                    string="Booked"
+                    domain="[('available', '=', False)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="website_event_booking_combination_action_available" model="ir.actions.act_window">
+        <field name="name">Available</field>
+        <field name="context">{'search_default_available': True}</field>
+        <field name="res_model">website.event.booking.combination</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="website_event_booking_combination_action_booked" model="ir.actions.act_window">
+        <field name="name">Booked</field>
+        <field name="context">{'search_default_booked': True}</field>
+        <field name="res_model">website.event.booking.combination</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="event_menu"
+        parent="resource_booking.resource_booking_main_menu"
+        name="Events"
+        sequence="15"
+    />
+    <menuitem
+        id="event_event_menu"
+        action="event.action_event_view"
+        parent="event_menu"
+        name="Events"
+        sequence="10"
+    />
+    <menuitem
+        id="website_event_booking_combination_available_menu"
+        action="website_event_booking_combination_action_available"
+        parent="event_menu"
+        name="Available"
+        sequence="20"
+    />
+    <menuitem
+        id="website_event_booking_combination_booked_menu"
+        action="website_event_booking_combination_action_booked"
+        parent="event_menu"
+        name="Booked"
+        sequence="30"
+    />
+</odoo>

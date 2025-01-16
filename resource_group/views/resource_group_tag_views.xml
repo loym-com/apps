@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="resource_group_tag_view_form" model="ir.ui.view">
+        <field name="name">resource.group.tag.view.form</field>
+        <field name="model">resource.group.tag</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="group_ids" widget="many2many_tags" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="resource_group_tag_view_tree" model="ir.ui.view">
+        <field name="name">resource.group.tag.view.tree</field>
+        <field name="model">resource.group.tag</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" optional="show" />
+                <field name="group_ids" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+    <record id="resource_group_tag_view_search" model="ir.ui.view">
+        <field name="name">resource.group.tag.view.search</field>
+        <field name="model">resource.group.tag</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="group_ids" />
+            </search>
+        </field>
+    </record>
+    <record id="resource_group_tag_action" model="ir.actions.act_window">
+        <field name="name">Resource Group Tags</field>
+        <field name="res_model">resource.group.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="resource_group_tag_menu"
+        action="resource_group_tag_action"
+        parent="resource.menu_resource_config"
+        name="Resource Group Tag"
+        sequence="30"
+    />
+</odoo>

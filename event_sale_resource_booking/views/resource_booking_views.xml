@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="resource_booking_view_form_event" model="ir.ui.view">
+        <field name="name">resource.booking.view.form.event</field>
+        <field name="model">resource.booking</field>
+        <field name="inherit_id" ref="resource_booking.resource_booking_view_form" />
+        <field name="priority" eval="20" />
+        <field name="arch" type="xml">
+            <group name="booking" position="inside">
+                <field name="event_id" />
+                <field name="event_registration_id" />
+            </group>
+        </field>
+    </record>
+    <!-- This is here for convenience, has nothing to do with event -->
+    <record id="resource_booking_view_form_order_line" model="ir.ui.view">
+        <field name="name">resource.booking.view.form.order.line</field>
+        <field name="model">resource.booking</field>
+        <field name="inherit_id" ref="sale_resource_booking.resource_booking_view_form" />
+        <field name="priority" eval="20" />
+        <field name="arch" type="xml">
+            <group name="sale" position="inside">
+                <field name="sale_order_line_id" readonly="1"/>
+                <field name="sale_order_line_ids" readonly="1" widget="many2many_tags"/>
+            </group>
+        </field>
+    </record>
+</odoo>

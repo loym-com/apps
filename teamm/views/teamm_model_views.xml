@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+    <!-- Views -->
+    <record id="teamm_model_view_tree" model="ir.ui.view">
+        <field name="name">teamm.model.view.tree</field>
+        <field name="model">teamm.model</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="teamm_id" />
+                <field name="sequence" />
+                <field name="is_active" />
+                <field name="name" />
+                <field name="description" />
+                <field name="primary_key" />
+                <field name="values" />
+            </tree>
+        </field>
+    </record>
+    <record id="teamm_model_view_search" model="ir.ui.view">
+        <field name="name">teamm.model.view.search</field>
+        <field name="model">teamm.model</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="teamm_id" />
+                <field name="sequence" />
+                <field name="is_active" />
+                <field name="name" />
+                <field name="description" />
+                <field name="primary_key" />
+                <field name="values" />
+            </search>
+        </field>
+    </record>
+    <!-- Actions -->
+    <record id="teamm_model_action" model="ir.actions.act_window">
+        <field name="name">Team M Model</field>
+        <field name="res_model">teamm.model</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem
+        id="teamm_model_menu"
+        parent="teamm_main_menu"
+        name="Team M Model"
+        action="teamm_model_action"
+        sequence="30"
+    />
+</data>

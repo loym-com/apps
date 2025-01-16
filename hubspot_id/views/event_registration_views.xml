@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="event_registration_view_form" model="ir.ui.view">
+        <field name="name">event.registration.view.form.hubspot</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_form" />
+        <field name="arch" type="xml">
+            <group name="utm_link" position="inside">
+                <field name="hubspot_deal_id" readonly="1" />
+            </group>
+        </field>
+    </record>
+    <record id="event_registration_view_tree" model="ir.ui.view">
+        <field name="name">event.registration.view.tree.hubspot</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_tree" />
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="hubspot_deal_id" string="Hubspot ID" optional="hide" />
+            </tree>
+        </field>
+    </record>
+</odoo>

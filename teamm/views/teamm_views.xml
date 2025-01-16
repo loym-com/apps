@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+    <record id="teamm_view_tree" model="ir.ui.view">
+        <field name="name">teamm.view.tree</field>
+        <field name="model">teamm</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="model_ids" widget="many2many_tags" />
+                <field name="state" optional="show" />
+                <field name="active" optional="hide" />
+                <field name="date_format" />
+            </tree>
+        </field>
+    </record>
+    <record id="teamm_view_form" model="ir.ui.view">
+        <field name="name">teamm.view.form</field>
+        <field name="model">teamm</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_import"
+                        class="oe_highlight"
+                        string="Import"
+                        type="object"
+                    />
+                    <button
+                        name="action_clear_csv"
+                        string="Clear CSV"
+                        type="object"
+                    />
+                    <button
+                        name="action_select_all_models"
+                        string="Select all models"
+                        type="object"
+                    />
+                    <button
+                        name="action_deselect_all_models"
+                        string="Deselect all models"
+                        type="object"
+                    />
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <field name="active" invisible="1" />
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Record Name" />
+                        </h1>
+                    </div>
+                    <group name="main">
+                        <field name="src" />
+                        <field name="src_begin" />
+                        <field name="src_end" />
+                        <field name="model_ids">
+                            <tree editable="bottom">
+                                <field name="teamm_id" invisible="1" />
+                                <field name="sequence" widget="handle" />
+                                <field name="is_active" />
+                                <field name="name" />
+                                <field name="description" />
+                                <field name="primary_key" />
+                                <field name="values" />
+                            </tree>
+                        </field>
+                        <field name="alias_ids">
+                            <tree editable="bottom" limit="1000">
+                                <field name="teamm_id" invisible="1" />
+                                <field name="note" />
+                                <field name="name" />
+                                <field name="aliases" />
+                            </tree>
+                        </field>
+                        <field name="url" attrs="{'invisible': [('src', '!=', 'api')]}" />
+                        <field name="param_ids">
+                            <tree editable="bottom">
+                                <field name="teamm_id" invisible="1" />
+                                <field name="type" />
+                                <field name="key" />
+                                <field name="value" />
+                            </tree>
+                        </field>
+                        <field name="date_format" attrs="{'invisible': [('src', '=', 'api')]}" />
+                        <field name="csv_delimiter" />
+                        <field name="csv_file_name" invisible="1" />
+                        <field name="csv_file" filename="csv_file_name" attrs="{'invisible': [('src', '!=', 'csv_file')]}" />
+                        <field name="csv" attrs="{'invisible': [('src', '!=', 'csv_field')]}" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="teamm_view_search" model="ir.ui.view">
+        <field name="name">teamm.view.search</field>
+        <field name="model">teamm</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <filter
+                    name="name"
+                    string="Team M"
+                    domain="[('name', '=', 'Team M')]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="teamm_action" model="ir.actions.act_window">
+        <field name="name">Team M</field>
+        <field name="res_model">teamm</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="teamm_main_menu"
+        name="Team M"
+        sequence="10"
+    />
+    <menuitem
+        id="teamm_menu"
+        parent="teamm_main_menu"
+        name="Team M"
+        action="teamm_action"
+        sequence="10"
+    />
+</data>

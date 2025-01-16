@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+teamm_access,"Team M Access",model_teamm,base.group_user,1,1,1,1
+teamm_alias_access,"Team M Alias Access",model_teamm_alias,base.group_user,1,1,1,1
+teamm_model_access,"Team M Model Access",model_teamm_model,base.group_user,1,1,1,1
+teamm_param_access,"Team M Parameter Access",model_teamm_param,base.group_user,1,1,1,1

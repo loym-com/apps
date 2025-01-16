@@ -1,0 +1,75 @@
+﻿id;sequence;name;src;date_format;csv_delimiter;alias_ids/id;alias_ids/name;alias_ids/aliases;model_ids/id;model_ids/sequence;model_ids/is_active;model_ids/name;model_ids/description;model_ids/primary_key;model_ids/values
+__export__.teamm_rooms;1;1 Rooms;CSV Field;;,;__export__.teamm_rooms_alias_resource_resource;resource.resource;resource.group;__export__.teamm_rooms_model_resource_group;0;SANN;resource.group;Room;name;
+;;;;;;;;;__export__.teamm_rooms_model_resource_resource;1;USANN;resource.resource;Bed;"group name
+bed_counter";"resource_type=material
+calendar_id
+group_id"
+;;;;;;;;;__export__.teamm_rooms_model_resource_booking_combination;2;USANN;resource.booking.combination;Combination to book;"room_size
+room_sharing
+group name
+resource name
+bed_counter";resource_ids
+;;;;;;;;;__export__.teamm_rooms_model_resource_booking_type;3;USANN;resource.booking.type;Type to book;"TODO: csv room description
+create:
+- name
+- bed_counter
+- room_sharing
+read:
+- group name
+- room size
+- room sharing";resource_calendar_id
+;;;;;;;;;__export__.teamm_rooms_model_resource_booking_type_combination_rel;4;USANN;resource.booking.type.combination.rel;Combinations per type;"type
+combination";
+__export__.teamm_attributes;2;2 Product Attributes;CSV Field;;,;__export__.teamm_attributes_alias_resource_booking_type;resource.booking.type;product.attribute.value;__export__.teamm_attributes_model_product_attribute;0;USANN;product.attribute;Product dimension;name;create_variant=always
+;;;;;;;;;__export__.teamm_attributes_model_product_attribute_value;1;SANN;product.attribute.value;Product tag;"attribute
+name";resource_booking_type_ids
+__export__.teamm_templates;3;3 Product Templates;CSV Field;;,;;;;__export__.teamm_templates_model_product_template;0;SANN;product.template;"Spain Health Holiday
+NEWSTART Sølv Fredheim
+NEWSTART Gold Fredheim
+NEWSTART Diamond Fredheim
+Discount
+
+Create a variant for each product tag combination";name;"attribute_line_ids
+-> value_ids"
+__export__.teamm_events;4;4 Events;CSV Field;%b %d, %Y;,;;;;__export__.teamm_events_model_resource_booking;0;USANN;resource.booking;Representation in the timeline;"partner
+type
+start
+duration";"name
+combination_auto_assign=1"
+;;;;;;;;;__export__.teamm_events_model_event_event;1;SANN;event.event;Guest session;"name
+# date_begin
+# date_end
+# cannot be identifiers since a booking may have other dates";"resource_booking_Id
+product_tmpl_ids"
+__export__.teamm_categories;5;5 Contact Categories;CSV Field;;,;;;;__export__.teamm_categories_model_res_partner_category;0;SANN;res.partner.category;HjertegodtNytt, Stjernestatus, Ambassador, Staff;name;
+__export__.teamm_bookings;6;6 Contacts & Bookings;CSV File;%m/%d/%Y;,;__export__.teamm_bookings_alias_event_event;event.event;session number;__export__.teamm_bookings_model_res_partner;0;USANN;res.partner;Contact;hubspot id;"firstname
+lastname
+email
+phone
+street
+zip
+city
+country_id
+category_id
+birthdate_date
+gender"
+;;;;;;__export__.teamm_bookings_alias_resource_group;resource.group;room;;;;;;;
+;;;;;;;;;__export__.teamm_bookings_model_resrouce_booking;1;USANN;resource.booking;Booking;"partner
+type
+start
+duration";"name
+combination_auto_assign=0
+combination_id
+product_id"
+;;;;;;;;;__export__.teamm_bookings_model_event_registration;2;USANN;event.registration;Booking;"event
+booking";"contact name
+
+booking:
+event_registration"
+;;;;;;;;;__export__.teamm_bookings_model_sale_order;3;USANN;sale.order;Main guest order;name (order number);"partner_id
+date_order"
+;;;;;;;;;__export__.teamm_bookings_model_sale_order_line;4;SANN;sale.order.line;Guest order line;"order_id
+resource_booking_id
+product_Id";"name (product name)
+product_uom_qty=1
+price_unit"

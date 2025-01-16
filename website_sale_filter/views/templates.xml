@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="website_sale_filters"
+        inherit_id="website_sale.products"
+        name="Website Sale Filters"
+        active="True"
+        customize_show="True"
+        priority="999"
+    >
+        <xpath expr="//div[hasclass('products_attributes_filters')]" position="inside">
+            <div id="wsale_products_filters_collapse" class=" position-relative">
+                <form t-if="filters" class="js_attributes position-relative mb-2" method="get">
+                    <t t-foreach="filters" t-as="f">
+                        <div class="accordion-item nav-item mb-1" t-if="f.records and len(f.records) &gt; 0">
+                            <h6 class="mb-3">
+                                <b class="o_products_attributes_title d-none d-lg-block" t-esc="f.visible_name"/>
+                            </h6>
+                            <div t-attf-id="o_products_filters_{{f.records._name}}" class="">
+                                <t t-if="f.display_type == 'select'">
+                                    <select class="form-select css_attribute_select mb-2" t-att-name="f.records._name">
+                                        <option value="" selected="true">Any</option>
+                                        <t t-foreach="f.records" t-as="r">
+                                            <option t-att-value="r.id" t-esc="r.name" t-att-selected="r.id in f.selected_ids"/>
+                                        </t>
+                                    </select>
+                                </t>
+                                <t t-if="f.display_type == 'radio'">
+                                    <div class="flex-column mb-3">
+                                        <t t-foreach="f.records" t-as="r">
+                                            <div class="form-check mb-1">
+                                                <input type="checkbox" t-att-name="r._name" class="form-check-input" t-att-id="r.id" t-att-value="r.id" t-att-checked="'checked' if r.id in f.selected_ids else None"/>
+                                                <label class="form-check-label fw-normal" t-att-for="r.id" t-field="r.name"/>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </form>
+            </div>
+        </xpath>
+    </template>
+    <!-- <template id="search_events" name="Search Box" inherit_id="website_sale.search">
+        <xpath expr="//t[contains(@t-if, 'attrib_values')]" position="after">
+            <t t-if="event_ids">
+                <t t-foreach="event_ids" t-as="event">
+                    <input type="hidden" name="event" t-att-value="event" />
+                </t>
+            </t>
+        </xpath>
+    </template> -->
+</odoo>
