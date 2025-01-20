@@ -198,7 +198,7 @@ class AuditFile:
         h.audit_file_date_created = datetime.now().strftime("%Y-%m-%d")
         h.software_company_name = "Norske Apps2GROW AS"
         h.software_id = "Odoo"
-        h.software_version = "14.0"
+        h.software_version = "16.0"
         h.company = self.Company()
         h.default_currency_code = "NOK"
         h.selection_criteria = saft.SelectionCriteriaStructure()
