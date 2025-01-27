@@ -8,13 +8,13 @@ from dateutil.relativedelta import relativedelta
 from lxml import etree
 from odoo.exceptions import UserError
 
-from odoo.addons.l10n_no_payroll.models.amelding.generated import amelding_v2_2 as a
+from odoo.addons.l10n_no_payroll.models.amelding.generated import amelding_v2_3 as a
 
 _logger = logging.getLogger(__name__)
 
 
 """
-a = amelding_v2_2
+a = amelding_v2_3
 af = Arbeidsforhold
 aga = Arbeidsgiveravgift
 agag = Arbeidsgiveravgiftsgrunnlag
