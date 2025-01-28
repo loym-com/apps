@@ -11,6 +11,9 @@
         "views/hr_payslip_line_views.xml",
     ],
     "depends": ["payroll"],
+    "external_dependencies": {
+        "python": ["openupgradelib"],
+    },
     "license": "AGPL-3",
     "maintainers": ["ows-cloud"],
     "pre_init_hook": "pre_init_hook",
