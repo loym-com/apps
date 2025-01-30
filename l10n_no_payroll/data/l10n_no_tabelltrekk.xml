@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<odoo>
-    <function model="l10n.no.tabelltrekk" name="post_init_hook_import_tax_deduction_tables"/>
-</odoo>
-<?xml version="1.0" encoding="utf-8" ?>
-<odoo>
-    <function model="l10n.no.tabelltrekk" name="post_init_hook_import_tax_deduction_tables"/>
-</odoo>
