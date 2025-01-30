@@ -37,8 +37,8 @@ class Tabelltrekk(models.Model):
                     line[:4],
                     line[4],
                     line[5],
-                    line[6:][:5],
-                    line[11:][:5],
+                    line[6:][:6],
+                    line[12:][:6],
                 )
                 # execute sql[:-1] without the last comma
                 count += 1
