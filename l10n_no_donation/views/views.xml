@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <!-- res.company -->
+
+        <record model="ir.ui.view" id="view_res_company_form">
+            <field name="name">res.company donation</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="priority" eval="20" />
+            <field name="arch" type="xml">
+                <field name="sequence" position="after">
+                    <field name="l10n_no_donation_partner_id" />
+                </field>
+            </field>
+        </record>
+
+        <!-- res.partner -->
+
+        <record model="ir.ui.view" id="view_res_partner_form">
+            <field name="name">res.partner donation</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="20" />
+            <field name="arch" type="xml">
+                <field name="category_id" position="after">
+                    <field name="donation_total" />
+                </field>
+            </field>
+        </record>
+
+        <!-- l10n_no_donation.xml -->
+
+        <record model="ir.ui.view" id="view_l10n_no_donation_xml_tree">
+            <field name="name">donation XML</field>
+            <field name="model">l10n_no_donation.xml</field>
+            <field name="priority" eval="20" />
+            <field name="arch" type="xml">
+                <tree string="Donation XML">
+                    <field name="date_from" />
+                    <field name="date_to" />
+                    <field name="company_id" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_l10n_no_donation_xml_form">
+            <field name="name">Donation XML</field>
+            <field name="model">l10n_no_donation.xml</field>
+            <field name="priority" eval="20" />
+            <field name="arch" type="xml">
+                <form string="Donation XML" create="0" edit="0">
+                    <group colspan="4">
+                        <group colspan="2" col="2">
+                            <field name="year" />
+                            <field name="company_id" />
+                            <field name="donation_filename" invisible="1" />
+                            <field
+                                name="donation_binary"
+                                filename="donation_filename"
+                            />
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_l10n_no_donation_xml_tree">
+            <field name="name">Donation XML</field>
+            <field name="res_model">l10n_no_donation.xml</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- l10n_no_account_saft.xml.wizard -->
+
+        <record model="ir.ui.view" id="view_l10n_no_donation_xml_wizard_form">
+            <field name="name">Create donation XML</field>
+            <field name="model">l10n_no_donation.xml.wizard</field>
+            <field name="priority" eval="20" />
+            <field name="arch" type="xml">
+                <form string="Create donation XML">
+                    <group colspan="4">
+                        <group colspan="2" col="2">
+                            <separator string="Create donation XML" colspan="2" />
+                            <field name="year" placeholder="yyyy" />
+                            <button
+                                name="create_xml"
+                                type="object"
+                                string="Create donation XML"
+                                class="oe_highlight"
+                            />
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record
+            id="action_l10n_no_donation_xml_wizard_form"
+            model="ir.actions.act_window"
+        >
+            <field name="name">Norwegian Donation Report XML</field>
+            <field name="res_model">l10n_no_donation.xml.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <!-- menu -->
+
+        <menuitem
+            id="menu_l10n_no_donation"
+            name="Norwegian Donation Report XML"
+            sequence="20"
+            parent="donation.donation_report_title_menu"
+            action="action_l10n_no_donation_xml_wizard_form"
+        />
+
+    </data>
+</odoo>
