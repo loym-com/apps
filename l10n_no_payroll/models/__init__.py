@@ -11,5 +11,4 @@ from . import l10n_no_job_code
 from . import l10n_no_tabelltrekk
 from . import res_company
 from .amelding import amelding_logic
-from .amelding.generated import amelding_v2_2
-# from .amelding.generated import amelding_v2_2_odoo
+from .amelding.generated import amelding_v2_3

@@ -13,6 +13,9 @@
         "base_time_parameter",
         "mail",
     ],
+    "external_dependencies": {
+        "python": ["openupgradelib"],
+    },
     "license": "AGPL-3",
     "maintainers": ["ows-cloud"],
     "pre_init_hook": "pre_init_hook",

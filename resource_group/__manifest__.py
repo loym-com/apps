@@ -12,6 +12,6 @@
         "resource",
         "resource_booking", # compute resource.booking.combination name
     ],
-    "version": "1.0",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
 }

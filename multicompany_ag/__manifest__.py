@@ -14,6 +14,9 @@
         "auth_password_policy_signup",
         "multicompany_base",
     ],
+    "external_dependencies": {
+        "python": ["openupgradelib"],
+    },
     "license": "AGPL-3",
     "maintainers": ["ows-cloud"],
     "version": "16.0.1.0.0",

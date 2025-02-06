@@ -24,7 +24,7 @@
     "demo": [
         "demo/hr_salary_rule_demo.xml",
         "demo/hr_payroll_structure_demo.xml",
-        "demo/res_company_demo.xml",
+        "demo/res_company_demo.xml",  # depends on l10n_no
     ],
     "depends": [
         "base_import",  # l10n_no_job_code

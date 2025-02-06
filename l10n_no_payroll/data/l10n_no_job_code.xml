@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<odoo>
-    <function model="l10n.no.job.code" name="post_init_hook_import_job_codes"/>
-</odoo>
-<?xml version="1.0" encoding="utf-8" ?>
-<odoo>
-    <function model="l10n.no.job.code" name="post_init_hook_import_job_codes"/>
-</odoo>

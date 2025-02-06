@@ -19,6 +19,9 @@
         "analytic",
         "payroll",
     ],
+    "external_dependencies": {
+        "python": ["openupgradelib"],
+    },
     "license": "AGPL-3",
     "maintainers": ["ows-cloud"],
     "post_init_hook": "post_init_hook",

@@ -2,9 +2,9 @@ import logging
 
 from odoo import fields, models
 
-from .tabelltrekk2023 import tabelltrekk2023 as tabelltrekk20xx
+from .tabelltrekk2025 import tabelltrekk as tabelltrekk20xx
 
-YEAR = 2023
+YEAR = 2025
 
 _logger = logging.getLogger(__name__)
 
@@ -37,8 +37,8 @@ class Tabelltrekk(models.Model):
                     line[:4],
                     line[4],
                     line[5],
-                    line[6:][:5],
-                    line[11:][:5],
+                    line[6:][:6],
+                    line[12:][:6],
                 )
                 # execute sql[:-1] without the last comma
                 count += 1
