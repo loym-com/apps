@@ -3,7 +3,6 @@
         <field name="name">hr.payslip.form manual payslip lines</field>
         <field name="model">hr.payslip</field>
         <field name="inherit_id" ref="payroll.hr_payslip_view_form" />
-        <field name="priority" eval="20" />
         <field name="arch" type="xml">
             <xpath expr="//separator[@name='worked']" position="before">
                 <separator string="Manual payslip lines" />

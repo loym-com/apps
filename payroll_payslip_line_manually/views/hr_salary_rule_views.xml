@@ -3,7 +3,6 @@
         <field name="name">hr.salary.rule.form line_manually_model</field>
         <field name="model">hr.salary.rule</field>
         <field name="inherit_id" ref="payroll.hr_salary_rule_view_form" />
-        <field name="priority" eval="20" />
         <field name="arch" type="xml">
             <data>
                 <field name="condition_select" position="after">
