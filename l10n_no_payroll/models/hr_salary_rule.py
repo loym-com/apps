@@ -148,12 +148,12 @@ class SalaryRule(models.Model):
         string="SkatteOgAvgiftsregel",
         sparse="json",
         selection=[
+            ("betaltTrygdeavgiftTilJanMayen", "betaltTrygdeavgiftTilJanMayen"),
             ("janMayenOgBilandene", "janMayenOgBilandene"),
-            ("kildeskattPaaPensjoner", "kildeskattPaaPensjoner"),
-            ("nettoloenn", "nettoloenn"),
+            ("kildeskattPaaPensjon", "kildeskattPaaPensjon"),
             ("svalbard", "svalbard"),
-            ("saerskiltFradragForSjoefolk", "saerskiltFradragForSjoefolk"),
-            ("nettoloennForSjoefolk", "nettoloennForSjoefolk"),
-            ("skattefriOrganisasjon", "skattefriOrganisasjon"),
+            ("barnepensjon", "barnepensjon"),
+            ("frivillig", "frivillig"),
+            ("ordinaert", "ordinaert"),
         ],
     )
