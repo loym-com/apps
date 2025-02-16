@@ -63,7 +63,6 @@ class SalaryRule(models.Model):
             ("bil", "bil"),
             ("bolig", "bolig"),
             ("bonus", "bonus"),
-            ("bonusFraForsvaret", "bonusFraForsvaret"),
             ("elektroniskKommunikasjon", "elektroniskKommunikasjon"),
             ("fastBilgodtgjoerelse", "fastBilgodtgjoerelse"),
             ("fastTillegg", "fastTillegg"),

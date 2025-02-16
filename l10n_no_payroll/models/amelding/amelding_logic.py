@@ -166,7 +166,7 @@ class AmeldingLogikk:
         lev.kalendermaaned = _get(
             self.amelding_record, "kalendermaaned"
         )
-        lev.kildesystem = "Odoo"
+        lev.kildesystem = "ODOO 302"
         erstatterMeldingsId = _get(self.amelding_record, "erstatterMeldingsId")
         if erstatterMeldingsId:
             lev.erstatterMeldingsId = str(erstatterMeldingsId)
@@ -236,15 +236,6 @@ class AmeldingLogikk:
             im = self.Inntektsmottaker(employee)
             if im:
                 v.inntektsmottaker.append(im)  # optional
-
-        for payslip_run in self.payslip_runs:
-            agaplikt_uten_loennsopplysningsplikt = _get(
-                payslip_run, "l10n_no_AgapliktUtenLoennsopplysningsplikt"
-            )
-            if agaplikt_uten_loennsopplysningsplikt:
-                self.aga["avgiftsgrunnlagBeloep"] += int(
-                    agaplikt_uten_loennsopplysningsplikt
-                )
 
         aga = self.Arbeidsgiveravgift()
         if aga:
@@ -478,7 +469,7 @@ class AmeldingLogikk:
         p.sluttdatoLoennsplikt = leave.l10n_no_date_end_salary.strftime("%Y-%m-%d")
         p.permitteringsprosent = leave.percent
         p.permitteringsaarsak = _get(
-            leave.holiday_status_id, "l10n_no_PermitteringsBeskrivelse"
+            leave.holiday_status_id, "l10n_no_Permitteringsaarsak"
         )
         return p
 
@@ -565,6 +556,12 @@ class AmeldingLogikk:
             "yrkebilTjenestligbehovKilometer",
         ]:
             _set(loenn, "antall", _get(line, "quantity"))
+        # # TEMPORARY
+        # if hasattr(loenn, 'beskrivelse'):
+        #     delattr(loenn, 'beskrivelse')
+        # if hasattr(loenn, 'antall'):
+        #     delattr(loenn, 'antall')
+        # # END TEMPORARY
         return loenn
 
     # def Tilleggsinformasjon(self):
@@ -723,6 +720,11 @@ class AmeldingLogikk:
         fraig = self.FradragIGrunnlaget(self.aga["avgiftsfradragBeloep"])
         aga.fradragIGrunnlagetForSone.append(fraig)
         # aga.fradragIGrunnlagetForUtenlandsk = self.FradragIGrunnlagetForUtenlandsk()
+        aga.samletGrunnlagUnderOpplysningsplikt = sum(self.payslip_runs.mapped('l10n_no_AgapliktUtenLoennsopplysningsplikt'))
+        self.je["sumArbeidsgiveravgift"] += (
+            aga.samletGrunnlagUnderOpplysningsplikt
+            * float(_get(self.company, "l10n_no_Grunnlagsprosent")) / 100
+        )
         return aga
 
     def Arbeidsgiveravgiftsgrunnlag(self, beloep):
@@ -734,7 +736,7 @@ class AmeldingLogikk:
         agag.avgiftsgrunnlagBeloep = beloep
         agag.prosentsatsForAvgiftsberegning = _get(
             self.company, "l10n_no_Grunnlagsprosent"
-        )  # float
+        )
         self.je["sumArbeidsgiveravgift"] += (
             agag.avgiftsgrunnlagBeloep
             * float(agag.prosentsatsForAvgiftsberegning) / 100

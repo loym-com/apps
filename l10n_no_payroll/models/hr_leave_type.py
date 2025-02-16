@@ -39,8 +39,8 @@ class LeaveType(models.Model):
 
     # PERMITTERING
 
-    l10n_no_PermitteringsBeskrivelse = fields.Selection(
-        string="Permitteringsbeskrivelse",
+    l10n_no_Permitteringsaarsak = fields.Selection(
+        string="Permitteringsaarsak",
         sparse="json",
         selection=[
             ("mangelPaaArbeidEllerOppdrag", "Mangel på arbeid eller oppdrag"),

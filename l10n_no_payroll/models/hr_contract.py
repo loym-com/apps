@@ -47,6 +47,9 @@ class HrContract(models.Model):
         selection=[
             ("fast", "Fast ansettelse"),
             ("midlertidig", "Midlertidig ansettelse"),
+            ("fastAnsattUtleid", "Fast ansatt utleid"),
+            ("midlertidigAnsattUtleid", "Midlertidig ansatt utleid"),
+            ("midlertidigAnsattSomTilkallingsvikar", "Midlertidig ansatt som tilkallingsvikar"),
         ],
     )
     l10n_no_loennsansiennitet = fields.Date("Dato for lønnsansiennitet", sparse="json")
