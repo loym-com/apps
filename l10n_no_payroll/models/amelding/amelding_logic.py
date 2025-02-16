@@ -420,8 +420,12 @@ class AmeldingLogikk:
                 )
                 if newer_period or (older_period and not changed):
                     continue
-                p = self.Permisjon(leave)
-                af.permisjon.append(p)
+                if leave.l10n_no_type == "permisjon":
+                    p = self.Permisjon(leave)
+                    af.permisjon.append(p)
+                elif leave.l10n_no_type == "permittering":
+                    p = self.Permittering(leave)
+                    af.permittering.append(p)
             _set(
                 af,
                 "sisteDatoForStillingsprosentendring",
@@ -457,7 +461,7 @@ class AmeldingLogikk:
         p.beskrivelse = _get(
             leave.holiday_status_id, "l10n_no_PermisjonsOgPermitteringsBeskrivelse"
         )
-        p.loennet = _get(leave.holiday_status_id, "l10n_no_PermisjonLoennetUloennet")
+        p.loennet = _get(leave.holiday_status_id, "l10n_no_PermisjonLoennet")
         return p
 
     def Permittering(self, leave):

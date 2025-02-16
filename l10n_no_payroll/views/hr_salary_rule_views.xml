@@ -6,14 +6,14 @@
             <notebook position="inside">
                 <page name="norway" string="Norway">
                     <group name="Norway" string="Norway">
-                        <field name="l10n_no_BeregnAga" />
-                        <field name="l10n_no_BeregnFP" />
-                        <field name="l10n_no_BeregnTrekk" />
-                        <field name="l10n_no_Fordel" />
-                        <field name="l10n_no_Forskuddstrekkbeskrivelse" />
-                        <field name="l10n_no_Loennsbeskrivelse" />
                         <field name="l10n_no_RegelType" />
-                        <field name="l10n_no_SkatteOgAvgiftsregel" />
+                        <field name="l10n_no_Forskuddstrekkbeskrivelse" attrs="{'invisible': [('l10n_no_RegelType', '!=', 'forskuddstrekk')]}" />
+                        <field name="l10n_no_Loennsbeskrivelse" attrs="{'invisible': [('l10n_no_RegelType', '=', 'forskuddstrekk')]}" />
+                        <field name="l10n_no_Fordel" attrs="{'invisible': [('l10n_no_RegelType', '=', 'forskuddstrekk')]}" />
+                        <field name="l10n_no_BeregnTrekk" attrs="{'invisible': [('l10n_no_RegelType', '=', 'forskuddstrekk')]}" />
+                        <field name="l10n_no_BeregnAga" attrs="{'invisible': [('l10n_no_RegelType', '=', 'forskuddstrekk')]}" />
+                        <field name="l10n_no_BeregnFP" attrs="{'invisible': [('l10n_no_RegelType', '=', 'forskuddstrekk')]}" />
+                        <field name="l10n_no_SkatteOgAvgiftsregel" attrs="{'invisible': [('l10n_no_RegelType', '=', 'forskuddstrekk')]}" />
                     </group>
                 </page>
             </notebook>

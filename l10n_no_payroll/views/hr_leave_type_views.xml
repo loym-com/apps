@@ -8,7 +8,7 @@
                 <group name="norway" string="Norway">
                     <field name="l10n_no_type" />
                     <field name="l10n_no_PermisjonsOgPermitteringsBeskrivelse" attrs="{'invisible': [('l10n_no_type', '!=', 'permisjon')]}" />
-                    <field name="l10n_no_PermisjonLoennetUloennet" attrs="{'invisible': [('l10n_no_type', '!=', 'permisjon')]}" />
+                    <field name="l10n_no_PermisjonLoennet" attrs="{'invisible': [('l10n_no_type', '!=', 'permisjon')]}" />
                     <field name="l10n_no_Permitteringsaarsak" attrs="{'invisible': [('l10n_no_type', '!=', 'permittering')]}" />
                 </group>
             </xpath>

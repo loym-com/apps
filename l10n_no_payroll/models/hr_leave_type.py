@@ -28,13 +28,9 @@ class LeaveType(models.Model):
             ("andreIkkeLovfestedePermisjoner", "Andre ikke lovfestede permisjoner"),
         ],
     )
-    l10n_no_PermisjonLoennetUloennet = fields.Selection(
-        string="PermisjonLoennetUloennet",
+    l10n_no_PermisjonLoennet = fields.Boolean(
+        string="Paid",
         sparse="json",
-        selection=[
-            ("permisjonLoennet", "permisjonLoennet"),
-            ("permisjonUloennet", "permisjonUloennet"),
-        ],
     )
 
     # PERMITTERING

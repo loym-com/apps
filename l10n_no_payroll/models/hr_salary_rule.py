@@ -46,7 +46,8 @@ class SalaryRule(models.Model):
             ("janMayenOgBilandene", "janMayenOgBilandene"),
             ("kildeskattPaaPensjon", "kildeskattPaaPensjon"),
             ("ordinaert", "ordinaert"),
-            ("svalbard", "svalbard"),        ],
+            ("svalbard", "svalbard"),
+        ],
     )
     l10n_no_Loennsbeskrivelse = fields.Selection(
         string="Loennsbeskrivelse",
@@ -138,12 +139,12 @@ class SalaryRule(models.Model):
         string="SkatteOgAvgiftsregel",
         sparse="json",
         selection=[
-            ("betaltTrygdeavgiftTilJanMayen", "betaltTrygdeavgiftTilJanMayen"),
             ("janMayenOgBilandene", "janMayenOgBilandene"),
-            ("kildeskattPaaPensjon", "kildeskattPaaPensjon"),
+            ("kildeskattPaaPensjoner", "kildeskattPaaPensjoner"),
+            ("nettoloenn", "nettoloenn"),
+            ("nettoloennForSjoefolk", "nettoloennForSjoefolk"),
+            ("saerskiltFradragForSjoefolk", "saerskiltFradragForSjoefolk"),
+            ("skattefriOrganisasjon", "skattefriOrganisasjon"),
             ("svalbard", "svalbard"),
-            ("barnepensjon", "barnepensjon"),
-            ("frivillig", "frivillig"),
-            ("ordinaert", "ordinaert"),
         ],
     )
