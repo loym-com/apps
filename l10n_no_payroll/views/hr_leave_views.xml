@@ -13,6 +13,9 @@
                         domain="[('employee_id','=',employee_id)]"
                     />
                     <field name="percent" />
+                    <field name="l10n_no_type" invisible="1" />
+                    <field name="l10n_no_varslingsdato" attrs="{'invisible': [('l10n_no_type', '!=', 'permittering')]}" />
+                    <field name="l10n_no_sluttdatoLoennsplikt" attrs="{'invisible': [('l10n_no_type', '!=', 'permittering')]}" />
                 </group>
             </group>
         </field>

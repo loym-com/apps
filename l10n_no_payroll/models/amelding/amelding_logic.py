@@ -466,6 +466,20 @@ class AmeldingLogikk:
         p.beskrivelse = _get(
             leave.holiday_status_id, "l10n_no_PermisjonsOgPermitteringsBeskrivelse"
         )
+        p.loennet = _get(leave.holiday_status_id, "l10n_no_PermisjonLoennetUloennet")
+        return p
+
+    def Permittering(self, leave):
+        p = a.Permittering()
+        p.permitteringId = str(leave.id)
+        p.varslingsdato = leave.l10n_no_date_warning.strftime("%Y-%m-%d")
+        p.startdatoPermittering = leave.date_from.strftime("%Y-%m-%d")
+        p.sluttdatoPermittering = leave.date_to.strftime("%Y-%m-%d")
+        p.sluttdatoLoennsplikt = leave.l10n_no_date_end_salary.strftime("%Y-%m-%d")
+        p.permitteringsprosent = leave.percent
+        p.permitteringsaarsak = _get(
+            leave.holiday_status_id, "l10n_no_PermitteringsBeskrivelse"
+        )
         return p
 
     # def Fradrag(self):
