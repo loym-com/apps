@@ -9,7 +9,7 @@
     "data": [
         "data/ir_config_parameter_data.xml",
         "views/product_template_views.xml",
-        "views/templates.xml",
+        # "views/templates.xml",
     ],
     "depends": [
         "website_sale_delivery",
