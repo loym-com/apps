@@ -8,7 +8,7 @@
     "category": "uncategorized",
     "data": [
         "views/product_template_views.xml",
-        "views/templates.xml",
+        # "views/templates.xml",
     ],
     "depends": [
         "website_sale_delivery",
