@@ -6,6 +6,7 @@ import re
 import requests
 import pytz
 
+from collections import defaultdict
 from datetime import datetime
 
 from odoo import api, fields, models
@@ -93,12 +94,12 @@ class TeamM(models.Model):
             csv_file = io.StringIO(file_data.decode('utf-8'))
             csv_reader = csv.DictReader(csv_file, delimiter=self.csv_delimiter)
             return self._action_import([line for line in csv_reader])
-        
+
     def action_import_csv_field(self):
         csv_file = io.StringIO(self.csv.strip())
         csv_reader = csv.DictReader(csv_file, delimiter=self.csv_delimiter)
         return self._action_import([line for line in csv_reader])
-    
+
     def action_clear_csv(self):
         self.csv = ""
 
@@ -164,7 +165,7 @@ class TeamM(models.Model):
         # Convert to list
         discounts = discounts.split(", ")
         # Final discounts
-        final_discounts = []
+        final_discounts = defaultdict(float)
         for discount in discounts:
             if "total discount" in discount.lower():
                 continue
@@ -181,16 +182,16 @@ class TeamM(models.Model):
             amount = self._replace_discount_amount(teamm_values, amount)
             # Exclude "Total discount"
             if name != "Total discount":
-                final_discounts.append((name, amount))
+                final_discounts[name] += amount
 
-        known_discount = sum(amount for _, amount in final_discounts)
+        known_discount = sum(amount for _, amount in final_discounts.items())
         unknown_discount = float(total_discount) - known_discount
         if unknown_discount:
             name = self.param_ids.filtered(
                 lambda p: p.type == "code" and p.key == "default_discount"
             ).value
-            final_discounts.append((name, unknown_discount))
-        return final_discounts
+            final_discounts[name] += unknown_discount
+        return final_discounts.items()
 
     def _replace_discount_amount(self, teamm_values, amount):
         """
@@ -210,7 +211,7 @@ class TeamM(models.Model):
     #
     # Used by other models
     #
-    
+
     def _get_date(self, key):
         datestring = self._teamm2odoo_get_value(key)
         if datestring:
@@ -218,7 +219,7 @@ class TeamM(models.Model):
             if not date_format:
                 raise UserError("Missing Date Format")
             return datetime.strptime(datestring, date_format).date()
-    
+
     def _get_datetime(self, key):
         date_string = self._teamm2odoo_get_value(key)
         date_format = self.env.context["teamm"].date_format
