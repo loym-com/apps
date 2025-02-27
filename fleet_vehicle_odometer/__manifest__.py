@@ -8,7 +8,8 @@
     "auto_install": True,
     "category": "Administration",
     "data": [
-        "views/fleet_vehicle_odometer.xml",
+        "views/fleet_vehicle_views.xml",
+        "views/fleet_vehicle_odometer_views.xml",
     ],
     "depends": [
         "analytic",
