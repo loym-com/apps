@@ -68,7 +68,7 @@
                                 <td style="width: 55%;" />
                                 <td style="width: 45%;">
                                     <p style="font-size: 18px;">
-                                        <t t-raw="0" />
+                                        <t t-out="0" />
                                         <span t-field="o.name" /><br />
                                         <span t-field="o.street" /><br
                                             t-if="o.street"
