@@ -31,7 +31,7 @@
         <field name="binding_model_id" ref="base.model_res_partner" />
     </record>
     <record id="action_report_donation_tax_receipt" model="ir.actions.report">
-        <field name="name">Thank-you letter</field>
+        <field name="name">Tax receipt thank-you letter</field>
         <field name="model">donation.tax.receipt</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">donation_thanks.report_donation_tax_receipt</field>
@@ -40,4 +40,5 @@
         <field name="binding_type">report</field>
         <field name="binding_model_id" ref="donation_base.model_donation_tax_receipt" />
     </record>
+    <!-- action_report_donation_donation is in res_partner.py to get today's date -->
 </odoo>

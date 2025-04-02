@@ -2,6 +2,7 @@
 <odoo noupdate="1">
 
     <!-- A4 res.partner -->
+
     <template id="report_address_sheet_a4">
         <t t-set="envelope" t-value="0" />
         <t t-call="donation_thanks.report_address_main">
@@ -13,6 +14,7 @@
     </template>
 
     <!-- ENVELOPE res.partner -->
+
     <template id="report_address_envelope_dle">
         <t t-set="envelope" t-value="1" />
         <t t-call="donation_thanks.report_address_main">
@@ -107,7 +109,126 @@
         </t>
     </template>
 
-    <!-- DONATION RECEIPT donation.tax.receipt -->
+    <!-- DONATION RECEIPTS (donation.donation= retrieved from CONTACTS (res.partner= -->
+
+    <template id="report_donation_donation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs.sorted(key=lambda x: x.name)" t-as="p">
+                <t
+                    t-set="unprinted_donations_with_template"
+                    t-value="p.donation_ids.filtered(lambda d: d.thanks_template_id and not d.thanks_printed)"
+                />
+                <t
+                    t-set="thanks_templates"
+                    t-value="unprinted_donations_with_template.mapped('thanks_template_id')"
+                />
+                <t t-foreach="thanks_templates" t-as="t"></t>
+                    <t t-call="web.basic_layout" t-lang="p.lang"><!-- t-lang doesn't seem to work -->
+                        <div class="page">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td colspan="2">
+                                        <img
+                                            src="https://granheims.no/wp-content/uploads/2021/07/Hjertelig-takk-for-gaven.png"
+                                            alt="Demo Icon"
+                                            width="730"
+                                            height="228"
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" style="padding-right: 15px;">
+                                        <p style="font-size: 6px;"><br /></p>
+                                        <span t-field="t.with_context(lang=p.lang).text1" />
+                                    </td>
+                                    <td valign="top" align="center">
+                                        <p style="font-size: 6px;"><br /></p>
+                                        <img
+                                            t-if="t.image"
+                                            t-att-src="image_data_uri(t.image)"
+                                            t-att-height="t.image_height"
+                                            t-att-width="t.image_width"
+                                            alt="Image of person"
+                                        />
+                                        <span t-field="t.with_context(lang=p.lang).image_text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <span t-field="t.with_context(lang=p.lang).text2" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <p />
+                            <table style="width:100%; font-size: 18px;" align="center">
+                                <tr>
+                                    <td
+                                        align="center"
+                                        colspan="3"
+                                        style="font-size: 18px;"
+                                    >
+                                        <t t-if="p.lang == 'nb_NO'">
+                                            <b><i>Kvittering <t t-esc="today[p.lang]"/>
+                                            </i></b> <br />
+                                            Granheimstiftelsen har mottatt fra <br />
+                                            <span t-field="o.partner_id.name" />:
+                                        </t>
+                                        <t t-else="">
+                                            <b><i>Receipt <t t-esc="today[p.lang]"/>
+                                            </i></b> <br />
+                                            The Granheim Foundation has received from <br
+                                            />
+                                            <span t-field="p.name" />:
+                                        </t>
+                                    </td>
+                                </tr>
+                                <t
+                                    t-foreach="unprinted_donations_with_template.filtered(lambda d: d.thanks_template_id == t)"
+                                    t-as="d"
+                                >
+                                    <tr t-foreach="d.line_ids" t-as="dl">
+                                        <!-- user.lang returns "English", not the lang record.
+                                            lang.date_format returns ERROR since the "lang" variable does not exist. -->
+                                        <td style="width:35%;" align="right">
+                                            <t t-if="p.lang == 'nb_NO'">
+                                                <span
+                                                    t-field="d.donation_date"
+                                                    t-options='{"format": "dd.MM.yyyy"}'
+                                                />
+                                            </t>
+                                            <t t-else="">
+                                                <span
+                                                    t-field="d.donation_date"
+                                                    t-options='{"format": "MM/dd/yyyy"}'
+                                                />
+                                            </t>
+                                        </td>
+                                        <td style="width:30%;" align="center"><span
+                                                t-field="dl.analytic_account_id.with_context(lang=o.partner_id.lang).donation_description"
+                                            /></td>
+                                        <td style="width:35%;" align="left"><span
+                                                t-field="dl.amount"
+                                            /></td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <div class="footer">
+                                <img
+                                    src="https://granheims.no/wp-content/uploads/2021/07/Granheimstiftelsen-skaper-bærekraftige-løsninger.png"
+                                    alt="Demo Icon"
+                                    width="872"
+                                    height="87"
+                                />
+                                <p style="font-size: 15px;"><br /></p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- DONATION TAX RECEIPT donation.tax.receipt -->
 
     <template id="report_donation_tax_receipt">
         <t t-call="web.html_container">

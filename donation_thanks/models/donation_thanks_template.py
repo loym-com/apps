@@ -28,3 +28,10 @@ class DonationThanksTemplate(models.Model):
         inverse_name="res_id",
         context={"default_res_model": "donation.thanks.template"},
     )
+    model = fields.Selection(
+        string="Model",
+        selection=[
+            ("donation.donation", "Donations"),
+            ("donation.tax.receipt", "Tax Receipts"),
+        ]
+    )
