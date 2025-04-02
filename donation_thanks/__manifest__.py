@@ -12,7 +12,7 @@
         "data/res_partner_category_data.xml", # before mail templates
         "data/mail_template_data.xml", # before server actions
         "data/ir_actions_server_data.xml",
-        "data/res_partner_templates.xml",
+        "reports/report_donation_thanks_templates.xml",
         "views/donation_tax_receipt_views.xml",
         "views/donation_thanks_template_views.xml",
         "views/ir_attachment_views.xml",
