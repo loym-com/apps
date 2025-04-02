@@ -108,10 +108,14 @@
             </t>
         </t>
     </template>
-
-    <!-- DONATION RECEIPTS (donation.donation= retrieved from CONTACTS (res.partner= -->
-
-    <template id="report_donation_donation">
+    <template id="report_donation_thanks">
+        <!--
+            Loop order and acronyms:
+            p = res.partner
+            r = donation.tax.receipt (t = donation.thanks.template)
+            d = donation.donation
+            dl = donation.line
+        -->
         <t t-call="web.html_container">
             <t t-foreach="docs.sorted(key=lambda x: x.name)" t-as="p">
                 <t
@@ -122,8 +126,16 @@
                     t-set="thanks_templates"
                     t-value="unprinted_donations_with_template.mapped('thanks_template_id')"
                 />
-                <t t-foreach="thanks_templates" t-as="t"></t>
-                    <t t-call="web.basic_layout" t-lang="p.lang"><!-- t-lang doesn't seem to work -->
+                <t t-foreach="thanks_templates" t-as="t">
+                    <t t-call="web.html_container" t-lang="p.lang">
+                        <style>
+                            table {
+                                border-collapse: collapse; /* Remove spacing between borders */
+                            }
+                            table, th, td {
+                                border: none; /* Remove borders from all table elements */
+                            }
+                        </style>
                         <div class="page">
                             <table style="width:100%;">
                                 <tr>
@@ -171,7 +183,7 @@
                                             <b><i>Kvittering <t t-esc="today[p.lang]"/>
                                             </i></b> <br />
                                             Granheimstiftelsen har mottatt fra <br />
-                                            <span t-field="o.partner_id.name" />:
+                                            <span t-field="p.name" />:
                                         </t>
                                         <t t-else="">
                                             <b><i>Receipt <t t-esc="today[p.lang]"/>
@@ -204,7 +216,7 @@
                                             </t>
                                         </td>
                                         <td style="width:30%;" align="center"><span
-                                                t-field="dl.analytic_account_id.with_context(lang=o.partner_id.lang).donation_description"
+                                                t-field="dl.analytic_account_id.with_context(lang=p.lang).donation_description"
                                             /></td>
                                         <td style="width:35%;" align="left"><span
                                                 t-field="dl.amount"
