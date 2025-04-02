@@ -10,8 +10,9 @@
         "data/report_paperformat_data.xml", # before reports
         "data/ir_actions_report_data.xml",
         "data/res_partner_category_data.xml", # before mail templates
-        "data/mail_template_data.xml",
-        "data/templates.xml",
+        "data/mail_template_data.xml", # before server actions
+        "data/ir_actions_server_data.xml",
+        "data/res_partner_templates.xml",
         "views/donation_tax_receipt_views.xml",
         "views/donation_thanks_template_views.xml",
         "views/ir_attachment_views.xml",
