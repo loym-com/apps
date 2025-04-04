@@ -1,0 +1,6 @@
+
+YEAR
+py3o://function="o_format_date(o.donation_date, lang_code=lang, date_format="YYYY")"
+
+AMOUNT
+py3o://function="o_format_lang(o.amount, digits=0, lang_code=lang, currency_obj=o.currency_id)"
