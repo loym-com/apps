@@ -5,7 +5,7 @@
 
     <record id="mail_template_donation_donation" model="mail.template">
         <field name="name">Donation Thanks</field>
-        <field name="model_id" ref="donation_base.model_donation_donation" />
+        <field name="model_id" ref="donation.model_donation_donation" />
         <field name="partner_to">${object.id}</field>
         <field name="reply_to">${user.login}</field>
         <field name="lang">${object.lang}</field>
