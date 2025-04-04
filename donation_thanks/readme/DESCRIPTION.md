@@ -1,3 +1,7 @@
+DOCUMENTATION
+
+Report template functions are documented in reports/[report]_functions.txt
+
 NEED
 
 Create two types of receipts:
