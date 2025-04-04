@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<odoo noupdate="0">
+<odoo noupdate="1"><!-- or set py3o_filetype=pdf and external dependency libreoffice -->
     <record id="action_report_address_sheet_a4" model="ir.actions.report">
         <field name="name">Address on A4 sheet</field>
         <field name="model">res.partner</field>
@@ -30,35 +30,15 @@
         <field name="binding_type">report</field>
         <field name="binding_model_id" ref="base.model_res_partner" />
     </record>
-    <!-- <record id="action_report_donation_thanks" model="ir.actions.report">
-        <field name="name">Thank-you letter</field>
-        <field name="model">res.partner</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">donation_thanks.report_donation_thanks</field>
-        <field name="paperformat_id" ref="paperformat_a5" />
-        <field name="binding_type">report</field>
-        <field name="binding_model_id" ref="base.model_res_partner" />
-    </record> -->
-    <!-- <record id="action_report_donation_tax_receipt" model="ir.actions.report">
-        <field name="name">Tax receipt thank-you letter</field>
-        <field name="model">donation.tax.receipt</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">donation_thanks.report_donation_tax_receipt</field>
-        <field name="report_file">donation_thanks.report_donation_tax_receipt</field>
-        <field name="paperformat_id" ref="paperformat_a5" />
-        <field name="binding_type">report</field>
-        <field name="binding_model_id" ref="donation_base.model_donation_tax_receipt" />
-    </record> -->
     <record id="action_report_donation_donation" model="ir.actions.report">
         <field name="name">Donation thanks</field>
         <field name="model">res.partner</field>
         <field name="report_type">py3o</field>
-        <field name="py3o_filetype">odt</field>
+        <!-- <field name="py3o_filetype">odt</field> -->
         <field name="module">donation_thanks</field>
         <field name="py3o_template_fallback">reports/report_donation_donation.odt</field>
         <field name="report_name">donation_thanks.report_donation_donation</field>
         <field name="print_report_name">f"Takk - {object.name}"</field>
-        <!-- <field name="paperformat_id" ref="paperformat_a5" /> -->
         <field name="binding_type">report</field>
         <field name="binding_model_id" ref="base.model_res_partner" />
     </record>
@@ -66,12 +46,11 @@
         <field name="name">Donation tax receipt thanks</field>
         <field name="model">res.partner</field>
         <field name="report_type">py3o</field>
-        <field name="py3o_filetype">odt</field>
+        <!-- <field name="py3o_filetype">odt</field> -->
         <field name="module">donation_thanks</field>
         <field name="py3o_template_fallback">reports/report_donation_tax_receipt.odt</field>
         <field name="report_name">donation_thanks.report_donation_tax_receipt</field>
         <field name="print_report_name">f"Skattefradrag for gaver - {object.name}"</field>
-        <!-- <field name="paperformat_id" ref="paperformat_a5" /> -->
         <field name="binding_type">report</field>
         <field name="binding_model_id" ref="base.model_res_partner" />
     </record>
