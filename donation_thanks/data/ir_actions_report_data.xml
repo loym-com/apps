@@ -57,6 +57,7 @@
         <field name="module">donation_thanks</field>
         <field name="py3o_template_fallback">reports/report_donation_donation.odt</field>
         <field name="report_name">donation_thanks.report_donation_donation</field>
+        <field name="print_report_name">f"Takk - {object.name}"</field>
         <!-- <field name="paperformat_id" ref="paperformat_a5" /> -->
         <field name="binding_type">report</field>
         <field name="binding_model_id" ref="base.model_res_partner" />
@@ -69,6 +70,7 @@
         <field name="module">donation_thanks</field>
         <field name="py3o_template_fallback">reports/report_donation_tax_receipt.odt</field>
         <field name="report_name">donation_thanks.report_donation_tax_receipt</field>
+        <field name="print_report_name">f"Skattefradrag for gaver - {object.name}"</field>
         <!-- <field name="paperformat_id" ref="paperformat_a5" /> -->
         <field name="binding_type">report</field>
         <field name="binding_model_id" ref="base.model_res_partner" />
