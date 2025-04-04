@@ -71,3 +71,19 @@ Donor actions
 - Print tax receipt
 - Send donation receipt DIRECTLY
 - Send tax receipt DIRECTLY
+
+TODO
+
+Reports should belong to their data model.
+
+Contacts should have two actions, return a window action with domain, ready to print:
+
+- Donations to print
+- Donation tax receipts to print
+
+Improve the reports:
+
+- report_donation_donation.odt
+- report_donation_tax_receipt.odt
+
+For now, report_donation_tax_receipt.odt works when there is max 1 receipt per contact.
