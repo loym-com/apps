@@ -2,8 +2,8 @@
 <odoo noupdate="1">
     <record id="action_donation_donation_email" model="ir.actions.server">
         <field name="name">Email Donation Thanks DIRECTLY</field>
-        <field name="model_id" ref="donation_base.model_donation_donation"/>
-        <field name="binding_model_id" ref="donation_base.model_donation_donation"/>
+        <field name="model_id" ref="donation.model_donation_donation"/>
+        <field name="binding_model_id" ref="donation.model_donation_donation"/>
         <field name="state">code</field>
         <field name="code"><![CDATA[
 mail_template = env.ref("donation_thanks.mail_template_donation_donation")

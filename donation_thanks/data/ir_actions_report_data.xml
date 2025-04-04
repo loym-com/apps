@@ -40,7 +40,7 @@
         <field name="report_name">donation_thanks.report_donation_donation</field>
         <field name="print_report_name">f"Takk - {object.name}"</field>
         <field name="binding_type">report</field>
-        <field name="binding_model_id" ref="base.model_donation_donation" />
+        <field name="binding_model_id" ref="donation.model_donation_donation" />
     </record> -->
     <record id="action_report_donation_tax_receipt" model="ir.actions.report">
         <field name="name">Donation tax receipt thanks</field>
