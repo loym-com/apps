@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
 
-    <record id="mail_template_contact_donation_donation" model="mail.template">
-        <field name="name">Contact Donations Thanks</field>
-        <field name="model_id" ref="base.model_res_partner" />
+    <!-- DONATION.DONATION-->
+
+    <record id="mail_template_donation_donation" model="mail.template">
+        <field name="name">Donation Thanks</field>
+        <field name="model_id" ref="donation_base.model_donation_donation" />
         <field name="partner_to">${object.id}</field>
         <field name="reply_to">${user.login}</field>
         <field name="lang">${object.lang}</field>
@@ -29,27 +31,28 @@
 </div>]]></field>
         <field
             name="report_template"
-            ref="action_report_donation_tax_receipt"
+            ref="action_report_donation_donation"
         />
-        <field name="report_name">Receipt to ${object.partner_id.name}.pdf</field>
+        <field name="report_name">Thanks to ${object.partner_id.name}.pdf</field>
     </record>
 
+    <!-- DONATION.TAX.RECEIPT -->
 
     <record id="mail_template_donation_tax_receipt" model="mail.template">
-        <field name="name">Donation Tax Receipt</field>
+        <field name="name">Donation Tax Receipt Thanks</field>
         <field name="model_id" ref="donation_base.model_donation_tax_receipt" />
         <field name="partner_to">${object.partner_id.id}</field>
         <field name="reply_to">${user.login}</field>
         <field name="lang">${object.partner_id.lang}</field>
         <field name="auto_delete" eval="0" />
-        <field name="subject">Thank you!</field>
+        <field name="subject">Donation Tax Receipt from the Granheim Foundation</field>
         <field
             name="body_html"
         ><![CDATA[
 <div>
     <p>Dear ${object.partner_id.name},</p>
     <p>Thank you for supporting the work of the Granheim Foundation!</p>
-    <p>Please find attached the latest newsletter from Matteson. I hope you will enjoy it.</p>
+    <p>Please find attached your tax report for last year.</p>
 
     % if object.env.ref('donation_thanks.res_partner_category_newsletter') not in object.partner_id.category_id.parent_id:
     <p>We would like to continue sending you updates from Matteson Mission School.
@@ -65,7 +68,5 @@
             name="report_template"
             ref="action_report_donation_tax_receipt"
         />
-        <field name="report_name">Receipt to ${object.partner_id.name}.pdf</field>
     </record>
-
 </odoo>
