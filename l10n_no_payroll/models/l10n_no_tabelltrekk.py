@@ -78,26 +78,30 @@ class HrEmployee(models.Model):
         trekktabell = self.l10n_no_trekktabell
         if trekktabell:
             trekkgrunnlag = int(trekkgrunnlag / 100.0) * 100
-            record = self.env["l10n.no.tabelltrekk"].search(
-                [
+            domain = [
                     ("year", "=", year),
                     ("tabellnummer", "=", trekktabell),
                     ("trekkperiode", "=", trekkperiode),
                     ("tabelltype", "=", tabelltype),
                     ("trekkgrunnlag", "=", trekkgrunnlag),
-                ],
+            ]
+            _logger.info(f"domain 1: {domain}")
+            record = self.env["l10n.no.tabelltrekk"].search(
+                domain,
                 limit=1,
             )
             if record:
                 return -int(int(record.ensure_one().trekk) * andel_av_trekk)
             else:
-                record = self.env["l10n.no.tabelltrekk"].search(
-                    [
+                domain = [
                         ("year", "=", year),
                         ("tabellnummer", "=", trekktabell),
                         ("trekkperiode", "=", trekkperiode),
                         ("tabelltype", "=", tabelltype),
-                    ],
+                ]
+                _logger.info(f"domain 2: {domain}")
+                record = self.env["l10n.no.tabelltrekk"].search(
+                    domain,
                     order="trekkgrunnlag DESC",
                     limit=1,
                 )
