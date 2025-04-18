@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data noupdate="0">
+
+    <!-- RESOURCE CALENDAR - AVAILABLE 24/7 -->
+
+    <record id="resource_calendar_24_7" model="resource.calendar">
+        <field name="name">Available 24/7</field>
+    </record>
+    <record id="resource_calendar_24_7" model="resource.calendar">
+        <field name="attendance_ids" eval="[(6, 0, [])]" />
+    </record>
+    <record id="resource_calendar_24_7_monday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Monday</field>
+        <field name="dayofweek">0</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_tuesday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Tuesday</field>
+        <field name="dayofweek">1</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_wednesday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Wednesday</field>
+        <field name="dayofweek">2</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_thursday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Thursday</field>
+        <field name="dayofweek">3</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_friday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Friday</field>
+        <field name="dayofweek">4</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_saturday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Saturday</field>
+        <field name="dayofweek">5</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_sunday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Sunday</field>
+        <field name="dayofweek">6</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+
+    <!-- MATERIAL RESOURCES -->
+
+    <record id="resource_resource_session" model="resource.resource">
+        <field name="name">SESSION</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_resource_room_basic_1" model="resource.resource">
+        <field name="name">Basic Room 1</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_resource_room_basic_2" model="resource.resource">
+        <field name="name">Basic Room 2</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_resource_room_premium_1" model="resource.resource">
+        <field name="name">Premium Room 1</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_resource_room_premium_2" model="resource.resource">
+        <field name="name">Premium Room 2</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_resource_workspace_1" model="resource.resource">
+        <field name="name">Workspace 1</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_resource_workspace_2" model="resource.resource">
+        <field name="name">Workspace 2</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+
+    <!-- USERs & HUMAN RESOURCES -->
+
+    <record id="user_doctor" model="res.users">
+        <field name="name">Don Doctor</field>
+        <field name="login">don.doctor@resource_booking.demo</field>
+    </record>
+    <record id="user_therapist" model="res.users">
+        <field name="name">Terri Therapist</field>
+        <field name="login">terri.therapist@resource_booking.demo</field>
+    </record>
+    <record id="resource_doctor" model="resource.resource">
+        <field name="name">Don Doctor</field>
+        <field name="user_id" ref="user_doctor" />
+    </record>
+    <record id="resource_therapist" model="resource.resource">
+        <field name="name">Terri Therapist</field>
+        <field name="user_id" ref="user_therapist" />
+    </record>
+    <!-- hr  -->
+    <!-- <record id="hr_doctor" model="hr.employee">
+        <field name="name">Don Doctor</field>
+        <field name="user_id" ref="user_doctor">
+    </record>
+    <record id="hr_therapist" model="res.users">
+        <field name="name">Terri Therapist</field>
+        <field name="user_id" ref="user_therapist">
+    </record>
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'resource_booking_demo.resource_doctor',
+            'record': obj().env.ref('hr.employee_doctor').resource_id,
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.resource_therapist',
+            'record': obj().env.ref('hr.employee_therapist').resource_id,
+            'noupdate': False,
+        },]"/>
+    </function> -->
+
+    <!-- RESOURCE COMBINATION -->
+
+    <record id="resource_booking_combination_session" model="resource.booking.combination">
+        <!-- <field name="name">SESSION</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_session')])]" />
+    </record>
+    <record id="resource_booking_combination_basic_room_1" model="resource.booking.combination">
+        <!-- <field name="name">Basic Room 1</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_basic_1')])]" />
+    </record>
+    <record id="resource_booking_combination_basic_room_2" model="resource.booking.combination">
+        <!-- <field name="name">Basic Room 2</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_basic_2')])]" />
+    </record>
+    <record id="resource_booking_combination_premium_room_1" model="resource.booking.combination">
+        <!-- <field name="name">Premium Room 1</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_premium_1')])]" />
+    </record>
+    <record id="resource_booking_combination_premium_room_2" model="resource.booking.combination">
+        <!-- <field name="name">Premium Room 2</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_premium_2')])]" />
+    </record>
+    <record id="resource_booking_combination_doctor_workspace_1" model="resource.booking.combination">
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_doctor'), ref('resource_resource_workspace_1')])]" />
+    </record>
+    <record id="resource_booking_combination_doctor_workspace_2" model="resource.booking.combination">
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_doctor'), ref('resource_resource_workspace_2')])]" />
+    </record>
+    <record id="resource_booking_combination_therapist_workspace_1" model="resource.booking.combination">
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_therapist'), ref('resource_resource_workspace_1')])]" />
+    </record>
+    <record id="resource_booking_combination_therapist_workspace_2" model="resource.booking.combination">
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_therapist'), ref('resource_resource_workspace_2')])]" />
+    </record>
+
+    <!-- RESOURCE BOOKING TYPE -->
+
+    <record id="resource_booking_type_session" model="resource.booking.type">
+        <field name="name">SESSION</field>
+        <field name="duration" eval="264" />
+        <field name="slot_duration" eval="24" />
+        <field name="resource_calendar_id" ref="resource_calendar_24_7" />
+        <field name="period_type">period</field>
+    </record>
+    <record id="resource_booking_type_basic_room" model="resource.booking.type">
+        <field name="name">Basic Room</field>
+        <field name="duration" eval="240" />
+        <field name="slot_duration" eval="24" />
+        <field name="resource_calendar_id" ref="resource_calendar_24_7" />
+        <field name="period_type">statistics</field>
+    </record>
+    <record id="resource_booking_type_premium_room" model="resource.booking.type">
+        <field name="name">Premium Room</field>
+        <field name="duration" eval="240" />
+        <field name="slot_duration" eval="24" />
+        <field name="resource_calendar_id" ref="resource_calendar_24_7" />
+        <field name="period_type">statistics</field>
+    </record>
+    <record id="resource_booking_type_massage" model="resource.booking.type">
+        <field name="name">Massage 30 minutes</field>
+        <field name="duration" eval="0.5" />
+        <field name="slot_duration" eval="0.5" />
+        <field name="resource_calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_booking_type_consultation" model="resource.booking.type">
+        <field name="name">Consultation 30 minutes</field>
+        <field name="duration" eval="0.5" />
+        <field name="slot_duration" eval="0.5" />
+        <field name="resource_calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_booking_type_doctor" model="resource.booking.type">
+        <field name="name">Doctor consultation 30 minutes</field>
+        <field name="duration" eval="0.5" />
+        <field name="slot_duration" eval="0.5" />
+        <field name="resource_calendar_id" ref="resource_calendar_24_7" />
+    </record>
+
+    <!-- RESOURCE BOOKING TYPE COMBINATION REL -->
+    <record id="resource_booking_type_combination_rel_session" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+    </record>
+    <record id="resource_booking_type_combination_rel_basic_room_1" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_basic_room" />
+        <field name="combination_id" ref="resource_booking_combination_basic_room_1" />
+    </record>
+    <record id="resource_booking_type_combination_rel_basic_room_2" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_basic_room" />
+        <field name="combination_id" ref="resource_booking_combination_basic_room_2" />
+    </record>
+    <record id="resource_booking_type_combination_rel_premium_room_1" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_premium_room" />
+        <field name="combination_id" ref="resource_booking_combination_premium_room_1" />
+    </record>
+    <record id="resource_booking_type_combination_rel_premium_room_2" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_premium_room" />
+        <field name="combination_id" ref="resource_booking_combination_premium_room_2" />
+    </record>
+    <record id="resource_booking_type_combination_rel_massage_workspace_1" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_massage" />
+        <field name="combination_id" ref="resource_booking_combination_therapist_workspace_1" />
+    </record>
+    <record id="resource_booking_type_combination_rel_massage_workspace_2" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_massage" />
+        <field name="combination_id" ref="resource_booking_combination_therapist_workspace_2" />
+    </record>
+    <record id="resource_booking_type_combination_rel_consultation_workspace_1" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_consultation" />
+        <field name="combination_id" ref="resource_booking_combination_therapist_workspace_1" />
+    </record>
+    <record id="resource_booking_type_combination_rel_consultation_workspace_2" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_consultation" />
+        <field name="combination_id" ref="resource_booking_combination_therapist_workspace_2" />
+    </record>
+    <record id="resource_booking_type_combination_rel_doctor_workspace_1" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_doctor" />
+        <field name="combination_id" ref="resource_booking_combination_doctor_workspace_1" />
+    </record>
+    <record id="resource_booking_type_combination_rel_doctor_workspace_2" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_doctor" />
+        <field name="combination_id" ref="resource_booking_combination_doctor_workspace_2" />
+    </record>
+
+    <!-- RESOURCE BOOKING: SHOW EACH COMBINATION IN TIMELINE -->
+
+    <record id="resource_booking_basic_room_1" model="resource.booking">
+        <field name="name">Show Basic Room 1</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_basic_room" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_basic_room_1" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_basic_room_2" model="resource.booking">
+        <field name="name">Show Basic Room 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_basic_room" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_basic_room_2" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_premium_room_1" model="resource.booking">
+        <field name="name">Show Premium Room 1</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_premium_room" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_premium_room_1" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_premium_room_2" model="resource.booking">
+        <field name="name">Show Premium Room 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_premium_room" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_premium_room_2" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_therapist_workspace_1" model="resource.booking">
+        <field name="name">Show Terri Therapist with Workspace 1</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_massage" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_therapist_workspace_1" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_therapist_workspace_2" model="resource.booking">
+        <field name="name">Show Terri Therapist with Workspace 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_massage" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_therapist_workspace_2" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_doctor_workspace_1" model="resource.booking">
+        <field name="name">Show Don Doctor with Workspace 1</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_doctor" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_doctor_workspace_1" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_doctor_workspace_2" model="resource.booking">
+        <field name="name">Show Don Doctor with Workspace 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_doctor" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_doctor_workspace_2" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+
+    <!-- SERVICES -->
+
+    <record id="health_services" model="product.public.category">
+        <field name="name">Health Services</field>
+        <field name="sequence">25</field>
+        <field name="image_1920" type="base64" file="website_sale/static/src/img/warranty.jpg"/>
+        <field name="sequence">1</field>
+    </record>
+    <record id="massage_pp" model="product.product">
+        <field name="name">Massage 25 minutes</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">20.0</field>
+        <field name="detailed_type">service</field>
+        <field name="website_published" eval="1" />
+        <field name="resource_booking_type_id" ref="resource_booking_type_massage"/>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('health_services')])]"/>
+    </record>
+    <record id="consultation_pp" model="product.product">
+        <field name="name">Consultation 25 minutes</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">20.0</field>
+        <field name="detailed_type">service</field>
+        <field name="website_published" eval="1" />
+        <field name="resource_booking_type_id" ref="resource_booking_type_consultation"/>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('health_services')])]"/>
+    </record>
+    <record id="doctor_pp" model="product.product">
+        <field name="name">Doctor 25 minutes</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">40.0</field>
+        <field name="detailed_type">service</field>
+        <field name="website_published" eval="1" />
+        <field name="resource_booking_type_id" ref="resource_booking_type_doctor"/>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('health_services')])]"/>
+    </record>
+
+    <!--
+        PRODUCTS FOR PERIODS
+        pa = product.attribute (room type)
+        pav = product.attribute.value (basic room type, premium room type)
+        pt = product.template (newstart silver)
+        ptal = product.template.attribute.line (newstart silver room type)
+        ptav = product.template.attribute.value (newstart silver basic room type, newstart silver premium room type)
+        pp = product.product (newstart silver basic room, newstart silver premium room)
+        ppl = product.pack.line
+    -->
+    <record id="room_type_id" model="product.attribute">
+        <field name="name">Room Type</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="basic_room_type_pav" model="product.attribute.value">
+        <field name="name">Basic Room - 1 person</field>
+        <field name="attribute_id" ref="room_type_id"/>
+        <field name="sequence">1</field>
+        <field name="resource_booking_type_id" ref="resource_booking_type_basic_room"/>
+    </record>
+    <record id="premium_room_1_person_type_pav" model="product.attribute.value">
+        <field name="name">Premium Room - 1 person</field>
+        <field name="attribute_id" ref="room_type_id"/>
+        <field name="sequence">2</field>
+        <field name="resource_booking_type_id" ref="resource_booking_type_premium_room"/>
+    </record>
+    <record id="premium_room_2_people_type_pav" model="product.attribute.value">
+        <field name="name">Premium Room - 2 people</field>
+        <field name="attribute_id" ref="room_type_id"/>
+        <field name="sequence">3</field>
+        <field name="resource_booking_type_id" ref="resource_booking_type_premium_room"/>
+    </record>
+
+    <!-- PRODUCT: NEWSTART SILVER -->
+    <record id="newstart_silver_pt" model="product.template">
+        <field name="name">NEWSTART Silver 10 days</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">1500.0</field>
+        <field name="detailed_type">service</field>
+        <field name="website_published" eval="1" />
+        <field name="pack_ok" eval="1" />
+        <field name="pack_type">non_detailed</field>
+        <field name="pack_component_price">ignored</field>
+    </record>
+    <record id="newstart_silver_room_type_ptal" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="newstart_silver_pt"/>
+        <field name="attribute_id" ref="room_type_id"/>
+        <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.basic_room_type_pav'), ref('resource_booking_demo.premium_room_1_person_type_pav'), ref('resource_booking_demo.premium_room_2_people_type_pav')])]"/>
+    </record>
+    <!-- product.template.attribute.value -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'resource_booking_demo.newstart_silver_basic_room_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.newstart_silver_room_type_ptal').product_template_value_ids[0],
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.newstart_silver_premium_room_1_person_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.newstart_silver_room_type_ptal').product_template_value_ids[1],
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.newstart_silver_premium_room_2_people_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.newstart_silver_room_type_ptal').product_template_value_ids[2],
+            'noupdate': False,
+        },]"/>
+    </function>
+    <record id="newstart_silver_premium_room_1_person_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">1000.0</field>
+    </record>
+    <record id="newstart_silver_premium_room_2_people_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">2000.0</field>
+    </record>
+    <!-- product.product -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'resource_booking_demo.newstart_silver_basic_room_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_basic_room_type_ptav')),
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.newstart_silver_premium_room_1_person_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_premium_room_1_person_type_ptav')),
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.newstart_silver_premium_room_2_people_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_premium_room_2_people_type_ptav')),
+            'noupdate': False,
+        },]"/>
+    </function>
+    <record id="massage_newstart_silver_basic_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_silver_basic_room_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">1</field>
+    </record>
+    <record id="massage_newstart_silver_premium_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_silver_premium_room_1_person_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">1</field>
+    </record>
+    <record id="massage_newstart_silver_premium_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_silver_premium_room_2_people_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">1</field>
+    </record>
+
+    <!-- PRODUCT: NEWSTART GOLD -->
+    <record id="newstart_gold_pt" model="product.template">
+        <field name="name">NEWSTART Gold 10 days</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">2000.0</field>
+        <field name="detailed_type">service</field>
+        <field name="website_published" eval="1" />
+        <field name="pack_ok" eval="1" />
+        <field name="pack_type">non_detailed</field>
+        <field name="pack_component_price">ignored</field>
+    </record>
+    <record id="newstart_gold_room_type_ptal" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="newstart_gold_pt"/>
+        <field name="attribute_id" ref="room_type_id"/>
+        <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.basic_room_type_pav'), ref('resource_booking_demo.premium_room_1_person_type_pav'), ref('resource_booking_demo.premium_room_2_people_type_pav')])]"/>
+    </record>
+    <!-- product.template.attribute.value -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'resource_booking_demo.newstart_gold_basic_room_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.newstart_gold_room_type_ptal').product_template_value_ids[0],
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.newstart_gold_premium_room_1_person_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.newstart_gold_room_type_ptal').product_template_value_ids[1],
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.newstart_gold_premium_room_2_people_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.newstart_gold_room_type_ptal').product_template_value_ids[2],
+            'noupdate': False,
+        },]"/>
+    </function>
+    <record id="newstart_gold_premium_room_1_person_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">1000.0</field>
+    </record>
+    <record id="newstart_gold_premium_room_2_people_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">2000.0</field>
+    </record>
+    <!-- product.product -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'resource_booking_demo.newstart_gold_basic_room_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_basic_room_type_ptav')),
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.newstart_gold_premium_room_1_person_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_premium_room_1_person_type_ptav')),
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.newstart_gold_premium_room_2_people_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_premium_room_2_people_type_ptav')),
+            'noupdate': False,
+        },]"/>
+    </function>
+    <record id="massagenewstart_gold_basic_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_gold_basic_room_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">2</field>
+    </record>
+    <record id="massage_newstart_gold_premium_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_gold_premium_room_1_person_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">2</field>
+    </record>
+    <record id="massage_newstart_gold_premium_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_gold_premium_room_2_people_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">2</field>
+    </record>
+
+    <!-- PRODUCT: DEPRESSION -->
+    <record id="depression_pt" model="product.template">
+        <field name="name">Out of DEPRESSION in 10 days</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">2500.0</field>
+        <field name="detailed_type">service</field>
+        <field name="website_published" eval="1" />
+        <field name="pack_ok" eval="1" />
+        <field name="pack_type">non_detailed</field>
+        <field name="pack_component_price">ignored</field>
+    </record>
+    <record id="depression_room_type_ptal" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="depression_pt"/>
+        <field name="attribute_id" ref="room_type_id"/>
+        <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.basic_room_type_pav'), ref('resource_booking_demo.premium_room_1_person_type_pav'), ref('resource_booking_demo.premium_room_2_people_type_pav')])]"/>
+    </record>
+    <!-- product.template.attribute.value -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'resource_booking_demo.depression_basic_room_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.depression_room_type_ptal').product_template_value_ids[0],
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.depression_premium_room_1_person_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.depression_room_type_ptal').product_template_value_ids[1],
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.depression_premium_room_2_people_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.depression_room_type_ptal').product_template_value_ids[2],
+            'noupdate': False,
+        },]"/>
+    </function>
+    <record id="depression_premium_room_1_person_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">1000.0</field>
+    </record>
+    <record id="depression_premium_room_2_people_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">2000.0</field>
+    </record>
+    <!-- product.product -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'resource_booking_demo.depression_basic_room_pp',
+            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_basic_room_type_ptav')),
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.depression_premium_room_1_person_pp',
+            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_premium_room_1_person_type_ptav')),
+            'noupdate': False,
+        }, {
+            'xml_id': 'resource_booking_demo.depression_premium_room_2_people_pp',
+            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_premium_room_2_people_type_ptav')),
+            'noupdate': False,
+        },]"/>
+    </function>
+    <record id="massage_depression_basic_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="depression_basic_room_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">3</field>
+    </record>
+    <record id="massage_depression_premium_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="depression_premium_room_1_person_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">3</field>
+    </record>
+    <record id="massage_depression_premium_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="depression_premium_room_2_people_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">3</field>
+    </record>
+
+    <!-- RESOURCE BOOKING: PERIODS -->
+
+    <record id="resource_booking_session_newstart" model="resource.booking">
+        <field name="name">NEWSTART</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field
+            name="period_product_tmpl_ids"
+            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
+        />
+        <field name="start" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_session_depression" model="resource.booking">
+        <field name="name">DEPRESSION</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field
+            name="period_product_tmpl_ids"
+            eval="[(6, 0, [ref('resource_booking_demo.depression_pt')])]"
+        />
+        <field name="start" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_session_newstart_2" model="resource.booking">
+        <field name="name">NEWSTART</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field
+            name="period_product_tmpl_ids"
+            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
+        />
+        <field name="start" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_session_depression_2" model="resource.booking">
+        <field name="name">DEPRESSION and NEWSTART</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field
+            name="period_product_tmpl_ids"
+            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt'), ref('resource_booking_demo.depression_pt')])]"
+        />
+        <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
+    </record>
+
+    <!-- PRICELIST & CONTACT -->
+
+    <!-- The main pricelist has USD currency. -->
+    <record id="discount_pricelist" model="product.pricelist">
+        <field name="name">10% Discount</field>
+        <field name="sequence">10</field>
+        <field name="currency_id" ref="base.USD" />
+    </record>
+    <record id="discount_pricelist_item" model="product.pricelist.item">
+        <field name="pricelist_id" ref="discount_pricelist" />
+        <field name="applied_on">3_global</field>
+        <field name="compute_price">percentage</field>
+        <field name="percent_price">10.0</field>
+    </record>
+    <record id="discount_partner" model="res.partner">
+        <field name="name">Contact with discount</field>
+        <field name="is_company" eval="0" />
+    </record>
+    <record forcecreate="True" id="discount_partner_property_product_pricelist" model="ir.property">
+        <field name="name">property_product_pricelist</field>
+        <field name="fields_id" search="[('model','=','res.partner'),('name','=','property_product_pricelist')]"/>
+        <field name="value" eval="'product.pricelist,'+str(ref('resource_booking_demo.discount_pricelist'))"/>
+        <field name="res_id" eval="'res.partner,'+str(ref('resource_booking_demo.discount_partner'))"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <!-- PAYMENT PROVIDER -->
+
+    <record id="payment.payment_provider_transfer" model="payment.provider">
+        <field name="state">enabled</field>
+    </record>
+
+</data>
