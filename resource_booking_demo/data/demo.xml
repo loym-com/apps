@@ -73,23 +73,33 @@
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
-    <record id="resource_resource_room_basic_1" model="resource.resource">
-        <field name="name">Basic Room 1</field>
+    <record id="resource_resource_room_single_1" model="resource.resource">
+        <field name="name">Single Room 1</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
-    <record id="resource_resource_room_basic_2" model="resource.resource">
-        <field name="name">Basic Room 2</field>
+    <record id="resource_resource_room_single_2" model="resource.resource">
+        <field name="name">Single Room 2</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
-    <record id="resource_resource_room_premium_1" model="resource.resource">
-        <field name="name">Premium Room 1</field>
+    <record id="resource_resource_room_double_1a" model="resource.resource">
+        <field name="name">Double Room 1 bed A</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
-    <record id="resource_resource_room_premium_2" model="resource.resource">
-        <field name="name">Premium Room 2</field>
+    <record id="resource_resource_room_double_1b" model="resource.resource">
+        <field name="name">Double Room 1 bed B</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_resource_room_double_2a" model="resource.resource">
+        <field name="name">Double Room 2 bed A</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_resource_room_double_2b" model="resource.resource">
+        <field name="name">Double Room 2 bed B</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
@@ -149,21 +159,37 @@
         <!-- <field name="name">SESSION</field> -->
         <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_session')])]" />
     </record>
-    <record id="resource_booking_combination_basic_room_1" model="resource.booking.combination">
-        <!-- <field name="name">Basic Room 1</field> -->
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_basic_1')])]" />
+    <record id="resource_booking_combination_single_room_1" model="resource.booking.combination">
+        <!-- <field name="name">Single Room 1</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_single_1')])]" />
     </record>
-    <record id="resource_booking_combination_basic_room_2" model="resource.booking.combination">
-        <!-- <field name="name">Basic Room 2</field> -->
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_basic_2')])]" />
+    <record id="resource_booking_combination_single_room_2" model="resource.booking.combination">
+        <!-- <field name="name">Single Room 2</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_single_2')])]" />
     </record>
-    <record id="resource_booking_combination_premium_room_1" model="resource.booking.combination">
-        <!-- <field name="name">Premium Room 1</field> -->
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_premium_1')])]" />
+    <record id="resource_booking_combination_double_room_1a" model="resource.booking.combination">
+        <!-- <field name="name">Double Room 1 A</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_double_1a')])]" />
     </record>
-    <record id="resource_booking_combination_premium_room_2" model="resource.booking.combination">
-        <!-- <field name="name">Premium Room 2</field> -->
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_premium_2')])]" />
+    <record id="resource_booking_combination_double_room_1b" model="resource.booking.combination">
+        <!-- <field name="name">Double Room 1 B</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_double_1b')])]" />
+    </record>
+    <record id="resource_booking_combination_double_room_1" model="resource.booking.combination">
+        <!-- <field name="name">Double Room 1</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_double_1a'), ref('resource_resource_room_double_1b')])]" />
+    </record>
+    <record id="resource_booking_combination_double_room_2a" model="resource.booking.combination">
+        <!-- <field name="name">Double Room 2 A</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_double_2a')])]" />
+    </record>
+    <record id="resource_booking_combination_double_room_2b" model="resource.booking.combination">
+        <!-- <field name="name">Double Room 2 B</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_double_2b')])]" />
+    </record>
+    <record id="resource_booking_combination_double_room_2" model="resource.booking.combination">
+        <!-- <field name="name">Double Room 2</field> -->
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_double_2a'), ref('resource_resource_room_double_2b')])]" />
     </record>
     <record id="resource_booking_combination_doctor_workspace_1" model="resource.booking.combination">
         <field name="resource_ids" eval="[(6, 0, [ref('resource_doctor'), ref('resource_resource_workspace_1')])]" />
@@ -185,21 +211,28 @@
         <field name="duration" eval="264" />
         <field name="slot_duration" eval="24" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
-        <field name="period_type">period</field>
+        <!-- <field name="period_type">period</field> -->
     </record>
-    <record id="resource_booking_type_basic_room" model="resource.booking.type">
-        <field name="name">Basic Room</field>
+    <record id="resource_booking_type_single_room" model="resource.booking.type">
+        <field name="name">Single Room</field>
         <field name="duration" eval="240" />
         <field name="slot_duration" eval="24" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
-        <field name="period_type">statistics</field>
+        <!-- <field name="period_type">statistics</field> -->
     </record>
-    <record id="resource_booking_type_premium_room" model="resource.booking.type">
-        <field name="name">Premium Room</field>
+    <record id="resource_booking_type_double_room" model="resource.booking.type">
+        <field name="name">Double Room</field>
         <field name="duration" eval="240" />
         <field name="slot_duration" eval="24" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
-        <field name="period_type">statistics</field>
+        <!-- <field name="period_type">statistics</field> -->
+    </record>
+    <record id="resource_booking_type_double_room_shared" model="resource.booking.type">
+        <field name="name">Double Room - shared</field>
+        <field name="duration" eval="240" />
+        <field name="slot_duration" eval="24" />
+        <field name="resource_calendar_id" ref="resource_calendar_24_7" />
+        <!-- <field name="period_type">statistics</field> -->
     </record>
     <record id="resource_booking_type_massage" model="resource.booking.type">
         <field name="name">Massage 30 minutes</field>
@@ -225,21 +258,37 @@
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_id" ref="resource_booking_combination_session" />
     </record>
-    <record id="resource_booking_type_combination_rel_basic_room_1" model="resource.booking.type.combination.rel">
-        <field name="type_id" ref="resource_booking_type_basic_room" />
-        <field name="combination_id" ref="resource_booking_combination_basic_room_1" />
+    <record id="resource_booking_type_combination_rel_single_room_1" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_single_room" />
+        <field name="combination_id" ref="resource_booking_combination_single_room_1" />
     </record>
-    <record id="resource_booking_type_combination_rel_basic_room_2" model="resource.booking.type.combination.rel">
-        <field name="type_id" ref="resource_booking_type_basic_room" />
-        <field name="combination_id" ref="resource_booking_combination_basic_room_2" />
+    <record id="resource_booking_type_combination_rel_single_room_2" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_single_room" />
+        <field name="combination_id" ref="resource_booking_combination_single_room_2" />
     </record>
-    <record id="resource_booking_type_combination_rel_premium_room_1" model="resource.booking.type.combination.rel">
-        <field name="type_id" ref="resource_booking_type_premium_room" />
-        <field name="combination_id" ref="resource_booking_combination_premium_room_1" />
+    <record id="resource_booking_type_combination_rel_double_room_1" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_double_room" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_1" />
     </record>
-    <record id="resource_booking_type_combination_rel_premium_room_2" model="resource.booking.type.combination.rel">
-        <field name="type_id" ref="resource_booking_type_premium_room" />
-        <field name="combination_id" ref="resource_booking_combination_premium_room_2" />
+    <record id="resource_booking_type_combination_rel_double_room_2" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_double_room" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_2" />
+    </record>
+    <record id="resource_booking_type_combination_rel_double_room_1a" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_double_room_shared" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_1a" />
+    </record>
+    <record id="resource_booking_type_combination_rel_double_room_1b" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_double_room_shared" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_1b" />
+    </record>
+    <record id="resource_booking_type_combination_rel_double_room_2a" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_double_room_shared" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_2a" />
+    </record>
+    <record id="resource_booking_type_combination_rel_double_room_2b" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_double_room_shared" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_2b" />
     </record>
     <record id="resource_booking_type_combination_rel_massage_workspace_1" model="resource.booking.type.combination.rel">
         <field name="type_id" ref="resource_booking_type_massage" />
@@ -268,39 +317,75 @@
 
     <!-- RESOURCE BOOKING: SHOW EACH COMBINATION IN TIMELINE -->
 
-    <record id="resource_booking_basic_room_1" model="resource.booking">
-        <field name="name">Show Basic Room 1</field>
+    <record id="resource_booking_single_room_1" model="resource.booking">
+        <field name="name">Show Single Room 1</field>
         <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_basic_room" />
+        <field name="type_id" ref="resource_booking_type_single_room" />
         <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_basic_room_1" />
+        <field name="combination_id" ref="resource_booking_combination_single_room_1" />
         <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
         <field name="duration" eval="0.5" />
     </record>
-    <record id="resource_booking_basic_room_2" model="resource.booking">
-        <field name="name">Show Basic Room 2</field>
+    <record id="resource_booking_single_room_2" model="resource.booking">
+        <field name="name">Show Single Room 2</field>
         <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_basic_room" />
+        <field name="type_id" ref="resource_booking_type_single_room" />
         <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_basic_room_2" />
+        <field name="combination_id" ref="resource_booking_combination_single_room_2" />
         <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
         <field name="duration" eval="0.5" />
     </record>
-    <record id="resource_booking_premium_room_1" model="resource.booking">
-        <field name="name">Show Premium Room 1</field>
+    <record id="resource_booking_double_room_1" model="resource.booking">
+        <field name="name">Show Double Room 1</field>
         <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_premium_room" />
+        <field name="type_id" ref="resource_booking_type_double_room" />
         <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_premium_room_1" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_1" />
         <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
         <field name="duration" eval="0.5" />
     </record>
-    <record id="resource_booking_premium_room_2" model="resource.booking">
-        <field name="name">Show Premium Room 2</field>
+    <record id="resource_booking_double_room_1a" model="resource.booking">
+        <field name="name">Show Double Room 1 A</field>
         <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_premium_room" />
+        <field name="type_id" ref="resource_booking_type_double_room_shared" />
         <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_premium_room_2" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_1a" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_double_room_1b" model="resource.booking">
+        <field name="name">Show Double Room 1 B</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_double_room_shared" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_1b" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_double_room_2" model="resource.booking">
+        <field name="name">Show Double Room 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_double_room" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_2" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_double_room_2a" model="resource.booking">
+        <field name="name">Show Double Room 2 A</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_double_room_shared" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_2a" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_double_room_2b" model="resource.booking">
+        <field name="name">Show Double Room 2 B</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_double_room_shared" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_double_room_2b" />
         <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
         <field name="duration" eval="0.5" />
     </record>
@@ -391,23 +476,26 @@
         <field name="name">Room Type</field>
         <field name="sequence">10</field>
     </record>
-    <record id="basic_room_type_pav" model="product.attribute.value">
-        <field name="name">Basic Room - 1 person</field>
+    <record id="single_room_type_pav" model="product.attribute.value">
+        <field name="name">Single Room</field>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="sequence">1</field>
-        <field name="resource_booking_type_id" ref="resource_booking_type_basic_room"/>
+        <!-- <field name="resource_booking_type_id" ref="resource_booking_type_single_room"/> -->
+        <field name="resource_booking_type_ids" eval="[(6, 0, [ref('resource_booking_demo.resource_booking_type_single_room')])]"/>
     </record>
-    <record id="premium_room_1_person_type_pav" model="product.attribute.value">
-        <field name="name">Premium Room - 1 person</field>
+    <record id="double_room_1_person_type_pav" model="product.attribute.value">
+        <field name="name">Double Room</field>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="sequence">2</field>
-        <field name="resource_booking_type_id" ref="resource_booking_type_premium_room"/>
+        <!-- <field name="resource_booking_type_id" ref="resource_booking_type_double_room"/> -->
+        <field name="resource_booking_type_ids" eval="[(6, 0, [ref('resource_booking_demo.resource_booking_type_double_room')])]"/>
     </record>
-    <record id="premium_room_2_people_type_pav" model="product.attribute.value">
-        <field name="name">Premium Room - 2 people</field>
+    <record id="double_room_2_people_type_pav" model="product.attribute.value">
+        <field name="name">Double Room - shared</field>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="sequence">3</field>
-        <field name="resource_booking_type_id" ref="resource_booking_type_premium_room"/>
+        <!-- <field name="resource_booking_type_id" ref="resource_booking_type_double_room"/> -->
+        <field name="resource_booking_type_ids" eval="[(6, 0, [ref('resource_booking_demo.resource_booking_type_double_room_shared')])]"/>
     </record>
 
     <!-- PRODUCT: NEWSTART SILVER -->
@@ -424,58 +512,58 @@
     <record id="newstart_silver_room_type_ptal" model="product.template.attribute.line">
         <field name="product_tmpl_id" ref="newstart_silver_pt"/>
         <field name="attribute_id" ref="room_type_id"/>
-        <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.basic_room_type_pav'), ref('resource_booking_demo.premium_room_1_person_type_pav'), ref('resource_booking_demo.premium_room_2_people_type_pav')])]"/>
+        <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.single_room_type_pav'), ref('resource_booking_demo.double_room_1_person_type_pav'), ref('resource_booking_demo.double_room_2_people_type_pav')])]"/>
     </record>
     <!-- product.template.attribute.value -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.newstart_silver_basic_room_type_ptav',
+            'xml_id': 'resource_booking_demo.newstart_silver_single_room_type_ptav',
             'record': obj().env.ref('resource_booking_demo.newstart_silver_room_type_ptal').product_template_value_ids[0],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_silver_premium_room_1_person_type_ptav',
+            'xml_id': 'resource_booking_demo.newstart_silver_double_room_1_person_type_ptav',
             'record': obj().env.ref('resource_booking_demo.newstart_silver_room_type_ptal').product_template_value_ids[1],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_silver_premium_room_2_people_type_ptav',
+            'xml_id': 'resource_booking_demo.newstart_silver_double_room_2_people_type_ptav',
             'record': obj().env.ref('resource_booking_demo.newstart_silver_room_type_ptal').product_template_value_ids[2],
             'noupdate': False,
         },]"/>
     </function>
-    <record id="newstart_silver_premium_room_1_person_type_ptav" model="product.template.attribute.value">
+    <record id="newstart_silver_double_room_1_person_type_ptav" model="product.template.attribute.value">
         <field name="price_extra">1000.0</field>
     </record>
-    <record id="newstart_silver_premium_room_2_people_type_ptav" model="product.template.attribute.value">
+    <record id="newstart_silver_double_room_2_people_type_ptav" model="product.template.attribute.value">
         <field name="price_extra">2000.0</field>
     </record>
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.newstart_silver_basic_room_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_basic_room_type_ptav')),
+            'xml_id': 'resource_booking_demo.newstart_silver_single_room_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_single_room_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_silver_premium_room_1_person_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_premium_room_1_person_type_ptav')),
+            'xml_id': 'resource_booking_demo.newstart_silver_double_room_1_person_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_double_room_1_person_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_silver_premium_room_2_people_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_premium_room_2_people_type_ptav')),
+            'xml_id': 'resource_booking_demo.newstart_silver_double_room_2_people_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_double_room_2_people_type_ptav')),
             'noupdate': False,
         },]"/>
     </function>
-    <record id="massage_newstart_silver_basic_room_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_silver_basic_room_pp" />
+    <record id="massage_newstart_silver_single_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_silver_single_room_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">1</field>
     </record>
-    <record id="massage_newstart_silver_premium_room_1_person_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_silver_premium_room_1_person_pp" />
+    <record id="massage_newstart_silver_double_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_silver_double_room_1_person_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">1</field>
     </record>
-    <record id="massage_newstart_silver_premium_room_2_people_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_silver_premium_room_2_people_pp" />
+    <record id="massage_newstart_silver_double_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_silver_double_room_2_people_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">1</field>
     </record>
@@ -494,58 +582,58 @@
     <record id="newstart_gold_room_type_ptal" model="product.template.attribute.line">
         <field name="product_tmpl_id" ref="newstart_gold_pt"/>
         <field name="attribute_id" ref="room_type_id"/>
-        <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.basic_room_type_pav'), ref('resource_booking_demo.premium_room_1_person_type_pav'), ref('resource_booking_demo.premium_room_2_people_type_pav')])]"/>
+        <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.single_room_type_pav'), ref('resource_booking_demo.double_room_1_person_type_pav'), ref('resource_booking_demo.double_room_2_people_type_pav')])]"/>
     </record>
     <!-- product.template.attribute.value -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.newstart_gold_basic_room_type_ptav',
+            'xml_id': 'resource_booking_demo.newstart_gold_single_room_type_ptav',
             'record': obj().env.ref('resource_booking_demo.newstart_gold_room_type_ptal').product_template_value_ids[0],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_gold_premium_room_1_person_type_ptav',
+            'xml_id': 'resource_booking_demo.newstart_gold_double_room_1_person_type_ptav',
             'record': obj().env.ref('resource_booking_demo.newstart_gold_room_type_ptal').product_template_value_ids[1],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_gold_premium_room_2_people_type_ptav',
+            'xml_id': 'resource_booking_demo.newstart_gold_double_room_2_people_type_ptav',
             'record': obj().env.ref('resource_booking_demo.newstart_gold_room_type_ptal').product_template_value_ids[2],
             'noupdate': False,
         },]"/>
     </function>
-    <record id="newstart_gold_premium_room_1_person_type_ptav" model="product.template.attribute.value">
+    <record id="newstart_gold_double_room_1_person_type_ptav" model="product.template.attribute.value">
         <field name="price_extra">1000.0</field>
     </record>
-    <record id="newstart_gold_premium_room_2_people_type_ptav" model="product.template.attribute.value">
+    <record id="newstart_gold_double_room_2_people_type_ptav" model="product.template.attribute.value">
         <field name="price_extra">2000.0</field>
     </record>
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.newstart_gold_basic_room_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_basic_room_type_ptav')),
+            'xml_id': 'resource_booking_demo.newstart_gold_single_room_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_single_room_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_gold_premium_room_1_person_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_premium_room_1_person_type_ptav')),
+            'xml_id': 'resource_booking_demo.newstart_gold_double_room_1_person_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_double_room_1_person_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_gold_premium_room_2_people_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_premium_room_2_people_type_ptav')),
+            'xml_id': 'resource_booking_demo.newstart_gold_double_room_2_people_pp',
+            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_double_room_2_people_type_ptav')),
             'noupdate': False,
         },]"/>
     </function>
-    <record id="massagenewstart_gold_basic_room_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_gold_basic_room_pp" />
+    <record id="massagenewstart_gold_single_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_gold_single_room_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">2</field>
     </record>
-    <record id="massage_newstart_gold_premium_room_1_person_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_gold_premium_room_1_person_pp" />
+    <record id="massage_newstart_gold_double_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_gold_double_room_1_person_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">2</field>
     </record>
-    <record id="massage_newstart_gold_premium_room_2_people_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_gold_premium_room_2_people_pp" />
+    <record id="massage_newstart_gold_double_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_gold_double_room_2_people_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">2</field>
     </record>
@@ -564,58 +652,58 @@
     <record id="depression_room_type_ptal" model="product.template.attribute.line">
         <field name="product_tmpl_id" ref="depression_pt"/>
         <field name="attribute_id" ref="room_type_id"/>
-        <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.basic_room_type_pav'), ref('resource_booking_demo.premium_room_1_person_type_pav'), ref('resource_booking_demo.premium_room_2_people_type_pav')])]"/>
+        <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.single_room_type_pav'), ref('resource_booking_demo.double_room_1_person_type_pav'), ref('resource_booking_demo.double_room_2_people_type_pav')])]"/>
     </record>
     <!-- product.template.attribute.value -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.depression_basic_room_type_ptav',
+            'xml_id': 'resource_booking_demo.depression_single_room_type_ptav',
             'record': obj().env.ref('resource_booking_demo.depression_room_type_ptal').product_template_value_ids[0],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.depression_premium_room_1_person_type_ptav',
+            'xml_id': 'resource_booking_demo.depression_double_room_1_person_type_ptav',
             'record': obj().env.ref('resource_booking_demo.depression_room_type_ptal').product_template_value_ids[1],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.depression_premium_room_2_people_type_ptav',
+            'xml_id': 'resource_booking_demo.depression_double_room_2_people_type_ptav',
             'record': obj().env.ref('resource_booking_demo.depression_room_type_ptal').product_template_value_ids[2],
             'noupdate': False,
         },]"/>
     </function>
-    <record id="depression_premium_room_1_person_type_ptav" model="product.template.attribute.value">
+    <record id="depression_double_room_1_person_type_ptav" model="product.template.attribute.value">
         <field name="price_extra">1000.0</field>
     </record>
-    <record id="depression_premium_room_2_people_type_ptav" model="product.template.attribute.value">
+    <record id="depression_double_room_2_people_type_ptav" model="product.template.attribute.value">
         <field name="price_extra">2000.0</field>
     </record>
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.depression_basic_room_pp',
-            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_basic_room_type_ptav')),
+            'xml_id': 'resource_booking_demo.depression_single_room_pp',
+            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_single_room_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.depression_premium_room_1_person_pp',
-            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_premium_room_1_person_type_ptav')),
+            'xml_id': 'resource_booking_demo.depression_double_room_1_person_pp',
+            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_double_room_1_person_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.depression_premium_room_2_people_pp',
-            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_premium_room_2_people_type_ptav')),
+            'xml_id': 'resource_booking_demo.depression_double_room_2_people_pp',
+            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_double_room_2_people_type_ptav')),
             'noupdate': False,
         },]"/>
     </function>
-    <record id="massage_depression_basic_room_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="depression_basic_room_pp" />
+    <record id="massage_depression_single_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="depression_single_room_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">3</field>
     </record>
-    <record id="massage_depression_premium_room_1_person_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="depression_premium_room_1_person_pp" />
+    <record id="massage_depression_double_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="depression_double_room_1_person_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">3</field>
     </record>
-    <record id="massage_depression_premium_room_2_people_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="depression_premium_room_2_people_pp" />
+    <record id="massage_depression_double_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="depression_double_room_2_people_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">3</field>
     </record>
@@ -628,10 +716,10 @@
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <field
+        <!-- <field
             name="period_product_tmpl_ids"
             eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
-        />
+        /> -->
         <field name="start" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)"/>
     </record>
     <record id="resource_booking_session_depression" model="resource.booking">
@@ -640,10 +728,10 @@
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <field
+        <!-- <field
             name="period_product_tmpl_ids"
             eval="[(6, 0, [ref('resource_booking_demo.depression_pt')])]"
-        />
+        /> -->
         <field name="start" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)"/>
     </record>
     <record id="resource_booking_session_newstart_2" model="resource.booking">
@@ -652,10 +740,10 @@
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <field
+        <!-- <field
             name="period_product_tmpl_ids"
             eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
-        />
+        /> -->
         <field name="start" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)"/>
     </record>
     <record id="resource_booking_session_depression_2" model="resource.booking">
@@ -664,10 +752,10 @@
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <field
+        <!-- <field
             name="period_product_tmpl_ids"
             eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt'), ref('resource_booking_demo.depression_pt')])]"
-        />
+        /> -->
         <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
     </record>
 

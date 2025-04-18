@@ -16,9 +16,9 @@
         "sale_management",  # optional
         # "web_responsive",  # optional oca/web
         "website_sale_resource_booking",  # oca/calendar, oca/sale-workflow, oca/e-commerce
-        "partner_product_price",  # oca/product-attribute
+        "partner_product_price",  # oca/partner-contact (not merged)
         "resource_booking_timeline",
-        "sale_resource_booking_period",
+        "event_sale_resource_booking",
         "sale_product_pack",  # oca/product-pack
         "product_pack_template",
     ],
