@@ -96,16 +96,16 @@ class ResPartner(models.Model):
         store=True,
         help="Filter on donors who are(n't) missing a report template on a donation.",
     )
-    tax_receipt_send = fields.Boolean(
-        string="Send Donation Tax Receipt",
-        compute="_compute_tax_receipt_send",
-        store=True,
-        help="""Filter on donors who (don't) need a tax receipt.\n
-                Send it e.g. together with a newsletter.""",
-    )
-    tax_receipt_missing_report_template = fields.Boolean(
-        string="Tax receipts missing report",
-        # compute="_compute_tax_receipt_missing_report_template",
-        store=True,
-        help="Filter on donors who are missing a report template on a tax receipt.",
-    )
+    # tax_receipt_send = fields.Boolean(
+    #     string="Send Donation Tax Receipt",
+    #     compute="_compute_tax_receipt_send",
+    #     store=True,
+    #     help="""Filter on donors who (don't) need a tax receipt.\n
+    #             Send it e.g. together with a newsletter.""",
+    # )
+    # tax_receipt_missing_report_template = fields.Boolean(
+    #     string="Tax receipts missing report",
+    #     # compute="_compute_tax_receipt_missing_report_template",
+    #     store=True,
+    #     help="Filter on donors who are missing a report template on a tax receipt.",
+    # )
