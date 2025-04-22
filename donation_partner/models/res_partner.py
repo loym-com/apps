@@ -47,7 +47,7 @@ class ResPartner(models.Model):
                 partner.donation_ids.filtered(lambda d: not d.thanks_printed)
             )
 
-    # @api.depends("donation_ids.thanks_template_id")
+    @api.depends("donation_ids.thanks_template_id")
     def _compute_donation_missing_report_template(self):
         for partner in self:
             partner.donation_missing_report_template = bool(
@@ -62,11 +62,11 @@ class ResPartner(models.Model):
             )
 
     # @api.depends("tax_receipt_ids.thanks_template_id")
-    def _compute_tax_receipt_missing_report_template(self):
-        for partner in self:
-            partner.tax_receipt_missing_report_template = bool(
-                partner.tax_receipt_ids.filtered(lambda d: not d.thanks_template_id)
-            )
+    # def _compute_tax_receipt_missing_report_template(self):
+    #     for partner in self:
+    #         partner.tax_receipt_missing_report_template = bool(
+    #             partner.tax_receipt_ids.filtered(lambda d: not d.thanks_template_id)
+    #         )
 
     donation_ids = fields.One2many(
         comodel_name="donation.donation",
@@ -105,7 +105,7 @@ class ResPartner(models.Model):
     )
     tax_receipt_missing_report_template = fields.Boolean(
         string="Tax receipts missing report",
-        compute="_compute_tax_receipt_missing_report_template",
+        # compute="_compute_tax_receipt_missing_report_template",
         store=True,
         help="Filter on donors who are missing a report template on a tax receipt.",
     )
