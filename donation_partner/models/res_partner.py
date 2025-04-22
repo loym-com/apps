@@ -68,6 +68,19 @@ class ResPartner(models.Model):
                 partner.tax_receipt_ids.filtered(lambda d: not d.thanks_template_id)
             )
 
+    donation_ids = fields.One2many(
+        comodel_name="donation.donation",
+        inverse_name="partner_id",
+        string="Donations",
+        help="All donations made by this donor.",
+    )
+    tax_receipt_ids = fields.One2many(
+        comodel_name="donation.tax.receipt",
+        inverse_name="partner_id",
+        string="Tax Receipts",
+        help="All tax receipts made by this donor.",
+    )
+
     # To search on these fields, they are stored.
 
     donation_send_thanks = fields.Boolean(
