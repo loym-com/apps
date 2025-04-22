@@ -21,3 +21,9 @@ class DonationTaxReceipt(models.Model):
         string="Donor tags",
         help="Use tags on the donor to segment e.g. communication (email / snailmail)",
     )
+    thanks_template_id = fields.Many2one(
+        "donation.thanks.template",
+        string="Thanks Template",
+        ondelete="restrict",
+        copy=False,
+    )
