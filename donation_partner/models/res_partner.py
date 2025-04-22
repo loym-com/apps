@@ -47,7 +47,7 @@ class ResPartner(models.Model):
                 partner.donation_ids.filtered(lambda d: not d.thanks_printed)
             )
 
-    @api.depends("donation_ids.thanks_template_id")
+    # @api.depends("donation_ids.thanks_template_id")
     def _compute_donation_missing_report_template(self):
         for partner in self:
             partner.donation_missing_report_template = bool(
@@ -61,7 +61,7 @@ class ResPartner(models.Model):
                 partner.tax_receipt_ids.filtered(lambda d: not d.print_date)
             )
 
-    @api.depends("tax_receipt_ids.thanks_template_id")
+    # @api.depends("tax_receipt_ids.thanks_template_id")
     def _compute_tax_receipt_missing_report_template(self):
         for partner in self:
             partner.tax_receipt_missing_report_template = bool(
