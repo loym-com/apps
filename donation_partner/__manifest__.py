@@ -7,9 +7,9 @@
     "author": "Henrik Norlin, Odoo Community Association (OCA)",
     "category": "Accounting & Finance",
     "data": [
-        # "views/donation_donation_views.xml",
-        # "views/donation_tax_receipt_views.xml",
-        # "views/res_partner_views.xml",
+        "views/donation_donation_views.xml",
+        "views/donation_tax_receipt_views.xml",
+        "views/res_partner_views.xml",
     ],
     "depends": [
         "donation",
