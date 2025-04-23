@@ -22,6 +22,7 @@
         # "base_partner_family",
         "donation",
         "donation_analytic",
+        "donation_partner",
         "partner_contact_id", # for the tax report
         "report_py3o",
     ],
