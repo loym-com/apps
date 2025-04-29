@@ -20,7 +20,7 @@ class ProductProduct(models.Model):
             "|",
             ("product_id", "=", self.id),
             ("combination_id", "in", combination_ids),
-            ("type_id", "=", self.env.ref(event_booking_type).id),
+            ("type_id", "=", event_booking_type.id),
         ]
         return action
 

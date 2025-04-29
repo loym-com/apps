@@ -1,49 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <data noupdate="1">
 
-    <!-- EVENT BOOKING TYPE ETC. TO SEE EVENTS IN THE TIMELINE -->
+        <!-- EVENT BOOKING TYPE ETC. TO SEE EVENTS IN THE TIMELINE -->
 
-    <record id="resource_resource_event_a" model="resource.resource">
-        <field name="name">EVENT RESOURCE A</field>
-        <field name="resource_type">material</field>
-        <field name="calendar_id" ref="event_sale_resource_booking.resource_calendar" />
-    </record>
-    <record id="resource_resource_event_b" model="resource.resource">
-        <field name="name">EVENT RESOURCE B</field>
-        <field name="resource_type">material</field>
-        <field name="calendar_id" ref="event_sale_resource_booking.resource_calendar" />
-    </record>
-    <record id="resource_booking_combination_a" model="resource.booking.combination">
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_event_a')])]" />
-    </record>
-    <record id="resource_booking_combination_b" model="resource.booking.combination">
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_event_b')])]" />
-    </record>
-    <record id="resource_booking_type_event" model="resource.booking.type">
-        <field name="name">EVENT</field>
-        <field name="duration" eval="24" />
-        <field name="slot_duration" eval="24" />
-        <field
-            name="resource_calendar_id"
-            ref="event_sale_resource_booking.resource_calendar"
-        />
-        <field name="combination_assignment">sorted</field>
-    </record>
-    <record
-        id="resource_booking_type_combination_rel_a"
-        model="resource.booking.type.combination.rel"
-    >
-        <field name="type_id" ref="resource_booking_type_event" />
-        <field name="combination_id" ref="resource_booking_combination_a" />
-        <field name="sequence" eval="1" />
-    </record>
-    <record
-        id="resource_booking_type_combination_rel_b"
-        model="resource.booking.type.combination.rel"
-    >
-        <field name="type_id" ref="resource_booking_type_event" />
-        <field name="combination_id" ref="resource_booking_combination_b" />
-        <field name="sequence" eval="2" />
-    </record>
+        <record id="resource_booking_type_event" model="resource.booking.type">
+            <field name="name">EVENT</field>
+            <field name="duration" eval="24" />
+            <field name="slot_duration" eval="24" />
+            <field
+                name="resource_calendar_id"
+                ref="event_sale_resource_booking.resource_calendar"
+            />
+            <field name="combination_assignment">sorted</field>
+        </record>
 
+        <record id="resource_resource_1" model="resource.resource">
+            <field name="name">EVENT RESOURCE 1</field>
+            <field name="resource_type">material</field>
+            <field name="calendar_id" ref="event_sale_resource_booking.resource_calendar" />
+        </record>
+        <record id="resource_booking_combination_1" model="resource.booking.combination">
+            <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_1')])]" />
+        </record>
+
+        <record
+            id="resource_booking_type_combination_rel_a"
+            model="resource.booking.type.combination.rel"
+        >
+            <field name="type_id" ref="resource_booking_type_event" />
+            <field name="combination_id" ref="resource_booking_combination_1" />
+            <field name="sequence" eval="1" />
+        </record>
+    </data>
 </odoo>

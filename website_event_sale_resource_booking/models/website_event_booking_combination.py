@@ -9,7 +9,7 @@ from odoo.addons.resource_booking.models.resource_booking import _availability_i
 _logger = logging.getLogger(__name__)
 
 
-class EventBookingCombination(models.Model):
+class WebsiteEventBookingCombination(models.Model):
     _name = "website.event.booking.combination"
     _description = "website.event.booking.combination"
     _auto = False
@@ -118,17 +118,16 @@ class EventBookingCombination(models.Model):
                     if name not in [c[0] for c in column_name_expr]:
                         column_name_expr.append((name, code + "." + name))
         select = ["{} AS {}".format(expr, name) for name, expr in column_name_expr]
-
-        self._cr.execute(
-            f"""
-            CREATE OR REPLACE VIEW website_event_booking_combination AS
-            SELECT {", ".join(select)}
-            FROM product_template_event_rel pt_ee
-            JOIN event_event ee ON pt_ee.event_event_id = ee.id
-            JOIN product_template pt ON pt_ee.product_template_id = pt.id
-            JOIN product_product pp ON pp.product_tmpl_id = pt.id
-            JOIN resource_booking_type rbt ON pp.resource_booking_type_id = rbt.id
-            JOIN resource_booking_type_combination_rel rbt_rbc ON rbt_rbc.type_id = rbt.id
-            JOIN resource_booking_combination rbc ON rbt_rbc.combination_id = rbc.id
-            """
-        )
+        sql = f"""
+        CREATE OR REPLACE VIEW website_event_booking_combination AS
+        SELECT {", ".join(select)}
+        FROM product_template_event_rel pt_ee
+        JOIN event_event ee ON pt_ee.event_event_id = ee.id
+        JOIN product_template pt ON pt_ee.product_template_id = pt.id
+        JOIN product_product pp ON pp.product_tmpl_id = pt.id
+        JOIN resource_booking_type rbt ON pp.resource_booking_type_id = rbt.id
+        JOIN resource_booking_type_combination_rel rbt_rbc ON rbt_rbc.type_id = rbt.id
+        JOIN resource_booking_combination rbc ON rbt_rbc.combination_id = rbc.id
+        """
+        _logger.warning(f"SQL: {sql}")
+        self._cr.execute(sql)

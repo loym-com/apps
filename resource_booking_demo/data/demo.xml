@@ -68,11 +68,6 @@
 
     <!-- MATERIAL RESOURCES -->
 
-    <record id="resource_resource_session" model="resource.resource">
-        <field name="name">SESSION</field>
-        <field name="resource_type">material</field>
-        <field name="calendar_id" ref="resource_calendar_24_7" />
-    </record>
     <record id="resource_resource_room_single_1" model="resource.resource">
         <field name="name">Single Room 1</field>
         <field name="resource_type">material</field>
@@ -155,10 +150,6 @@
 
     <!-- RESOURCE COMBINATION -->
 
-    <record id="resource_booking_combination_session" model="resource.booking.combination">
-        <!-- <field name="name">SESSION</field> -->
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_session')])]" />
-    </record>
     <record id="resource_booking_combination_single_room_1" model="resource.booking.combination">
         <!-- <field name="name">Single Room 1</field> -->
         <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_single_1')])]" />
@@ -256,7 +247,7 @@
     <!-- RESOURCE BOOKING TYPE COMBINATION REL -->
     <record id="resource_booking_type_combination_rel_session" model="resource.booking.type.combination.rel">
         <field name="type_id" ref="resource_booking_type_session" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="combination_id" ref="event_sale_resource_booking_timeline.resource_booking_combination_1" />
     </record>
     <record id="resource_booking_type_combination_rel_single_room_1" model="resource.booking.type.combination.rel">
         <field name="type_id" ref="resource_booking_type_single_room" />
@@ -480,21 +471,18 @@
         <field name="name">Single Room</field>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="sequence">1</field>
-        <!-- <field name="resource_booking_type_id" ref="resource_booking_type_single_room"/> -->
         <field name="resource_booking_type_ids" eval="[(6, 0, [ref('resource_booking_demo.resource_booking_type_single_room')])]"/>
     </record>
     <record id="double_room_1_person_type_pav" model="product.attribute.value">
         <field name="name">Double Room</field>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="sequence">2</field>
-        <!-- <field name="resource_booking_type_id" ref="resource_booking_type_double_room"/> -->
         <field name="resource_booking_type_ids" eval="[(6, 0, [ref('resource_booking_demo.resource_booking_type_double_room')])]"/>
     </record>
     <record id="double_room_2_people_type_pav" model="product.attribute.value">
         <field name="name">Double Room - shared</field>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="sequence">3</field>
-        <!-- <field name="resource_booking_type_id" ref="resource_booking_type_double_room"/> -->
         <field name="resource_booking_type_ids" eval="[(6, 0, [ref('resource_booking_demo.resource_booking_type_double_room_shared')])]"/>
     </record>
 
@@ -715,7 +703,7 @@
         <field name="partner_id" ref="base.main_partner" />
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="combination_id" ref="event_sale_resource_booking_timeline.resource_booking_combination_1" />
         <!-- <field
             name="period_product_tmpl_ids"
             eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
@@ -727,7 +715,7 @@
         <field name="partner_id" ref="base.main_partner" />
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="combination_id" ref="event_sale_resource_booking_timeline.resource_booking_combination_1" />
         <!-- <field
             name="period_product_tmpl_ids"
             eval="[(6, 0, [ref('resource_booking_demo.depression_pt')])]"
@@ -739,7 +727,7 @@
         <field name="partner_id" ref="base.main_partner" />
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="combination_id" ref="event_sale_resource_booking_timeline.resource_booking_combination_1" />
         <!-- <field
             name="period_product_tmpl_ids"
             eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
@@ -751,7 +739,7 @@
         <field name="partner_id" ref="base.main_partner" />
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="combination_id" ref="event_sale_resource_booking_timeline.resource_booking_combination_1" />
         <!-- <field
             name="period_product_tmpl_ids"
             eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt'), ref('resource_booking_demo.depression_pt')])]"

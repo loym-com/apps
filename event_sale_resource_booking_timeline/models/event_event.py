@@ -10,7 +10,7 @@ class EventEvent(models.Model):
         help="A booking to show the event in the timeline."
     )
 
-    @api.constrains("name", "date_begin", "date_end")
+    @api.constrains("name", "date_begin", "date_end", "product_tmpl_ids")
     def _set_a_resource_booking(self):
         Booking = self.env["resource.booking"]
         event_booking_type = self.env.ref(
@@ -29,6 +29,10 @@ class EventEvent(models.Model):
                     rec.resource_booking_id.write(values)
                 else:
                     rec.resource_booking_id = Booking.create(values)
+            else:
+                if rec.resource_booking_id:
+                    rec.resource_booking_id.unlink()
+                    rec.resource_booking_id = False
 
     @api.ondelete(at_uninstall=False)
     def _delete_the_resource_booking(self):
