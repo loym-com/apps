@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_module_module_view_list" model="ir.ui.view">
+        <field name="name">ir.module.module.view.list</field>
+        <field name="model">ir.module.module</field>
+        <field name="inherit_id" ref="base.module_tree" />
+        <field name="arch" type="xml">
+            <list position="inside">
+                <field name="price_user_group" optional="hide" />
+                <field name="price" optional="hide" sum="Total" />
+                <field name="price1" optional="hide" sum="Total" />
+                <field name="price2" optional="hide" sum="Total" />
+                <field name="price3" optional="hide" sum="Total" />
+                <field name="currency_id" optional="hide" sum="Total" />
+            </list>
+        </field>
+    </record>
+</odoo>
