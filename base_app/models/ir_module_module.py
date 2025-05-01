@@ -20,45 +20,15 @@ class IrModuleModule(models.Model):
     price2 = fields.Monetary(default=PRICELESS, string="2-5 users")
     price3 = fields.Monetary(default=PRICELESS, string="6-25 users")
     price4 = fields.Monetary(default=PRICELESS, string="26-100 users")
-    price5 = fields.Monetary(default=PRICELESS, string="101-300 users")
-    price6 = fields.Monetary(default=PRICELESS, string="301-1000 users")
-    price7 = fields.Monetary(default=PRICELESS, string="1001-3000 users")
-    price8 = fields.Monetary(default=PRICELESS, string="3001-10000 users")
+    price5 = fields.Monetary(default=PRICELESS, string="101-350 users")
+    price6 = fields.Monetary(default=PRICELESS, string="351-1000 users")
+    price7 = fields.Monetary(default=PRICELESS, string="1001-2500 users")
+    price8 = fields.Monetary(default=PRICELESS, string="2501-5000 users")
     currency_id = fields.Many2one(
         comodel_name="res.currency",
         string="Currency",
         default=lambda self: self.env.ref("base.EUR").id,
     )
-
-    def _compute_price(self):
-        for record in self:
-            user_group_xmlid = record.price_user_group or "base.group_user"
-            user_group = self.env.ref(record.price_user_group)
-            user_count = self.env["res.users"].search_count(
-                [("groups_id", "in", [user_group.id])]
-            )
-
-            def convert(count):
-                if count < 1:
-                    return 0
-                elif count == 1:
-                    return 1
-                elif count <= 5:
-                    return 2
-                elif count <= 25:
-                    return 3
-                elif count <= 100:
-                    return 4
-                elif count <= 300:
-                    return 5
-                elif count <= 1000:
-                    return 6
-                elif count <= 3000:
-                    return 7
-                else:
-                    return 8
-
-            record.price = getattr(record, f"price{convert(user_count)}", PRICELESS)
 
     def import_prices(self):
 
@@ -106,3 +76,33 @@ class IrModuleModule(models.Model):
                 "price8": module_data["prices"][7],
             })
         self._compute_price()
+
+    def _compute_price(self):
+        for record in self:
+            user_group_xmlid = record.price_user_group or "base.group_user"
+            user_group = self.env.ref(record.price_user_group)
+            user_count = self.env["res.users"].search_count(
+                [("groups_id", "in", [user_group.id])]
+            )
+
+            def convert(count):
+                if count < 1:
+                    return 0
+                elif count == 1:
+                    return 1
+                elif count <= 5:
+                    return 2
+                elif count <= 25:
+                    return 3
+                elif count <= 100:
+                    return 4
+                elif count <= 350:
+                    return 5
+                elif count <= 1000:
+                    return 6
+                elif count <= 2500:
+                    return 7
+                else:
+                    return 8
+
+            record.price = getattr(record, f"price{convert(user_count)}", PRICELESS)

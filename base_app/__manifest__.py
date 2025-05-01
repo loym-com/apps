@@ -6,7 +6,6 @@
     "author": "Loym",
     "auto_install": True,
     "data": [
-        "data/ir_actions_server_data.xml",
         "views/ir_module_module_views.xml",
     ],
     "depends": [
