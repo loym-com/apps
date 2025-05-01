@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- User Access -->
+    <record id="rule_cx_tower_server_group_portal_read" model="ir.rule">
+        <field name="name">Tower Server: portal visibility rule</field>
+        <field name="model_id" ref="cetmix_tower_server.model_cx_tower_server" />
+        <field name="groups" eval="[(4, ref('base.group_portal'))]" />
+        <!-- allow read if the user is in Users -->
+        <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+        <field name="perm_read" eval="1" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+</odoo>

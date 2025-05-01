@@ -1,0 +1,68 @@
+<odoo>
+    <data>
+
+        <template id="portal_my_home_menu_tower" name="My Tower Servers" customize_show="True" inherit_id="portal.portal_my_home">
+            <xpath expr="//div[hasclass('o_portal_my_home')]" position="inside">
+                <div class="o_portal_my_home_link">
+                    <a href="/my/towers">
+                        <i class="fa fa-server" role="img" aria-label="Tower Servers"/>
+                        Tower Servers
+                        <span class="badge badge-pill"><t t-esc="tower_count"/></span>
+                    </a>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="portal_my_towers" name="My Tower Servers">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs" t-value="[{'url': '/my/home', 'title': 'Home'}, {'title': 'Tower Servers'}]"/>
+                <!-- <t t-call="portal.portal_searchable">
+                    <t t-set="title">Tower Servers</t>
+                </t> -->
+                <div class="row">
+                    <div class="col-12">
+                        <h2>My Tower Servers</h2>
+                        <t t-if="towers">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="towers" t-as="tower">
+                                        <tr>
+                                            <td><t t-esc="tower.name"/></td>
+                                            <td>
+                                                <a t-attf-href="/my/tower/#{tower.id}" class="btn btn-sm btn-primary">View</a>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <t t-call="portal.pager"/>
+                        </t>
+                        <t t-else="">
+                            <p>No Tower Servers found.</p>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_my_tower" name="My Tower Server">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs" t-value="[{'url': '/my/home', 'title': 'Home'}, {'url': '/my/towers', 'title': 'Tower Servers'}, {'title': tower.name}]"/>
+                <div class="row">
+                    <div class="col-12">
+                        <h2><t t-esc="tower.name"/></h2>
+                        <p>Partner: <t t-esc="tower.partner_id.name"/></p>
+                        <!-- Display other tower details here -->
+                    </div>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>
