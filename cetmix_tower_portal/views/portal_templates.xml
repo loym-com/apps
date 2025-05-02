@@ -3,26 +3,46 @@
 
         <template id="portal_my_home_menu_tower" name="My Tower Servers" customize_show="True" inherit_id="portal.portal_my_home">
             <xpath expr="//div[hasclass('o_portal_my_home')]" position="inside">
-                <div class="o_portal_my_home_link">
-                    <a href="/my/towers">
-                        <i class="fa fa-server" role="img" aria-label="Tower Servers"/>
-                        Tower Servers
-                        <span class="badge badge-pill"><t t-esc="tower_count"/></span>
-                    </a>
+                <div class="o_portal_docs row g-2">
+                    <div class="o_portal_category row g-2 mt-3" id="portal_common_category">
+                        <t t-call="portal.portal_docs_entry" t-if="False"/>
+                        <t t-call="portal.portal_docs_entry">
+                            <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
+                            <t t-set="title">My Databases</t>
+                            <t t-set="text">Configure your databases</t>
+                            <t t-set="url" t-value="'/my/databases'"/>
+                            <t t-set="config_card" t-value="True"/>
+                        </t>
+                    </div>
                 </div>
             </xpath>
         </template>
 
-        <template id="portal_my_towers" name="My Tower Servers">
+        <template id="portal_my_home_cetmix_tower_database" name="My Databases">
             <t t-call="portal.portal_layout">
-                <t t-set="breadcrumbs" t-value="[{'url': '/my/home', 'title': 'Home'}, {'title': 'Tower Servers'}]"/>
-                <!-- <t t-call="portal.portal_searchable">
-                    <t t-set="title">Tower Servers</t>
-                </t> -->
+                <t t-set="breadcrumbs_after" t-value="'Databases'"/>
+                <t t-call="portal.portal_searchable">
+                    <t t-set="title">My Databases</t>
+                </t>
+                <div class="container">
+                    <h2>My Databases</h2>
+                    <a href="/my/databases/new" class="btn btn-primary">Create database</a>
+                    <!-- Display existing databases here -->
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_my_towers" name="My Databases">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_after" t-value="[{'url': '/my/home', 'title': 'Home'}, {'title': 'Databases'}]"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">My Databases</t>
+                </t>
                 <div class="row">
                     <div class="col-12">
-                        <h2>My Tower Servers</h2>
-                        <t t-if="towers">
+                        <h2>My Databases</h2>
+                        <a href="/my/databases/new" class="btn btn-primary">Create database</a>
+                        <t t-if="databases">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -31,11 +51,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <t t-foreach="towers" t-as="tower">
+                                    <t t-foreach="databases" t-as="database">
                                         <tr>
-                                            <td><t t-esc="tower.name"/></td>
+                                            <td><t t-esc="database.name"/></td>
                                             <td>
-                                                <a t-attf-href="/my/tower/#{tower.id}" class="btn btn-sm btn-primary">View</a>
+                                                <a t-attf-href="/my/database/#{database.id}" class="btn btn-sm btn-primary">View</a>
                                             </td>
                                         </tr>
                                     </t>
@@ -43,23 +63,67 @@
                             </table>
                             <t t-call="portal.pager"/>
                         </t>
-                        <t t-else="">
-                            <p>No Tower Servers found.</p>
-                        </t>
                     </div>
                 </div>
             </t>
         </template>
 
-        <template id="portal_my_tower" name="My Tower Server">
+        <template id="portal_my_tower" name="My database">
             <t t-call="portal.portal_layout">
-                <t t-set="breadcrumbs" t-value="[{'url': '/my/home', 'title': 'Home'}, {'url': '/my/towers', 'title': 'Tower Servers'}, {'title': tower.name}]"/>
+                <t t-set="breadcrumbs" t-value="[{'url': '/my/home', 'title': 'Home'}, {'url': '/my/databases', 'title': 'Databases'}, {'title': database.name}]"/>
                 <div class="row">
                     <div class="col-12">
-                        <h2><t t-esc="tower.name"/></h2>
-                        <p>Partner: <t t-esc="tower.partner_id.name"/></p>
+                        <h2><t t-esc="database.name"/></h2>
+                        <p>Partner: <t t-esc="database.partner_id.name"/></p>
                         <!-- Display other tower details here -->
                     </div>
+                </div>
+            </t>
+        </template>
+
+        <!-- REPLACE THE FORM BELOW WITH WEBSITE PAGE MADE WITH FORM BUILDER. ADD <t t-if="request.env.user._is_public() == False"> OR PASTE THE WEBSITE FORM PAGE BELOW. -->
+
+        <template id="database_form" name="Database Form">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_after" t-value="'Create Database'"/>
+                <div class="container">
+                    <form action="/my/databases/create" method="post">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="form-group">
+                            <label for="name">Database Name:</label>
+                            <input type="text" class="form-control" name="name" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="version">Version:</label>
+                            <input type="text" class="form-control" name="version"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="company_name">Company Name:</label>
+                            <input type="text" class="form-control" name="company_name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="country_id">Country:</label>
+                            <select class="form-control" name="country_id">
+                                <t t-foreach="countries" t-as="country">
+                                    <option t-att-value="country.id"><t t-esc="country.name"/></option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category:</label>
+                            <select class="form-control" name="category">
+                                <option value="sda_church">SDA Church</option>
+                                <option value="sda_supporting_ministry">SDA Supporting Ministry</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Start</button>
+                        <t t-if="error">
+                            <div class="alert alert-danger" role="alert">
+                                <t t-esc="error"/>
+                            </div>
+                        </t>
+                    </form>
                 </div>
             </t>
         </template>
