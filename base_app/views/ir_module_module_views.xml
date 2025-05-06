@@ -5,14 +5,14 @@
         <field name="model">ir.module.module</field>
         <field name="inherit_id" ref="base.module_tree" />
         <field name="arch" type="xml">
-            <list position="inside">
+            <tree position="inside">
                 <field name="price_user_group" optional="hide" />
                 <field name="price" optional="hide" sum="Total" />
                 <field name="price1" optional="hide" sum="Total" />
                 <field name="price2" optional="hide" sum="Total" />
                 <field name="price3" optional="hide" sum="Total" />
                 <field name="currency_id" optional="hide" sum="Total" />
-            </list>
+            </tree>
         </field>
     </record>
 </odoo>
