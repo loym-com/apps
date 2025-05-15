@@ -9,13 +9,7 @@ class MailTemplate(models.Model):
     # This module has donation.thanks.template one2many ir.attachment (with lang field).
     def generate_email(self, res_ids, fields=None):
         self.ensure_one()
-        multi = True
-        if isinstance(res_ids, int):
-            res_ids = [res_ids]
-            multi = False
-        res = super().generate_email(
-            res_ids, fields
-        )
+        res = super().generate_email(res_ids, fields)
 
         if not self.model == "donation.tax.receipt":
             return res
@@ -42,4 +36,8 @@ class MailTemplate(models.Model):
                         attachment.name,
                         attachment.datas))
                     attached.append(attachment.id)
-        return multi and res or res[res_ids[0]]
+        return res
+        # multi = True
+        # if isinstance(res_ids, int):
+        #     multi = False
+        # return multi and res or res[res_ids[0]]
