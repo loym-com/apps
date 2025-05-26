@@ -1,0 +1,38 @@
+https://github.com/OCA/reporting-engine/tree/16.0/report_py3o#available-functions-and-objects
+https://py3otemplate.readthedocs.io/en/latest/templating.html
+
+Open libreoffice document
+Ctrl+F2 - Functions - Input field - Reference (paste value) - Insert - Placeholder name - Ok - Close
+
+PRINT_DATE
+py3o://function="o_format_date(o.print_date, lang_code=lang)"
+
+DONATION_DATE
+py3o://function="o_format_date(d.donation_date, lang_code=lang)"
+
+AMOUNT
+py3o://function="o_format_lang(dl.amount, digits=0, lang_code=lang, currency_obj=dl.currency_id)"
+
+
+
+RES.PARTNER
+lang
+name
+
+DONATION.DONATION
+thanks_template_id
+thanks_printed
+donation_date
+write_date (or create a computed field for today or stored field print_date)
+
+DONATION.LINE
+amount
+analytic_account_id.donation_description
+
+DONATION.THANKS.TEMPLATE
+image
+image_height
+image_width
+image_text
+text1
+text2

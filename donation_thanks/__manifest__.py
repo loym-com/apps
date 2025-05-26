@@ -11,10 +11,13 @@
         "data/ir_actions_report_data.xml",
         "data/res_partner_category_data.xml", # before mail templates
         "data/mail_template_data.xml", # before server actions
-        "data/ir_actions_server_data.xml",
+        "data/ir_actions_server_data.xml", # UPDATE (noupdate="0")
         # "reports/old_report_donation_thanks_templates.xml",
+        "security/ir.model.access.csv",
+        "views/donation_donation_views.xml",
         "views/donation_tax_receipt_views.xml",
         "views/donation_thanks_template_views.xml",
+        "views/donation_thanks_views.xml",
         "views/ir_attachment_views.xml",
         "views/res_partner_views.xml",
     ],

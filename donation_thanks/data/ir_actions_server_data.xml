@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<odoo noupdate="1">
-    <record id="action_donation_donation_email" model="ir.actions.server">
+<odoo noupdate="0">
+    <record id="donation_donation_action_create_thanks" model="ir.actions.server">
+        <field name="name">Create Thanks</field>
+        <field name="model_id" ref="donation.model_donation_donation" />
+        <field name="binding_model_id" ref="donation.model_donation_donation" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[action = records.filtered(lambda r: not r.thanks_id).action_create_thanks()]]></field>
+    </record>
+    <!-- <record id="donation_thanks_action_email" model="ir.actions.server">
         <field name="name">Email Donation Thanks DIRECTLY</field>
-        <field name="model_id" ref="donation.model_donation_donation"/>
-        <field name="binding_model_id" ref="donation.model_donation_donation"/>
+        <field name="model_id" ref="donation.model_donation_thanks"/>
+        <field name="binding_model_id" ref="donation.model_donation_thanks"/>
         <field name="state">code</field>
         <field name="code"><![CDATA[
 mail_template = env.ref("donation_thanks.mail_template_donation_donation")
@@ -18,8 +25,8 @@ action = {
     'res_model': 'mail.mail',
 }
         ]]></field>
-    </record>
-    <record id="action_donation_tax_receipt_email" model="ir.actions.server">
+    </record> -->
+    <record id="donation_tax_receipt_action_email" model="ir.actions.server">
         <field name="name">Email Tax Receipt Thanks DIRECTLY</field>
         <field name="model_id" ref="donation_base.model_donation_tax_receipt"/>
         <field name="binding_model_id" ref="donation_base.model_donation_tax_receipt"/>

@@ -1,3 +1,8 @@
+https://github.com/OCA/reporting-engine/tree/16.0/report_py3o#available-functions-and-objects
+https://py3otemplate.readthedocs.io/en/latest/templating.html
+
+Open libreoffice document
+Ctrl+F2 - Functions - Input field - Reference (paste value) - Insert - Placeholder name - Ok - Close
 
 YEAR
 py3o://function="o_format_date(o.donation_date, lang_code=lang, date_format="YYYY")"

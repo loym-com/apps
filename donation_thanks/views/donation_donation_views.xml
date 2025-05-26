@@ -1,0 +1,37 @@
+<odoo>
+    <!-- Inherit the form view -->
+    <record id="donation_donation_view_form" model="ir.ui.view">
+        <field name="name">donation.donation.view.form.inherit</field>
+        <field name="model">donation.donation</field>
+        <field name="inherit_id" ref="donation.donation_form"/>
+        <field name="arch" type="xml">
+            <field name="thanks_printed" position="after">
+                <field name="thanks_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherit the list view -->
+    <record id="donation_donation_view_tree" model="ir.ui.view">
+        <field name="name">donation.donation.view.tree.inherit</field>
+        <field name="model">donation.donation</field>
+        <field name="inherit_id" ref="donation.donation_tree"/>
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="thanks_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Inherit the search view -->
+    <record id="donation_donation_view_search" model="ir.ui.view">
+        <field name="name">donation.donation.view.search.inherit</field>
+        <field name="model">donation.donation</field>
+        <field name="inherit_id" ref="donation.donation_search"/>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <field name="thanks_id" string="Thanks"/>
+            </search>
+        </field>
+    </record>
+</odoo>
