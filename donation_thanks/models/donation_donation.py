@@ -1,5 +1,6 @@
 import logging
 
+from collections import defaultdict
 from itertools import groupby
 
 from odoo import Command, fields, models
@@ -18,6 +19,7 @@ class DonationDonation(models.Model):
 
     def action_create_thanks(self):
         thanks_ids = []
+        thanks_donations = defaultdict(self.env["donation.donation"].browse)
         # Odoo 17
         # grouped_donations = self.grouped(lambda d: (d.partner_id, d.thanks_template_id))
         # for (partner, template), donations in grouped_donations.items():
@@ -35,12 +37,17 @@ class DonationDonation(models.Model):
                 template = template.browse(group["thanks_template_id"][0])
             donations = self.search(group["__domain"])
             # End Odoo 16
-
-            # Create a new thanks record for each unique partner and template combination
+            # Create a new thanks record for each combination of (parent) partner and thanks template
+            if partner.parent_id:
+                partner = partner.parent_id
+            thanks_donations[(partner.id, template.id)] |= donations
+        for (partner_id, template_id), donations in thanks_donations.items():
             thanks = self.env["donation.thanks"].create({
-                "partner_id": partner.id,
-                "thanks_template_id": template.id,
-                "donation_ids": [Command.set(donations.sorted(key="donation_date").ids)],
+                "partner_id": partner_id,
+                "thanks_template_id": template_id,
+                "donation_ids": [
+                    Command.set(donations.sorted(key="donation_date", reverse=True).ids)
+                ],
             })
             thanks_ids.append(thanks.id)
 
