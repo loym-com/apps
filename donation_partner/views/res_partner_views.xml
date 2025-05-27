@@ -9,7 +9,7 @@
                 <field name="donation_send_thanks" />
                 <field name="donation_thanks_send" />
                 <field
-                    name="tax_receipt_send"
+                    name="donation_tax_receipt_send"
                     attrs="{'invisible': [('parent_id', '!=', False)]}"
                 />
             </field>
@@ -23,7 +23,7 @@
             <search position="inside">
                 <field name="donation_send_thanks" />
                 <field name="donation_thanks_send" />
-                <field name="tax_receipt_send" />
+                <field name="donation_tax_receipt_send" />
             </search>
         </field>
     </record>

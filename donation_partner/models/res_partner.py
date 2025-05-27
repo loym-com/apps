@@ -20,11 +20,11 @@ class ResPartner(models.Model):
                 partner.donation_thanks_ids.filtered(lambda d: not d.print_date)
             )
 
-    @api.depends("tax_receipt_ids.print_date")
-    def _compute_tax_receipt_send(self):
+    @api.depends("donation_tax_receipt_ids.print_date")
+    def _compute_donation_tax_receipt_send(self):
         for partner in self:
-            partner.tax_receipt_send = bool(
-                partner.tax_receipt_ids.filtered(lambda d: not d.print_date)
+            partner.donation_tax_receipt_send = bool(
+                partner.donation_tax_receipt_ids.filtered(lambda d: not d.print_date)
             )
 
     # To search on these fields, they are stored.
@@ -43,9 +43,9 @@ class ResPartner(models.Model):
         help="""Filter on donors with(out) a thanks to send.\n
                 Send it e.g. together with a newsletter.""",
     )
-    tax_receipt_send = fields.Boolean(
+    donation_tax_receipt_send = fields.Boolean(
         string="Send Donation Tax Receipt",
-        compute="_compute_tax_receipt_send",
+        compute="_compute_donation_tax_receipt_send",
         store=True,
         help="""Filter on donors who (don't) need a tax receipt.\n
                 Send it e.g. together with a newsletter.""",
@@ -65,7 +65,7 @@ class ResPartner(models.Model):
         string="Donation Thanks",
         help="All donations thanks to this donor.",
     )
-    tax_receipt_ids = fields.One2many(
+    donation_tax_receipt_ids = fields.One2many(
         comodel_name="donation.tax.receipt",
         inverse_name="partner_id",
         string="Tax Receipts",
@@ -88,7 +88,7 @@ class ResPartner(models.Model):
         action["domain"] = [("partner_id", "in", self.ids), ("print_date", "=", False)]
         return action
 
-    def action_tax_receipt_ids_to_send(self):
+    def action_donation_tax_receipt_ids_to_send(self):
         action = self.env["ir.actions.actions"]._for_xml_id(
             "donation_base.donation_tax_receipt_action"
         )
