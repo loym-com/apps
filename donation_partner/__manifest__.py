@@ -13,7 +13,7 @@
         "views/res_partner_views.xml",
     ],
     "depends": [
-        "donation",
+        "donation_thanks",
         "partner_valid_postal_address",
     ],
     "development_status": "Alpha",

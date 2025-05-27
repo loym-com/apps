@@ -37,7 +37,7 @@
         <field name="py3o_filetype">odt</field>
         <field name="module">donation_thanks</field>
         <field name="py3o_template_fallback">reports/report_donation_thanks.odt</field>
-        <field name="report_name">mandatory field in database</field>
+        <field name="report_name">mandatory field in database (donation.thanks)</field>
         <field name="print_report_name">f"Thank you, {object.partner_id.name}"</field>
         <field name="binding_type">report</field>
         <field name="binding_model_id" ref="donation_thanks.model_donation_thanks" />
@@ -49,7 +49,7 @@
         <field name="py3o_filetype">odt</field>
         <field name="module">donation_thanks</field>
         <field name="py3o_template_fallback">reports/report_donation_tax_receipt.odt</field>
-        <field name="report_name">mandatory field in database</field>
+        <field name="report_name">mandatory field in database (donation.tax.receipt)</field>
         <field name="print_report_name">f"Tax receipt for donations - {object.partner_id.name}"</field>
         <field name="binding_type">report</field>
         <field name="binding_model_id" ref="donation_base.model_donation_tax_receipt" />

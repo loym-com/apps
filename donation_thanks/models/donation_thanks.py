@@ -32,6 +32,6 @@ class DonationThanks(models.Model):
     def name_get(self):
         result = []
         for record in self:
-            name = f"{record.partner_id.name} {record.print_date}"
+            name = f"{record.partner_id.name} {record.write_date}"
             result.append((record.id, name))
         return result

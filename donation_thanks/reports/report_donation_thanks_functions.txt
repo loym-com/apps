@@ -13,8 +13,8 @@ Binary is not working
 b64decode                   py3o://function="b64decode(o.thanks_template_id.image)"
 test function o_value       py3o://function="o_value(o.thanks_template_id.image)"
 
-PRINT_DATE
-py3o://function="o_format_date(o.print_date, lang_code=lang)"
+WRITE_DATE
+py3o://function="o_format_date(o.write_date, lang_code=lang)"
 
 DONATION_DATE
 py3o://function="o_format_date(d.donation_date, lang_code=lang)"

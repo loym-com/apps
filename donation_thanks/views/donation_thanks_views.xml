@@ -24,7 +24,7 @@
         <field name="name">donation.thanks.tree</field>
         <field name="model">donation.thanks</field>
         <field name="arch" type="xml">
-            <tree string="Donation Thanks">
+            <tree string="Donation Thanks" multi_edit="1">
                 <field name="partner_id"/>
                 <field name="thanks_template_id"/>
                 <field name="print_date"/>

@@ -5,15 +5,22 @@
         <field name="model_id" ref="donation.model_donation_donation" />
         <field name="binding_model_id" ref="donation.model_donation_donation" />
         <field name="state">code</field>
-        <field name="code"><![CDATA[action = records.filtered(lambda r: not r.thanks_id).action_create_thanks()]]></field>
+        <field name="code">action = records.filtered(lambda r: not r.thanks_id).action_create_thanks()</field>
     </record>
-    <!-- <record id="donation_thanks_action_email" model="ir.actions.server">
+    <record id="donation_thanks_action_printed" model="ir.actions.server">
+        <field name="name">Set Printed</field>
+        <field name="model_id" ref="donation_thanks.model_donation_thanks" />
+        <field name="binding_model_id" ref="donation_thanks.model_donation_thanks" />
+        <field name="state">code</field>
+        <field name="code">records.write({"print_date": datetime.date.today()})</field>
+    </record>
+    <record id="donation_thanks_action_email" model="ir.actions.server">
         <field name="name">Email Donation Thanks DIRECTLY</field>
-        <field name="model_id" ref="donation.model_donation_thanks"/>
-        <field name="binding_model_id" ref="donation.model_donation_thanks"/>
+        <field name="model_id" ref="donation_thanks.model_donation_thanks"/>
+        <field name="binding_model_id" ref="donation_thanks.model_donation_thanks"/>
         <field name="state">code</field>
         <field name="code"><![CDATA[
-mail_template = env.ref("donation_thanks.mail_template_donation_donation")
+mail_template = env.ref("donation_thanks.mail_template_donation_thanks")
 
 for record in records:
     mail_template.send_mail(record.id)
@@ -25,7 +32,7 @@ action = {
     'res_model': 'mail.mail',
 }
         ]]></field>
-    </record> -->
+    </record>
     <record id="donation_tax_receipt_action_email" model="ir.actions.server">
         <field name="name">Email Tax Receipt Thanks DIRECTLY</field>
         <field name="model_id" ref="donation_base.model_donation_tax_receipt"/>

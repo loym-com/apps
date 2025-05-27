@@ -40,7 +40,6 @@ class DonationDonation(models.Model):
             thanks = self.env["donation.thanks"].create({
                 "partner_id": partner.id,
                 "thanks_template_id": template.id,
-                "print_date": fields.Date.context_today(self),
                 "donation_ids": [Command.set(donations.sorted(key="donation_date").ids)],
             })
             thanks_ids.append(thanks.id)

@@ -7,13 +7,9 @@
         <field name="arch" type="xml">
             <field name="tax_receipt_option" position="after">
                 <field name="donation_send_thanks" />
-                <field name="donation_missing_report_template" />
+                <field name="donation_thanks_send" />
                 <field
                     name="tax_receipt_send"
-                    attrs="{'invisible': [('parent_id', '!=', False)]}"
-                />
-                <field
-                    name="tax_receipt_missing_report_template"
                     attrs="{'invisible': [('parent_id', '!=', False)]}"
                 />
             </field>
@@ -26,9 +22,8 @@
         <field name="arch" type="xml">
             <search position="inside">
                 <field name="donation_send_thanks" />
-                <field name="donation_missing_report_template" />
+                <field name="donation_thanks_send" />
                 <field name="tax_receipt_send" />
-                <field name="tax_receipt_missing_report_template" />
             </search>
         </field>
     </record>
