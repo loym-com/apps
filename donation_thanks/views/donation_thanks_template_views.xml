@@ -7,17 +7,21 @@
         <field name="arch" type="xml">
             <sheet position="inside">
                 <group groups="donation.group_donation_manager">
-                    <field name="image_height" />
-                    <field name="image_width" />
-                    <field name="image_text" />
-                    <field name="text1" />
-                    <field name="text2" />
+                    <field name="img_text" />
+                    <field name="model" />
                     <field name="attachment_ids">
                         <tree>
                             <field name="lang" />
                             <field name="name" />
                         </tree>
                     </field>
+                </group>
+                <group groups="donation.group_donation_manager" string="DEPRECATED">
+                    <field name="image_height" />
+                    <field name="image_width" />
+                    <field name="image_text" />
+                    <field name="text1" />
+                    <field name="text2" />
                 </group>
             </sheet>
         </field>
