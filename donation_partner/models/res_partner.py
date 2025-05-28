@@ -75,22 +75,19 @@ class ResPartner(models.Model):
     # Actions
 
     def action_donation_ids_to_send_thanks(self):
-        action = self.env["ir.actions.actions"]._for_xml_id(
-            "donation.donation_action"
-        )
-        action["domain"] = [("partner_id", "in", self.ids), ("thanks_printed", "=", False)]
-        return action
+        xml_id = "donation.donation_action"
+        act = self.env["ir.actions.actions"]._for_xml_id(xml_id)
+        act["domain"] = [("partner_id", "in", self.ids), ("thanks_printed", "=", False)]
+        return act
 
     def action_donation_thanks_ids_to_send(self):
-        action = self.env["ir.actions.actions"]._for_xml_id(
-            "donation_thanks.donation_thanks_action"
-        )
+        xml_id = "donation_thanks.donation_thanks_action"
+        action = self.env["ir.actions.actions"]._for_xml_id(xml_id)
         action["domain"] = [("partner_id", "in", self.ids), ("print_date", "=", False)]
         return action
 
     def action_donation_tax_receipt_ids_to_send(self):
-        action = self.env["ir.actions.actions"]._for_xml_id(
-            "donation_base.donation_tax_receipt_action"
-        )
+        xml_id = "donation_partner.donation_tax_receipt_action"
+        action = self.env["ir.actions.actions"]._for_xml_id(xml_id)
         action["domain"] = [("partner_id", "in", self.ids), ("print_date", "=", False)]
         return action

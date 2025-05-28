@@ -15,6 +15,11 @@ class DonationThanks(models.Model):
         required=True,
         ondelete="restrict",
     )
+    partner_display_name = fields.Char(
+        string="Partner Display Name",
+        related="partner_id.display_name",
+        store=True,
+    )
     thanks_template_id = fields.Many2one(
         string="Thanks Template",
         comodel_name="donation.thanks.template",

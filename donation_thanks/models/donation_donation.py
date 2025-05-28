@@ -21,7 +21,7 @@ class DonationDonation(models.Model):
         thanks_ids = []
         thanks_donations = defaultdict(self.env["donation.donation"].browse)
         # Odoo 17
-        # grouped_donations = self.grouped(lambda d: (d.partner_id, d.thanks_template_id))
+        # grouped_donations = self.grouped(lambda d: (d.partner_id.commercial_partner_id, d.thanks_template_id))
         # for (partner, template), donations in grouped_donations.items():
         # Odoo 16
         grouped_donations = self.read_group(
@@ -31,15 +31,13 @@ class DonationDonation(models.Model):
             lazy=False,
         )
         for group in grouped_donations:
-            partner = self.env["res.partner"].browse(group["partner_id"][0])
+            partner = self.env["res.partner"].browse(group["partner_id"][0]).commercial_partner_id
             template = self.env["donation.thanks.template"]
             if group.get("thanks_template_id"):
                 template = template.browse(group["thanks_template_id"][0])
             donations = self.search(group["__domain"])
             # End Odoo 16
-            # Create a new thanks record for each combination of (parent) partner and thanks template
-            if partner.parent_id:
-                partner = partner.parent_id
+            # Create a new thanks record for each combination of partner and thanks template
             thanks_donations[(partner.id, template.id)] |= donations
         for (partner_id, template_id), donations in thanks_donations.items():
             thanks = self.env["donation.thanks"].create({
