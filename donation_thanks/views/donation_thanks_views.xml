@@ -24,7 +24,11 @@
         <field name="name">donation.thanks.tree</field>
         <field name="model">donation.thanks</field>
         <field name="arch" type="xml">
-            <tree string="Donation Thanks" multi_edit="1">
+            <tree
+                string="Donation Thanks"
+                multi_edit="1"
+                default_order="partner_id.display_name ASC, partner_id.id DESC"
+            >
                 <field name="partner_id"/>
                 <field name="thanks_template_id"/>
                 <field name="print_date"/>
