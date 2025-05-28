@@ -32,6 +32,7 @@
                 <field name="partner_id"/>
                 <field name="thanks_template_id"/>
                 <field name="print_date"/>
+                <field name="donation_count"/>
             </tree>
         </field>
     </record>

@@ -9,6 +9,11 @@ class DonationThanks(models.Model):
     _name = "donation.thanks"
     _description = "Donation Thanks"
 
+    @api.depends("donation_ids")
+    def _compute_donation_count(self):
+        for record in self:
+            record.donation_count = len(record.donation_ids)
+
     partner_id = fields.Many2one(
         string="Partner",
         comodel_name="res.partner",
@@ -28,6 +33,11 @@ class DonationThanks(models.Model):
         string="Donations",
         comodel_name="donation.donation",
         inverse_name="thanks_id",
+    )
+    donation_count = fields.Integer(
+        string="Donation Count",
+        compute="_compute_donation_count",
+        store=True,
     )
     print_date = fields.Date(
         string="Print Date",
