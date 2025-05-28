@@ -17,7 +17,7 @@ class DonationDonation(models.Model):
         readonly=True,
     )
 
-    def action_create_thanks(self):
+    def action_create_donation_thanks(self):
         thanks_ids = []
         thanks_donations = defaultdict(self.env["donation.donation"].browse)
         # Odoo 17

@@ -8,6 +8,7 @@ _logger = logging.getLogger(__name__)
 class DonationThanks(models.Model):
     _name = "donation.thanks"
     _description = "Donation Thanks"
+    _order = "partner_id.display_name ASC, partner_id.id DESC" # Same as res.partner
 
     partner_id = fields.Many2one(
         string="Partner",

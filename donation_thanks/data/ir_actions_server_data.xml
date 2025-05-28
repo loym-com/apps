@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="0">
-    <record id="donation_donation_action_create_thanks" model="ir.actions.server">
-        <field name="name">Create Thanks</field>
+    <record id="donation_donation_action_create_donation_thanks" model="ir.actions.server">
+        <field name="name">Create Donation Thanks</field>
         <field name="model_id" ref="donation.model_donation_donation" />
         <field name="binding_model_id" ref="donation.model_donation_donation" />
         <field name="state">code</field>
-        <field name="code">action = records.filtered(lambda r: not r.thanks_id).action_create_thanks()</field>
+        <field name="code">action = records.filtered(lambda r: not r.thanks_id).action_create_donation_thanks()</field>
     </record>
     <record id="donation_thanks_action_printed" model="ir.actions.server">
         <field name="name">Set Printed</field>
