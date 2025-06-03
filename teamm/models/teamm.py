@@ -175,7 +175,7 @@ class TeamM(models.Model):
                 name = discount
                 amount = total_discount
             # Remove codes
-            name = re.sub(r'\s*\(.*?\)\s*', '', name)
+            # name = re.sub(r'\s*\(.*?\)\s*', '', name) # allow (8000,-)
             # Replace aliases
             name = aliases.get(name, name)
             # Convert percentages
