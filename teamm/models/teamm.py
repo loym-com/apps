@@ -116,7 +116,7 @@ class TeamM(models.Model):
         aliases = {
             alias_name: alias_record.name or ""
             for alias_record in self.alias_ids
-            for alias_name in [a.strip() for a in alias_record.aliases.split(",")]
+            for alias_name in [a.strip() for a in alias_record.aliases.split(", ")]
         }
         record_ids = []
         begin, end = self.src_begin, self.src_end

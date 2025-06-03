@@ -9,6 +9,6 @@ class TeammAlias(models.Model):
 
     note = fields.Char()
     name = fields.Char()
-    aliases = fields.Text(help="comma-separated string")
+    aliases = fields.Text(help="comma+space separated string")
     teamm_id = fields.Many2one("teamm", ondelete="cascade")
     teamm_sequence = fields.Integer(related="teamm_id.sequence")

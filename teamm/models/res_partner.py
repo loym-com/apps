@@ -16,7 +16,12 @@ class ResPartner(models.Model):
     def _teamm2odoo_search_kwargs(self, kwargs):
         hubspot_id = self._teamm2odoo_get_value("hubspot contact id")
         if hubspot_id:
-            kwargs |= {"hubspot_contact_id": hubspot_id}
+            if hubspot_id[0].lower() == "o":
+                assert hubspot_id.startswith("odoo-"), \
+                    _("Hubspot contact id must start with 'odoo-'")
+                kwargs |= {"id": int(hubspot_id[5:])} # remove "odoo-"
+            else:
+                kwargs |= {"hubspot_contact_id": hubspot_id}
         else:
             # Without hubspot_id, don't return any contact.
             kwargs |= {"id": 0}
@@ -44,7 +49,7 @@ class ResPartner(models.Model):
                 # "firstname": values["mainGuest"]["firstName"],
                 # "lastname": values["mainGuest"]["lastName"],
             }
-        else:             
+        else:
             kwargs |= {
                 "firstname": self._teamm2odoo_get_value("first name"),
                 "lastname": self._teamm2odoo_get_value("last name"),
