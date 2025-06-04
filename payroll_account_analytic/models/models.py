@@ -92,7 +92,7 @@ class HrPayslip(models.Model):
         # TODO: Move to l10n_no_payroll
         company = self.env.company
         aga = float(company.l10n_no_Grunnlagsprosent) / 100.0
-        fp = company.l10n_no_fp_prosent / 100.0
+        fp_normal = company.l10n_no_fp_prosent / 100.0
         fp_senior = company.l10n_no_fp_prosent_senior / 100.0
 
         # create one account.move per journal/month
@@ -201,8 +201,7 @@ class HrPayslip(models.Model):
                         if beregn_fp:
                             year = line.slip_id.date_to.year
                             birthyear = line.employee_id.birthday.year
-                            if year - birthyear >= 59:
-                                fp = fp_senior
+                            fp = fp_senior if year - birthyear >= 59 else fp_normal
                             _add(amount * fp, company.l10n_no_fp_konto)
                             _add(-amount * fp, company.l10n_no_fp_motkonto)
                             _add(amount * aga * fp, company.l10n_no_aga_fp_konto)
