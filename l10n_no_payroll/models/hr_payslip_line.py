@@ -74,6 +74,7 @@ class HrPayslipLine(models.Model):
         payslip_lines = self.search([])
         # payslip_lines = self.search([("date_from", "<", date(2024, 1, 1))])
         for line in payslip_lines:
+            total = -line.total if line.credit_note else line.total
             employee_id = line.employee_id.id
             rule = line.salary_rule_id
             year = line.slip_id.date_to.year
@@ -101,9 +102,9 @@ class HrPayslipLine(models.Model):
                 else:
                     d[employee_id]["year"][year]["rate"] = fp_prosent
             if rule in [loennsart_fp_i_fjor_id, loennsart_fp_i_aar_id]:
-                d[employee_id]["year"][year]["paid"] += line.total
+                d[employee_id]["year"][year]["paid"] += total
             elif line.salary_rule_id.l10n_no_BeregnFP:
-                d[employee_id]["year"][year]["basis"] += line.total
+                d[employee_id]["year"][year]["basis"] += total
 
         # Create a CSV report
         csv = "employee_id,employee_name,year,basis,rate,vacation_money,paid,unpaid\n"
