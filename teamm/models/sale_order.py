@@ -18,6 +18,7 @@ class SaleOrder(models.Model):
                 "partner_id": self.env["res.partner"]._teamm2odoo_search().id,
                 "date_order": TeamM._get_date("booked at"),
                 "state": "sale",
+                "workflow_process_id": False,
             }
 
             # FIXME: Hard-coded for Fredheim

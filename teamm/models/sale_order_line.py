@@ -10,6 +10,13 @@ class SaleOrderLine(models.Model):
 
     @api.model
     def _teamm2odoo(self):
+        # Set quantity to 0 (old booking) if no record found (new booking)
+        record = self._teamm2odoo_search()
+        if not record:
+            lines = self.with_context(teamm_ignore_product=True)._teamm2odoo_search()
+            for line in lines:
+                line.write({"product_uom_qty": 0})
+
         records = self._teamm2odoo_set_record()
 
         discounts = self._teamm2odoo_get_value("discounts")
@@ -30,10 +37,13 @@ class SaleOrderLine(models.Model):
         kwargs |= {
             "order_id": order.id,
             "resource_booking_id": booking.id,
-            "product_id": product.id,
         }
+        if not self.env.context.get("teamm_ignore_product"):
+            kwargs |= {
+                "product_id": product.id,
+            }
         return super()._teamm2odoo_search_kwargs(kwargs)
-    
+
     @api.model
     def _teamm2odoo_values(self, kwargs):
         TeamM = self.env ["teamm"]
@@ -68,7 +78,7 @@ class SaleOrderLine(models.Model):
             kwargs["resource_booking_ids"] = [(fields.Command.set([booking.id]))]
             # "resource_booking_ids" is necessary because
             # _sync_resource_bookings() needs it before the order line is saved.
-        
+
         return super()._teamm2odoo_values(kwargs)
 
     @api.model

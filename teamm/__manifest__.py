@@ -23,6 +23,7 @@
         # "partner_product_price",
         "resource_booking_inverse",
         "resource_group",
+        "sale_automatic_workflow", # sale.order workflow_process_id
         "sale_inverse",
         "sale_start_end_dates",
         "sale_start_end_dates_inverse",
