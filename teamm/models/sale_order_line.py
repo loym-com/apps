@@ -13,9 +13,11 @@ class SaleOrderLine(models.Model):
         # Set quantity to 0 (old booking) if no record found (new booking)
         record = self._teamm2odoo_search()
         if not record:
+            hubspot_deal_id = self._teamm2odoo_get_value("hubspot deal id")
             lines = self.with_context(teamm_ignore_product=True)._teamm2odoo_search()
             for line in lines:
-                line.write({"product_uom_qty": 0})
+                if line.resource_booking_id.hubspot_deal_id == hubspot_deal_id:
+                    line.write({"product_uom_qty": 0})
 
         records = self._teamm2odoo_set_record()
 
