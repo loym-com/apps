@@ -15,6 +15,7 @@ class DonationDonation(models.Model):
         string="Thanks",
         comodel_name="donation.thanks",
         readonly=True,
+        copy=False,
     )
 
     def action_create_donation_thanks(self):

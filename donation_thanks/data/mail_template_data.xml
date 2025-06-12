@@ -6,17 +6,17 @@
     <record id="mail_template_donation_thanks" model="mail.template">
         <field name="name">Donation Thanks</field>
         <field name="model_id" ref="donation_thanks.model_donation_thanks" />
-        <field name="partner_to">${object.partner_id.id}</field>
-        <field name="reply_to">${user.login}</field>
-        <field name="lang">${object.lang}</field>
+        <field name="partner_to">{{object.partner_id.id}}</field>
+        <field name="reply_to">{{user.login}}</field>
+        <field name="lang">{{object.partner_id.lang}}</field>
         <field name="auto_delete" eval="0" />
         <field name="subject">Thank you!</field>
         <field
             name="body_html"
         ><![CDATA[
 <div>
-    <p>Dear ${object.name},</p>
-    <p>Thank you for supporting the work of the ${object.env.company.name}!</p>
+    <p>Dear {{object.name}},</p>
+    <p>Thank you for supporting the work of the {{object.env.company.name}}!</p>
     <p>Please find attached the latest newsletter. I hope you will enjoy it.</p>
 
     % if object.env.ref('donation_thanks.res_partner_category_newsletter') not in object.category_id.parent_id:
@@ -27,13 +27,13 @@
     <p>Best regards,</p>
 </div>
 <div>
-    ${user.signature | safe}
+    {{user.signature | safe}}
 </div>]]></field>
         <field
             name="report_template"
             ref="action_report_donation_thanks"
         />
-        <field name="report_name">Thanks to ${object.partner_id.name}.pdf</field>
+        <field name="report_name">Thanks to {{object.partner_id.name}}.pdf</field>
     </record>
 
     <!-- DONATION.TAX.RECEIPT -->
@@ -41,23 +41,23 @@
     <record id="mail_template_donation_tax_receipt" model="mail.template">
         <field name="name">Donation Tax Receipt Thanks</field>
         <field name="model_id" ref="donation_base.model_donation_tax_receipt" />
-        <field name="partner_to">${object.partner_id.id}</field>
-        <field name="reply_to">${user.login}</field>
-        <field name="lang">${object.partner_id.lang}</field>
+        <field name="partner_to">{{object.partner_id.id}}</field>
+        <field name="reply_to">{{user.login}}</field>
+        <field name="lang">{{object.partner_id.lang}}</field>
         <field name="auto_delete" eval="0" />
         <field name="subject">Donation Tax Receipt from the Granheim Foundation</field>
         <field
             name="body_html"
         ><![CDATA[
 <div>
-    <p>Dear ${object.partner_id.name},</p>
+    <p>Dear {{object.partner_id.name}},</p>
     <p>Thank you for supporting the work of the Granheim Foundation!</p>
     <p>Please find attached your tax report for last year.</p>
 
     <p>Best regards,</p>
 </div>
 <div>
-    ${user.signature | safe}
+    {{user.signature | safe}}
 </div>]]></field>
         <field
             name="report_template"

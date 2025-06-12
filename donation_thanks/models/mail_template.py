@@ -11,7 +11,7 @@ class MailTemplate(models.Model):
         self.ensure_one()
         res = super().generate_email(res_ids, fields)
 
-        if not self.model == "donation.tax.receipt":
+        if self.model not in ("donation.thanks", "donation.tax.receipt"):
             return res
 
         attached = []
