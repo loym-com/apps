@@ -9,35 +9,26 @@ class MailTemplate(models.Model):
     # This module has donation.thanks.template one2many ir.attachment (with lang field).
     def generate_email(self, res_ids, fields=None):
         self.ensure_one()
-        res = super().generate_email(res_ids, fields)
+        email = super().generate_email(res_ids, fields)
 
-        if self.model not in ("donation.thanks", "donation.tax.receipt"):
-            return res
+        if self.model in ("donation.thanks", "donation.tax.receipt"):
 
-        attached = []
-        for res_id in res.keys():
-            mail = res[res_id]
-            partner_ids = 'partner_ids' in mail and \
-                          mail['partner_ids'] or False
-            if not partner_ids:
-                continue
+            # assert len(res_ids) == 1, \
+            #     "This method should only be called with a single res_id"
 
-            thanks_template = self.env["donation.tax.receipt"].browse(res_id).thanks_template_id
+            # assert res_ids = email['res_id'], \
+            #     "The res_id in the email should match the res_ids provided"
 
-            for partner in self.env['res.partner'].browse(partner_ids):
-                for attachment in thanks_template.attachment_ids.filtered(
-                    lambda a: a.lang == partner.lang
-                ):
-                    if attachment.id in attached:
-                        continue
-                    if not res[res_id].get('attachments'):
-                        res[res_id]['attachments'] = []
-                    res[res_id]['attachments'].append((
-                        attachment.name,
-                        attachment.datas))
-                    attached.append(attachment.id)
-        return res
-        # multi = True
-        # if isinstance(res_ids, int):
-        #     multi = False
-        # return multi and res or res[res_ids[0]]
+            # email["attachments"] = email.get("attachments", [])
+
+            model_record = self.env[self.model].browse(res_ids)
+            thanks_template = model_record.thanks_template_id
+            lang = model_record.partner_id.lang
+
+            # Add thanks_template attachments based on the language of the partner
+            for attachment in thanks_template.attachment_ids.filtered(
+                lambda a: a.lang == lang
+            ):
+                email["attachments"].append((attachment.name, attachment.datas))
+
+        return email
