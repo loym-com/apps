@@ -4,6 +4,16 @@ from odoo import api, fields, models
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+    country_group_ids = fields.Many2many(
+        string="Country Groups",
+        readonly=True,
+        related="country_id.country_group_ids",
+        comodel_name="res.country.group",
+        relation="res_partner_country_group_rel",
+        column1="partner_id",
+        column2="country_group_id",
+    )
+
     # Compute methods
 
     @api.depends("donation_ids.thanks_printed")
@@ -30,21 +40,21 @@ class ResPartner(models.Model):
     # To search on these fields, they are stored.
 
     donation_send_thanks = fields.Boolean(
-        string="Send Donation Thanks",
+        string="Send DONATION Thanks",
         compute="_compute_donation_send_thanks",
         store=True,
         help="""Filter on donors who (don't) need a thanks.\n
                 Send it e.g. together with a newsletter.""",
     )
     donation_thanks_send = fields.Boolean(
-        string="Donation Thanks to send",
+        string="DONATION THANKS to send",
         compute="_compute_donation_thanks_send",
         store=True,
         help="""Filter on donors with(out) a thanks to send.\n
                 Send it e.g. together with a newsletter.""",
     )
     donation_tax_receipt_send = fields.Boolean(
-        string="Send Donation Tax Receipt",
+        string="DONATION TAX RECEIPT to send",
         compute="_compute_donation_tax_receipt_send",
         store=True,
         help="""Filter on donors who (don't) need a tax receipt.\n

@@ -7,7 +7,11 @@
         <field name="arch" type="xml">
             <field name="tax_receipt_option" position="after">
                 <field name="donation_send_thanks" />
-                <field name="donation_thanks_send" />
+                <!-- If parent is registered, thanks and receipt goes to the parent (e.g. a couple) -->
+                <field
+                    name="donation_thanks_send"
+                    attrs="{'invisible': [('parent_id', '!=', False)]}"
+                />
                 <field
                     name="donation_tax_receipt_send"
                     attrs="{'invisible': [('parent_id', '!=', False)]}"
@@ -18,13 +22,54 @@
     <record id="res_partner_view_search" model="ir.ui.view">
         <field name="name">res.partner.view.search.donation</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="donation_base.res_partner_view_search" />
+        <!-- <field name="inherit_id" ref="donation_base.res_partner_view_search" /> -->
         <field name="arch" type="xml">
-            <search position="inside">
+            <search>
                 <field name="donation_send_thanks" />
                 <field name="donation_thanks_send" />
                 <field name="donation_tax_receipt_send" />
+                <!-- Address/Newsletter/Donation filters -->
+                <filter string="Address" name="is_valid_postal_address" domain="[('is_valid_postal_address', '=', True)]"/>
+                <filter string="Email" name="email" domain="[('email', '!=', False)]"/>
+                <filter string="Address + email" name="address_email" domain="[('is_valid_postal_address', '=', True), ('email', '!=', False)]"/>
+                <filter string="No address/email" name="no_contact_info" domain="[('is_valid_postal_address', '=', False), ('email', '=', False)]"/>
+                <separator/>
+                <filter string="Newsletter Snailmail" name="newsletter_snailmail" domain="[('category_id', 'ilike', 'Newsletter Snailmail')]"/>
+                <filter string="Newsletter Email" name="newsletter_email" domain="[('category_id', 'ilike', 'Newsletter Email')]"/>
+                <filter string="Both Newsletters" name="newsletter_both" domain="[('category_id', 'ilike', 'Newsletter Snailmail'), ('category_id', 'ilike', 'Newsletter Email')]"/>
+                <filter string="No Newsletter" name="no_newsletter" domain="[('category_id', 'not ilike', 'Newsletter')]"/>
+                <separator/>
+                <filter string="Donation (new)" name="donation_send_thanks_yes" domain="[('donation_send_thanks', '=', True)]"/>
+                <filter string="No Donation (new)" name="donation_send_thanks_no" domain="[('donation_send_thanks', '=', False)]"/>
+                <filter string="Donation Thanks" name="donation_thanks_send_yes" domain="[('donation_thanks_send', '=', True)]"/>
+                <filter string="No Donation Thanks" name="donation_thanks_send_no" domain="[('donation_thanks_send', '=', False)]"/>
+                <filter string="Tax Receipt" name="donation_tax_receipt_send_yes" domain="[('donation_tax_receipt_send', '=', True)]"/>
+                <filter string="No Tax Receipt" name="donation_tax_receipt_send_no" domain="[('donation_tax_receipt_send', '=', False)]"/>
             </search>
         </field>
     </record>
+    <record id="donation_base.res_partner_action_donor" model="ir.actions.act_window">
+        <field name="search_view_id" ref="res_partner_view_search" />
+    </record>
+    <data noupdate="1">
+        <record id="res_partner_view_search_customize" model="ir.ui.view">
+            <field name="name">res.partner.view.search.donation.customize</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="res_partner_view_search" />
+            <field name="arch" type="xml">
+                <search position="inside">
+                    <!-- THIS VIEW WILL NOT BE OVERWRITTEN, SO FEEL FREE TO EDIT :) -->
+                    <!-- Language/Country filters -->
+                    <separator/>
+                    <filter string="Norwegian" name="norwegian" domain="[('lang', '=', 'nb_NO')]"/>
+                    <filter string="English" name="english" domain="[('lang', '=', 'en_US')]"/>
+                    <separator/>
+                    <filter string="Norway" name="norway" domain="[('country_id', 'in', ['Norway', 'Norge'])]"/>
+                    <filter string="Europe" name="europe" domain="[('country_group_ids.name', 'in', ['Europe', 'Europa']), ('country_id', 'not in', ['Norway', 'Norge'])]"/>
+                    <!-- not working -->
+                    <!-- <filter string="World" name="world" domain="['|', '!', ('country_group_ids.name', 'in', ['Europe', 'Europa']), ('country_group_ids', '=', False)]"/> -->
+                </search>
+            </field>
+        </record>
+    </data>
 </odoo>
