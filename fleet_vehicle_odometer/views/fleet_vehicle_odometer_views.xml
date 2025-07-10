@@ -46,11 +46,11 @@
             <field name="value" position="after">
                 <field name="distance" />
             </field>
-            <group position="inside">
+            <xpath expr="//group/group" position="inside">
                 <field name="analytic_plan_id"/>
                 <field name="analytic_account_id"/>
                 <field name="comment"/>
-            </group>
+            </xpath>
         </field>
     </record>
     <record id="fleet_vehicle_odometer_view_form_create" model="ir.ui.view">
