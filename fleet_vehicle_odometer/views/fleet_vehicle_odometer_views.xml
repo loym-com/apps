@@ -20,6 +20,7 @@
                 <attribute name="widget">integer</attribute>
             </field>
             <tree position="inside">
+                <field name="plan_id" options="{'no_create': True, 'no_create_edit':True}"/>
                 <field name="analytic_account_id" options="{'no_create': True, 'no_create_edit':True}"/>
                 <field name="comment"/>
                 <field name="distance" sum="Total Distance"/>

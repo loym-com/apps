@@ -8,7 +8,8 @@ _logger = logging.getLogger(__name__)
 
 
 class FleetVehicleOdometer(models.Model):
-    _inherit = "fleet.vehicle.odometer"
+    _name = "fleet.vehicle.odometer"
+    _inherit = ["fleet.vehicle.odometer", "analytic.plan.mixin"]
 
     analytic_account_id = fields.Many2one(
         "account.analytic.account", string="Analytic Account"
