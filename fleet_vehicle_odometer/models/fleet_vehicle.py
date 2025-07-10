@@ -4,6 +4,8 @@ from odoo import _, api, fields, models
 class FleetVehicle(models.Model):
     _inherit = "fleet.vehicle"
 
+    state_id = fields.Many2one(group_expand="")
+
     def action_register_odometer(self):
         self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id(
