@@ -7,10 +7,9 @@ class AnalyticPlanMixin(models.AbstractModel):
 
     analytic_plan_id = fields.Many2one(
         comodel_name="account.analytic.plan",
-        # compute="_compute_analytic_plan_id",
         inverse="_inverse_analytic_plan_id",
+        readonly="analytic_account_id != False",
         related="analytic_account_id.plan_id",
-        readonly=False,
         store=False,
         string="Analytic Plan",
     )
