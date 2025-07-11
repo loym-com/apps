@@ -20,9 +20,9 @@ class AnalyticPlanMixin(models.AbstractModel):
     def _onchange_analytic_plan_id(self):
         for rec in self:
             if rec.analytic_plan_id:
-                rec.analytic_account_id = rec.analytic_plan_id.account_id
+                return {"domain": {"analytic_account_id": [("plan_id", "=", rec.analytic_plan_id.id)]}}
             else:
-                rec.analytic_account_id = False
+                return {"domain": {"analytic_account_id": []}}
 
     def _inverse_analytic_plan_id(self):
         for rec in self:
