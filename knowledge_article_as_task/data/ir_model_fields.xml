@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="x_article_id" model="ir.model.fields">
+        <field name="name">x_article_id</field>
+        <field name="ttype">many2one</field>
+        <field name="model_id" ref="analytic.model_account_analytic_line"/>
+        <field name="field_description">Article</field>
+        <field name="help">Purpose - Log time per task</field>
+        <field name="relation">knowledge.article</field>
+    </record>
+    <record id="x_deadline" model="ir.model.fields">
+        <field name="name">x_deadline</field>
+        <field name="ttype">date</field>
+        <field name="model_id" ref="knowledge.model_knowledge_article"/>
+        <field name="field_description">Deadline</field>
+        <field name="help">Purpose - Sort by Deadline</field>
+        <field name="copied">False</field>
+    </record>
+    <record id="x_lastdone" model="ir.model.fields">
+        <field name="name">x_lastdone</field>
+        <field name="ttype">date</field>
+        <field name="model_id" ref="knowledge.model_knowledge_article"/>
+        <field name="field_description">Last Done</field>
+        <field name="help">Purpose - Sort by Last Done</field>
+        <field name="copied">False</field>
+    </record>
+</odoo>

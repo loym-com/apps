@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_log_time" model="ir.actions.server">
+        <field name="name">CUSTOM - Log time</field>
+        <field name="model_id" ref="knowledge.model_knowledge_article"/>
+        <field name="state">code</field>
+        <field name="code">
+            <![CDATA[
+record.ensure_one()
+day = datetime.date.today()
+
+analytic_line = env["account.analytic.line"].create(
+    {
+        "date": day,
+        "x_article_id": record.id,
+    }
+)
+
+action = {
+    'type': 'ir.actions.act_window',
+    'res_model': 'account.analytic.line',
+    'view_mode': 'list,pivot,form',
+    'domain': [('user_id', '=', user.id), ('x_article_id', '=', record.id)],
+}
+            ]]>
+        </field>
+    </record>
+    <record id="action_done" model="ir.actions.server">
+        <field name="name">CUSTOM - Donw</field>
+        <field name="model_id" ref="knowledge.model_knowledge_article"/>
+        <field name="state">code</field>
+        <field name="code">
+            <![CDATA[
+# Update x_deadline and x_lastdone fields instead of properties.
+# + Sort lists
+# + Simplify code
+            ]]>
+        </field>
+    </record>
+</odoo>

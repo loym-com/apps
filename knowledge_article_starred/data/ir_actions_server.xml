@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_star" model="ir.actions.server">
+        <field name="name">CUSTOM - Star</field>
+        <field name="model_id" ref="knowledge.model_knowledge_article"/>
+        <field name="state">code</field>
+        <field name="code">
+            <![CDATA[
+for rec in records:
+    rec.write({"x_starred_user_ids": [(4, env.user.id)]})
+            ]]>
+        </field>
+    </record>
+    <record id="action_unstar" model="ir.actions.server">
+        <field name="name">CUSTOM - Unstar</field>
+        <field name="model_id" ref="knowledge.model_knowledge_article"/>
+        <field name="state">code</field>
+        <field name="code">
+            <![CDATA[
+for rec in records:
+    rec.write({"x_starred_user_ids": [(3, env.user.id)]})
+            ]]>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_analytic_line_view_list" model="ir.ui.view">
+        <field name="name">account.analytic.line.view.list.inherit.as.task</field>
+        <field name="model">account.analytic.line</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <list string="Hours" multi_edit="1" editable="bottom">
+                <field name="user_id"/>
+                <field name="date"/>
+                <field name="x_article_id"/>
+                <field name="unit_amount" widget="float_time" string="Hours" sum="total"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+    <record id="account_analytic_line_view_form" model="ir.ui.view">
+        <field name="name">account.analytic.line.view.form.inherit.as.task</field>
+        <field name="model">account.analytic.line</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form string="Hours">
+                <sheet>
+                    <group>
+                        <group name="analytic_item" string="Analytic Item">
+                            <field name="unit_amount" widget="float_time" string="Hours"/>
+                            <field name="name"/>
+                            <field name="x_article_id" domain="[('is_article_item', '=', True)]"/>
+                            <field name="user_id"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="account_analytic_line_view_pivot" model="ir.ui.view">
+        <field name="name">account.analytic.line.pivot.form.inherit.as.task</field>
+        <field name="model">account.analytic.line</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <pivot string="Analytic Items" sample="1">
+                <field name="x_article_id" type="row"/>
+                <field name="date" interval="month" type="col"/>
+                <field name="unit_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="knowledge_article_view_list" model="ir.ui.view">
+        <field name="name">knowledge.article.view.list.embedded.inherit.as.task</field>
+        <field name="model">knowledge.article</field>
+        <field name="inherit_id" ref="knowledge.knowledge_article_view_tree_items" />
+        <field name="arch" type="xml">
+            <data>
+                <list position="attributes">
+                    <attribute name="multi_edit">1</attribute>
+                    <attribute name="default_order">x_deadline</attribute>
+                </list>
+                <field name="is_user_favorite" position="after">
+                    <button name="%(knowledge_article_as_task.action_done)s" type="action" string="Done"/>
+                    <button name="%(knowledge_article_as_task.action_log_time)s" type="action" string="Log time"/>
+                </field>
+                <field name="article_properties" position="before">
+                    <field name="x_deadline" optional="show"/>
+                    <field name="x_lastdone" optional="show"/>
+                </field>
+            </data>
+        </field>
+    </record>
+</odoo>

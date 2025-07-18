@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="x_starred_user_ids" model="ir.model.fields">
+        <field name="name">x_starred_user_ids</field>
+        <field name="ttype">many2many</field>
+        <field name="model_id" ref="knowledge.model_knowledge_article"/>
+        <field name="field_description">Starred by</field>
+        <field name="help">Purpose - Filter by 'My Starred'</field>
+        <field name="relation">res.users</field>
+    </record>
+    <record id="x_is_user_starred" model="ir.model.fields">
+        <field name="name">x_is_user_starred</field>
+        <field name="ttype">boolean</field>
+        <field name="model_id" ref="knowledge.model_knowledge_article"/>
+        <field name="field_description">Is Starred</field>
+        <field name="help">Purpose - Filter by "My Starred"</field>
+        <field name="readonly">True</field>
+        <field name="depends">x_starred_user_ids</field>
+        <field name="compute">
+            <![CDATA[
+for record in self:
+    starred_users = record.x_starred_user_ids
+    if self.env.user in starred_users:
+        record['x_is_user_starred'] = True
+    else:
+        record['x_is_user_starred'] = False
+            ]]>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="knowledge_article_view_list" model="ir.ui.view">
+        <field name="name">knowledge.article.view.list.embedded.inherit.starred</field>
+        <field name="model">knowledge.article</field>
+        <field name="inherit_id" ref="knowledge.knowledge_article_view_tree_items" />
+        <field name="arch" type="xml">
+            <data>
+                <field name="is_user_favorite" position="after">
+                    <field name="x_is_user_starred" column_invisible="True"/>
+                </field>
+                <xpath expr="//button[@name='action_toggle_favorite'][1]" position="replace">
+                    <button
+                        string="Star"    
+                        name="%(knowledge_article_starred.action_star)s"
+                        type="action"
+                        icon="fa-star-o pe-2"
+                        class="o_knowledge_toggle_favorite"
+                        invisible="x_is_user_starred"
+                    />
+                </xpath>
+                <xpath expr="//button[@name='action_toggle_favorite'][1]" position="replace">
+                    <button
+                        string="Unstar"
+                        name="%(knowledge_article_starred.action_unstar)s"
+                        type="action"
+                        icon="fa-star pe-2"
+                        class="o_knowledge_toggle_favorite"
+                        invisible="not x_is_user_starred"
+                    />
+                </xpath>
+            </data>
+        </field>
+    </record>
+    <record id="knowledge_article_view_search" model="ir.ui.view">
+        <field name="name">knowledge.article.view.search.embedded.inherit.starred</field>
+        <field name="model">knowledge.article</field>
+        <field name="inherit_id" ref="knowledge.knowledge_article_view_search_items" />
+        <field name="priority">15</field>
+        <field name="arch" type="xml">
+            <filter name="filter_favorites" position="after">
+                <filter name="filter_starred" string="My Starred" domain="[('x_starred_user_ids', 'in', [uid])]"/>
+            </filter>
+        </field>
+    </record>
+</odoo>
