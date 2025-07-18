@@ -5,7 +5,7 @@
         <field name="ttype">many2one</field>
         <field name="model_id" ref="analytic.model_account_analytic_line"/>
         <field name="field_description">Article</field>
-        <field name="help">Purpose - Log time per task</field>
+        <field name="help">Purpose - Log hours per task</field>
         <field name="relation">knowledge.article</field>
     </record>
     <record id="x_deadline" model="ir.model.fields">
@@ -23,5 +23,14 @@
         <field name="field_description">Last Done</field>
         <field name="help">Purpose - Sort by Last Done</field>
         <field name="copied">False</field>
+    </record>
+    <record id="x_frequency" model="ir.model.fields">
+        <field name="name">x_frequency</field>
+        <field name="ttype">selection</field>
+        <field name="model_id" ref="knowledge.model_knowledge_article"/>
+        <field name="field_description">Frequency</field>
+        <field name="help">Purpose - Compute next deadline</field>
+        <field name="copied">False</field>
+        <field name="selection">[('weekly', 'Weekly'), ('monthly', 'Monthly'), ('yearly', 'Yearly')]</field>
     </record>
 </odoo>

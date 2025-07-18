@@ -46,6 +46,17 @@
             </pivot>
         </field>
     </record>
+    <record id="account_analytic_line_view_search" model="ir.ui.view">
+        <field name="name">account.analytic.line.view.search.embedded.inherit.as.task</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_filter" />
+        <field name="arch" type="xml">
+            <search position="inside">
+                <field name="x_article_id"/>
+                <field name="user_id"/>
+            </search>
+        </field>
+    </record>
     <record id="knowledge_article_view_list" model="ir.ui.view">
         <field name="name">knowledge.article.view.list.embedded.inherit.as.task</field>
         <field name="model">knowledge.article</field>
@@ -58,11 +69,12 @@
                 </list>
                 <field name="is_user_favorite" position="after">
                     <button name="%(knowledge_article_as_task.action_done)s" type="action" string="Done"/>
-                    <button name="%(knowledge_article_as_task.action_log_time)s" type="action" string="Log time"/>
+                    <button name="%(knowledge_article_as_task.action_log_hours)s" type="action" string="Log hours"/>
                 </field>
                 <field name="article_properties" position="before">
-                    <field name="x_deadline" optional="show"/>
                     <field name="x_lastdone" optional="show"/>
+                    <field name="x_deadline" optional="show"/>
+                    <field name="x_frequency" optional="show"/>
                 </field>
             </data>
         </field>
