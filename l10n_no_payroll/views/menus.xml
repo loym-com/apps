@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- feriepenger (hr.payslip.line) -->
-
-    <record id="l10n_no_action_feriepenger" model="ir.actions.server">
-        <field name="name">Vis feriepenger</field>
-        <field name="model_id" ref="payroll.model_hr_payslip_line" />
-        <field name="state">code</field>
-        <field name="code">env['hr.payslip.line'].l10n_no_feriepenger()</field>
-    </record>
-
-    <!-- l10n_no_payroll.tabelltrekk -->
-
-    <record id="l10n_no_tabelltrekk_action_import" model="ir.actions.server">
-        <field name="name">Importer trekktabeller</field>
-        <field name="model_id" ref="model_l10n_no_tabelltrekk" />
-        <field name="state">code</field>
-        <field name="code">model.post_init_hook_import_tax_deduction_tables()</field>
-    </record>
-
-    <!-- menu -->
-
     <menuitem
         id="l10n_no_menu"
         name="Norge"
@@ -46,7 +26,7 @@
         name="Vis feriepenger"
         sequence="22"
         parent="l10n_no_menu"
-        action="l10n_no_action_feriepenger"
+        action="action_l10n_no_fp_show"
     />
     <menuitem
         id="l10n_no_tabelltrekk_menu_import"

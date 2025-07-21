@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- l10n_no_payroll.tabelltrekk -->
+
+    <record id="l10n_no_tabelltrekk_action_import" model="ir.actions.server">
+        <field name="name">Importer trekktabeller</field>
+        <field name="model_id" ref="model_l10n_no_tabelltrekk" />
+        <field name="state">code</field>
+        <field name="code">model.post_init_hook_import_tax_deduction_tables()</field>
+    </record>
+
+    <!-- feriepenger (hr.payslip.line) -->
+
+    <record id="action_l10n_no_fp_show" model="ir.actions.server">
+        <field name="name">Vis feriepenger</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+        <field name="state">code</field>
+        <field name="code">model.action_l10n_no_fp_show()</field>
+    </record>
+    <record id="action_l10n_no_fp_i_fjor_show" model="ir.actions.server">
+        <field name="name">Vis feriepenger i fjor</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+        <field name="binding_model_id" ref="payroll.model_hr_payslip" />
+        <field name="state">code</field>
+        <field name="code">records.action_l10n_no_fp_i_fjor_show()</field>
+    </record>
+    <record id="action_l10n_no_fp_i_aar_show" model="ir.actions.server">
+        <field name="name">Vis feriepenger i år</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+        <field name="binding_model_id" ref="payroll.model_hr_payslip" />
+        <field name="state">code</field>
+        <field name="code">records.action_l10n_no_fp_i_aar_show()</field>
+    </record>
+    <record id="action_l10n_no_fp_i_fjor" model="ir.actions.server">
+        <field name="name">Oppdater feriepenger i fjor</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+        <field name="binding_model_id" ref="payroll.model_hr_payslip" />
+        <field name="state">code</field>
+        <field name="code">records.action_l10n_no_fp_i_fjor()</field>
+    </record>
+    <record id="action_l10n_no_fp_i_aar" model="ir.actions.server">
+        <field name="name">Oppdater feriepenger i år</field>
+        <field name="model_id" ref="payroll.model_hr_payslip" />
+        <field name="binding_model_id" ref="payroll.model_hr_payslip" />
+        <field name="state">code</field>
+        <field name="code">records.action_l10n_no_fp_i_aar()</field>
+    </record>
+</odoo>

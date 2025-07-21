@@ -1,12 +1,13 @@
-# Copyright 2019-2023 Ows - Henrik Norlin
+# Copyright 2019-2025 Loym - Henrik Norlin
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     "name": "Norway - Payroll",
     "summary": "",
-    "author": "Ows, Odoo Community Association (OCA)",
+    "author": "Loym, Odoo Community Association (OCA)",
     "category": "Localization",
     "data": [
+        "data/ir_actions_server_data.xml",
         "security/ir.model.access.csv",
         "views/hr_contract_views.xml",
         "views/hr_employee_views.xml",
@@ -32,6 +33,7 @@
         "hr_contract_leave",
         # "l10n_no",
         "payroll_account_analytic",
+        "payroll_payslip_line_manually", # hr.payslip feriepenger
     ],
     "external_dependencies": {"python": ["xsdata-pydantic"]},
     "license": "AGPL-3",
