@@ -10,6 +10,7 @@
         "data/ir_actions_server_data.xml",
         "security/ir.model.access.csv",
         "views/hr_contract_views.xml",
+        "views/hr_contract_history_views.xml",
         "views/hr_employee_views.xml",
         "views/hr_job_views.xml",
         "views/hr_leave_type_views.xml",
