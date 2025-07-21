@@ -83,4 +83,15 @@
             </data>
         </field>
     </record>
+    <record id="knowledge_article_view_search" model="ir.ui.view">
+        <field name="name">knowledge.article.view.search.embedded.inherit.as.task</field>
+        <field name="model">knowledge.article</field>
+        <field name="inherit_id" ref="knowledge.knowledge_article_view_search_items" />
+        <field name="arch" type="xml">
+            <field name="article_properties" position="before">
+                <field name="x_role_id"/>
+                <field name="x_frequency"/>
+            </field>
+        </field>
+    </record>
 </odoo>
