@@ -5,10 +5,11 @@
     "summary": "",
     "author": "Loym",
     "data": [
-        "data/ir_actions_act_window.xml",
         "data/ir_actions_server.xml",
         "data/ir_model_fields.xml",
         "data/ir_ui_view.xml",
+        "data/ir_actions_act_window.xml",
+        "data/ir_ui_menu.xml",
     ],
     "depends": [
         "analytic",

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_hours"
+        name="Hours"
+        sequence="50"
+        action="account_analytic_line_action"
+        web_icon="base,static/img/icons/timesheet_grid.png"
+    />
+</odoo>
