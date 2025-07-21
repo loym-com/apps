@@ -13,3 +13,4 @@ class AccountBankStatementLine(models.Model):
         # FIXME (test, and see donation_line)
         context["default_line_ids"][0][2]["analytic_account_id"] = False
         context["default_line_ids"][0][2]["description"] = False
+        return context

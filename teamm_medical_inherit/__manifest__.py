@@ -7,5 +7,6 @@
     "depends": [
         "teamm_medical",
     ],
+    "license": "AGPL-3",
     "version": "16.0.1.0.0",
 }
