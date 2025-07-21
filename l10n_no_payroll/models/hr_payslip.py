@@ -133,7 +133,7 @@ class HrPayslip(models.Model):
         # Sort by second column (employee_id)
         sorted_rows = sorted(rows, key=lambda row: row[2])
         # Build CSV string
-        csv_lines = [header] + [",".join(row) for row in sorted_rows]
+        csv_lines = [header] + [",".join(row.items()) for row in sorted_rows]
         csv_string = "\n".join(csv_lines)
         raise UserError(csv_string)
 
