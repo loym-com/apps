@@ -12,29 +12,6 @@ _logger = logging.getLogger(__name__)
 class HrPayslip(models.Model):
     _inherit = "hr.payslip"
 
-    """
-    Feriepenger menuitem:
-        payslip_lines: all
-        action: show feriepenger
-
-    Payslip run action:
-        Feriepenger forrige år
-            payslip_lines: last year
-            action: show feriepenger not paid
-
-    Payslips actions:
-        Feriepenger forrige år
-            payslip_lines: last year for payslip employees
-            action: update payslips
-        Feriepenger inneværende år
-            payslip_lines: this year for payslip employees
-            action: update payslips
-
-    Show feriepenger:
-        2 decimals
-        Show what to pay in first column
-    """
-
     def action_l10n_no_fp_i_aar(self):
         self._action_l10n_no_fp("update_payslips", "this_year")
 
@@ -127,7 +104,8 @@ class HrPayslip(models.Model):
     @api.model
     def _l10n_no_fp_show(self, d, year_filter=None):
         # Create a CSV report
-        csv = "unpaid,employee_id,employee_name,year,basis,rate,vacation_money,paid,unpaid\n"
+        header = "unpaid,employee_id,employee_name,year,basis,rate,vacation_money,paid,unpaid"
+        rows = []
         for employee_id in d:
             for year in d[employee_id]["year"]:
                 if year_filter and year != year_filter:
@@ -138,19 +116,26 @@ class HrPayslip(models.Model):
                 )
                 unpaid = vacation_money - d[employee_id]["year"][year]["paid"]
                 # pattern = "%.2f,%s,%s,%s,%.2f,%.3f,%.2f,%.2f,%.2f\n"
-                pattern = "%.2f,%s,%s,%s,%s,%s,%.2f,%.2f,%.2f\n"
-                csv += pattern % (
-                    unpaid,
-                    employee_id,
-                    d[employee_id]["name"],
-                    year,
-                    d[employee_id]["year"][year]["basis"],
-                    d[employee_id]["year"][year]["rate"],
-                    vacation_money,
-                    d[employee_id]["year"][year]["paid"],
-                    unpaid,
+                pattern = "%.2f,%s,%s,%s,%s,%s,%.2f,%.2f,%.2f"
+                rows.append(
+                    [
+                        unpaid,
+                        employee_id,
+                        d[employee_id]["name"],
+                        year,
+                        d[employee_id]["year"][year]["basis"],
+                        d[employee_id]["year"][year]["rate"],
+                        vacation_money,
+                        d[employee_id]["year"][year]["paid"],
+                        unpaid,
+                    ]
                 )
-        raise UserError(csv)
+        # Sort by second column (employee_id)
+        sorted_rows = sorted(rows, key=lambda row: row[2])
+        # Build CSV string
+        csv_lines = [header] + [",".join(row) for row in sorted_rows]
+        csv_string = "\n".join(csv_lines)
+        raise UserError(csv_string)
 
     def _l10n_no_fp_update_payslips(self, d, relative_year, loennsart):
         year = self[0].date_from.year
