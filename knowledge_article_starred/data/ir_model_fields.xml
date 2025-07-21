@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
-    <record id="x_starred_user_ids" model="ir.model.fields">
+    <record id="field_knowledge_article__starred_user_ids" model="ir.model.fields">
         <field name="name">x_starred_user_ids</field>
         <field name="ttype">many2many</field>
         <field name="model_id" ref="knowledge.model_knowledge_article"/>
@@ -8,7 +8,7 @@
         <field name="help">Purpose - Filter by 'My Starred'</field>
         <field name="relation">res.users</field>
     </record>
-    <record id="x_is_user_starred" model="ir.model.fields">
+    <record id="field_knowledge_article__is_user_starred" model="ir.model.fields">
         <field name="name">x_is_user_starred</field>
         <field name="ttype">boolean</field>
         <field name="model_id" ref="knowledge.model_knowledge_article"/>

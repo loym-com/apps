@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- account.analytic.line -->
     <record id="account_analytic_line_view_list" model="ir.ui.view">
         <field name="name">account.analytic.line.view.list.inherit.as.task</field>
         <field name="model">account.analytic.line</field>
@@ -9,6 +10,7 @@
                 <field name="user_id"/>
                 <field name="date"/>
                 <field name="x_article_id"/>
+                <field name="x_role_id"/>
                 <field name="unit_amount" widget="float_time" string="Hours" sum="total"/>
                 <field name="name"/>
             </list>
@@ -26,6 +28,7 @@
                             <field name="unit_amount" widget="float_time" string="Hours"/>
                             <field name="name"/>
                             <field name="x_article_id" domain="[('is_article_item', '=', True)]"/>
+                            <field name="x_role_id"/>
                             <field name="user_id"/>
                             <field name="date"/>
                         </group>
@@ -40,8 +43,6 @@
         <field name="priority">1</field>
         <field name="arch" type="xml">
             <pivot string="Analytic Items" sample="1">
-                <field name="x_article_id" type="row"/>
-                <field name="date" interval="month" type="col"/>
                 <field name="unit_amount" type="measure"/>
             </pivot>
         </field>
@@ -53,10 +54,12 @@
         <field name="arch" type="xml">
             <search position="inside">
                 <field name="x_article_id"/>
+                <field name="x_role_id"/>
                 <field name="user_id"/>
             </search>
         </field>
     </record>
+    <!-- knowledge.article -->
     <record id="knowledge_article_view_list" model="ir.ui.view">
         <field name="name">knowledge.article.view.list.embedded.inherit.as.task</field>
         <field name="model">knowledge.article</field>
@@ -75,6 +78,7 @@
                     <field name="x_lastdone" optional="show"/>
                     <field name="x_deadline" optional="show"/>
                     <field name="x_frequency" optional="show"/>
+                    <field name="x_role_id" optional="show"/>
                 </field>
             </data>
         </field>

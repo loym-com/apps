@@ -4,7 +4,14 @@
         id="menu_hours"
         name="Hours"
         sequence="50"
-        action="account_analytic_line_action"
+        action="action_account_analytic_line"
         web_icon="base,static/img/icons/timesheet_grid.png"
+    />
+    <menuitem
+        id="menu_roles"
+        name="Roles"
+        sequence="60"
+        action="action_x_role"
+        web_icon="base,static/img/icons/mrp_workorder.png"
     />
 </odoo>
