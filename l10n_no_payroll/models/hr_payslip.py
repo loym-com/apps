@@ -43,10 +43,21 @@ class HrPayslip(models.Model):
         d = defaultdict(dict)
         year_filter = None
         if relative_year:
-            date_from = self.mapped("date_from")
-            assert len(date_from) == 1, "Only one payslip period allowed."
-            assert relative_year in ["this_year", "last_year"], "Invalid year parameter."
-            date_from = date_from[0]
+            unique_employees = set(self.mapped("employee_id.id"))
+            if len(unique_employees) != len(self):
+                msg = (
+                    "Each payslip should have a different employee. "
+                    "There are {} payslips with {} unique employees."
+                ).format(len(self), len(unique_employees))
+                raise UserError(msg)
+
+            unique_dates = set(self.mapped("date_from"))
+            if len(unique_dates) != 1:
+                raise UserError(f"There are multiple payslip dates: {unique_dates}")
+            date_from = unique_dates.pop()
+
+            if relative_year not in ["this_year", "last_year"]:
+                raise UserError("Invalid year parameter.")
             year_filter = date_from.year if relative_year == "this_year" else date_from.year - 1
         #     domain = [
         #         ("date_from", ">=", datetime(year, 1, 1).date()),
@@ -143,7 +154,8 @@ class HrPayslip(models.Model):
             year -= 1
 
         for payslip in self:
-            assert payslip.state in ["draft", "verify"], "Payslip must be in draft or verify state."
+            if payslip.state not in ["draft", "verify"]:
+                raise UserError("Payslip must be in draft or verify state.")
             values = d[payslip.employee_id.id]["year"][year]
             vacation_money = values["basis"] * values["rate"]
             unpaid = round(vacation_money - values["paid"], 2)
@@ -153,9 +165,12 @@ class HrPayslip(models.Model):
             line = payslip.line_manually_ids.filtered(
                 lambda l: l.salary_rule_id.id == loennsart.id)
             if line:
-                assert len(line) == 1, "Multiple lines for the same salary rule."
-                assert line.quantity == 1.0, "Quantity must be 1.0 for vacation money."
-                assert line.rate == 100.0, "Rate must be 100.0 for vacation money."
+                if len(line) > 1:
+                    raise UserError("Multiple lines for the same salary rule.")
+                if not line.quantity == 1.0:
+                    raise UserError("Quantity must be 1.0 for vacation money.")
+                if not line.rate == 100.0:
+                    raise UserError("Rate must be 100.0 for vacation money.")
                 line.amount += unpaid
             else:
                 # Create a new line for vacation money
