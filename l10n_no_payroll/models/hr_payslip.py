@@ -119,15 +119,15 @@ class HrPayslip(models.Model):
                 pattern = "%.2f,%s,%s,%s,%s,%s,%.2f,%.2f,%.2f"
                 rows.append(
                     [
-                        unpaid,
+                        round(unpaid, 2),
                         employee_id,
                         d[employee_id]["name"],
                         year,
-                        d[employee_id]["year"][year]["basis"],
+                        round(d[employee_id]["year"][year]["basis"], 2),
                         d[employee_id]["year"][year]["rate"],
-                        vacation_money,
-                        d[employee_id]["year"][year]["paid"],
-                        unpaid,
+                        round(vacation_money, 2),
+                        round(d[employee_id]["year"][year]["paid"], 2),
+                        round(unpaid, 2),
                     ]
                 )
         # Sort by second column (employee_id)
