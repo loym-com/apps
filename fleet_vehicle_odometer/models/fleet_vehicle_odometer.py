@@ -1,4 +1,5 @@
 import logging
+import math
 from datetime import datetime
 
 from odoo import _, api, fields, models
@@ -37,7 +38,7 @@ class FleetVehicleOdometer(models.Model):
         for record in self:
             count = len(record.analytic_account_ids)
             if count:
-                record.analytic_account_distance = (
+                record.analytic_account_distance = math.ceil(
                     record.distance / count
                 )
             else:
