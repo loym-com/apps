@@ -48,6 +48,15 @@
             </field>
         </field>
     </record>
+    <record id="donation_line_view_pivot" model="ir.ui.view">
+        <field name="name">donation.line.view.pivot</field>
+        <field name="model">donation.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Donation Lines">
+                <field name="amount_company_currency" type="measure" />
+            </pivot>
+        </field>
+    </record>
     <record id="donation_line_view_search" model="ir.ui.view">
         <field name="name">donation.line.view.search</field>
         <field name="model">donation.line</field>
@@ -62,6 +71,9 @@
                 <filter name="donation_date" date="donation_date" />
             </search>
         </field>
+    </record>
+    <record id="donation.donation_line_action" model="ir.actions.act_window">
+        <field name="view_mode">tree,form,pivot</field>
     </record>
     <menuitem
         id="donation_line_menu"
