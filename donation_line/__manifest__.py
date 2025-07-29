@@ -2,8 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Analytic Donation Line",
-    "summary": "",
+    "name": "Donation Line (analytic etc.)",
+    "summary": "replacing donation_analytic",
     "author": "Loym AS, Odoo Community Association (OCA)",
     "category": "Accounting & Finance",
     "data": [

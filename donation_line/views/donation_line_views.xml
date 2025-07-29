@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="donation_line_view_tree" model="ir.ui.view">
+        <field name="name">donation.line.view.tree.inherit</field>
+        <field name="model">donation.line</field>
+        <field name="inherit_id" ref="donation.donation_line_tree" />
+        <field name="priority" eval="20" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="default_order">donation_date desc</attribute>
+                </xpath>
+                <field name="product_id" position="after">
+                    <field name="analytic_account_id" />
+                    <field name="description" />
+                </field>
+                <field name="analytic_distribution" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </field>
+                <field name="amount" position="attributes">
+                    <attribute name="sum">Total</attribute>
+                </field>
+                <tree position="inside">
+                    <field name="partner_id" optional="hide" />
+                    <field name="donation_date" optional="hide" />
+                    <field name="currency_id" optional="hide" />
+                    <field name="payment_ref" optional="hide" />
+                    <field name="amount_company_currency" optional="hide" />
+                </tree>
+            </data>
+        </field>
+    </record>
+    <record id="donation_line_view_form" model="ir.ui.view">
+        <field name="name">donation.line.view.form.inherit</field>
+        <field name="model">donation.line</field>
+        <field name="inherit_id" ref="donation.donation_line_form" />
+        <field name="priority" eval="20" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field
+                    name="analytic_account_id"
+                    groups="donation.group_donation_manager"
+                />
+                <field
+                    name="description"
+                    groups="donation.group_donation_manager"
+                />
+            </field>
+        </field>
+    </record>
+    <record id="donation_line_view_search" model="ir.ui.view">
+        <field name="name">donation.line.view.search</field>
+        <field name="model">donation.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="analytic_account_id" />
+                <field name="product_id" />
+                <field name="currency_id" />
+                <field name="partner_id" />
+                <field name="donation_date" />
+                <field name="payment_ref" />
+                <filter name="donation_date" date="donation_date" />
+            </search>
+        </field>
+    </record>
+    <menuitem
+        id="donation_line_menu"
+        name="Donation Lines"
+        parent="donation.donation_title_menu"
+        action="donation.donation_line_action"
+        sequence="20"
+    />
+</odoo>

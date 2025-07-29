@@ -64,7 +64,7 @@
 
     <!-- Menu Item -->
     <menuitem
-        id="menu_donation_thanks"
+        id="donation_thanks_menu"
         name="Donation Thanks"
         parent="donation.donation_title_menu"
         action="donation_thanks_action"
