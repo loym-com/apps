@@ -5,25 +5,50 @@
         <field name="model">donation.thanks.template</field>
         <field name="inherit_id" ref="donation.donation_thanks_template_form" />
         <field name="arch" type="xml">
-            <sheet position="inside">
-                <group groups="donation.group_donation_manager">
-                    <field name="img_text" />
-                    <field name="model" />
-                    <field name="attachment_ids">
-                        <tree>
-                            <field name="lang" />
-                            <field name="name" />
-                        </tree>
-                    </field>
+            <data>
+                <sheet position="before">
+                    <header>
+                        <button
+                            name="action_goto_report_donation_thanks"
+                            type="object"
+                            string="Go to the Donation Thanks report"
+                            attrs="{'invisible': [('model', '!=', 'donation.thanks')]}"
+                        />
+                        <button
+                            name="action_goto_report_donation_tax_receipt"
+                            type="object"
+                            string="Go to the Donation Tax Receipt report"
+                            attrs="{'invisible': [('model', '!=', 'donation.tax.receipt')]}"
+                        />
+                    </header>
+                </sheet>
+                <field name="image" position="replace"/>
+                <group name="main" position="after">
+                    <group>
+                        <field name="img_text" />
+                        <field name="model" />
+                        <field name="attachment_ids">
+                            <tree>
+                                <field name="lang" />
+                                <field name="name" />
+                            </tree>
+                        </field>
+                    </group>
+                    <!-- <group>
+                        <field name="model" invisible="1" />
+
+                    </group> -->
                 </group>
-                <group groups="donation.group_donation_manager" string="DEPRECATED">
-                    <field name="image_height" />
-                    <field name="image_width" />
-                    <field name="image_text" />
-                    <field name="text1" />
-                    <field name="text2" />
-                </group>
-            </sheet>
+                <sheet position="inside">
+                    <group groups="donation.group_donation_manager" string="DEPRECATED">
+                        <field name="image_height" />
+                        <field name="image_width" />
+                        <field name="image_text" />
+                        <field name="text1" />
+                        <field name="text2" />
+                    </group>
+                </sheet>
+            </data>
         </field>
     </record>
 </odoo>
