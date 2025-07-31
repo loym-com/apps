@@ -156,15 +156,18 @@ class HrPayslip(models.Model):
         for payslip in self:
             if payslip.state not in ["draft", "verify"]:
                 raise UserError("Payslip must be in draft or verify state.")
-            values = d[payslip.employee_id.id]["year"][year]
+            values = d[payslip.employee_id.id]["year"].get(year)
+            if not values:
+                continue
             vacation_money = values["basis"] * values["rate"]
             unpaid = round(vacation_money - values["paid"], 2)
             if not unpaid:
                 continue
-
             line = payslip.line_manually_ids.filtered(
-                lambda l: l.salary_rule_id.id == loennsart.id)
+                lambda l: l.salary_rule_id.id == loennsart.id
+            )
             if line:
+                # Update existing payslip line for vacation money
                 if len(line) > 1:
                     raise UserError("Multiple lines for the same salary rule.")
                 if not line.quantity == 1.0:
@@ -173,7 +176,7 @@ class HrPayslip(models.Model):
                     raise UserError("Rate must be 100.0 for vacation money.")
                 line.amount += unpaid
             else:
-                # Create a new line for vacation money
+                # Create a new payslip line for vacation money
                 self.env["hr.payslip.line.manually"].create({
                     "model": "hr.payslip",
                     "res_id": payslip.id,
