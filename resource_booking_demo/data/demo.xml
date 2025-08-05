@@ -68,30 +68,33 @@
 
     <!-- RESOURCE GROUP TAGS -->
 
-    <record id="resource_group_tag_room_single" model="resource.group.tag">
-        <field name="name">Single Room</field>
+    <record id="resource_group_tag_room_first_floor" model="resource.group.tag">
+        <field name="name">First Floor</field>
     </record>
-    <record id="resource_group_tag_room_double" model="resource.group.tag">
-        <field name="name">Double Room</field>
+    <record id="resource_group_tag_room_second_floor" model="resource.group.tag">
+        <field name="name">Second Floor</field>
+    </record>
+    <record id="resource_group_tag_room_dogs_allowed" model="resource.group.tag">
+        <field name="name">Dogs Allowed</field>
     </record>
 
     <!-- RESOURCE GROUPS -->
 
     <record id="resource_group_room_single_1" model="resource.group">
         <field name="name">Single Room 1</field>
-        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_single'))]" />
+        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_first_floor'))]" />
     </record>
     <record id="resource_group_room_single_2" model="resource.group">
         <field name="name">Single Room 2</field>
-        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_single'))]" />
+        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_second_floor'))]" />
     </record>
     <record id="resource_group_room_double_1" model="resource.group">
         <field name="name">Double Room 1</field>
-        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_double'))]" />
+        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_first_floor'))]" />
     </record>
     <record id="resource_group_room_double_2" model="resource.group">
         <field name="name">Double Room 2</field>
-        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_double'))]" />
+        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_second_floor')), (4, ref('resource_group_tag_room_dogs_allowed'))]" />
     </record>
 
     <!-- MATERIAL RESOURCES -->
