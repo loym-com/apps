@@ -15,12 +15,13 @@
         # "payment_custom",  # optional
         "sale_management",  # optional
         # "web_responsive",  # optional oca/web
-        "website_sale_resource_booking",  # oca/calendar, oca/sale-workflow, oca/e-commerce
-        "partner_product_price",  # oca/partner-contact (not merged)
-        "resource_booking_timeline",
         "event_sale_resource_booking",
-        "sale_product_pack",  # oca/product-pack
+        "partner_product_price",  # oca/partner-contact (not merged)
         "product_pack_template",
+        "resource_booking_timeline",
+        "resource_group",
+        "sale_product_pack",  # oca/product-pack
+        "website_sale_resource_booking",  # oca/calendar, oca/sale-workflow, oca/e-commerce
     ],
     "development_status": "Alpha",
     "license": "AGPL-3",
