@@ -64,7 +64,7 @@ class EventRegistration(models.Model):
                     return value
 
         event = self.env["event.event"].browse(get("event_id"))
-        if event.product_tmpl_ids and not get("resource_booking_id"):
+        if event.product_tmpl_id and not get("resource_booking_id"):
             product_id = get("product_id")
             combination_id = get("resource_booking_combination_id")
             if not (product_id and combination_id):

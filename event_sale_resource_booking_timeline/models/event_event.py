@@ -17,7 +17,7 @@ class EventEvent(models.Model):
             "event_sale_resource_booking_timeline.resource_booking_type_event"
         )
         for rec in self:
-            if rec.product_tmpl_ids:
+            if rec.product_tmpl_id:
                 duration = (rec.date_end - rec.date_begin).total_seconds() / 3600
                 values = {
                     "name": rec.name,

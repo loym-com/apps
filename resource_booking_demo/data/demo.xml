@@ -801,7 +801,7 @@
         <field name="date_begin" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)" />
         <field name="date_end" eval="DateTime.now() + relativedelta(days=12, hour=22, minute=0, second=0)" />
         <field name="tag_ids" eval="[(6, 0, [ref('event_tag_newstart')])]" />
-        <field name="product_tmpl_ids" eval="[(6, 0, [ref('newstart_silver_pt'), ref('newstart_gold_pt')])]" />
+        <field name="product_tmpl_id" ref="newstart_gold_pt" />
         <field name="is_published" eval="1" />
     </record>
     <record id="event_event_1_ticket_double" model="event.event.ticket">
@@ -828,7 +828,7 @@
         <field name="date_begin" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)" />
         <field name="date_end" eval="DateTime.now() + relativedelta(days=26, hour=22, minute=0, second=0)" />
         <field name="tag_ids" eval="[(6, 0, [ref('event_tag_depression')])]" />
-        <field name="product_tmpl_ids" eval="[(6, 0, [ref('depression_pt')])]" />
+        <field name="product_tmpl_id" ref="depression_pt" />
         <field name="is_published" eval="1" />
     </record>
     <record id="event_event_2_ticket_double" model="event.event.ticket">
@@ -855,7 +855,7 @@
         <field name="date_begin" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)" />
         <field name="date_end" eval="DateTime.now() + relativedelta(days=40, hour=22, minute=0, second=0)" />
         <field name="tag_ids" eval="[(6, 0, [ref('event_tag_newstart')])]" />
-        <field name="product_tmpl_ids" eval="[(6, 0, [ref('newstart_silver_pt'), ref('newstart_gold_pt')])]" />
+        <field name="product_tmpl_id" ref="newstart_gold_pt" />
         <field name="is_published" eval="1" />
     </record>
     <record id="event_event_3_ticket_double" model="event.event.ticket">
@@ -882,7 +882,7 @@
         <field name="date_begin" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)" />
         <field name="date_end" eval="DateTime.now() + relativedelta(days=54, hour=22, minute=0, second=0)" />
         <field name="tag_ids" eval="[(6, 0, [ref('event_tag_depression')])]" />
-        <field name="product_tmpl_ids" eval="[(6, 0, [ref('depression_pt')])]" />
+        <field name="product_tmpl_id" ref="depression_pt" />
         <field name="is_published" eval="1" />
     </record>
     <record id="event_event_4_ticket_double" model="event.event.ticket">
@@ -912,10 +912,6 @@
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
-        /> -->
         <field name="start" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)"/>
     </record>
     <record id="resource_booking_event_2" model="resource.booking">
@@ -924,10 +920,6 @@
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.depression_pt')])]"
-        /> -->
         <field name="start" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)"/>
     </record>
     <record id="resource_booking_event_3" model="resource.booking">
@@ -936,10 +928,6 @@
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
-        /> -->
         <field name="start" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)"/>
     </record>
     <record id="resource_booking_event_4" model="resource.booking">
@@ -948,10 +936,6 @@
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt'), ref('resource_booking_demo.depression_pt')])]"
-        /> -->
         <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
     </record>
 </data>

@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="event.view_event_form" />
         <field name="arch" type="xml">
             <group name="right_event_details" position="inside">
-                <field name="product_tmpl_ids" widget="many2many_tags"/>
+                <field name="product_tmpl_id" />
             </group>
         </field>
     </record>

@@ -18,6 +18,7 @@
         "event_sale_resource_booking",
         "partner_product_price",  # oca/partner-contact (not merged)
         "product_pack_template",
+        "resource_booking_group",
         "resource_booking_timeline",
         "resource_group",
         "sale_product_pack",  # oca/product-pack
