@@ -21,6 +21,7 @@
         "resource_booking_timeline",
         "resource_group",
         "sale_product_pack",  # oca/product-pack
+        "website_event_sale_resource_booking",
         "website_sale_resource_booking",  # oca/calendar, oca/sale-workflow, oca/e-commerce
     ],
     "development_status": "Alpha",

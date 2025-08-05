@@ -148,7 +148,7 @@
         <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
 
-    <!-- USERs & HUMAN RESOURCES -->
+    <!-- USERS & HUMAN RESOURCES -->
 
     <record id="user_doctor" model="res.users">
         <field name="name">Don Doctor</field>
@@ -742,57 +742,6 @@
         <field name="quantity">3</field>
     </record>
 
-    <!-- RESOURCE BOOKING: PERIODS -->
-
-    <record id="resource_booking_session_newstart" model="resource.booking">
-        <field name="name">NEWSTART</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_session" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
-        /> -->
-        <field name="start" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)"/>
-    </record>
-    <record id="resource_booking_session_depression" model="resource.booking">
-        <field name="name">DEPRESSION</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_session" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.depression_pt')])]"
-        /> -->
-        <field name="start" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)"/>
-    </record>
-    <record id="resource_booking_session_newstart_2" model="resource.booking">
-        <field name="name">NEWSTART</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_session" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
-        /> -->
-        <field name="start" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)"/>
-    </record>
-    <record id="resource_booking_session_depression_2" model="resource.booking">
-        <field name="name">DEPRESSION and NEWSTART</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_session" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt'), ref('resource_booking_demo.depression_pt')])]"
-        /> -->
-        <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
-    </record>
-
     <!-- PRICELIST & CONTACT -->
 
     <!-- The main pricelist has USD currency. -->
@@ -825,4 +774,106 @@
         <field name="state">enabled</field>
     </record>
 
+    <!-- EVENT TAG CATEGORY -->
+
+    <record id="event_tag_category_theme" model="event.tag.category">
+        <field name="name">Theme</field>
+    </record>
+
+    <!-- EVENT TAGS -->
+
+    <record id="event_tag_newstart" model="event.tag">
+        <field name="name">Newstart</field>
+        <field name="category_id" ref="event_tag_category_theme"/>
+    </record>
+    <record id="event_tag_depression" model="event.tag">
+        <field name="name">Depression</field>
+        <field name="category_id" ref="event_tag_category_theme"/>
+    </record>
+
+    <!-- EVENTS (SESSIONS) -->
+
+    <record id="event_event_1" model="event.event">
+        <field name="name">1: NEWSTART</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=12, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_newstart')])]" />
+        <field name="product_tmpl_ids" eval="[(6, 0, [ref('newstart_silver_pt'), ref('newstart_gold_pt')])]" />
+        <field name="is_published" eval="1" />
+    </record>
+    <record id="event_event_2" model="event.event">
+        <field name="name">2: DEPRESSION</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=26, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_depression')])]" />
+        <field name="product_tmpl_ids" eval="[(6, 0, [ref('depression_pt')])]" />
+        <field name="is_published" eval="1" />
+    </record>
+    <record id="event_event_3" model="event.event">
+        <field name="name">3: NEWSTART</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=40, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_newstart')])]" />
+        <field name="product_tmpl_ids" eval="[(6, 0, [ref('newstart_silver_pt'), ref('newstart_gold_pt')])]" />
+        <field name="is_published" eval="1" />
+    </record>
+    <record id="event_event_4" model="event.event">
+        <field name="name">4: DEPRESSION AND NEWSTART</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=54, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_newstart'), ref('event_tag_depression')])]" />
+        <field name="product_tmpl_ids" eval="[(6, 0, [ref('newstart_silver_pt'), ref('newstart_gold_pt'), ref('depression_pt')])]" />
+        <field name="is_published" eval="1" />
+    </record>
+
+    <!-- RESOURCE BOOKINGS (SESSIONS) -->
+
+    <record id="resource_booking_event_1" model="resource.booking">
+        <field name="name">1: NEWSTART</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <!-- <field
+            name="period_product_tmpl_ids"
+            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
+        /> -->
+        <field name="start" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_event_2" model="resource.booking">
+        <field name="name">2: DEPRESSION</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <!-- <field
+            name="period_product_tmpl_ids"
+            eval="[(6, 0, [ref('resource_booking_demo.depression_pt')])]"
+        /> -->
+        <field name="start" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_event_3" model="resource.booking">
+        <field name="name">3: NEWSTART</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <!-- <field
+            name="period_product_tmpl_ids"
+            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
+        /> -->
+        <field name="start" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_event_4" model="resource.booking">
+        <field name="name">4: DEPRESSION and NEWSTART</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <!-- <field
+            name="period_product_tmpl_ids"
+            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt'), ref('resource_booking_demo.depression_pt')])]"
+        /> -->
+        <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
+    </record>
 </data>
