@@ -539,11 +539,11 @@
     <record id="newstart_silver_pt" model="product.template">
         <field name="name">NEWSTART Silver 10 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">1500.0</field>
+        <field name="list_price">0.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
-        <field name="pack_type">non_detailed</field>
+        <field name="pack_type">detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
     <record id="newstart_silver_room_type_ptal" model="product.template.attribute.line">
@@ -567,11 +567,14 @@
             'noupdate': False,
         },]"/>
     </function>
+    <record id="newstart_silver_single_room_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">1000.0</field>
+    </record>
     <record id="newstart_silver_double_room_1_person_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">0.0</field>
+        <field name="price_extra">2500.0</field>
     </record>
     <record id="newstart_silver_double_room_2_people_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">0.0</field>
+        <field name="price_extra">1500.0</field>
     </record>
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
@@ -613,7 +616,7 @@
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
-        <field name="pack_type">non_detailed</field>
+        <field name="pack_type">detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
     <record id="newstart_gold_room_type_ptal" model="product.template.attribute.line">
@@ -637,11 +640,14 @@
             'noupdate': False,
         },]"/>
     </function>
+    <record id="newstart_gold_single_room_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">1000.0</field>
+    </record>
     <record id="newstart_gold_double_room_1_person_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">0.0</field>
+        <field name="price_extra">2500.0</field>
     </record>
     <record id="newstart_gold_double_room_2_people_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">0.0</field>
+        <field name="price_extra">1500.0</field>
     </record>
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
@@ -683,7 +689,7 @@
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
-        <field name="pack_type">non_detailed</field>
+        <field name="pack_type">detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
     <record id="depression_room_type_ptal" model="product.template.attribute.line">
@@ -707,12 +713,16 @@
             'noupdate': False,
         },]"/>
     </function>
+    <record id="depression_single_room_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">1000.0</field>
+    </record>
     <record id="depression_double_room_1_person_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">0.0</field>
+        <field name="price_extra">2500.0</field>
     </record>
     <record id="depression_double_room_2_people_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">0.0</field>
+        <field name="price_extra">1500.0</field>
     </record>
+
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
