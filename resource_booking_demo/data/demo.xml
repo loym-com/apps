@@ -612,7 +612,7 @@
     <record id="newstart_gold_pt" model="product.template">
         <field name="name">NEWSTART Gold 10 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">2000.0</field>
+        <field name="list_price">0.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
@@ -685,7 +685,7 @@
     <record id="depression_pt" model="product.template">
         <field name="name">Out of DEPRESSION in 10 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">2500.0</field>
+        <field name="list_price">0.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
@@ -814,25 +814,6 @@
         <field name="product_tmpl_id" ref="newstart_gold_pt" />
         <field name="is_published" eval="1" />
     </record>
-    <record id="event_event_1_ticket_double" model="event.event.ticket">
-        <field name="event_id" ref="event_event_1"/>
-        <field name="name">Double Room</field>
-        <field name="product_id" ref="newstart_gold_double_room_1_person_pp"/>
-        <field name="price">2500</field>
-    </record>
-    <record id="event_event_1_ticket_double_shared" model="event.event.ticket">
-        <field name="event_id" ref="event_event_1"/>
-        <field name="name">Double Room - Shared</field>
-        <field name="product_id" ref="newstart_gold_double_room_2_people_pp"/>
-        <field name="price">1500</field>
-    </record>
-    <record id="event_event_1_ticket_single" model="event.event.ticket">
-        <field name="event_id" ref="event_event_1"/>
-        <field name="name">Single Room</field>
-        <field name="product_id" ref="newstart_gold_single_room_pp"/>
-        <field name="price">1000</field>
-    </record>
-
     <record id="event_event_2" model="event.event">
         <field name="name">2: DEPRESSION</field>
         <field name="date_begin" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)" />
@@ -841,25 +822,6 @@
         <field name="product_tmpl_id" ref="depression_pt" />
         <field name="is_published" eval="1" />
     </record>
-    <record id="event_event_2_ticket_double" model="event.event.ticket">
-        <field name="event_id" ref="event_event_2"/>
-        <field name="name">Double Room</field>
-        <field name="product_id" ref="depression_double_room_1_person_pp"/>
-        <field name="price">2500</field>
-    </record>
-    <record id="event_event_2_ticket_double_shared" model="event.event.ticket">
-        <field name="event_id" ref="event_event_2"/>
-        <field name="name">Double Room - Shared</field>
-        <field name="product_id" ref="depression_double_room_2_people_pp"/>
-        <field name="price">1500</field>
-    </record>
-    <record id="event_event_2_ticket_single" model="event.event.ticket">
-        <field name="event_id" ref="event_event_2"/>
-        <field name="name">Single Room</field>
-        <field name="product_id" ref="depression_single_room_pp"/>
-        <field name="price">1000</field>
-    </record>
-
     <record id="event_event_3" model="event.event">
         <field name="name">3: NEWSTART Gold</field>
         <field name="date_begin" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)" />
@@ -868,25 +830,6 @@
         <field name="product_tmpl_id" ref="newstart_gold_pt" />
         <field name="is_published" eval="1" />
     </record>
-    <record id="event_event_3_ticket_double" model="event.event.ticket">
-        <field name="event_id" ref="event_event_3"/>
-        <field name="name">Double Room</field>
-        <field name="product_id" ref="newstart_gold_double_room_1_person_pp"/>
-        <field name="price">2500</field>
-    </record>
-    <record id="event_event_3_ticket_double_shared" model="event.event.ticket">
-        <field name="event_id" ref="event_event_3"/>
-        <field name="name">Double Room - Shared</field>
-        <field name="product_id" ref="newstart_gold_double_room_2_people_pp"/>
-        <field name="price">1500</field>
-    </record>
-    <record id="event_event_3_ticket_single" model="event.event.ticket">
-        <field name="event_id" ref="event_event_3"/>
-        <field name="name">Single Room</field>
-        <field name="product_id" ref="newstart_gold_single_room_pp"/>
-        <field name="price">1000</field>
-    </record>
-
     <record id="event_event_4" model="event.event">
         <field name="name">4: DEPRESSION</field>
         <field name="date_begin" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)" />
@@ -894,24 +837,6 @@
         <field name="tag_ids" eval="[(6, 0, [ref('event_tag_depression')])]" />
         <field name="product_tmpl_id" ref="depression_pt" />
         <field name="is_published" eval="1" />
-    </record>
-    <record id="event_event_4_ticket_double" model="event.event.ticket">
-        <field name="event_id" ref="event_event_4"/>
-        <field name="name">Double Room</field>
-        <field name="product_id" ref="depression_double_room_1_person_pp"/>
-        <field name="price">2500</field>
-    </record>
-    <record id="event_event_4_ticket_double_shared" model="event.event.ticket">
-        <field name="event_id" ref="event_event_4"/>
-        <field name="name">Double Room - Shared</field>
-        <field name="product_id" ref="depression_double_room_2_people_pp"/>
-        <field name="price">1500</field>
-    </record>
-    <record id="event_event_4_ticket_single" model="event.event.ticket">
-        <field name="event_id" ref="event_event_4"/>
-        <field name="name">Single Room</field>
-        <field name="product_id" ref="depression_single_room_pp"/>
-        <field name="price">1000</field>
     </record>
 
     <!-- RESOURCE BOOKINGS (SESSIONS) -->
