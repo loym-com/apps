@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="project_task_view_search" model="ir.ui.view">
+        <field name="name">project.task.view.search.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form_extended" />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <searchpanel>
+                    <field name="project_id" view_types="list,kanban,pivot,graph,calendar" hierarchize="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+    <record id="project_task_action_all_list" model="ir.actions.act_window">
+        <field name="name">All Tasks</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">list,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="project_task_view_search"/>
+    </record>
+    <menuitem id="project_task_menu_all_list"
+              name="All Tasks"
+              parent="project.menu_main_pm"
+              sequence="20"
+              action="project_task_action_all_list"
+              groups="project.group_project_user"
+    />
+</odoo>
