@@ -27,6 +27,28 @@ class DonationThanksTemplate(models.Model):
         translate=True,
     )
 
+    def action_goto_report_donation_thanks(self):
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Donation Thanks Report",
+            "res_model": "ir.actions.report",
+            "view_mode": "form",
+            "res_id": self.env.ref(
+                "donation_thanks.action_report_donation_thanks"
+            ).id,
+        }
+
+    def action_goto_report_donation_tax_receipt(self):
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Donation Tax Receipt Report",
+            "res_model": "ir.actions.report",
+            "view_mode": "form",
+            "res_id": self.env.ref(
+                "donation_thanks.action_report_donation_tax_receipt"
+            ).id,
+        }
+
     # DEPRECATED
     image_height = fields.Integer("Image Height")
     image_width = fields.Integer("Image Width")

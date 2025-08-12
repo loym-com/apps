@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
     <record id="resource_booking_view_timeline" model="ir.ui.view">
+        <field name="name">resource.booking.view.timeline</field>
         <field name="model">resource.booking</field>
         <field name="type">timeline</field>
         <field name="arch" type="xml">

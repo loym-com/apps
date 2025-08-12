@@ -66,6 +66,37 @@
         <field name="hour_to">24.0</field>
     </record>
 
+    <!-- RESOURCE GROUP TAGS -->
+
+    <record id="resource_group_tag_room_first_floor" model="resource.group.tag">
+        <field name="name">First Floor</field>
+    </record>
+    <record id="resource_group_tag_room_second_floor" model="resource.group.tag">
+        <field name="name">Second Floor</field>
+    </record>
+    <record id="resource_group_tag_room_dogs_allowed" model="resource.group.tag">
+        <field name="name">Dogs Allowed</field>
+    </record>
+
+    <!-- RESOURCE GROUPS -->
+
+    <record id="resource_group_room_single_1" model="resource.group">
+        <field name="name">Single Room 1</field>
+        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_first_floor'))]" />
+    </record>
+    <record id="resource_group_room_single_2" model="resource.group">
+        <field name="name">Single Room 2</field>
+        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_second_floor'))]" />
+    </record>
+    <record id="resource_group_room_double_1" model="resource.group">
+        <field name="name">Double Room 1</field>
+        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_first_floor'))]" />
+    </record>
+    <record id="resource_group_room_double_2" model="resource.group">
+        <field name="name">Double Room 2</field>
+        <field name="tag_ids" eval="[(4, ref('resource_group_tag_room_second_floor')), (4, ref('resource_group_tag_room_dogs_allowed'))]" />
+    </record>
+
     <!-- MATERIAL RESOURCES -->
 
     <record id="resource_resource_session" model="resource.resource">
@@ -77,31 +108,37 @@
         <field name="name">Single Room 1</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="group_id" ref="resource_group_room_single_1" />
     </record>
     <record id="resource_resource_room_single_2" model="resource.resource">
         <field name="name">Single Room 2</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="group_id" ref="resource_group_room_single_2" />
     </record>
     <record id="resource_resource_room_double_1a" model="resource.resource">
         <field name="name">Double Room 1 bed A</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="group_id" ref="resource_group_room_double_1" />
     </record>
     <record id="resource_resource_room_double_1b" model="resource.resource">
         <field name="name">Double Room 1 bed B</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="group_id" ref="resource_group_room_double_1" />
     </record>
     <record id="resource_resource_room_double_2a" model="resource.resource">
         <field name="name">Double Room 2 bed A</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="group_id" ref="resource_group_room_double_2" />
     </record>
     <record id="resource_resource_room_double_2b" model="resource.resource">
         <field name="name">Double Room 2 bed B</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="group_id" ref="resource_group_room_double_2" />
     </record>
     <record id="resource_resource_workspace_1" model="resource.resource">
         <field name="name">Workspace 1</field>
@@ -114,7 +151,7 @@
         <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
 
-    <!-- USERs & HUMAN RESOURCES -->
+    <!-- USERS & HUMAN RESOURCES -->
 
     <record id="user_doctor" model="res.users">
         <field name="name">Don Doctor</field>
@@ -502,11 +539,11 @@
     <record id="newstart_silver_pt" model="product.template">
         <field name="name">NEWSTART Silver 10 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">1500.0</field>
+        <field name="list_price">0.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
-        <field name="pack_type">non_detailed</field>
+        <field name="pack_type">detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
     <record id="newstart_silver_room_type_ptal" model="product.template.attribute.line">
@@ -530,11 +567,14 @@
             'noupdate': False,
         },]"/>
     </function>
-    <record id="newstart_silver_double_room_1_person_type_ptav" model="product.template.attribute.value">
+    <record id="newstart_silver_single_room_type_ptav" model="product.template.attribute.value">
         <field name="price_extra">1000.0</field>
     </record>
+    <record id="newstart_silver_double_room_1_person_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">2500.0</field>
+    </record>
     <record id="newstart_silver_double_room_2_people_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">2000.0</field>
+        <field name="price_extra">1500.0</field>
     </record>
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
@@ -572,11 +612,11 @@
     <record id="newstart_gold_pt" model="product.template">
         <field name="name">NEWSTART Gold 10 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">2000.0</field>
+        <field name="list_price">0.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
-        <field name="pack_type">non_detailed</field>
+        <field name="pack_type">detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
     <record id="newstart_gold_room_type_ptal" model="product.template.attribute.line">
@@ -600,11 +640,14 @@
             'noupdate': False,
         },]"/>
     </function>
-    <record id="newstart_gold_double_room_1_person_type_ptav" model="product.template.attribute.value">
+    <record id="newstart_gold_single_room_type_ptav" model="product.template.attribute.value">
         <field name="price_extra">1000.0</field>
     </record>
+    <record id="newstart_gold_double_room_1_person_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">2500.0</field>
+    </record>
     <record id="newstart_gold_double_room_2_people_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">2000.0</field>
+        <field name="price_extra">1500.0</field>
     </record>
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
@@ -642,11 +685,11 @@
     <record id="depression_pt" model="product.template">
         <field name="name">Out of DEPRESSION in 10 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">2500.0</field>
+        <field name="list_price">0.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
-        <field name="pack_type">non_detailed</field>
+        <field name="pack_type">detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
     <record id="depression_room_type_ptal" model="product.template.attribute.line">
@@ -670,12 +713,16 @@
             'noupdate': False,
         },]"/>
     </function>
-    <record id="depression_double_room_1_person_type_ptav" model="product.template.attribute.value">
+    <record id="depression_single_room_type_ptav" model="product.template.attribute.value">
         <field name="price_extra">1000.0</field>
     </record>
-    <record id="depression_double_room_2_people_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">2000.0</field>
+    <record id="depression_double_room_1_person_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">2500.0</field>
     </record>
+    <record id="depression_double_room_2_people_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">1500.0</field>
+    </record>
+
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
@@ -706,57 +753,6 @@
         <field name="parent_product_id" ref="depression_double_room_2_people_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">3</field>
-    </record>
-
-    <!-- RESOURCE BOOKING: PERIODS -->
-
-    <record id="resource_booking_session_newstart" model="resource.booking">
-        <field name="name">NEWSTART</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_session" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
-        /> -->
-        <field name="start" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)"/>
-    </record>
-    <record id="resource_booking_session_depression" model="resource.booking">
-        <field name="name">DEPRESSION</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_session" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.depression_pt')])]"
-        /> -->
-        <field name="start" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)"/>
-    </record>
-    <record id="resource_booking_session_newstart_2" model="resource.booking">
-        <field name="name">NEWSTART</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_session" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
-        /> -->
-        <field name="start" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)"/>
-    </record>
-    <record id="resource_booking_session_depression_2" model="resource.booking">
-        <field name="name">DEPRESSION and NEWSTART</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_session" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_session" />
-        <!-- <field
-            name="period_product_tmpl_ids"
-            eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt'), ref('resource_booking_demo.depression_pt')])]"
-        /> -->
-        <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
     </record>
 
     <!-- PRICELIST & CONTACT -->
@@ -791,4 +787,90 @@
         <field name="state">enabled</field>
     </record>
 
+    <!-- EVENT TAG CATEGORY -->
+
+    <record id="event_tag_category_theme" model="event.tag.category">
+        <field name="name">Theme</field>
+    </record>
+
+    <!-- EVENT TAGS -->
+
+    <record id="event_tag_newstart" model="event.tag">
+        <field name="name">Newstart</field>
+        <field name="category_id" ref="event_tag_category_theme"/>
+    </record>
+    <record id="event_tag_depression" model="event.tag">
+        <field name="name">Depression</field>
+        <field name="category_id" ref="event_tag_category_theme"/>
+    </record>
+
+    <!-- EVENTS (SESSIONS) -->
+
+    <record id="event_event_1" model="event.event">
+        <field name="name">1: NEWSTART Gold</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=12, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_newstart')])]" />
+        <field name="product_tmpl_id" ref="newstart_gold_pt" />
+        <field name="is_published" eval="1" />
+    </record>
+    <record id="event_event_2" model="event.event">
+        <field name="name">2: DEPRESSION</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=26, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_depression')])]" />
+        <field name="product_tmpl_id" ref="depression_pt" />
+        <field name="is_published" eval="1" />
+    </record>
+    <record id="event_event_3" model="event.event">
+        <field name="name">3: NEWSTART Gold</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=40, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_newstart')])]" />
+        <field name="product_tmpl_id" ref="newstart_gold_pt" />
+        <field name="is_published" eval="1" />
+    </record>
+    <record id="event_event_4" model="event.event">
+        <field name="name">4: DEPRESSION</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=54, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_depression')])]" />
+        <field name="product_tmpl_id" ref="depression_pt" />
+        <field name="is_published" eval="1" />
+    </record>
+
+    <!-- RESOURCE BOOKINGS (SESSIONS) -->
+
+    <record id="resource_booking_event_1" model="resource.booking">
+        <field name="name">1: NEWSTART</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="start" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_event_2" model="resource.booking">
+        <field name="name">2: DEPRESSION</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="start" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_event_3" model="resource.booking">
+        <field name="name">3: NEWSTART</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="start" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_event_4" model="resource.booking">
+        <field name="name">4: DEPRESSION and NEWSTART</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
+    </record>
 </data>

@@ -35,7 +35,7 @@ class SaleOrderLine(models.Model):
         product = self.env["product.product"]._teamm2odoo_search()
         if not len(order) or not len(booking) or not len(product):
             hubspot_deal_id = self._teamm2odoo_get_value("hubspot deal id")
-            raise ValidationError(f"Missing info for hubspot deal id {hubspot_deal_id}:\nOrder: {order}\nProduct: {product} (check discount codes)\nBooking: {booking}")
+            raise ValidationError(f"Missing info for hubspot deal id {hubspot_deal_id}:\nOrder: {order}\nProduct: {product} (if missing, check discount codes)\nBooking: {booking} (if missing, manually check the resource bookings of the period)")
         kwargs |= {
             "order_id": order.id,
             "resource_booking_id": booking.id,

@@ -5,7 +5,7 @@
         inherit_id="website_event.registration_attendee_details"
     >
         <xpath expr="//t[@name='attendee_loop']//*[hasclass('modal-body')]" position="inside">
-            <t t-if="event.product_tmpl_ids">
+            <t t-if="event.product_tmpl_id">
                 <script type="text/javascript">
                     function updateCombinations(product_id) {
                         const event_id = "<t t-esc="event.id"/>";

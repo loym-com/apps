@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+    <record id="resource_booking_group_view_timeline" model="ir.ui.view">
+        <field name="name">resource.booking.group.view.timeline</field>
+        <field name="model">resource.booking.group</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+            <timeline
+                date_start="start"
+                date_delay="duration"
+                date_stop="stop"
+                string="Bookings per Resource Group"
+                default_group_by="group_id"
+                zoomKey="ctrlKey"
+            >
+                <field name="group_id" />
+                <templates>
+                    <div t-name="timeline-item">
+                        <div t-esc="record.display_name" />
+                    </div>
+                </templates>
+            </timeline>
+        </field>
+    </record>
+    <record id="resource_booking_group_action" model="ir.actions.act_window">
+        <field name="name">Resource Booking per Group</field>
+        <field name="res_model">resource.booking.group</field>
+        <field name="view_mode">timeline</field>
+    </record>
+    <menuitem
+        id="resource_booking_group_menu"
+        action="resource_booking_group_action"
+        parent="resource_booking.resource_booking_main_menu"
+        name="Overview"
+        sequence="5"
+    />
+</data>

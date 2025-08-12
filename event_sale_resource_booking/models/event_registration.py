@@ -31,7 +31,7 @@ class EventRegistration(models.Model):
         for vals in vals_list:
             booking_vals = self._get_booking_vals(vals)
             if booking_vals:
-                booking = self.env['resource.booking'].create(booking_vals)
+                booking = self.env["resource.booking"].create(booking_vals)
                 vals["resource_booking_id"] = booking.id
                 # vals.pop("product_id")
                 # vals.pop("resource_booking_combination_id")
@@ -46,7 +46,7 @@ class EventRegistration(models.Model):
                     if booking:
                         booking.write(booking_vals)
                     else:
-                        booking = self.env['resource.booking'].create(booking_vals)
+                        booking = self.env["resource.booking"].create(booking_vals)
                     vals["resource_booking_id"] = booking.id
                 # vals.pop("product_id")
                 # vals.pop("resource_booking_combination_id")
@@ -64,19 +64,16 @@ class EventRegistration(models.Model):
                     return value
 
         event = self.env["event.event"].browse(get("event_id"))
-        if event.product_tmpl_ids and not get("resource_booking_id"):
-            product_id = get("product_id")
-            combination_id = get("resource_booking_combination_id")
-            if not (product_id and combination_id):
-                raise UserError("Missing booking product or combination.")
-            product = self.env["product.product"].browse(product_id)
+        if event.product_tmpl_id and not get("resource_booking_id"):
+            ticket = self.env["event.event.ticket"].browse(vals["event_ticket_id"])
+            product = ticket.product_id
             booking_vals = {
                 "name": get("name"),
-                "partner_id": get('partner_id'), # TODO: search / create
-                'type_id': product.resource_booking_type_id.id,
-                'combination_id': get('resource_booking_combination_id'),
+                "partner_id": get("partner_id"), # TODO: search / create
+                "type_id": product.resource_booking_type_id.id,
                 "product_id": product.id,
                 "start": event.date_begin,
                 "stop": event.date_end,
+                "state": "scheduled",
             }
             return booking_vals

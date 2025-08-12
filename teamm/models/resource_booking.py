@@ -116,7 +116,8 @@ class ResourceBooking(models.Model):
             combination = combinations
             if len(combinations) != 1:
                 debug = True
-        assert len(combination) == 1, f"{str(combinations)} - probably missing room size or room sharing."
+        if len(combination) != 1:
+            raise ValidationError(f"{str(combinations)} - probably missing room size or room sharing.")
         return combination
 
     def _teamm2odoo_after_create_or_write(self):

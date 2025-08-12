@@ -24,7 +24,7 @@
     "depends": [
         # "base_partner_family",
         "donation",
-        "donation_analytic",
+        "donation_line",
         "partner_contact_id", # Person ID for the tax report
         "report_py3o",
     ],
