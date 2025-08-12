@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="project_task_view_form" model="ir.ui.view">
+        <field name="name">project.task.view.form.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2" />
+        <field name="arch" type="xml">
+            <data>
+                <header position="inside">
+                    <button name="action_project_task_done_next_deadline"
+                            type="object"
+                            string="Done"
+                            class="oe_highlight"
+                            groups="project.group_project_user"
+                    />
+                </header>
+                <field name="date_deadline" position="before">
+                    <field name="date_done" />
+                </field>
+                <field name="date_deadline" position="after">
+                    <field name="frequency" />
+                </field>
+            </data>
+        </field>
+    </record>
+    <record id="project_task_view_list" model="ir.ui.view">
+        <field name="name">project.task.view.list.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2" />
+        <field name="arch" type="xml">
+            <data>
+                <field name="date_deadline" position="before">
+                    <field name="date_done" optional="hide" />
+                </field>
+                <field name="date_deadline" position="after">
+                    <field name="frequency" optional="hide" />
+                </field>
+            </data>
+        </field>
+    </record>
+</odoo>
