@@ -26,6 +26,12 @@ class DonationThanksTemplate(models.Model):
         string="Image Text",
         translate=True,
     )
+    paragraph_ids = fields.One2many(
+        comodel_name="donation.thanks.template.paragraph",
+        inverse_name="template_id",
+        string="Paragraphs",
+        help="Paragraphs to be included in the thanks document.",
+    )
 
     def action_goto_report_donation_thanks(self):
         return {
