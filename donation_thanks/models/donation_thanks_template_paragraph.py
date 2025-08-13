@@ -9,7 +9,7 @@ class DonationThanksTemplateParagraph(models.Model):
     _name = "donation.thanks.template.paragraph"
     _order = "sequence, id"
 
-    paragraph = fields.Char()
+    paragraph = fields.Char(translate=True, string="Paragraph")
     sequence = fields.Integer(
         string="Sequence",
         default=10,
