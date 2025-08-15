@@ -18,7 +18,7 @@ class Base(models.AbstractModel):
                     line.import_last_name or "",
                 ).strip()
             if line.partner_name and not line.partner_id:
-                partner = Partner.search([("name", "=", line.partner_name)])
+                partner = Partner.search([("name", "=ilike", line.partner_name)])
                 if force and not partner:
                     partner = Partner.create(
                         {
