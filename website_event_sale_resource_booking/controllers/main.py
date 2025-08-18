@@ -8,7 +8,21 @@ from odoo.http import request
 # from collections import defaultdict
 # from odoo.http import request, route
 
+# from ...website_sale_resource_booking.controllers import main
 from odoo.addons.website_event_sale.controllers.main import WebsiteEventSaleController
+
+
+# class WebsiteSale(main.WebsiteSale):
+
+#     def checkout_redirection(self, order):
+
+#         """Redirect to scheduling bookings if still not done."""
+#         order.order_line._sync_resource_bookings()
+#         bookings = order.mapped("order_line.resource_booking_ids")
+#         for booking in bookings:
+#             if booking.state == "pending":
+#                 return request.redirect("/shop/booking/1/schedule")
+#         return super().checkout_redirection(order)
 
     
 class EventRegistration(http.Controller):
