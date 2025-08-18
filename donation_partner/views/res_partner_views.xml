@@ -25,6 +25,8 @@
         <!-- <field name="inherit_id" ref="donation_base.res_partner_view_search" /> -->
         <field name="arch" type="xml">
             <search>
+                <field name="name" />
+                <field name="email" />
                 <field name="donation_send_thanks" />
                 <field name="donation_thanks_send" />
                 <field name="donation_tax_receipt_send" />
