@@ -105,6 +105,10 @@ class HrEmployee(models.Model):
                     order="trekkgrunnlag DESC",
                     limit=1,
                 )
+                if not record:
+                    raise ValueError(
+                        f"No tax deduction record found for this domain: {domain}"
+                    )
                 if trekkgrunnlag > record.trekkgrunnlag:
                     return -int(
                         (
