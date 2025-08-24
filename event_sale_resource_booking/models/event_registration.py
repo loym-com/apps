@@ -26,54 +26,20 @@ class EventRegistration(models.Model):
 
     @api.model
     def create(self, vals_list):
-        if type(vals_list) is dict:
-            vals_list = [vals_list]
-        for vals in vals_list:
-            booking_vals = self._get_booking_vals(vals)
-            if booking_vals:
-                booking = self.env["resource.booking"].create(booking_vals)
-                vals["resource_booking_id"] = booking.id
-                # vals.pop("product_id")
-                # vals.pop("resource_booking_combination_id")
-        return super(EventRegistration, self).create(vals)
+        attendees = super().create(vals_list)
+        attendees._update_sale_order_line()
+        attendees.mapped('sale_order_line_id')._update_attendee_and_booking()
+        return attendees
 
-    def write(self, vals):
-        for record in self:
-            if vals.get("product_id") or vals.get("resource_booking_combination_id"):
-                booking_vals = self._get_booking_vals(vals)
-                if booking_vals:
-                    booking = record.resource_booking_id
-                    if booking:
-                        booking.write(booking_vals)
-                    else:
-                        booking = self.env["resource.booking"].create(booking_vals)
-                    vals["resource_booking_id"] = booking.id
-                # vals.pop("product_id")
-                # vals.pop("resource_booking_combination_id")
-        return super().write(vals)
-
-    def _get_booking_vals(self, vals):
-        def get(field):
-            if vals.get(field):
-                return vals[field]
-            else:
-                value = getattr(self, field)
-                if isinstance(value, models.Model):
-                    return value.id
-                else:
-                    return value
-
-        event = self.env["event.event"].browse(get("event_id"))
-        if event.product_tmpl_id and not get("resource_booking_id"):
-            ticket = self.env["event.event.ticket"].browse(vals["event_ticket_id"])
-            product = ticket.product_id
-            booking_vals = {
-                "name": get("name"),
-                "partner_id": get("partner_id"), # TODO: search / create
-                "type_id": product.resource_booking_type_id.id,
-                "product_id": product.id,
-                "start": event.date_begin,
-                "stop": event.date_end,
-                "state": "scheduled",
-            }
-            return booking_vals
+    def _update_sale_order_line(self):
+        for attendee in self:
+            order_line = attendee.sale_order_line_id
+            if order_line:
+                # Link attendee to order line
+                order_line.event_registration_id = attendee.id
+                # Link booking to order line
+                bookings = order_line.resource_booking_ids
+                if bookings and len(bookings) == 1:
+                    # This is also done here:
+                    # https://github.com/norlinhenrik/oca-sale-workflow/blob/16.0-imp-sale_resource_booking-fredheim/sale_resource_booking/models/sale_order_line.py#L97
+                    order_line.resource_booking_id = bookings.id
