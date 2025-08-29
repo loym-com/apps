@@ -1,0 +1,48 @@
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
+from odoo.fields import Command
+
+
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
+
+    @api.model
+    def _get_default_usd_currency(self):
+        usd_currency = self.env.ref("base.USD")
+        return usd_currency.id
+
+    external_url = fields.Char(
+        string="External URL",
+    )
+    external_currency_id = fields.Many2one(
+        "res.currency",
+        string="External Currency",
+        default=_get_default_usd_currency,
+    )
+    external_price = fields.Monetary(
+        string="Price (USD)",
+        currency_field="external_currency_id",
+    )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            url = vals.get("external_url")
+            price = vals.get("external_price")
+            if url and price:
+                vals["website_published"] = True
+                vals["website_id"] = 56
+                vals["public_categ_ids"] = 45
+
+                if url.startswith("https://remnantpublications.com/"):
+                    vals["list_price"] = price * 15
+                    vals["categ_id"] = 84
+
+                elif url.startswith("https://safeliz.com/"):
+                    vals["list_price"] = price * 15
+                    vals["categ_id"] = 129
+
+                else:
+                    raise UserError("Url should start with https://remnantpublications.com/ or https://safeliz.com/")
+
+        return super().create(vals_list)
