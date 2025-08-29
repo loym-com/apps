@@ -5,6 +5,11 @@ from odoo.fields import Command
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
+    _sql_constraints = [
+        ('unique_external_url',
+         'unique(external_url)',
+         'The External URL must be unique!'),
+    ]
 
     @api.model
     def _get_default_usd_currency(self):
@@ -16,6 +21,7 @@ class ProductTemplate(models.Model):
     )
     external_url = fields.Char(
         string="External URL",
+        index=True,
     )
     external_currency_id = fields.Many2one(
         "res.currency",
@@ -39,13 +45,14 @@ class ProductTemplate(models.Model):
                 vals["website_id"] = 56
                 vals["public_categ_ids"] = [Command.set([45])]
                 vals["company_id"] = 15
+                vals["description_sale"] = vals["external_url"]
 
                 if url.startswith("https://remnantpublications.com/"):
-                    vals["list_price"] = price * 15
+                    vals["list_price"] = price * 14
                     vals["categ_id"] = 84
 
                 elif url.startswith("https://safeliz.com/"):
-                    vals["list_price"] = price * 15
+                    vals["list_price"] = price * 14
                     vals["categ_id"] = 129
 
                 else:
