@@ -7,7 +7,9 @@
     "depends": ["website_sale"],
     "data": [
         "data/ir_model_data.xml",
+        "data/ir_model_fields_data.xml",
         "views/product_template_views.xml",
+        "views/templates.xml",
     ],
     "license": "AGPL-3",
     "installable": True,

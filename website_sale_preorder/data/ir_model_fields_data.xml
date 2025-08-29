@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <function model="ir.model.fields" name="formbuilder_whitelist">
+        <value>product.template</value>
+        <value eval="[
+            'external_name',
+            'external_url',
+            'external_price',
+        ]"/>
+    </function>
+</odoo>

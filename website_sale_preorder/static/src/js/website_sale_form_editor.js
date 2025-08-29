@@ -10,7 +10,7 @@ FormEditorRegistry.add('create_product', {
     formFields: [{
         type: 'char',
         modelRequired: true,
-        name: 'name',
+        name: 'external_name',
         string: _lt('Product Name'),
     }, {
         type: 'char',

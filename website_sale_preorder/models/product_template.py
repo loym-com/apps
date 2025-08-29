@@ -11,6 +11,9 @@ class ProductTemplate(models.Model):
         usd_currency = self.env.ref("base.USD")
         return usd_currency.id
 
+    external_name = fields.Char(
+        string="External Name",
+    )
     external_url = fields.Char(
         string="External URL",
     )
@@ -27,12 +30,15 @@ class ProductTemplate(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            name = vals.get("external_name")
             url = vals.get("external_url")
             price = vals.get("external_price")
-            if url and price:
+            if name and url and price:
+                vals["name"] = name
                 vals["website_published"] = True
                 vals["website_id"] = 56
-                vals["public_categ_ids"] = 45
+                vals["public_categ_ids"] = [Command.set([45])]
+                vals["company_id"] = 15
 
                 if url.startswith("https://remnantpublications.com/"):
                     vals["list_price"] = price * 15
