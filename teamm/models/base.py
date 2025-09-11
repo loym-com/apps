@@ -54,7 +54,7 @@ class Base(models.AbstractModel):
         if self._name == "product.product":
             debug = True
         # Don't search if there is no search domain
-        record = self.search(domain) if domain else self
+        record = self.with_context(active_test=False).search(domain) if domain else self
         x2many = self._teamm2odoo_x2many()
         if x2many:
             # Check if record.x2many_field.ids == kwargs[x2many_field]
