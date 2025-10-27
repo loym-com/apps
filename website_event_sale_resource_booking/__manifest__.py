@@ -9,8 +9,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/website_event_booking_combination_views.xml",
-        "views/website_event.xml",
-        # "views/website_sale.xml",
+        # "views/website_event.xml",
     ],
     "depends": [
         # "base_set_record_values_mixin",

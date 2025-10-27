@@ -123,9 +123,8 @@ class EventBookingCombination(models.Model):
             f"""
             CREATE OR REPLACE VIEW website_event_booking_combination AS
             SELECT {", ".join(select)}
-            FROM product_template_event_rel pt_ee
-            JOIN event_event ee ON pt_ee.event_event_id = ee.id
-            JOIN product_template pt ON pt_ee.product_template_id = pt.id
+            FROM event_event ee
+            JOIN product_template pt ON ee.product_tmpl_id = pt.id
             JOIN product_product pp ON pp.product_tmpl_id = pt.id
             JOIN resource_booking_type rbt ON pp.resource_booking_type_id = rbt.id
             JOIN resource_booking_type_combination_rel rbt_rbc ON rbt_rbc.type_id = rbt.id

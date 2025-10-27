@@ -46,6 +46,8 @@
                 <field name="partner_id"/>
                 <field name="thanks_template_id"/>
                 <field name="print_date"/>
+                <filter name="not_printed" string="Not Printed" domain="[('print_date', '=', False)]"/>
+                <filter name="printed" string="Printed" domain="[('print_date', '!=', False)]"/>
             </search>
         </field>
     </record>

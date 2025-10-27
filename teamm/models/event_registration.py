@@ -29,6 +29,11 @@ class EventRegistration(models.Model):
         combination = self.env["resource.booking.combination"]._teamm2odoo_search()
         product = self.env["product.product"]._teamm2odoo_search()
 
+        if not event:
+            raise ValidationError(
+                f"Event not found for hubspot deal id {self._teamm2odoo_get_value('hubspot deal id')}"
+            )
+
         kwargs |= {
             "name": booking.partner_id.name,
             "email": booking.partner_id.email,

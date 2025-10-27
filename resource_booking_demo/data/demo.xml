@@ -245,14 +245,14 @@
 
     <record id="resource_booking_type_session" model="resource.booking.type">
         <field name="name">SESSION</field>
-        <field name="duration" eval="264" />
+        <field name="duration" eval="144" />
         <field name="slot_duration" eval="24" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
         <!-- <field name="period_type">period</field> -->
     </record>
     <record id="resource_booking_type_single_room" model="resource.booking.type">
         <field name="name">Single Room</field>
-        <field name="duration" eval="240" />
+        <field name="duration" eval="144" />
         <field name="slot_duration" eval="24" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
         <!-- <field name="period_type">statistics</field> -->
@@ -535,9 +535,9 @@
         <field name="resource_booking_type_ids" eval="[(6, 0, [ref('resource_booking_demo.resource_booking_type_double_room_shared')])]"/>
     </record>
 
-    <!-- PRODUCT: NEWSTART SILVER -->
-    <record id="newstart_silver_pt" model="product.template">
-        <field name="name">NEWSTART Silver 10 days</field>
+    <!-- PRODUCT: PROGRAM 1 -->
+    <record id="program1_pt" model="product.template">
+        <field name="name">PROGRAM 1 FOR 7 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
         <field name="list_price">0.0</field>
         <field name="detailed_type">service</field>
@@ -546,71 +546,71 @@
         <field name="pack_type">detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
-    <record id="newstart_silver_room_type_ptal" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="newstart_silver_pt"/>
+    <record id="program1_room_type_ptal" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="program1_pt"/>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.single_room_type_pav'), ref('resource_booking_demo.double_room_1_person_type_pav'), ref('resource_booking_demo.double_room_2_people_type_pav')])]"/>
     </record>
     <!-- product.template.attribute.value -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.newstart_silver_single_room_type_ptav',
-            'record': obj().env.ref('resource_booking_demo.newstart_silver_room_type_ptal').product_template_value_ids[0],
+            'xml_id': 'resource_booking_demo.program1_single_room_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.program1_room_type_ptal').product_template_value_ids[0],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_silver_double_room_1_person_type_ptav',
-            'record': obj().env.ref('resource_booking_demo.newstart_silver_room_type_ptal').product_template_value_ids[1],
+            'xml_id': 'resource_booking_demo.program1_double_room_1_person_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.program1_room_type_ptal').product_template_value_ids[1],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_silver_double_room_2_people_type_ptav',
-            'record': obj().env.ref('resource_booking_demo.newstart_silver_room_type_ptal').product_template_value_ids[2],
+            'xml_id': 'resource_booking_demo.program1_double_room_2_people_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.program1_room_type_ptal').product_template_value_ids[2],
             'noupdate': False,
         },]"/>
     </function>
-    <record id="newstart_silver_single_room_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">1000.0</field>
+    <record id="program1_single_room_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">7000.0</field>
     </record>
-    <record id="newstart_silver_double_room_1_person_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">2500.0</field>
+    <record id="program1_double_room_1_person_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">17500.0</field>
     </record>
-    <record id="newstart_silver_double_room_2_people_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">1500.0</field>
+    <record id="program1_double_room_2_people_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">9940.0</field>
     </record>
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.newstart_silver_single_room_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_single_room_type_ptav')),
+            'xml_id': 'resource_booking_demo.program1_single_room_pp',
+            'record': obj().env.ref('resource_booking_demo.program1_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.program1_single_room_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_silver_double_room_1_person_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_double_room_1_person_type_ptav')),
+            'xml_id': 'resource_booking_demo.program1_double_room_1_person_pp',
+            'record': obj().env.ref('resource_booking_demo.program1_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.program1_double_room_1_person_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_silver_double_room_2_people_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_silver_double_room_2_people_type_ptav')),
+            'xml_id': 'resource_booking_demo.program1_double_room_2_people_pp',
+            'record': obj().env.ref('resource_booking_demo.program1_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.program1_double_room_2_people_type_ptav')),
             'noupdate': False,
         },]"/>
     </function>
-    <record id="massage_newstart_silver_single_room_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_silver_single_room_pp" />
+    <!-- <record id="massage_program1_single_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="program1_single_room_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">1</field>
     </record>
-    <record id="massage_newstart_silver_double_room_1_person_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_silver_double_room_1_person_pp" />
+    <record id="massage_program1_double_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="program1_double_room_1_person_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">1</field>
     </record>
-    <record id="massage_newstart_silver_double_room_2_people_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_silver_double_room_2_people_pp" />
+    <record id="massage_program1_double_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="program1_double_room_2_people_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">1</field>
-    </record>
+    </record> -->
 
-    <!-- PRODUCT: NEWSTART GOLD -->
-    <record id="newstart_gold_pt" model="product.template">
-        <field name="name">NEWSTART Gold 10 days</field>
+    <!-- PRODUCT: PROGRAM 2 -->
+    <record id="program2_pt" model="product.template">
+        <field name="name">PROGRAM 2 for 7 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
         <field name="list_price">0.0</field>
         <field name="detailed_type">service</field>
@@ -619,71 +619,71 @@
         <field name="pack_type">detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
-    <record id="newstart_gold_room_type_ptal" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="newstart_gold_pt"/>
+    <record id="program2_room_type_ptal" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="program2_pt"/>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.single_room_type_pav'), ref('resource_booking_demo.double_room_1_person_type_pav'), ref('resource_booking_demo.double_room_2_people_type_pav')])]"/>
     </record>
     <!-- product.template.attribute.value -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.newstart_gold_single_room_type_ptav',
-            'record': obj().env.ref('resource_booking_demo.newstart_gold_room_type_ptal').product_template_value_ids[0],
+            'xml_id': 'resource_booking_demo.program2_single_room_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.program2_room_type_ptal').product_template_value_ids[0],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_gold_double_room_1_person_type_ptav',
-            'record': obj().env.ref('resource_booking_demo.newstart_gold_room_type_ptal').product_template_value_ids[1],
+            'xml_id': 'resource_booking_demo.program2_double_room_1_person_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.program2_room_type_ptal').product_template_value_ids[1],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_gold_double_room_2_people_type_ptav',
-            'record': obj().env.ref('resource_booking_demo.newstart_gold_room_type_ptal').product_template_value_ids[2],
+            'xml_id': 'resource_booking_demo.program2_double_room_2_people_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.program2_room_type_ptal').product_template_value_ids[2],
             'noupdate': False,
         },]"/>
     </function>
-    <record id="newstart_gold_single_room_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">1000.0</field>
+    <record id="program2_single_room_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">7000.0</field>
     </record>
-    <record id="newstart_gold_double_room_1_person_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">2500.0</field>
+    <record id="program2_double_room_1_person_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">17500.0</field>
     </record>
-    <record id="newstart_gold_double_room_2_people_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">1500.0</field>
+    <record id="program2_double_room_2_people_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">9940.0</field>
     </record>
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.newstart_gold_single_room_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_single_room_type_ptav')),
+            'xml_id': 'resource_booking_demo.program2_single_room_pp',
+            'record': obj().env.ref('resource_booking_demo.program2_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.program2_single_room_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_gold_double_room_1_person_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_double_room_1_person_type_ptav')),
+            'xml_id': 'resource_booking_demo.program2_double_room_1_person_pp',
+            'record': obj().env.ref('resource_booking_demo.program2_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.program2_double_room_1_person_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.newstart_gold_double_room_2_people_pp',
-            'record': obj().env.ref('resource_booking_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.newstart_gold_double_room_2_people_type_ptav')),
+            'xml_id': 'resource_booking_demo.program2_double_room_2_people_pp',
+            'record': obj().env.ref('resource_booking_demo.program2_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.program2_double_room_2_people_type_ptav')),
             'noupdate': False,
         },]"/>
     </function>
-    <record id="massagenewstart_gold_single_room_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_gold_single_room_pp" />
+    <!-- <record id="massage_program2_single_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="program2_single_room_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">2</field>
     </record>
-    <record id="massage_newstart_gold_double_room_1_person_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_gold_double_room_1_person_pp" />
+    <record id="massage_program2_double_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="program2_double_room_1_person_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">2</field>
     </record>
-    <record id="massage_newstart_gold_double_room_2_people_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="newstart_gold_double_room_2_people_pp" />
+    <record id="massage_program2_double_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="program2_double_room_2_people_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">2</field>
-    </record>
+    </record> -->
 
-    <!-- PRODUCT: DEPRESSION -->
-    <record id="depression_pt" model="product.template">
-        <field name="name">Out of DEPRESSION in 10 days</field>
+    <!-- PRODUCT: PROGRAM 3 -->
+    <record id="program3_pt" model="product.template">
+        <field name="name">PROGRAM 3 for 7 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
         <field name="list_price">0.0</field>
         <field name="detailed_type">service</field>
@@ -692,68 +692,68 @@
         <field name="pack_type">detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
-    <record id="depression_room_type_ptal" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="depression_pt"/>
+    <record id="program3_room_type_ptal" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="program3_pt"/>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="value_ids" eval="[(6, 0, [ref('resource_booking_demo.single_room_type_pav'), ref('resource_booking_demo.double_room_1_person_type_pav'), ref('resource_booking_demo.double_room_2_people_type_pav')])]"/>
     </record>
     <!-- product.template.attribute.value -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.depression_single_room_type_ptav',
-            'record': obj().env.ref('resource_booking_demo.depression_room_type_ptal').product_template_value_ids[0],
+            'xml_id': 'resource_booking_demo.program3_single_room_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.program3_room_type_ptal').product_template_value_ids[0],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.depression_double_room_1_person_type_ptav',
-            'record': obj().env.ref('resource_booking_demo.depression_room_type_ptal').product_template_value_ids[1],
+            'xml_id': 'resource_booking_demo.program3_double_room_1_person_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.program3_room_type_ptal').product_template_value_ids[1],
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.depression_double_room_2_people_type_ptav',
-            'record': obj().env.ref('resource_booking_demo.depression_room_type_ptal').product_template_value_ids[2],
+            'xml_id': 'resource_booking_demo.program3_double_room_2_people_type_ptav',
+            'record': obj().env.ref('resource_booking_demo.program3_room_type_ptal').product_template_value_ids[2],
             'noupdate': False,
         },]"/>
     </function>
-    <record id="depression_single_room_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">1000.0</field>
+    <record id="program3_single_room_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">7000.0</field>
     </record>
-    <record id="depression_double_room_1_person_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">2500.0</field>
+    <record id="program3_double_room_1_person_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">17500.0</field>
     </record>
-    <record id="depression_double_room_2_people_type_ptav" model="product.template.attribute.value">
-        <field name="price_extra">1500.0</field>
+    <record id="program3_double_room_2_people_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">9940.0</field>
     </record>
 
     <!-- product.product -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.depression_single_room_pp',
-            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_single_room_type_ptav')),
+            'xml_id': 'resource_booking_demo.program3_single_room_pp',
+            'record': obj().env.ref('resource_booking_demo.program3_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.program3_single_room_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.depression_double_room_1_person_pp',
-            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_double_room_1_person_type_ptav')),
+            'xml_id': 'resource_booking_demo.program3_double_room_1_person_pp',
+            'record': obj().env.ref('resource_booking_demo.program3_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.program3_double_room_1_person_type_ptav')),
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.depression_double_room_2_people_pp',
-            'record': obj().env.ref('resource_booking_demo.depression_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.depression_double_room_2_people_type_ptav')),
+            'xml_id': 'resource_booking_demo.program3_double_room_2_people_pp',
+            'record': obj().env.ref('resource_booking_demo.program3_pt')._get_variant_for_combination(obj().env.ref('resource_booking_demo.program3_double_room_2_people_type_ptav')),
             'noupdate': False,
         },]"/>
     </function>
-    <record id="massage_depression_single_room_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="depression_single_room_pp" />
+    <!-- <record id="massage_program3_single_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="program3_single_room_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">3</field>
     </record>
-    <record id="massage_depression_double_room_1_person_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="depression_double_room_1_person_pp" />
+    <record id="massage_program3_double_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="program3_double_room_1_person_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">3</field>
     </record>
-    <record id="massage_depression_double_room_2_people_ppl" model="product.pack.line">
-        <field name="parent_product_id" ref="depression_double_room_2_people_pp" />
+    <record id="massage_program3_double_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="program3_double_room_2_people_pp" />
         <field name="product_id" ref="massage_pp" />
         <field name="quantity">3</field>
-    </record>
+    </record> -->
 
     <!-- PRICELIST & CONTACT -->
 
@@ -795,82 +795,118 @@
 
     <!-- EVENT TAGS -->
 
-    <record id="event_tag_newstart" model="event.tag">
-        <field name="name">Newstart</field>
+    <record id="event_tag_program1" model="event.tag">
+        <field name="name">PROGRAM 1</field>
         <field name="category_id" ref="event_tag_category_theme"/>
     </record>
-    <record id="event_tag_depression" model="event.tag">
-        <field name="name">Depression</field>
+    <record id="event_tag_program2" model="event.tag">
+        <field name="name">PROGRAM 2</field>
+        <field name="category_id" ref="event_tag_category_theme"/>
+    </record>
+    <record id="event_tag_program3" model="event.tag">
+        <field name="name">PROGRAM 3</field>
         <field name="category_id" ref="event_tag_category_theme"/>
     </record>
 
     <!-- EVENTS (SESSIONS) -->
 
     <record id="event_event_1" model="event.event">
-        <field name="name">1: NEWSTART Gold</field>
-        <field name="date_begin" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)" />
-        <field name="date_end" eval="DateTime.now() + relativedelta(days=12, hour=22, minute=0, second=0)" />
-        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_newstart')])]" />
-        <field name="product_tmpl_id" ref="newstart_gold_pt" />
+        <field name="name">1: PROGRAM 1</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=7, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=14, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_program1')])]" />
+        <field name="product_tmpl_id" ref="program1_pt" />
         <field name="is_published" eval="1" />
     </record>
     <record id="event_event_2" model="event.event">
-        <field name="name">2: DEPRESSION</field>
-        <field name="date_begin" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)" />
-        <field name="date_end" eval="DateTime.now() + relativedelta(days=26, hour=22, minute=0, second=0)" />
-        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_depression')])]" />
-        <field name="product_tmpl_id" ref="depression_pt" />
+        <field name="name">2: PROGRAM 2</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=14, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=21, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_program2')])]" />
+        <field name="product_tmpl_id" ref="program2_pt" />
         <field name="is_published" eval="1" />
     </record>
     <record id="event_event_3" model="event.event">
-        <field name="name">3: NEWSTART Gold</field>
-        <field name="date_begin" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)" />
-        <field name="date_end" eval="DateTime.now() + relativedelta(days=40, hour=22, minute=0, second=0)" />
-        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_newstart')])]" />
-        <field name="product_tmpl_id" ref="newstart_gold_pt" />
+        <field name="name">3: PROGRAM 3</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=21, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=28, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_program3')])]" />
+        <field name="product_tmpl_id" ref="program3_pt" />
         <field name="is_published" eval="1" />
     </record>
     <record id="event_event_4" model="event.event">
-        <field name="name">4: DEPRESSION</field>
-        <field name="date_begin" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)" />
-        <field name="date_end" eval="DateTime.now() + relativedelta(days=54, hour=22, minute=0, second=0)" />
-        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_depression')])]" />
-        <field name="product_tmpl_id" ref="depression_pt" />
+        <field name="name">4: PROGRAM 1</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=28, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=35, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_program1')])]" />
+        <field name="product_tmpl_id" ref="program1_pt" />
+        <field name="is_published" eval="1" />
+    </record>
+    <record id="event_event_5" model="event.event">
+        <field name="name">5: PROGRAM 2</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=35, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=42, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_program2')])]" />
+        <field name="product_tmpl_id" ref="program2_pt" />
+        <field name="is_published" eval="1" />
+    </record>
+    <record id="event_event_6" model="event.event">
+        <field name="name">6: PROGRAM 3</field>
+        <field name="date_begin" eval="DateTime.now() + relativedelta(days=42, hour=22, minute=0, second=0)" />
+        <field name="date_end" eval="DateTime.now() + relativedelta(days=49, hour=22, minute=0, second=0)" />
+        <field name="tag_ids" eval="[(6, 0, [ref('event_tag_program3')])]" />
+        <field name="product_tmpl_id" ref="program3_pt" />
         <field name="is_published" eval="1" />
     </record>
 
     <!-- RESOURCE BOOKINGS (SESSIONS) -->
 
     <record id="resource_booking_event_1" model="resource.booking">
-        <field name="name">1: NEWSTART</field>
+        <field name="name">1: PROGRAM 1</field>
         <field name="partner_id" ref="base.main_partner" />
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <field name="start" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)"/>
+        <field name="start" eval="DateTime.now() + relativedelta(days=7, hour=22, minute=0, second=0)"/>
     </record>
     <record id="resource_booking_event_2" model="resource.booking">
-        <field name="name">2: DEPRESSION</field>
+        <field name="name">2: PROGRAM 2</field>
         <field name="partner_id" ref="base.main_partner" />
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <field name="start" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)"/>
+        <field name="start" eval="DateTime.now() + relativedelta(days=14, hour=22, minute=0, second=0)"/>
     </record>
     <record id="resource_booking_event_3" model="resource.booking">
-        <field name="name">3: NEWSTART</field>
+        <field name="name">3: PROGRAM 3</field>
         <field name="partner_id" ref="base.main_partner" />
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <field name="start" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)"/>
+        <field name="start" eval="DateTime.now() + relativedelta(days=21, hour=22, minute=0, second=0)"/>
     </record>
     <record id="resource_booking_event_4" model="resource.booking">
-        <field name="name">4: DEPRESSION and NEWSTART</field>
+        <field name="name">4: PROGRAM 1</field>
         <field name="partner_id" ref="base.main_partner" />
         <field name="type_id" ref="resource_booking_type_session" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
-        <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
+        <field name="start" eval="DateTime.now() + relativedelta(days=28, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_event_5" model="resource.booking">
+        <field name="name">5: PROGRAM 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="start" eval="DateTime.now() + relativedelta(days=35, hour=22, minute=0, second=0)"/>
+    </record>
+    <record id="resource_booking_event_6" model="resource.booking">
+        <field name="name">6: PROGRAM 3</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field name="start" eval="DateTime.now() + relativedelta(days=42, hour=22, minute=0, second=0)"/>
     </record>
 </data>

@@ -1,0 +1,13 @@
+<odoo>
+  <template id="product_external_url" inherit_id="website_sale.product">
+    <xpath expr="//div[@id='product_details']/h1" position="after">
+      <t t-if="product.external_url">
+        <div class="mt16">
+          <a t-att-href="product.external_url" target="_blank" class="btn btn-primary">
+            Visit External Link
+          </a>
+        </div>
+      </t>
+    </xpath>
+  </template>
+</odoo>
