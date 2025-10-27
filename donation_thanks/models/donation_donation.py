@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 
 class DonationDonation(models.Model):
     _inherit = "donation.donation"
+    _order = "donation_date desc" # Date order on thank-you letter in .odt
 
     thanks_id = fields.Many2one(
         string="Thanks",
