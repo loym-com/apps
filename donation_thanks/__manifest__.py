@@ -13,6 +13,7 @@
         "data/mail_template_data.xml", # before server actions
         "data/ir_actions_server_data.xml", # UPDATE (noupdate="0")
         # "reports/old_report_donation_thanks_templates.xml",
+        "reports/report_donation_thanks_templates.xml",
         "security/ir.model.access.csv",
         "views/donation_donation_views.xml",
         "views/donation_tax_receipt_views.xml",
