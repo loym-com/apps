@@ -43,6 +43,7 @@ class DonationReport(models.Model):
                 l.analytic_account_id, -- NEW
                 l.in_kind,
                 l.tax_receipt_ok,
+                l.product_detailed_type,
                 pt.categ_id,
                 d.donation_date,
                 d.partner_id,
