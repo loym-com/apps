@@ -33,7 +33,7 @@
         </field>
     </record>
 
-    <record id="fleet_vehicle_odometer_view_form" model="ir.ui.view">
+    <record id="fleet.fleet_vehicle_odometer_view_form" model="ir.ui.view">
         <field name="name">fleet.vehicle.odometer.form</field>
         <field name="model">fleet.vehicle.odometer</field>
         <field name="priority" eval="20" />
@@ -59,8 +59,8 @@
                         </div>
                         <field name="comment" />
                         <field name="value" widget="integer" />
-                        <field name="value_start" readonly="1"/>
-                        <field name="distance" readonly="1"/>
+                        <field name="value_start" />
+                        <field name="distance" />
                         <field name="driver_id" />
                         <field name="date" />
                     </group>

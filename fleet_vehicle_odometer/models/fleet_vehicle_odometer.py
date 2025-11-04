@@ -12,6 +12,7 @@ class FleetVehicleOdometer(models.Model):
     _name = "fleet.vehicle.odometer"
     _inherit = ["fleet.vehicle.odometer", "analytic.plan.mixin"]
 
+    comment = fields.Char("Comment")
     analytic_account_id = fields.Many2one(
         "account.analytic.account", string="Analytic Account"
     )
@@ -24,12 +25,33 @@ class FleetVehicleOdometer(models.Model):
         store=True,
         help="Compute how many km for each analytic account"
     )
-    comment = fields.Char("Comment")
-    distance = fields.Integer("Distance")
+    distance = fields.Integer(
+        "Distance",
+        compute="_compute_start_and_distance_and_check_date",
+        store=True,
+    )
     value_start = fields.Integer(
         "Odometer Start",
-        compute="_compute_odometer_start",
+        compute="_compute_start_and_distance_and_check_date",
+        store=True,
     )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        next = self._get_next()
+        next._compute_start_and_distance_and_check_date()
+        return records
+
+    def write(self, values):
+        super().write(values)
+        next = self._get_next()
+        next._compute_start_and_distance_and_check_date()
+
+    def unlink(self):
+        next = self._get_next()
+        super().unlink()
+        next._compute_start_and_distance_and_check_date()
 
     @api.depends("analytic_account_ids", "distance")
     def _compute_analytic_account_distance(self):
@@ -42,121 +64,38 @@ class FleetVehicleOdometer(models.Model):
             else:
                 record.analytic_account_distance = 0
 
-    @api.depends("value", "distance", "vehicle_id")
-    def _compute_odometer_start(self):
-        for vehicle in self.mapped('vehicle_id'):
-            max_value = self.search(
-                [('vehicle_id', '=', vehicle.id)],
-                order='value desc',
-                limit=1
-            ).value
-            for record in self.filtered(lambda r: r.vehicle_id == vehicle):
-                if record.distance:
-                    # write
-                    record.value_start = record.value - record.distance
-                else:
-                    # create
-                    record.value_start = max_value
-        self.filtered(lambda r: not r.vehicle_id).value_start = 0
+    @api.depends("value", "vehicle_id")
+    def _compute_start_and_distance_and_check_date(self):
+        for rec in self:
+            vehicle = rec.vehicle_id
+            rec.value_start = 0
+            rec.distance = 0
+            if vehicle:
+                prev = rec._get_prev()
+                if prev:
+                    if rec.date and prev.date and rec.date < prev.date:
+                        raise UserError("Date is earlier than for the previous odometer.")
+                    rec.value_start = prev.value
+                rec.distance = max(0, rec.value - rec.value_start)
 
-    def unlink(self):
-        self._recompute_distance_before_unlink()
-        return super().unlink()
+    def _get_next(self):
+        """ Return the next record of each record. """
+        return self._get_related(operator=">", order="value asc")
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        for values in vals_list:
-            self._recompute_distance_before_create(values)
-        return super().create(vals_list)
+    def _get_prev(self):
+        """ Return the next record of each record. """
+        return self._get_related(operator="<", order="value desc")
 
-    def write(self, values):
-        recompute_distance = False
-        for value in values:
-            if value in ("date", "vehicle_id", "value"):
-                recompute_distance = True
-        if recompute_distance:
-            for record in self:
-                record._recompute_distance_before_unlink()
-                values["date"] = values.get("date") or record.date
-                values["vehicle_id"] = values.get("vehicle_id") or record.vehicle_id.id
-                values["value"] = values.get("value") or record.value
-                record._recompute_distance_before_create(values)
-        return super().write(values)
-
-    def _recompute_distance_before_unlink(self):
-        for record in self:
-            prev = self._get_record("prev")
-            next = self._get_record("next")
-            if prev and next:
-                next.distance = next.value - prev.value
-            elif next:
-                next.distance = None
-
-    def _recompute_distance_before_create(self, values):
-        prev = self._get_record("prev", values)
-        next = self._get_record("next", values)
-        self._check_date(prev, next, values)
-        self._set_distance(prev, next, values)
-
-    def _check_date(self, prev, next, values):
-        value = values.get("value") or self.value
-        date = values["date"]
-        if type(date) is str:
-            date = datetime.strptime(date, "%Y-%m-%d").date()
-        if prev and prev.date > date:
-            raise UserError(
-                _("Date should not be lower than {} for odometer value {}.").format(
-                    str(prev.date), str(value)
-                )
+    def _get_related(self, operator, order):
+        result = self.env[self._name].browse()
+        for rec in self:
+            prev = self.search(
+                [
+                    ('vehicle_id', '=', rec.vehicle_id.id),
+                    ('value', operator, rec.value or 9999999),
+                ],
+                order=order,
+                limit=1,
             )
-        if next and next.date < date:
-            raise UserError(
-                _("Date should not be higher than {} for odometer value {}.").format(
-                    str(next.date), str(value)
-                )
-            )
-
-    def _set_distance(self, prev, next, values):
-        if prev:
-            values["distance"] = values["value"] - prev.value
-        else:
-            values["distance"] = 0
-        if next:
-            next.distance = next.value - values["value"]
-
-    @api.onchange("value")
-    def _onchange_set_distance(self):
-        prev = self._get_record("prev")
-        if prev:
-            self.distance = self.value - prev.value
-        else:
-            self.distance = 0
-
-    def _get_record(self, which, values=None):
-        if values:
-            assert type(values) == dict
-        else:
-            self.ensure_one()
-
-        def _get(field_name):
-            if values:
-                return values[field_name]
-            else:
-                value = getattr(self, field_name)
-                if hasattr(value, "id"):
-                    value = getattr(value, "id")
-                return value
-
-        sign = {"prev": "<", "next": ">"}
-        order = {"prev": "value desc", "next": "value"}
-        id = self.ids[0] if self.ids and type(self.ids[0]) is int else 0
-
-        return self.search(
-            [
-                ("vehicle_id", "=", _get("vehicle_id")),
-                ("value", sign[which], _get("value")),
-                ("id", "!=", id),
-            ],
-            order=order[which],
-            limit=1,
-        )
+            result |= prev
+        return result

@@ -12,7 +12,7 @@ class FleetVehicle(models.Model):
             "fleet.fleet_vehicle_odometer_action"
         )
         action["views"] = [
-            [self.env.ref("fleet_vehicle_odometer.fleet_vehicle_odometer_view_form").id, "form"]
+            [self.env.ref("fleet.fleet_vehicle_odometer_view_form").id, "form"]
         ]
         action["context"] = {
             "default_vehicle_id": self.id,
