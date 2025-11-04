@@ -26,12 +26,10 @@ class FleetVehicleOdometer(models.Model):
     )
     comment = fields.Char("Comment")
     distance = fields.Integer("Distance")
-    value_int = fields.Integer("Odometer")
-
-    @api.onchange("value_int")
-    def _onchange_set_value(self):
-        for record in self:
-            record.value = float(record.value_int)
+    value_start = fields.Integer(
+        "Odometer Start",
+        compute="_compute_odometer_start",
+    )
 
     @api.depends("analytic_account_ids", "distance")
     def _compute_analytic_account_distance(self):
@@ -43,6 +41,23 @@ class FleetVehicleOdometer(models.Model):
                 )
             else:
                 record.analytic_account_distance = 0
+
+    @api.depends("value", "distance", "vehicle_id")
+    def _compute_odometer_start(self):
+        for vehicle in self.mapped('vehicle_id'):
+            max_value = self.search(
+                [('vehicle_id', '=', vehicle.id)],
+                order='value desc',
+                limit=1
+            ).value
+            for record in self.filtered(lambda r: r.vehicle_id == vehicle):
+                if record.distance:
+                    # write
+                    record.value_start = record.value - record.distance
+                else:
+                    # create
+                    record.value_start = max_value
+        self.filtered(lambda r: not r.vehicle_id).value_start = 0
 
     def unlink(self):
         self._recompute_distance_before_unlink()
