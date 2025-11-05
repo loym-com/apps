@@ -105,7 +105,7 @@ class FleetVehicleOdometer(models.Model):
             prev = self.search(
                 [
                     ('vehicle_id', '=', rec.vehicle_id.id),
-                    ('value', operator, rec.value or 9999999),
+                    ('value', operator, rec.value),
                 ],
                 order=order,
                 limit=1,
