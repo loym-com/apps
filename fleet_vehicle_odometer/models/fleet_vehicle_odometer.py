@@ -74,7 +74,20 @@ class FleetVehicleOdometer(models.Model):
                 prev = rec._get_prev()
                 if prev:
                     if rec.date and prev.date and rec.date < prev.date:
-                        raise UserError("Date is earlier than for the previous odometer.")
+                        raise UserError(
+                            (
+                                "Date of current odometer entry is earlier than previous one.\n"
+                                "Vehicle: %s\n"
+                                "Current entry -> Date: %s, Value: %s\n"
+                                "Previous entry -> Date: %s, Value: %s"
+                            ) % (
+                                vehicle.display_name,
+                                rec.date,
+                                rec.value,
+                                prev.date,
+                                prev.value,
+                            )
+                        )
                     rec.value_start = prev.value
                 rec.distance = max(0, rec.value - rec.value_start)
 
