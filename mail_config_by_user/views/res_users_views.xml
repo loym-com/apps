@@ -1,0 +1,16 @@
+<odoo>
+    <record id="res_users_view_form_inherit_mail" model="ir.ui.view">
+        <field name="name">res.users.view.form.inherit.mail</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <field name="email" position="after">
+                <button
+                    name="action_mail_config_by_user"
+                    type="object"
+                    string="Configure Outgoing Email"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
