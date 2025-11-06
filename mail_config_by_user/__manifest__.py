@@ -4,7 +4,7 @@
     "name": "Mail Config By User",
     "author": "FIQ, Loym",
     "website": "https://loym.com",
-    "version": "18.0.5.1.0",
+    "version": "16.0.5.1.0",
     "license": "AGPL-3",
     "depends": [
         "mail",
