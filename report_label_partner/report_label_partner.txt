@@ -1,0 +1,16 @@
+Odoo dependency:
+report_label https://github.com/OCA/reporting-engine/tree/16.0/report_label
+
+Python dependency:
+wkhtmltopdf 0.12.6.1 (with patched qt)
+
+<address/> is italic by default. Remove the italic this way:
+
+<t name="Partner Label: Address" t-name="report_label.label_template_partner_address">
+  <style>
+    address {
+      font-style: normal;
+    }
+  </style>
+  <address t-field="record.self" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+</t>
