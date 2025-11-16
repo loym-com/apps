@@ -1,0 +1,14 @@
+from odoo import models, fields, api
+
+""" DO NOT SEND MEETING INVITATIONS TO GUESTS WHEN THEY BOOK A STAY. """
+
+
+class CalendarEvent(models.Model):
+    _inherit = "calendar.event"
+
+    @api.model
+    def create(self, vals):
+        return super().with_context(skip_attendee_notification=True).create(vals)
+
+    def write(self, vals):
+        return super().with_context(skip_attendee_notification=True).create(vals)
