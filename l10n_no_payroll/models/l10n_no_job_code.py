@@ -1,15 +1,24 @@
 import inspect
 import os
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class JobCode(models.Model):
     _name = "l10n.no.job.code"
     _description = "Norwegian Profession Codes"
+    _rec_name_search = ["code", "name"]
 
-    name = fields.Char()
     code = fields.Char()
+    name = fields.Char()
+
+    @api.depends("name", "code")
+    def _compute_display_name(self):
+        for rec in self:
+            if rec.code and rec.name:
+                rec.display_name = f"{rec.code} {rec.name}"
+            else:
+                rec.display_name = rec.code or rec.name or ""
 
     def post_init_hook_import_job_codes(self):
         directory_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
