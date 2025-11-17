@@ -6,11 +6,19 @@ wkhtmltopdf 0.12.6.1 (with patched qt)
 
 <address/> is italic by default. Remove the italic this way:
 
-<t name="Partner Label: Address" t-name="report_label.label_template_partner_address">
+<t name="Partner Label: Address" t-name="report_label.label_template_partner_address" inherit_id="web.report_layout">
+  <head>
+    <meta charset="utf-8"/>
+  </head>
   <style>
     address {
       font-style: normal;
+      font-family: "Arial", "DejaVu Sans", "Liberation Sans", "Noto Sans", sans-serif;
+      font-size: 10pt;
     }
   </style>
-  <address t-field="record.self" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+    <address
+      t-field="record.self"
+      t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}'
+  />
 </t>
