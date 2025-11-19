@@ -6,9 +6,9 @@ from odoo import models, fields, api
 class CalendarEvent(models.Model):
     _inherit = "calendar.event"
 
-    @api.model
-    def create(self, vals):
-        return super().with_context(skip_attendee_notification=True).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        return super().with_context(skip_attendee_notification=True).create(vals_list)
 
     def write(self, vals):
         return super().with_context(skip_attendee_notification=True).create(vals)

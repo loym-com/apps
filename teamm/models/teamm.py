@@ -30,6 +30,7 @@ _logger = logging.getLogger(__name__)
 
 class TeamM(models.Model):
     _name = "teamm"
+    _description = "teamm"
     _order = "sequence"
 
     sequence = fields.Integer()

@@ -25,7 +25,7 @@ class HrPayslipLine(models.Model):
     net_quantity = fields.Float(
         string="Net Quantity",
         help="Quantity - opposite sign if credit note",
-        digits="Payroll",
+        # digits="Payroll",
         default=1.0,
         compute="_compute_net",
         store=True,
@@ -33,7 +33,7 @@ class HrPayslipLine(models.Model):
     net_rate = fields.Float(
         string="Net Rate (%)",
         help="Rate - opposite sign if credit note",
-        digits="Payroll Rate",
+        # digits="Payroll Rate",
         default=100.0,
         compute="_compute_net",
         store=True,
@@ -41,14 +41,14 @@ class HrPayslipLine(models.Model):
     net_amount = fields.Float(
         string="Net Amount",
         help="Amount - opposite sign if credit note",
-        digits="Payroll",
+        # digits="Payroll",
         compute="_compute_net",
         store=True,
     )
     net_total = fields.Float(
         string="Net Total",
         help="Total - opposite sign if credit note",
-        digits="Payroll",
+        # digits="Payroll",
         compute="_compute_net",
         store=True,
     )

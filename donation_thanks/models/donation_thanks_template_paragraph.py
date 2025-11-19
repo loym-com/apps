@@ -7,6 +7,7 @@ _logger = logging.getLogger(__name__)
 
 class DonationThanksTemplateParagraph(models.Model):
     _name = "donation.thanks.template.paragraph"
+    _description = "donation.thanks.template.paragraph"
     _order = "sequence, id"
 
     paragraph = fields.Char(translate=True, string="Paragraph")

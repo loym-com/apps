@@ -24,7 +24,7 @@ class EventRegistration(models.Model):
 
     """ SET RESOURCE BOOKING """
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals_list):
         attendees = super().create(vals_list)
         attendees._update_sale_order_line()

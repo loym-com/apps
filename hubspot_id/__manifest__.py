@@ -13,5 +13,6 @@
         "resource_booking",
         "sale",
     ],
+    "licence": "AGPL-3",
     "version": "16.0.1.0.0",
 }
