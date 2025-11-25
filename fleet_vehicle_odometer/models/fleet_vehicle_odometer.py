@@ -102,13 +102,19 @@ class FleetVehicleOdometer(models.Model):
     def _get_related(self, operator, order):
         result = self.env[self._name].browse()
         for rec in self:
-            prev = self.search(
-                [
+            if rec.value:
+                search_domain = [
                     ('vehicle_id', '=', rec.vehicle_id.id),
                     ('value', operator, rec.value),
-                ],
+                ]
+            else:
+                search_domain = [
+                    ('vehicle_id', '=', rec.vehicle_id.id),
+                ]
+                related = self.search(
+                search_domain,
                 order=order,
                 limit=1,
             )
-            result |= prev
+            result |= related
         return result
