@@ -41,18 +41,18 @@ class FleetVehicleOdometer(models.Model):
     def create(self, vals_list):
         records = super().create(vals_list)
         next = self._get_next()
-        next._compute_start_and_distance_and_check_date()
+        next._compute_start_and_distance_and_check_date_and_value()
         return records
 
     def write(self, values):
         super().write(values)
         next = self._get_next()
-        next._compute_start_and_distance_and_check_date()
+        next._compute_start_and_distance_and_check_date_and_value()
 
     def unlink(self):
         next = self._get_next()
         super().unlink()
-        next._compute_start_and_distance_and_check_date()
+        next._compute_start_and_distance_and_check_date_and_value()
 
     @api.depends("analytic_account_ids", "distance")
     def _compute_analytic_account_distance(self):
@@ -66,11 +66,13 @@ class FleetVehicleOdometer(models.Model):
                 record.analytic_account_distance = 0
 
     @api.depends("value", "vehicle_id")
-    def _compute_start_and_distance_and_check_date(self):
+    def _compute_start_and_distance_and_check_date_and_value(self):
         for rec in self:
+            if not rec.value:
+                raise UserError(
+                    _("Odometer value must be set for vehicle %s.") % rec.vehicle_id.display_name
+                )
             vehicle = rec.vehicle_id
-            rec.value_start = 0
-            rec.distance = 0
             if vehicle:
                 prev = rec._get_prev()
                 if prev:
@@ -90,14 +92,19 @@ class FleetVehicleOdometer(models.Model):
                             )
                         )
                     rec.value_start = prev.value
+                else:
+                    rec.value_start = 0
                 rec.distance = max(0, rec.value - rec.value_start)
+            else:
+                rec.value_start = 0
+                rec.distance = 0
 
     def _get_next(self):
         """ Return the next record of each record. """
         return self._get_related(operator=">", order="value asc")
 
     def _get_prev(self):
-        """ Return the next record of each record. """
+        """ Return the previous record of each record. """
         return self._get_related(operator="<", order="value desc")
 
     def _get_related(self, operator, order):
