@@ -31,6 +31,9 @@ class FleetVehicleOdometer(models.Model):
         compute="_compute_start_and_distance_and_check_date",
         store=True,
     )
+    value = fields.Integer(
+        string="Odometer Stop",
+    )
     value_start = fields.Integer(
         "Odometer Start",
         compute="_compute_start_and_distance_and_check_date",
@@ -40,19 +43,31 @@ class FleetVehicleOdometer(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         records = super().create(vals_list)
-        next = self._get_next()
-        next._compute_start_and_distance_and_check_date_and_value()
+        records._check_value()
+        records._compute_start_and_distance_and_check_date()
+        next = records._get_next()
+        next._compute_start_and_distance_and_check_date()
         return records
 
     def write(self, values):
         super().write(values)
-        next = self._get_next()
-        next._compute_start_and_distance_and_check_date_and_value()
+        if 'value' in values or 'vehicle_id' in values:
+            self._compute_start_and_distance_and_check_date()
+            next = self._get_next()
+            next._compute_start_and_distance_and_check_date()
 
     def unlink(self):
         next = self._get_next()
         super().unlink()
-        next._compute_start_and_distance_and_check_date_and_value()
+        next._compute_start_and_distance_and_check_date()
+
+    @api.constrains("value")
+    def _check_value(self):
+        for rec in self:
+            if not rec.value or rec.value < 0:
+                raise UserError(
+                    _("Odometer value must be positive for vehicle %s.") % rec.vehicle_id.display_name
+                )
 
     @api.depends("analytic_account_ids", "distance")
     def _compute_analytic_account_distance(self):
@@ -65,13 +80,8 @@ class FleetVehicleOdometer(models.Model):
             else:
                 record.analytic_account_distance = 0
 
-    @api.depends("value", "vehicle_id")
-    def _compute_start_and_distance_and_check_date_and_value(self):
+    def _compute_start_and_distance_and_check_date(self):
         for rec in self:
-            if not rec.value:
-                raise UserError(
-                    _("Odometer value must be set for vehicle %s.") % rec.vehicle_id.display_name
-                )
             vehicle = rec.vehicle_id
             if vehicle:
                 prev = rec._get_prev()
