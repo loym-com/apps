@@ -13,6 +13,7 @@ class FleetVehicleOdometer(models.Model):
     _inherit = ["fleet.vehicle.odometer", "analytic.plan.mixin"]
 
     comment = fields.Char("Comment")
+    destination = fields.Char("Destination")
     analytic_account_id = fields.Many2one(
         "account.analytic.account", string="Analytic Account"
     )

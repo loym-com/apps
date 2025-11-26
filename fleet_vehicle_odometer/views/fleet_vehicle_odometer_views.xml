@@ -26,7 +26,8 @@
                     attrs="{'readonly': [('analytic_account_id', '!=', False)]}"
                 />
                 <field name="analytic_account_id" options="{'no_create': True, 'no_create_edit':True}"/>
-                <field name="comment"/>
+                <field name="destination" optional="show"/>
+                <field name="comment" optional="show"/>
                 <field name="distance" sum="Total Distance"/>
                 <field name="name"/>
             </tree>
@@ -73,8 +74,9 @@
                                 context="{'kanban_view_ref': 'fleet_vehicle_odometer.account_analytic_account_kanban_view_ref'}"
                             />
                         </div>
+                        <field name="destination" />
                         <field name="comment" />
-                        <field name="value" widget="integer" />
+                        <field name="value" widget="integer" string="Odometer Stop" />
                         <field name="value_start" />
                         <field name="distance" />
                         <field name="driver_id" />
