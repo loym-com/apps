@@ -111,7 +111,7 @@ class FleetVehicleOdometer(models.Model):
                 search_domain = [
                     ('vehicle_id', '=', rec.vehicle_id.id),
                 ]
-                related = self.search(
+            related = self.search(
                 search_domain,
                 order=order,
                 limit=1,
