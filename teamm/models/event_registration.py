@@ -11,10 +11,10 @@ class EventRegistration(models.Model):
 
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
-        hubspot_deal_id = self._teamm2odoo_get_value("hubspot deal id")
+        hubspot_deal_id = self._teamm2odoo_get_value("Booking_id")
         if not hubspot_deal_id:
             raise ValidationError(
-                f"hubspot deal id is missing: {self.env.context['teamm_values']}"
+                f"Booking_id is missing: {self.env.context['teamm_values']}"
             )
 
         kwargs |= {
@@ -31,7 +31,7 @@ class EventRegistration(models.Model):
 
         if not event:
             raise ValidationError(
-                f"Event not found for hubspot deal id {self._teamm2odoo_get_value('hubspot deal id')}"
+                f"Event not found for Booking_id {self._teamm2odoo_get_value('Booking_id')}"
             )
 
         kwargs |= {
