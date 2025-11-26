@@ -33,6 +33,21 @@
         </field>
     </record>
 
+    <record id="account_analytic_account_kanban_view_ref" model="ir.ui.view">
+        <field name="name">account_analytic_account_kanban_view_ref</field>
+        <field name="model">account.analytic.account</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <field name="name"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
     <record id="fleet.fleet_vehicle_odometer_view_form" model="ir.ui.view">
         <field name="name">fleet.vehicle.odometer.form</field>
         <field name="model">fleet.vehicle.odometer</field>
@@ -55,6 +70,7 @@
                                 name="analytic_account_ids"
                                 options="{'no_create': True, 'no_create_edit':True}"
                                 widget="many2many_tags"
+                                context="{'kanban_view_ref': 'fleet_vehicle_odometer.account_analytic_account_kanban_view_ref'}"
                             />
                         </div>
                         <field name="comment" />
