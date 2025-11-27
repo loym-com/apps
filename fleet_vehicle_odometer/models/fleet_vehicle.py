@@ -5,6 +5,7 @@ class FleetVehicle(models.Model):
     _inherit = "fleet.vehicle"
 
     state_id = fields.Many2one(group_expand="")
+    driver_id = fields.Many2one('res.partner', tracking=False)
 
     def action_register_odometer(self):
         self.ensure_one()

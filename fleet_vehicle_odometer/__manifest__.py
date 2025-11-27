@@ -1,15 +1,18 @@
-# Copyright 2019 Ows - Henrik Norlin
+# Copyright 2025 Loym - Henrik Norlin
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     "name": "Fleet vehicle odometer",
     "summary": "Analytic Fleet",
-    "author": "Ows, Odoo Community Association (OCA)",
+    "author": "Loym, Odoo Community Association (OCA)",
     "auto_install": True,
     "category": "Administration",
     "data": [
+        "security/ir.model.access.csv",
+        "security/security.xml",
         "views/fleet_vehicle_views.xml",
         "views/fleet_vehicle_odometer_views.xml",
+        "views/menus.xml",
     ],
     "depends": [
         "analytic",

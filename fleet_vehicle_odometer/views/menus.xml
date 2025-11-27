@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="fleet.menu_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('fleet_vehicle_odometer.group_driver'))]"/>
+    </record>
+    <!-- <record id="fleet.fleet_vehicles" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('fleet_vehicle_odometer.group_driver'))]"/>
+    </record>
+    <record id="fleet.fleet_vehicle_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('fleet_vehicle_odometer.group_driver'))]"/>
+    </record> -->
+    <menuitem
+        id="menu_fleet_vehicle_odometer_log"
+        name="Log Travel"
+        parent="fleet.menu_root"
+        action="fleet_vehicle_odometer_action_log"
+        sequence="1"
+        groups="fleet_vehicle_odometer.group_driver"
+    />
+</odoo>

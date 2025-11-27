@@ -57,8 +57,7 @@
             <sheet>
                 <group>
                     <group>
-                        <field name="vehicle_id" readonly="1" />
-                        <field name="vehicle_id" invisible="1" />
+                        <field name="vehicle_id" required="1" />
                         <label for="analytic_account_ids"/>
                         <div name="project" class="d-inline-flex w-100">
                             <button
@@ -113,6 +112,12 @@
             You can add various odometer entries for all vehicles.
             </p>
         </field>
+    </record>
+
+    <record id='fleet_vehicle_odometer_action_log' model='ir.actions.act_window'>
+        <field name="name">Log Travel</field>
+        <field name="res_model">fleet.vehicle.odometer</field>
+        <field name="view_mode">form</field>
     </record>
 
 </odoo>
