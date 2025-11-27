@@ -16,7 +16,7 @@ _logger = logging.getLogger(__name__)
 
 # TODO: replace KEY & VALUE with teamm.alias
 # KEY = {
-#     "Record ID - Contact - Hubspot": "hubspot contact id",
+#     "Record ID - Contact - Hubspot": "ref",
 #     "Ordre nr. ": "sale.order",
 # }
 # VALUE = {

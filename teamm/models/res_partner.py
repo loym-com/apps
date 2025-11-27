@@ -14,16 +14,11 @@ class ResPartner(models.Model):
 
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
-        hubspot_id = self._teamm2odoo_get_value("hubspot contact id")
-        if hubspot_id:
-            if hubspot_id[0].lower() == "o":
-                assert hubspot_id.startswith("odoo-"), \
-                    _("Hubspot contact id must start with 'odoo-'")
-                kwargs |= {"id": int(hubspot_id[5:])} # remove "odoo-"
-            else:
-                kwargs |= {"hubspot_contact_id": hubspot_id}
+        ref = self._teamm2odoo_get_value("ref")
+        if ref:
+            kwargs |= {"ref": ref}
         else:
-            # Without hubspot_id, don't return any contact.
+            # Without ref, don't return any contact.
             kwargs |= {"id": 0}
         return super()._teamm2odoo_search_kwargs(kwargs)
 
