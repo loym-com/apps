@@ -9,11 +9,25 @@
     <record id="fleet.fleet_vehicle_menu" model="ir.ui.menu">
         <field name="groups_id" eval="[(4, ref('fleet_vehicle_odometer.group_driver'))]"/>
     </record> -->
+    <record id="server_action_log_travel" model="ir.actions.server">
+        <field name="name">Log Travel</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_odometer"/>
+        <field name="state">code</field>
+        <field name="code">
+action = env["ir.actions.actions"]._for_xml_id(
+    "fleet.fleet_vehicle_odometer_action"
+)
+action["views"] = [[False, "form"]]
+action["context"] = {
+    "default_driver_id": env.user.partner_id.id,
+}
+        </field>
+    </record>
     <menuitem
         id="menu_fleet_vehicle_odometer_log"
         name="Log Travel"
         parent="fleet.menu_root"
-        action="fleet_vehicle_odometer_action_log"
+        action="server_action_log_travel"
         sequence="1"
         groups="fleet_vehicle_odometer.group_driver"
     />
