@@ -78,7 +78,7 @@
                         <field name="value" widget="integer" string="Odometer Stop" />
                         <field name="value_start" />
                         <field name="distance" />
-                        <field name="driver_id" />
+                        <!-- <field name="driver_id" /> -->
                         <field name="date" />
                     </group>
                 </group>

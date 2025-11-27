@@ -206,7 +206,7 @@ class TeamM(models.Model):
                 amount = float(amount)
             return amount
         except:
-            booking_id = teamm_values.get("Booking_id")
+            booking_id = teamm_values.get("booking_id")
             raise ValidationError(f"Discount error on deal {booking_id}")
 
     #

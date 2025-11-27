@@ -83,6 +83,14 @@ class FleetVehicleOdometer(models.Model):
     @api.onchange("vehicle_id") # FIXME: onchange does not trigger!
     def onchange_vehicle_id(self):
         return self._compute_start_and_distance_and_check_date()
+    
+    @api.onchange("destination") # TEST
+    def onchange_vehicle_id(self):
+        return self._compute_start_and_distance_and_check_date()
+    
+    @api.onchange("comment") # TEST
+    def onchange_vehicle_id(self):
+        return self._compute_start_and_distance_and_check_date()
 
     def _compute_start_and_distance_and_check_date(self):
         for rec in self:

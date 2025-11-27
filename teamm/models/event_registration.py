@@ -11,10 +11,10 @@ class EventRegistration(models.Model):
 
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
-        booking_id = self._teamm2odoo_get_value("Booking_id")
+        booking_id = self._teamm2odoo_get_value("booking_id")
         if not booking_id:
             raise ValidationError(
-                f"Booking_id is missing: {self.env.context['teamm_values']}"
+                f"booking_id is missing: {self.env.context['teamm_values']}"
             )
 
         kwargs |= {
@@ -31,7 +31,7 @@ class EventRegistration(models.Model):
 
         if not event:
             raise ValidationError(
-                f"Event not found for Booking_id {self._teamm2odoo_get_value('Booking_id')}"
+                f"Event not found for booking_id {self._teamm2odoo_get_value('booking_id')}"
             )
 
         kwargs |= {

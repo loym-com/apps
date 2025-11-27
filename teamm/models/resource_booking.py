@@ -36,10 +36,10 @@ class ResourceBooking(models.Model):
             # # Assert "Private" or "Share room"
             # room_sharing = self._teamm2odoo_get_value("room sharing")
             # assert room_sharing in ("Private", "Share room")
-            booking_id = self._teamm2odoo_get_value("Booking_id")
+            booking_id = self._teamm2odoo_get_value("booking_id")
             if not booking_id:
                 raise ValidationError(
-                    f"Booking_id is missing: {self.env.context['teamm_values']}"
+                    f"booking_id is missing: {self.env.context['teamm_values']}"
                 )
             kwargs |= {
                 "booking_id": booking_id,
@@ -64,8 +64,8 @@ class ResourceBooking(models.Model):
             start = TeamM._get_datetime("from")
             stop = TeamM._get_datetime("to")
             if not len(partner) or not len(product) or not len(combination) or not len(booking_type):
-                booking_id = self._teamm2odoo_get_value("Booking_id")
-                raise ValidationError(f"Missing info for Booking_id {booking_id}:\nContact: {partner}\nProduct: {product}\nCombination: {combination}\nBooking Type: {booking_type}")
+                booking_id = self._teamm2odoo_get_value("booking_id")
+                raise ValidationError(f"Missing info for booking_id {booking_id}:\nContact: {partner}\nProduct: {product}\nCombination: {combination}\nBooking Type: {booking_type}")
 
             kwargs |= {
                 "name": partner.name,
