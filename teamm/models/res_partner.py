@@ -12,13 +12,15 @@ GENDER = {
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+    teamm_contact_id = fields.Char("TeamM Contact ID", index=True, copy=False)
+
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
-        ref = self._teamm2odoo_get_value("ref")
-        if ref:
-            kwargs |= {"ref": ref}
+        teamm_contact_id = self._teamm2odoo_get_value("teamm_contact_id")
+        if teamm_contact_id:
+            kwargs |= {"teamm_contact_id": teamm_contact_id}
         else:
-            # Without ref, don't return any contact.
+            # Without teamm_contact_id, don't return any contact.
             kwargs |= {"id": 0}
         return super()._teamm2odoo_search_kwargs(kwargs)
 
@@ -46,7 +48,7 @@ class ResPartner(models.Model):
             }
         else:
             kwargs |= {
-                "ref": self._teamm2odoo_get_value("ref"),
+                "teamm_contact_id": self._teamm2odoo_get_value("teamm_contact_id"),
                 "firstname": self._teamm2odoo_get_value("firstname"),
                 "lastname": self._teamm2odoo_get_value("lastname"),
                 "email": self._teamm2odoo_get_value("email"),

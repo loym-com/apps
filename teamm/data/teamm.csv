@@ -42,7 +42,7 @@ combination_auto_assign=1"
 # cannot be identifiers since a booking may have other dates";"resource_booking_Id
 product_tmpl_ids"
 __export__.teamm_categories;5;5 Contact Categories;CSV Field;;,;;;;__export__.teamm_categories_model_res_partner_category;0;SANN;res.partner.category;HjertegodtNytt, Stjernestatus, Ambassador, Staff;name;
-__export__.teamm_bookings;6;6 Contacts & Bookings;CSV File;%m/%d/%Y;,;__export__.teamm_bookings_alias_event_event;event.event;session number;__export__.teamm_bookings_model_res_partner;0;USANN;res.partner;Contact;ref;"firstname
+__export__.teamm_bookings;6;6 Contacts & Bookings;CSV File;%m/%d/%Y;,;__export__.teamm_bookings_alias_event_event;event.event;session number;__export__.teamm_bookings_model_res_partner;0;USANN;res.partner;Contact;teamm_contact_id;"firstname
 lastname
 email
 phone

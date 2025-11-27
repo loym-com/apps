@@ -80,6 +80,8 @@ class Base(models.AbstractModel):
     @api.model
     def _teamm2odoo_x2many(self, kwargs={}):
         kwargs = kwargs or self._teamm2odoo_search_kwargs({})
+        if "teamm_booking_id" in kwargs:
+            debug = True
         x2many_kwargs = {
             key: val for key, val in kwargs.items()
             if self._fields[key].type in ("one2many", "many2many")

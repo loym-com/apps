@@ -8,6 +8,11 @@
     "category": "Uncategorized",
     "data": [
         "security/ir.model.access.csv",
+        "views/event_registration_views.xml",
+        "views/res_partner_views.xml",
+        "views/resource_booking_views.xml",
+        "views/sale_order_line_views.xml",
+        "views/sale_order_views.xml",
         "views/teamm_views.xml",
         "views/teamm_alias_views.xml",
         "views/teamm_model_views.xml",
@@ -29,7 +34,7 @@
         "website_event_sale_resource_booking", # resource.resource.combination_ids
     ],
     "development_status": "Alpha",
-    "license": "AGPL-3",
+    # "license": "AGPL-3",
     "maintainers": [],
     "version": "16.0.1.0.0",
     "website": "https://github.com/OCA/",

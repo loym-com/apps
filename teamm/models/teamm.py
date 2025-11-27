@@ -16,7 +16,7 @@ _logger = logging.getLogger(__name__)
 
 # TODO: replace KEY & VALUE with teamm.alias
 # KEY = {
-#     "Record ID - Contact - Hubspot": "ref",
+#     "Record ID - Contact - Hubspot": "teamm_contact_id",
 #     "Ordre nr. ": "sale.order",
 # }
 # VALUE = {
@@ -206,8 +206,8 @@ class TeamM(models.Model):
                 amount = float(amount)
             return amount
         except:
-            booking_id = teamm_values.get("booking_id")
-            raise ValidationError(f"Discount error on deal {booking_id}")
+            teamm_booking_id = teamm_values.get("teamm_booking_id")
+            raise ValidationError(f"Discount error on deal {teamm_booking_id}")
 
     #
     # Used by other models

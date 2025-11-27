@@ -9,6 +9,8 @@ _logger = logging.getLogger(__name__)
 class ResourceBooking(models.Model):
     _inherit = "resource.booking"
 
+    teamm_booking_id = fields.Char("TeamM Booking ID", index=True, copy=False)
+
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
         TeamM = self.env ["teamm"]
@@ -36,13 +38,13 @@ class ResourceBooking(models.Model):
             # # Assert "Private" or "Share room"
             # room_sharing = self._teamm2odoo_get_value("room sharing")
             # assert room_sharing in ("Private", "Share room")
-            booking_id = self._teamm2odoo_get_value("booking_id")
-            if not booking_id:
+            teamm_booking_id = self._teamm2odoo_get_value("teamm_booking_id")
+            if not teamm_booking_id:
                 raise ValidationError(
-                    f"booking_id is missing: {self.env.context['teamm_values']}"
+                    f"teamm_booking_id is missing: {self.env.context['teamm_values']}"
                 )
             kwargs |= {
-                "booking_id": booking_id,
+                "teamm_booking_id": teamm_booking_id,
             }
 
         return super()._teamm2odoo_search_kwargs(kwargs)

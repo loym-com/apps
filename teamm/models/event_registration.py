@@ -9,16 +9,18 @@ _logger = logging.getLogger(__name__)
 class EventRegistration(models.Model):
     _inherit = "event.registration"
 
+    teamm_booking_id = fields.Char("TeamM Booking ID", index=True, copy=False)
+
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
-        booking_id = self._teamm2odoo_get_value("booking_id")
-        if not booking_id:
+        teamm_booking_id = self._teamm2odoo_get_value("teamm_booking_id")
+        if not teamm_booking_id:
             raise ValidationError(
-                f"booking_id is missing: {self.env.context['teamm_values']}"
+                f"teamm_booking_id is missing: {self.env.context['teamm_values']}"
             )
 
         kwargs |= {
-            "booking_id": booking_id,
+            "teamm_booking_id": teamm_booking_id,
         }
         return super()._teamm2odoo_search_kwargs(kwargs)
 
@@ -31,7 +33,7 @@ class EventRegistration(models.Model):
 
         if not event:
             raise ValidationError(
-                f"Event not found for booking_id {self._teamm2odoo_get_value('booking_id')}"
+                f"Event not found for booking_id {self._teamm2odoo_get_value('teamm_booking_id')}"
             )
 
         kwargs |= {
