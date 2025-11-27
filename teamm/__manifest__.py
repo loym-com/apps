@@ -16,7 +16,6 @@
     "depends": [
         "event_sale_resource_booking",
         "event_sale_resource_booking_timeline",
-        "ref",
         "partner_contact_birthdate",
         "partner_contact_gender",
         "partner_firstname",
