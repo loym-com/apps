@@ -46,8 +46,9 @@ class ResPartner(models.Model):
             }
         else:
             kwargs |= {
-                "firstname": self._teamm2odoo_get_value("first name"),
-                "lastname": self._teamm2odoo_get_value("last name"),
+                "ref": self._teamm2odoo_get_value("ref"),
+                "firstname": self._teamm2odoo_get_value("firstname"),
+                "lastname": self._teamm2odoo_get_value("lastname"),
                 "email": self._teamm2odoo_get_value("email"),
                 "mobile": self._teamm2odoo_get_value("phone"),
                 "street": self._teamm2odoo_get_value("street"),
