@@ -8,8 +8,8 @@
     "auto_install": True,
     "category": "Administration",
     "data": [
-        "security/ir.model.access.csv",
         "security/security.xml",
+        "security/ir.model.access.csv",
         "views/fleet_vehicle_views.xml",
         "views/fleet_vehicle_odometer_views.xml",
         "views/menus.xml",
