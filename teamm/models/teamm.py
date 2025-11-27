@@ -206,8 +206,8 @@ class TeamM(models.Model):
                 amount = float(amount)
             return amount
         except:
-            hubspot_deal_id = teamm_values.get("Booking_id")
-            raise ValidationError(f"Discount error on deal {hubspot_deal_id}")
+            booking_id = teamm_values.get("Booking_id")
+            raise ValidationError(f"Discount error on deal {booking_id}")
 
     #
     # Used by other models

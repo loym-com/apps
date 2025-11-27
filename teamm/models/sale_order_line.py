@@ -13,10 +13,10 @@ class SaleOrderLine(models.Model):
         # Set quantity to 0 (old booking) if no record found (new booking)
         record = self._teamm2odoo_search()
         if not record:
-            hubspot_deal_id = self._teamm2odoo_get_value("Booking_id")
+            booking_id = self._teamm2odoo_get_value("Booking_id")
             lines = self.with_context(teamm_ignore_product=True)._teamm2odoo_search()
             for line in lines:
-                if line.resource_booking_id.hubspot_deal_id == hubspot_deal_id:
+                if line.resource_booking_id.booking_id == booking_id:
                     line.write({"product_uom_qty": 0})
 
         records = self._teamm2odoo_set_record()
@@ -34,10 +34,10 @@ class SaleOrderLine(models.Model):
         booking = self.env["resource.booking"]._teamm2odoo_search()
         product = self.env["product.product"]._teamm2odoo_search()
         if not len(order) or not len(booking) or not len(product):
-            hubspot_deal_id = self._teamm2odoo_get_value("Booking_id")
+            booking_id = self._teamm2odoo_get_value("Booking_id")
             raise ValidationError(
                 (
-                    f"Missing info for Booking_id {hubspot_deal_id}:\n"
+                    f"Missing info for Booking_id {booking_id}:\n"
                     f"Order: {order} (if missing, check Main Guest)\n"
                     f"Product: {product} (if missing, check discount codes)\n"
                     f"Booking: {booking} (if missing, manually check the resource bookings of the period)"
@@ -64,7 +64,7 @@ class SaleOrderLine(models.Model):
         event = self.env["event.event"]._teamm2odoo_search()
         event_registration = self.env["event.registration"]._teamm2odoo_search()
         booking = self.env["resource.booking"]._teamm2odoo_search()
-        hubspot_deal_id = self._teamm2odoo_get_value("Booking_id")
+        booking_id = self._teamm2odoo_get_value("Booking_id")
         if not len(product):
             debug = True
         kwargs |= {
@@ -75,7 +75,7 @@ class SaleOrderLine(models.Model):
             "currency_id": self.env.company.currency_id.id,
             "event_id": event.id,
             "event_registration_id": event_registration.id,
-            "hubspot_deal_id": hubspot_deal_id,
+            "booking_id": booking_id,
         }
 
         # conditional values
