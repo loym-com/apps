@@ -33,7 +33,7 @@ class EventRegistration(models.Model):
 
         if not event:
             raise ValidationError(
-                f"Event not found for booking_id {self._teamm2odoo_get_value('teamm_booking_id')}"
+                f"Event not found for teamm_booking_id {self._teamm2odoo_get_value('teamm_booking_id')}"
             )
 
         kwargs |= {
