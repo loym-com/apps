@@ -51,8 +51,6 @@ class Base(models.AbstractModel):
     @api.model
     def _teamm2odoo_search(self):
         domain = self._teamm2odoo_domain()
-        if self._name == "product.product":
-            debug = True
         # Don't search if there is no search domain
         record = self.with_context(active_test=False).search(domain) if domain else self
         x2many = self._teamm2odoo_x2many()
@@ -80,8 +78,6 @@ class Base(models.AbstractModel):
     @api.model
     def _teamm2odoo_x2many(self, kwargs={}):
         kwargs = kwargs or self._teamm2odoo_search_kwargs({})
-        if "teamm_booking_id" in kwargs:
-            debug = True
         x2many_kwargs = {
             key: val for key, val in kwargs.items()
             if self._fields[key].type in ("one2many", "many2many")

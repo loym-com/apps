@@ -40,7 +40,7 @@ class SaleOrderLine(models.Model):
             raise ValidationError(
                 (
                     f"Missing info for teamm_booking_id {teamm_booking_id}:\n"
-                    f"Order: {order} (if missing, check Main Guest)\n"
+                    f"Order: {order} (if missing, check Main Guest and Order No.)\n"
                     f"Product: {product} (if missing, check discount codes)\n"
                     f"Booking: {booking} (if missing, manually check the resource bookings of the period)"
                 )

@@ -216,6 +216,7 @@ class TeamM(models.Model):
     def _get_date(self, key):
         datestring = self._teamm2odoo_get_value(key)
         if datestring:
+            datestring = " ".join(datestring.split()[0:3]) # 31 Dec 2025
             date_format = self.env.context["teamm"].date_format
             if not date_format:
                 raise UserError("Missing Date Format")

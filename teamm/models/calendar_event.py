@@ -8,7 +8,9 @@ class CalendarEvent(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        return super().with_context(skip_attendee_notification=True).create(vals_list)
+        self = self.with_context(skip_attendee_notification=True)
+        return super().create(vals_list)
 
     def write(self, vals):
-        return super().with_context(skip_attendee_notification=True).write(vals)
+        self = self.with_context(skip_attendee_notification=True)
+        return super().write(vals)
