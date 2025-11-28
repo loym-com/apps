@@ -1,4 +1,5 @@
 from odoo import _, api, fields, models
+from odoo.exceptions import ValueError
 
 
 class SaleOrder(models.Model):
@@ -31,6 +32,9 @@ class SaleOrder(models.Model):
     @api.model
     def _teamm2odoo_name(self):
         name = super()._teamm2odoo_name()
+        if not name:
+            teamm_booking_id = self._teamm2odoo_get_value("teamm_booking_id")
+            raise ValueError(f"Sale Order {teamm_booking_id} must have an order number.")
         if name[:1] == "T":
             name = name[1:]
         name = f"T{name.zfill(5)}"
