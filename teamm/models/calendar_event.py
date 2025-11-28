@@ -11,4 +11,4 @@ class CalendarEvent(models.Model):
         return super().with_context(skip_attendee_notification=True).create(vals_list)
 
     def write(self, vals):
-        return super().with_context(skip_attendee_notification=True).create(vals)
+        return super().with_context(skip_attendee_notification=True).write(vals)
