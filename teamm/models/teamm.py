@@ -10,7 +10,6 @@ from collections import defaultdict
 from datetime import datetime
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
