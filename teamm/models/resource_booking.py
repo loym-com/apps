@@ -111,7 +111,8 @@ class ResourceBooking(models.Model):
                 try:
                     combination = combination[0]
                 except:
-                    raise UserError(f"No available combinations for room {room.name} from {start} to {stop}.")
+                    err_msg = f"No available combinations for room {room.name} from {start} to {stop}."
+                    self._teamm2odoo_raise_error(err_msg)
             else:
                 combination = combinations.filtered(lambda c: len(c.resource_ids) > 1)
         else:

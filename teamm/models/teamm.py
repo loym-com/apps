@@ -141,6 +141,7 @@ class TeamM(models.Model):
                     teamm=self,
                     teamm_values=teamm_values,
                     teamm_params=teamm_params,
+                    teamm_counter=i,
                 )
                 records = Model._teamm2odoo()
                 record_ids.extend(records.ids)
