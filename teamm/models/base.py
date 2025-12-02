@@ -1,7 +1,7 @@
 from collections.abc import Iterable
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 class Base(models.AbstractModel):
     _inherit = "base"
@@ -139,4 +139,4 @@ class Base(models.AbstractModel):
 
     def _teamm2odoo_raise_error(self, err_msg):
         i = self.env.context["teamm_counter"]
-        raise UserError(f"{err_msg}\n\nCSV record {i} (CSV row {i+1})")
+        raise ValidationError(f"{err_msg}\n\nCSV record {i} (CSV row {i+1})")

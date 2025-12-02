@@ -37,14 +37,13 @@ class SaleOrderLine(models.Model):
         product = self.env["product.product"]._teamm2odoo_search()
         if not len(order) or not len(booking) or not len(product):
             teamm_booking_id = self._teamm2odoo_get_value("teamm_booking_id")
-            raise ValidationError(
-                (
-                    f"Missing info for teamm_booking_id {teamm_booking_id}:\n"
-                    f"Order: {order} (if missing, check Main Guest and Order No.)\n"
-                    f"Product: {product} (if missing, check discount codes)\n"
-                    f"Booking: {booking} (if missing, manually check the resource bookings of the period)"
-                )
+            err_msg = (
+                f"Missing info for teamm_booking_id {teamm_booking_id}:\n"
+                f"Order: {order} (if missing, check Main Guest and Order No.)\n"
+                f"Product: {product} (if missing, check discount codes)\n"
+                f"Booking: {booking} (if missing, manually check the resource bookings of the period)"
             )
+            self._teamm2odoo_raise_error(err_msg)
         kwargs |= {
             "order_id": order.id,
             "resource_booking_id": booking.id,
