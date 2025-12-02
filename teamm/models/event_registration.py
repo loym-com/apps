@@ -15,9 +15,8 @@ class EventRegistration(models.Model):
     def _teamm2odoo_search_kwargs(self, kwargs):
         teamm_booking_id = self._teamm2odoo_get_value("teamm_booking_id")
         if not teamm_booking_id:
-            raise ValidationError(
-                f"teamm_booking_id is missing: {self.env.context['teamm_values']}"
-            )
+            err_msg = "teamm_booking_id is missing: {self.env.context['teamm_values']}"
+            self._teamm2odoo_raise_error(err_msg)
 
         kwargs |= {
             "teamm_booking_id": teamm_booking_id,
@@ -32,9 +31,8 @@ class EventRegistration(models.Model):
         product = self.env["product.product"]._teamm2odoo_search()
 
         if not event:
-            raise ValidationError(
-                f"Event not found for teamm_booking_id {self._teamm2odoo_get_value('teamm_booking_id')}"
-            )
+            err_msg = f"Event not found for teamm_booking_id {self._teamm2odoo_get_value('teamm_booking_id')}"
+            self._teamm2odoo_raise_error(err_msg)
 
         kwargs |= {
             "name": booking.partner_id.name,

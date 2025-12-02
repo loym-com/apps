@@ -15,4 +15,5 @@ class ResourceGroup(models.Model):
         elif len(record) == 1:
             return record.name
         else:
-            raise ValidationError(f"Multiple names begins with {name}: {record}")
+            err_msg = f"Multiple names begins with {name}: {record}"
+            self._teamm2odoo_raise_error(err_msg)

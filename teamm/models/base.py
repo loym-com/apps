@@ -139,4 +139,5 @@ class Base(models.AbstractModel):
 
     def _teamm2odoo_raise_error(self, err_msg):
         i = self.env.context["teamm_counter"]
-        raise ValidationError(f"{err_msg}\n\nCSV record {i} (CSV row {i+1})")
+        err_msg = f"{err_msg}\n\nImport record {i} (line {i+1} since the first line has field names)"
+        self._teamm2odoo_raise_error(err_msg)

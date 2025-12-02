@@ -86,7 +86,8 @@ class TeamM(models.Model):
         params = {p.key: p.value for p in self.param_ids if p.type == "api"}
         response = requests.get(self.url, headers=headers, params=params)
         if response.status_code != 200:
-            raise UserError(response.text)
+            err_msg = response.text
+            self._teamm2odoo_raise_error(err_msg)
         return self._action_import(response.json())
 
     def action_import_csv_file(self):
@@ -208,7 +209,8 @@ class TeamM(models.Model):
             return amount
         except:
             teamm_booking_id = teamm_values.get("teamm_booking_id")
-            raise ValidationError(f"Discount error on deal {teamm_booking_id}")
+            err_msg = f"Discount error on deal {teamm_booking_id}"
+            self._teamm2odoo_raise_error(err_msg)
 
     #
     # Used by other models
@@ -220,7 +222,8 @@ class TeamM(models.Model):
             datestring = " ".join(datestring.split()[0:3]) # 31 Dec 2025
             date_format = self.env.context["teamm"].date_format
             if not date_format:
-                raise UserError("Missing Date Format")
+                err_msg = "Missing Date Format"
+                self._teamm2odoo_raise_error(err_msg)
             return datetime.strptime(datestring, date_format).date()
 
     def _get_datetime(self, key):

@@ -40,9 +40,8 @@ class ResourceBooking(models.Model):
             # assert room_sharing in ("Private", "Share room")
             teamm_booking_id = self._teamm2odoo_get_value("teamm_booking_id")
             if not teamm_booking_id:
-                raise ValidationError(
-                    f"teamm_booking_id is missing: {self.env.context['teamm_values']}"
-                )
+                err_msg = f"teamm_booking_id is missing: {self.env.context['teamm_values']}"
+                self._teamm2odoo_raise_error(err_msg)
             kwargs |= {
                 "teamm_booking_id": teamm_booking_id,
             }
@@ -67,7 +66,8 @@ class ResourceBooking(models.Model):
             stop = TeamM._get_datetime("to")
             if not len(partner) or not len(product) or not len(combination) or not len(booking_type):
                 teamm_booking_id = self._teamm2odoo_get_value("teamm_booking_id")
-                raise ValidationError(f"Missing info for teamm_booking_id {teamm_booking_id}:\nContact: {partner}\nProduct: {product}\nCombination: {combination}\nBooking Type: {booking_type}")
+                err_msg = f"Missing info for teamm_booking_id {teamm_booking_id}:\nContact: {partner}\nProduct: {product}\nCombination: {combination}\nBooking Type: {booking_type}"
+                self._teamm2odoo_raise_error(err_msg)
 
             kwargs |= {
                 "name": partner.name,
@@ -120,7 +120,8 @@ class ResourceBooking(models.Model):
             if len(combinations) != 1:
                 debug = True
         if len(combination) != 1:
-            raise ValidationError(f"{str(combinations)} - probably missing room size or room sharing.")
+            err_msg = f"{str(combinations)} - probably missing room size or room sharing."
+            self._teamm2odoo_raise_error(err_msg)
         return combination
 
     def _teamm2odoo_after_create_or_write(self):
