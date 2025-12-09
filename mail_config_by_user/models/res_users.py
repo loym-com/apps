@@ -1,8 +1,22 @@
-from odoo import models
+from odoo import fields, models
 
 
 class ResUsers(models.Model):
     _inherit = "res.users"
+
+    mail_server_id = fields.Many2one(
+        comodel_name="ir.mail_server",
+        string="Outgoing Mail Server",
+        help="The outgoing mail server used by this user to send emails.",
+        compute="_compute_mail_server_id",
+    )
+
+    def _compute_mail_server_id(self):
+        for user in self:
+            mail_server = self.env["ir.mail_server"].search(
+                [("from_filter", "=", user.login)], limit=1
+            )
+            user.mail_server_id = mail_server.id if mail_server else False
 
     def action_mail_config_by_user(self):
         """
