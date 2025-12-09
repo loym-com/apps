@@ -13,8 +13,11 @@ class ResUsers(models.Model):
 
     def _compute_mail_server_id(self):
         for user in self:
-            mail_server = self.env["ir.mail_server"].search(
-                [("from_filter", "=", user.login)], limit=1
+            mail_server = (
+                self.env["ir.mail_server"]
+                .sudo()
+                .with_context(active_test=False)
+                .search([("from_filter", "=", user.login)], limit=1)
             )
             user.mail_server_id = mail_server.id if mail_server else False
 
