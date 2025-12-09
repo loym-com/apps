@@ -17,6 +17,7 @@
     "depends": [
         "analytic",
         "fleet",
+        "partner_contact_driver",
     ],
     "license": "AGPL-3",
     "maintainers": ["ows-cloud"],
