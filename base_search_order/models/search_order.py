@@ -15,15 +15,6 @@ def _get_model_search_order(env, model_name):
             _search_order_cache[model_name] = None
     return _search_order_cache[model_name]
 
-# def clear_search_order_cache(model_names=None):
-#     """Clear cache manually, optionally for specific models"""
-#     global _search_order_cache
-#     if model_names:
-#         for model_name in model_names:
-#             _search_order_cache.pop(model_name, None)
-#     else:
-#         _search_order_cache = {}
-
 # ---------------------------
 # Patch BaseModel.search
 # ---------------------------
@@ -31,7 +22,7 @@ def _get_model_search_order(env, model_name):
 _original_search = models.Model.search
 
 def patched_search(self, domain, offset=0, limit=None, order=None, count=False):
-    if order is None:
+    if not order:
         order = _get_model_search_order(self.env, self._name)
     return _original_search(self, domain, offset=offset, limit=limit, order=order, count=count)
 
@@ -45,10 +36,6 @@ _original_name_search = models.Model.name_search
 
 @api.model
 def patched_name_search(self, name='', args=None, operator='ilike', limit=100):
-    # args = args or []
-    # # name_search internally calls search(), which is now patched
-    # return _original_name_search(self, name=name, args=args, operator=operator, limit=limit)
-
     ids = self._name_search(name=name, args=args, operator=operator, limit=limit, name_get_uid=None)
     domain = [('id', 'in', ids)]
     recs = patched_search(self, domain)
