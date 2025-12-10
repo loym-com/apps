@@ -1,5 +1,8 @@
 from odoo import api, models
 
+import logging
+_logger = logging.getLogger(__name__)
+
 # Cache for search_order values
 _search_order_cache = {}
 
@@ -22,8 +25,10 @@ def _get_model_search_order(env, model_name):
 _original_search = models.Model.search
 
 def patched_search(self, domain, offset=0, limit=None, order=None, count=False):
+    _logger.info("Patched search called on model %s with domain %s, order %s", self._name, domain, order)
     if not order:
         order = _get_model_search_order(self.env, self._name)
+        _logger.info("Using search_order '%s' for model %s", order, self._name)
     return _original_search(self, domain, offset=offset, limit=limit, order=order, count=count)
 
 models.Model.search = patched_search
