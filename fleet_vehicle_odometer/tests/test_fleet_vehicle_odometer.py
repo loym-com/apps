@@ -172,3 +172,21 @@ class TestFleetVehicleOdometer(TransactionCase):
         self.assertEqual(od2._get_next(), od3)
         self.assertEqual(self.od1._get_prev(), self.env["fleet.vehicle.odometer"])
         self.assertEqual(od3._get_next(), self.env["fleet.vehicle.odometer"])
+
+        """
+        When changing history, we need to recompute the next records as well.
+        Example:
+            Entry | Car |  Start | Stop
+                1 | BMW |      0 |  100
+                2 | BMW |    100 |  200
+                3 | KIA |      0 |  200
+            If the first entry has wrong car and should be with KIA instead of BMW,
+            then the entries should be:
+            Entry | Car |  Start | Stop
+                1 | KIA |      0 |  100
+                2 | BMW |      0 |  200
+                3 | KIA |    100 |  200
+        To achieve this, we recompute the NEXT entry before and after changing the current one.
+        Before changing entry 1, entry 2 is the next.
+        After changing entry 1, entry 3 is the next.
+        """

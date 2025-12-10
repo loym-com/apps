@@ -43,23 +43,22 @@ class FleetVehicleOdometer(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         records = super().create(vals_list)
-        records._check_value()
-        records._compute_start_and_distance_and_check_date()
         next = records._get_next()
-        next._compute_start_and_distance_and_check_date()
+        (records | next)._compute_start_and_distance_and_check_date()
         return records
 
-    def write(self, values):
-        super().write(values)
-        if 'value' in values or 'vehicle_id' in values:
-            self._compute_start_and_distance_and_check_date()
-            next = self._get_next()
-            next._compute_start_and_distance_and_check_date()
+    def write(self, vals):
+        old_next = self._get_next()
+        res = super().write(vals)
+        new_next = self._get_next()
+        if 'vehicle_id' in vals or 'value' in vals:
+            (self | old_next | new_next)._compute_start_and_distance_and_check_date()
+        return res
 
     def unlink(self):
         next = self._get_next()
         super().unlink()
-        next._compute_start_and_distance_and_check_date()
+        next.exists()._compute_start_and_distance_and_check_date()
 
     @api.constrains("value")
     def _check_value(self):
