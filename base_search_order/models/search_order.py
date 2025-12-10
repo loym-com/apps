@@ -25,7 +25,7 @@ def _get_model_search_order(env, model_name):
 _original_search = models.Model.search
 
 def patched_search(self, domain, offset=0, limit=None, order=None, count=False):
-    _logger.info("Patched search called on model %s with domain %s, order %s", self._name, domain, order)
+    _logger.info("Patched search called on model %s with order %s", self._name, order)
     if not order:
         order = _get_model_search_order(self.env, self._name)
         _logger.info("Using search_order '%s' for model %s", order, self._name)
