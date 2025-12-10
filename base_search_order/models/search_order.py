@@ -25,10 +25,8 @@ def _get_model_search_order(env, model_name):
 _original_search = models.Model.search
 
 def patched_search(self, domain, offset=0, limit=None, order=None, count=False):
-    _logger.info("Patched search called on model %s with order %s", self._name, order)
     if not order:
         order = _get_model_search_order(self.env, self._name)
-        _logger.info("Using search_order '%s' for model %s", order, self._name)
     return _original_search(self, domain, offset=offset, limit=limit, order=order, count=count)
 
 models.Model.search = patched_search
@@ -44,7 +42,6 @@ def patched_name_search(self, name='', args=None, operator='ilike', limit=100):
     ids = self._name_search(name=name, args=args, operator=operator, limit=limit, name_get_uid=None)
     domain = [('id', 'in', ids)]
     recs = patched_search(self, domain)
-    _logger.info(str([r.name for r in recs]))
     return recs.name_get()
 
 models.Model.name_search = patched_name_search
