@@ -44,6 +44,7 @@ def patched_name_search(self, name='', args=None, operator='ilike', limit=100):
     ids = self._name_search(name=name, args=args, operator=operator, limit=limit, name_get_uid=None)
     domain = [('id', 'in', ids)]
     recs = patched_search(self, domain)
+    _logger.info(str([r.name for r in recs]))
     return recs.name_get()
 
 models.Model.name_search = patched_name_search
