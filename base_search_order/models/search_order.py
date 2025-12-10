@@ -48,3 +48,33 @@ def patched_name_search(self, name='', args=None, operator='ilike', limit=100):
     return recs.name_get()
 
 models.Model.name_search = patched_name_search
+
+# -----------------------
+# Patch BaseModel._search
+# -----------------------
+
+_original__search = models.Model._search
+
+@api.model
+def patched__search(self, domain, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
+    """
+    Inject the model-level order into context if `order` is not explicitly set.
+    This affects _name_search(), search(), and all downstream calls.
+    """
+    if not order:
+        # get default order from ir.model
+        order = _get_model_search_order(self.env, self._name)
+
+    # call original
+    return _original__search(
+        self,
+        domain,
+        offset=offset,
+        limit=limit,
+        order=order,
+        count=count,
+        access_rights_uid=access_rights_uid,
+    )
+
+# Apply patch
+models.Model._search = patched__search
