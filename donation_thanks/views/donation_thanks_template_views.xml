@@ -23,6 +23,7 @@
                     </header>
                 </sheet>
                 <field name="image" position="replace"/>
+                <field name="text" position="replace"/>
                 <group name="main" position="after">
                     <group>
                         <field name="img_text" />
@@ -52,6 +53,7 @@
                         <field name="image_text" />
                         <field name="text1" />
                         <field name="text2" />
+                        <field name="text" />
                     </group>
                 </sheet>
             </data>
