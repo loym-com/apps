@@ -46,6 +46,7 @@ class SaleOrderLine(models.Model):
         kwargs |= {
             "order_id": order.id,
             "resource_booking_id": booking.id,
+            "product_uom_qty": 1,
         }
         if not self.env.context.get("teamm_ignore_product"):
             kwargs |= {
