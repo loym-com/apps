@@ -21,6 +21,7 @@ class HrPayslipLine(models.Model):
     credit_note = fields.Boolean(
         string="Credit Note",
         related="slip_id.credit_note",
+        store=True,
     )
     net_quantity = fields.Float(
         string="Net Quantity",
