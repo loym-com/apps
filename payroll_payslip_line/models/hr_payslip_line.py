@@ -4,7 +4,7 @@ from odoo import api, fields, models
 class HrPayslipLine(models.Model):
     _inherit = "hr.payslip.line"
 
-    @api.depends("quantity", "rate", "amount")
+    @api.depends("quantity", "rate", "amount", "credit_note")
     def _compute_net(self):
         for record in self:
             factor = -1 if record.credit_note else 1
