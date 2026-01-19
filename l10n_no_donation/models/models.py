@@ -59,7 +59,8 @@ class DonationWizard(models.TransientModel):
             raise UserError(_("The year should have this format: yyyy"))
 
         donor_data = self.env["donation.tax.receipt"].get_donor_name_personid_total(
-            self.company_id, "l10n_no_personid", date_from, date_to, min_total=500
+            # self.company_id, "l10n_no_personid", date_from, date_to, min_total=500
+            self.company_id, date_from, date_to, min_total=500
         )
         donor_file = DonorFile(self.env, self.year, donor_data)
         self.donation_xml = self._create_xml_generateds(donor_file.donor_file)
