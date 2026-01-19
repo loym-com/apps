@@ -14,7 +14,8 @@
     ],
     "depends": [
         "donation",  # OCA/donation
-        "partner_identification",  # OCA/partner-contact
+        # "partner_identification",  # OCA/partner-contact - use with donation_tax_receipt_advanced.py
+        "partner_contact_id",  # invisible for companies
     ],
     "development_status": "Alpha",
     "license": "AGPL-3",
