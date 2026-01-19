@@ -1,2 +1,0 @@
-id,name,model_id:id,groups:id,domain_force,perm_read,perm_write,perm_create,perm_unlink
-l10n_no_donation_xml_company_id_rule,l10n_no_donation.xml multi-company,model_l10n_no_donation_xml,,"[('company_id','child_of',[user.company_id.id])]",1,1,1,1

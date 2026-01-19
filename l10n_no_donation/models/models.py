@@ -11,37 +11,26 @@ from odoo.exceptions import UserError
 from . import gavefrivilligorganisasjon_2_0 as gave
 
 
-class Company(models.Model):
-    _inherit = "res.company"
-
-    l10n_no_donation_partner_id = fields.Many2one(
-        "res.partner", "Donation Contact Person"
-    )
-
-# TODO The donation total should be computed based on the donation models.
-# Then this class extension may be deleted.
-class Partner(models.Model):
-    _inherit = "res.partner"
-
-    donation_total = fields.Integer("Donation Total")
-
-
-# TODO The wizard should download the donation XML file directly.
-# Then this class may be deleted.
-class Donation(models.Model):
-    _name = "l10n_no_donation.xml"
+class DonationWizard(models.TransientModel):
+    _name = "l10n_no_donation.xml.wizard"
+    _description = "Donation XML Wizard"
 
     @api.depends("year")
     def _compute_donation_filename(self):
-        self.ensure_one()
-
-        name = "Skattefradrag {year}.xml".format(year=self.year)
-        self.donation_filename = name
+        for wizard in self:
+            wizard.donation_filename = (
+                f"Skattefradrag_{wizard.year}.xml" if wizard.year else False
+            )
 
     @api.depends("donation_xml")
     def _compute_donation_binary(self):
-        self.donation_binary = base64.b64encode(bytes(self.donation_xml, "utf-8"))
-        # pass
+        for wizard in self:
+            if wizard.donation_xml:
+                wizard.donation_binary = base64.b64encode(
+                    wizard.donation_xml.encode("utf-8")
+                )
+            else:
+                wizard.donation_binary = False
 
     company_id = fields.Many2one(
         "res.company",
@@ -51,63 +40,53 @@ class Donation(models.Model):
         index=True,
         default=lambda self: self.env.company,
     )
-    year = fields.Char()
-    date_from = fields.Date()
-    date_to = fields.Date()
-    timestamp = fields.Datetime(readonly=True)
+    year = fields.Integer(
+        default=lambda self: datetime.now().year - 1,
+        string="Year",
+        required=True,
+    )
     donation_xml = fields.Text(readonly=True)
     donation_filename = fields.Char(compute=_compute_donation_filename)
     donation_binary = fields.Binary(
         compute=_compute_donation_binary, string="Donation Binary"
     )
 
-
-class DonationWizard(models.TransientModel):
-    _name = "l10n_no_donation.xml.wizard"
-
-    year = fields.Char()
-
     def create_xml(self):
-        # Verify periods
         try:
-            date_from = datetime.strptime(self.year + "-01-01", "%Y-%m-%d")
-            date_to = datetime.strptime(self.year + "-12-31", "%Y-%m-%d")
+            date_from = datetime.strptime(str(self.year) + "-01-01", "%Y-%m-%d")
+            date_to = datetime.strptime(str(self.year) + "-12-31", "%Y-%m-%d")
         except:
             raise UserError(_("The year should have this format: yyyy"))
 
-        # Create record with xml
-        d = {
-            "year": self.year,
-            "date_from": date_from,
-            "date_to": date_to,
-        }
-        record = self.env["l10n_no_donation.xml"].create(d)
-        donation_file_class = DonationFile(record)
-        donation_file = donation_file_class.DonationFile()
+        donor_data = self.env["donation.tax.receipt"].get_donor_name_personid_total(
+            self.company_id, "l10n_no_personid", date_from, date_to, min_total=500
+        )
+        donor_file = DonorFile(self.env, self.year, donor_data)
+        self.donation_xml = self._create_xml_generateds(donor_file.donor_file)
 
-        record.donation_xml = self._create_xml_generateds(donation_file)
+    def _get_donations(self, date_from, date_to):
+        id_category = self.env.ref("l10n_no_donation.l10n_no_personid")
+        contacts_with_id = self.env["res.partner.id_number"].search(
+            [("category_id", "=", id_category.id)]
+        ).mapped("partner_id")
+        donors = self.env["donation.tax.receipt"].search(
+            [("date", ">=", self.date_from), ("date", "<=", self.date_to)]
+        ).mapped("partner_id")
 
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "l10n_no_donation.xml",
-            "res_id": record.id,
-            "view_mode": "form",
-        }
-
-    def _create_xml_generateds(self, donation_file):
+    def _create_xml_generateds(self, donor_file):
         xml_io = StringIO()
-        donation_file.export(xml_io, level=0)
+        donor_file.export(xml_io, level=0)
         return xml_io.getvalue()
 
 
-class DonationFile:
-    def __init__(self, donation_record):
-        self.company = donation_record.company_id
-        self.year = int(donation_record.year)
-        self.date_from = donation_record.date_from
-        self.date_to = donation_record.date_to
+class DonorFile:
+    def __init__(self, env, year, donor_data):
+        self.env = env
+        self.year = year
+        self.donor_data = donor_data # list of dicts: donor, name, personid, total
+        self.donor_file = self.DonorFile()
 
-    def DonationFile(self):
+    def DonorFile(self):
         # gavefrivilligorganisasjon_2_0.py#L1136 Melding
         # def export(self, outfile, level, namespaceprefix_='',
         # namespacedef_='xmlns="urn:ske:fastsetting:innsamling:gavefrivilligorganisasjon:v2"
@@ -127,17 +106,15 @@ class DonationFile:
         l.oppgavegiversLeveranseReferanse = "unik_referanse"
         # TODO: select 'ordinaer' or 'ingenoppgaver'
         l.leveransetype = "ordinaer"
-        # for partner in self.company.env['res.partner'].search([('customer', '=', True)]):
+        # Donation statistics
         count = 0
         total = 0
-        # TODO: filter partners
-        category = self.company.env.ref("l10n_no_donation.l10n_no_personid")
-        for partner in self.company.env["res.partner.id_number"].search(
-            [("category_id", "=", category.id)]
-        ).partner_id:
-            l.add_oppgave(self.Oppgave(partner))
+        # Filter donors with personal id number
+
+        for donor in self.donor_data:
+            l.add_oppgave(self.Oppgave(donor))
             count += 1
-            total += int(partner.donation_total)
+            total += int(donor['total'])
         l.oppgaveoppsummering = gave.Oppgaveoppsummering()
         l.oppgaveoppsummering.antallOppgaver = count
         l.oppgaveoppsummering.sumBeloep = total
@@ -145,33 +122,31 @@ class DonationFile:
 
     def Oppgavegiver(self):
         og = gave.Oppgavegiver()
-        og.organisasjonsnummer = self.company.vat
-        og.organisasjonsnavn = self.company.name
+        og.organisasjonsnummer = self.env.company.vat
+        og.organisasjonsnavn = self.env.company.name
         og.kontaktinformasjon = self.Kontaktinformasjon()
         return og
 
     def Kontaktinformasjon(self):
         k = gave.Kontaktinformasjon()
         # TODO: error handling if partner is missing
-        partner = self.company.l10n_no_donation_partner_id
+        partner = self.env.company.l10n_no_donation_partner_id
         k.navn = partner.name
         k.telefonnummer = partner.phone
         k.varselEpostadresse = partner.email
         k.varselSmsMobilnummer = partner.mobile
         return k
 
-    def Oppgave(self, partner):
+    def Oppgave(self, donor):
         o = gave.OppgaveGave()
-        o.oppgaveeier = self.Oppgaveeier(partner)
+        o.oppgaveeier = self.Oppgaveeier(donor)
         # TODO: compute the total donation
-        o.beloep = int(partner.donation_total)
+        o.beloep = int(donor['total'])
         return o
 
-    def Oppgaveeier(self, partner):
+    def Oppgaveeier(self, donor):
         oe = gave.Oppgaveeier()
         # TODO: error handling
-        oe.foedselsnummer = partner.id_numbers.filtered(
-            lambda r: r.category_id.code == "l10n_no_personid"
-        ).name
-        oe.navn = partner.name
+        oe.foedselsnummer = donor['personid']
+        oe.navn = donor['name']
         return oe
