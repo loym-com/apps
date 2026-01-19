@@ -1,3 +1,10 @@
+from odoo import api, models
+from odoo.exceptions import UserError
+
+
+class DonationTaxReceipt(models.Model):
+    _inherit = "donation.tax.receipt"
+
     @api.model
     def get_donor_name_personid_total(self, company, date_from, date_to, min_total=0):
         """
