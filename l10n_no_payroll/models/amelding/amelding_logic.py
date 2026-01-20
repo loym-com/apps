@@ -312,7 +312,8 @@ class AmeldingLogikk:
                     }
                     beregnAga = _get(rule, "l10n_no_BeregnAga")
                     if beregnAga:
-                        self.aga[navn[beregnAga]] += _get(line, "total")
+                        factor = -1 if line.slip_id.credit_note else 1
+                        self.aga[navn[beregnAga]] += factor * _get(line, "total")
                     else:
                         _debug("ERROR: payslip line rule_type = " + str(rule_type))
 
