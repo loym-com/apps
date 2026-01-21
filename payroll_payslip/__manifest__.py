@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Payslip layout improvements",
+    "name": "Payslip translation",
     "summary": "",
     "author": "Ows, Odoo Community Association (OCA)",
     "auto_install": False,
