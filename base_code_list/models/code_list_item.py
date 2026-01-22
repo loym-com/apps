@@ -16,7 +16,8 @@ class CodeListItem(models.Model):
     _order = "list_id, code"
 
     code = fields.Char(required=False, copy=False)
-    name = fields.Char(required=True, copy=False)
+    name = fields.Char(required=True, copy=False, translate=True)
+    description = fields.Text(translate=True)
     list_id = fields.Many2one(
         "code.list",
         string="Code List",
@@ -28,7 +29,6 @@ class CodeListItem(models.Model):
         string="Parent Item",
         ondelete="restrict",
     )
-    description = fields.Text()
     active = fields.Boolean(default=True)
 
     _sql_constraints = [

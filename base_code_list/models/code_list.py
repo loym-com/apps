@@ -10,8 +10,8 @@ class CodeList(models.Model):
     _order = "code"
 
     code = fields.Char(required=False, copy=False)
-    name = fields.Char(required=True, copy=False)
-    description = fields.Text()
+    name = fields.Char(required=True, copy=False, translate=True)
+    description = fields.Text(translate=True)
     active = fields.Boolean(default=True)
     item_ids = fields.One2many(
         comodel_name="code.list.item",
