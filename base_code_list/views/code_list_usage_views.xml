@@ -10,8 +10,7 @@
         <field name="arch" type="xml">
             <tree editable="bottom" >
                 <field name="model"/>
-                <field name="res_id" invisible="1"/>
-                <field name="resource_display_name" readonly="1"/>
+                <field name="resource_id" />
                 <field name="code_list_id" />
                 <field name="code_list_item_id" />
                 <field name="note" optional="hide" />
@@ -23,7 +22,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="model"/>
-                <field name="res_id" />
+                <field name="resource_id" />
                 <field name="code_list_id" />
                 <field name="code_list_item_id" />
                 <field name="note" />
