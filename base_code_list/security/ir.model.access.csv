@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_code_list_item_user_read,Read access on code.list.item to employees,model_code_list_item,base.group_user,1,0,0,0
+access_code_list_item_public_read,Read access on code.list.item to public,model_code_list_item,base.group_public,1,0,0,0
+access_code_list_item_portal_read,Read access on code.list.item to portal,model_code_list_item,base.group_portal,1,0,0,0
+access_code_list_item_full,Full access on code.list.item to Settings group,model_code_list_item,base.group_system,1,1,1,1
+access_code_list_user_read,Read access on code.list to employees,model_code_list,base.group_user,1,0,0,0
+access_code_list_public_read,Read access on code.list to public,model_code_list,base.group_public,1,0,0,0
+access_code_list_portal_read,Read access on code.list to portal,model_code_list,base.group_portal,1,0,0,0
+access_code_list_full,Full access on code.list to Settings group,model_code_list,base.group_system,1,1,1,1
+access_code_list_usage_user_read,Read access on code.list.usage to employees,model_code_list_usage,base.group_user,1,0,0,0
+access_code_list_usage_public_read,Read access on code.list.usage to public,model_code_list_usage,base.group_public,1,0,0,0
+access_code_list_usage_portal_read,Read access on code.list.usage to portal,model_code_list_usage,base.group_portal,1,0,0,0
+access_code_list_usage_full,Full access on code.list.usage to Settings group,model_code_list_usage,base.group_system,1,1,1,1

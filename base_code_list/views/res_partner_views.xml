@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_partner_view_form" model="ir.ui.view">
+        <field name="name">res.partner.view.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Codes">
+                    <group>
+                        <field
+                            name="code_list_item_ids"
+                            widget="many2many_tags"
+                            readonly="1"
+                            context="{'include_list_code': True}"
+                        />
+                    </group>
+                    <field name="code_list_usage_ids" context="{'default_model': 'res.partner', 'default_res_id': id}">
+                        <tree editable="bottom">
+                            <field name="model" invisible="1"/>
+                            <field name="res_id" invisible="1"/>
+                            <field name="code_list_id"/>
+                            <field name="code_list_item_id" domain="[('list_id', '=', code_list_id)]"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    <record id="view_res_partner_search" model="ir.ui.view">
+        <field name="name">res.partner.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <field name="name" string="Name"/>
+                <field name="code_list_item_ids" string="Code List Items"/>
+
+                <filter string="Code List Item" name="filter_code_list_item" domain="[('code_list_item_ids', '!=', False)]"/>
+            </search>
+        </field>
+    </record>
+</odoo>

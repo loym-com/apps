@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2016-2021 Akretion France (http://www.akretion.com/)
+  Copyright 2026 FIQ
+  @author Alexis de Lattre <alexis.delattre@akretion.com>
+  License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo>
+    <record id="code_list_view_form" model="ir.ui.view">
+        <field name="model">code.list</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        invisible="1"
+                    />
+                    <group name="main">
+                        <group name="general">
+                            <field name="code" />
+                            <field name="name" />
+                            <field name="active" invisible="1" />
+                            <field name="description" />
+                        </group>
+                    </group>
+                    <group name="items_group" col="1" colspan="2">
+                        <field name="item_ids">
+                            <tree editable="bottom" context="{'code_list_item_main_view': True}">
+                                <field name="code" optional="hide" />
+                                <field name="name" />
+                                <field name="description" optional="hide" />
+                                <field name="parent_id" optional="hide" />
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="code_list_view_list" model="ir.ui.view">
+        <field name="model">code.list</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="code" optional="hide" />
+                <field name="name" />
+                <field name="description" optional="hide" />
+                <button name="action_open_items" type="object" string="Items" icon="fa-list"/>
+            </tree>
+        </field>
+    </record>
+    <record id="code_list_view_search" model="ir.ui.view">
+        <field name="model">code.list</field>
+        <field name="arch" type="xml">
+            <search>
+                <field
+                    name="name"
+                    string="Name or Code"
+                    filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"
+                />
+                <field name="code" />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="code_list_action" model="ir.actions.act_window">
+        <field name="name">Code Lists</field>
+        <field name="res_model">code.list</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem
+        id="code_list_menu"
+        action="code_list_action"
+        parent="base.menu_ir_property"
+        sequence="150"
+    />
+</odoo>

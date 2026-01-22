@@ -1,0 +1,16 @@
+<odoo>
+    <menuitem
+        id="code_list_menu"
+        name="Code Lists"
+        parent="contacts.res_partner_menu_config"
+        action="base_code_list.code_list_action"
+        sequence="90"
+    />
+    <menuitem
+        id="code_list_item_menu"
+        name="Code List Items"
+        parent="contacts.res_partner_menu_config"
+        action="base_code_list.code_list_item_action"
+        sequence="91"
+    />
+</odoo>
