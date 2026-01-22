@@ -202,10 +202,9 @@ class AmeldingLogikk:
     def Betalingsinformasjon(self):
         bi = a.Betalingsinformasjon()
         if self.je["sumForskuddstrekk"]:
-            bi.sumForskuddstrekk = int(
+            self.amelding_record.sumForskuddstrekk = int(
                 self.je["sumForskuddstrekk"]
             )
-            self.amelding_record.sumForskuddstrekk = bi.sumForskuddstrekk
         if self.je["sumArbeidsgiveravgift"]:
             bi.sumArbeidsgiveravgift = int(
                 self.je["sumArbeidsgiveravgift"]
