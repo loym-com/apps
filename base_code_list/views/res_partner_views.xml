@@ -11,7 +11,7 @@
                         <field
                             name="code_list_item_ids"
                             widget="many2many_tags"
-                            readonly="1"
+                            readonly="0"
                             context="{'include_list_code': True}"
                         />
                     </group>
@@ -39,6 +39,22 @@
 
                 <filter string="Code List Item" name="filter_code_list_item" domain="[('code_list_item_ids', '!=', False)]"/>
             </search>
+        </field>
+    </record>
+    <record id="res_partner_view_tree" model="ir.ui.view">
+        <field name="name">res.partner.view.tree.inherit.code.list</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field
+                    name="code_list_item_ids"
+                    widget="many2many_tags"
+                    readonly="0"
+                    context="{'include_list_code': True}"
+                    optional="hide"
+                />
+            </tree>
         </field>
     </record>
 </odoo>

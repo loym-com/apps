@@ -24,3 +24,18 @@ class CodeListUsage(models.Model):
         comodel_name="code.list.item",
     )
     note = fields.Text()
+    resource_display_name = fields.Char(
+        string="Resource Display Name",
+        compute="_compute_resource_display_name",
+        store=True,
+    )
+
+    @api.depends("res_id", "model")
+    def _compute_resource_display_name(self):
+        for record in self:
+            if record.model and record.res_id:
+                # Fetch the actual record using model and res_id
+                related_record = self.env[record.model].browse(record.res_id)
+                record.resource_display_name = related_record.display_name if related_record.exists() else False
+            else:
+                record.resource_display_name = False

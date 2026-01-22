@@ -17,6 +17,7 @@
         "security/ir.model.access.csv",
         "views/code_list_views.xml",
         "views/code_list_item_views.xml",
+        "views/code_list_usage_views.xml",
         "views/res_partner_views.xml",
         "views/menus.xml",
     ],

@@ -48,6 +48,10 @@ class CodeListItem(models.Model):
                 item.display_name = f"{item.list_id.code or item.list_id.name}: {item.code or ''} {item.name}"
             else:
                 item.display_name = f"{item.code or ''} {item.name}"
+            # list = f"{item.list_id.code or item.list_id.name}: " if include_list_code else ""
+            # code = f"{item.code}" if item.code else ""
+            # note = "*" if item.note else ""
+            # item.display_name = f"{list}{code}{item.name}{note}"
 
     # _rec_names_search = ['name', 'code'] doesn't give the result we want
     # We want that, when you type an exact code, you get only that code

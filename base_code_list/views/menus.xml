@@ -13,4 +13,11 @@
         action="base_code_list.code_list_item_action"
         sequence="91"
     />
+    <menuitem
+        id="code_list_usage_menu"
+        name="Code List Usages"
+        parent="contacts.res_partner_menu_config"
+        action="base_code_list.code_list_usage_action"
+        sequence="92"
+    />
 </odoo>
