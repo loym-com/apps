@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class CodeList(models.Model):
     _name = "code.list"
     _description = "Code List"
-    _order = "code"
+    _order = "code, name"
 
     code = fields.Char(required=False, copy=False)
     name = fields.Char(required=True, copy=False, translate=True)

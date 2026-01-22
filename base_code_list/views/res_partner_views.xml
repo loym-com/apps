@@ -21,6 +21,7 @@
                             <field name="res_id" invisible="1"/>
                             <field name="code_list_id"/>
                             <field name="code_list_item_id" domain="[('list_id', '=', code_list_id)]"/>
+                            <field name="note"/>
                         </tree>
                     </field>
                 </page>

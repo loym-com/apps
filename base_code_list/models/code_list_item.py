@@ -13,7 +13,7 @@ from odoo import api, fields, models
 class CodeListItem(models.Model):
     _name = "code.list.item"
     _description = "Code List Item"
-    _order = "list_id, code"
+    _order = "list_id, code, name"
 
     code = fields.Char(required=False, copy=False)
     name = fields.Char(required=True, copy=False, translate=True)

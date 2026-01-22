@@ -23,3 +23,4 @@ class CodeListUsage(models.Model):
     code_list_item_id = fields.Many2one(
         comodel_name="code.list.item",
     )
+    note = fields.Text()
