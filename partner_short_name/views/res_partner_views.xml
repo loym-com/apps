@@ -8,4 +8,13 @@
             </span>
         </field>
     </record>
+    <record id="res_partner_view_tree" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree" />
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="short_name" optional="hide" />
+            </tree>
+        </field>
+    </record>
 </odoo>
