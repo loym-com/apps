@@ -23,4 +23,7 @@
             </field>
         </field>
     </record>
+    <record id="donation.donation_line_action" model="ir.actions.act_window">
+        <field name="domain">[("donation_id.recurring_template", "=", False)]</field>
+    </record>
 </odoo>

@@ -16,6 +16,7 @@
     "development_status": "Alpha",
     "license": "AGPL-3",
     "maintainers": ["norlinhenrik"],
+    "uninstall_hook": "uninstall_hook",
     "version": "16.0.1.0.0",
     "website": "https://github.com/OCA/donation",
 }
