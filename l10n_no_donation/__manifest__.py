@@ -9,7 +9,7 @@
     "category": "Localization",
     "data": [
         "security/ir.model.access.csv",
-        "data/data.xml",
+        # "data/data.xml",
         "views/views.xml",
     ],
     "depends": [

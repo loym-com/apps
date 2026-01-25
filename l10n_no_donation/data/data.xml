@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<!-- <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
         <record model="res.partner.id_category" id="l10n_no_personid">
@@ -6,4 +6,4 @@
             <field name="name">Fødsels-/D-nummer</field>
         </record>
     </data>
-</odoo>
+</odoo> -->
