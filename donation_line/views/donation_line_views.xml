@@ -69,6 +69,11 @@
                 <field name="donation_date" />
                 <field name="payment_ref" />
                 <filter name="donation_date" date="donation_date" />
+                <group expand="1" string="Group By Options">
+                    <filter name="group_by_analytic" string="Analytic Account" context="{'group_by':'analytic_account_id'}"/>
+                    <filter name="group_by_partner" string="Partner" context="{'group_by':'partner_id'}"/>
+                    <filter name="group_by_product" string="Product" context="{'group_by':'product_id'}"/>
+                </group>
             </search>
         </field>
     </record>

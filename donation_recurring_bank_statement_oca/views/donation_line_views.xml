@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="donation_line_view_list" model="ir.ui.view">
+        <field name="name">donation.line.view.list</field>
+        <field name="model">donation.line</field>
+        <field name="inherit_id" ref="donation.donation_line_tree" />
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field
+                    name="source_recurring_id"
+                    domain="[('partner_id', '=', partner_id), ('recurring_template', '=', 'active')]"
+                    optional="hide"
+                    context="{'default_recurring_template': 'active'}"
+                />
+            </tree>
+        </field>
+    </record>
+</odoo>

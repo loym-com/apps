@@ -8,6 +8,7 @@
     "category": "Accounting & Finance",
     "data": [
         "views/donation_donation_views.xml",
+        "views/donation_line_views.xml",
     ],
     "depends": [
         "donation_bank_statement_oca",
