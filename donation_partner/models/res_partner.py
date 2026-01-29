@@ -97,7 +97,7 @@ class ResPartner(models.Model):
         return action
 
     def action_donation_tax_receipt_ids_to_send(self):
-        xml_id = "donation_partner.donation_tax_receipt_action"
+        xml_id = "donation_thanks.donation_tax_receipt_action"
         action = self.env["ir.actions.actions"]._for_xml_id(xml_id)
         action["domain"] = [("partner_id", "in", self.ids), ("print_date", "=", False)]
         return action
