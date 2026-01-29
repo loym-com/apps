@@ -1,5 +1,5 @@
 from . import base
-from . import calendar_event
+from . import calendar_attendee
 from . import event_event
 from . import event_registration
 from . import product_attribute
