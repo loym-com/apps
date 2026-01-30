@@ -6,11 +6,17 @@
         <field name="inherit_id" ref="payroll.hr_payslip_run_view_form" />
         <field name="priority" eval="20" />
         <field name="arch" type="xml">
-            <sheet position="inside">
-                <group name="norway" string="Norway">
-                    <field name="l10n_no_AgapliktUtenLoennsopplysningsplikt" />
-                </group>
-            </sheet>
+            <data>
+                <label for="date_start" position="before">
+                    <field name="l10n_no_Loennsutbetalingsdato" />
+                </label>
+                <sheet position="inside">
+                    <group name="norway" string="Norway">
+                        <field name="l10n_no_AgapliktUtenLoennsopplysningsplikt" group="base.group_no_one" />
+                    </group>
+                </sheet>
+            </data>
+
         </field>
     </record>
 </odoo>

@@ -1,6 +1,6 @@
 import logging
+from calendar import monthrange
 from collections import defaultdict
-from datetime import date, datetime
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -11,6 +11,35 @@ _logger = logging.getLogger(__name__)
 
 class HrPayslip(models.Model):
     _inherit = "hr.payslip"
+
+    json = fields.Serialized()
+    l10n_no_Loennsutbetalingsdato = fields.Date(
+        "Lønnsutbetalingsdato", sparse="json"
+    )
+    date_from = fields.Date(
+        compute="_compute_dates",
+        readonly=False,
+        store=True,
+    )
+    date_to = fields.Date(
+        compute="_compute_dates",
+        readonly=False,
+        store=True,
+    )
+
+    @api.depends("l10n_no_Loennsutbetalingsdato")
+    def _compute_dates(self):
+        for record in self:
+            if record.l10n_no_Loennsutbetalingsdato:
+                date = record.l10n_no_Loennsutbetalingsdato
+                # Set the date_from and date_to to first/last day of month
+                record.date_from = date.replace(day=1)
+                record.date_to = date.replace(
+                    day=monthrange(date.year, date.month)[1]
+                )
+            else:
+                record.date_from = record.date_from
+                record.date_to = record.date_to
 
     def action_l10n_no_fp_i_aar(self):
         self._action_l10n_no_fp("update_payslips", "this_year")

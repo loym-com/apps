@@ -2,6 +2,7 @@ from xsdata.formats.dataclass.serializers import XmlSerializer
 from xsdata.formats.dataclass.serializers.config import SerializerConfig
 
 import logging
+from collections import defaultdict
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
@@ -23,6 +24,7 @@ bif = BetalingsinformasjonForForenkletOrdning
 fraig = FradragIGrunnlagetForSone
 fra = Fradrag
 ft = Forskuddstrekk
+fpld = (forskuddstrekk) BeloepPerLoennsutbetalingsdato
 inn = Inntekt
 ii = InternasjonalIdentifikator
 im = Inntektsmottaker
@@ -33,7 +35,6 @@ opphold = OppholdPaaSvalbardJanMayenOgBilandene
 p = Permisjon
 v = Virksomhet
 """
-
 
 def _debug(my_input):
     # _logger.debug(str(my_input))
@@ -133,6 +134,7 @@ class AmeldingLogikk:
             "sumArbeidsgiveravgift": 0,
             "sumFinansskattLoenn": 0,
             "sumUtleggstrekk": 0,
+            "sumForskuddstrekkPerLoennsutbetalingsdato": defaultdict(int),
             "sumForskuddstrekkForenklet": 0,
             "sumArbeidsgiveravgiftForenklet": 0,
         }
@@ -218,6 +220,12 @@ class AmeldingLogikk:
         if self.je["sumUtleggstrekk"]:
             bi.sumUtleggstrekk = int(self.je["sumUtleggstrekk"])
             self.amelding_record.sumUtleggstrekk = bi.sumUtleggstrekk
+        # Fra 2026
+        for dato, beloep in self.je["sumForskuddstrekkPerLoennsutbetalingsdato"].items():
+            fpld = a.BeloepPerLoennsutbetalingsdato()
+            fpld.loennsutbetalingsdato = dato.strftime("%Y-%m-%d")
+            fpld.beloep = int(beloep)
+            bi.sumForskuddstrekkPerLoennsutbetalingsdato.append(fpld)
         return bi
 
     # def BetalingsinformasjonForForenkletOrdning(self):
@@ -493,6 +501,9 @@ class AmeldingLogikk:
         factor = -1 if line.slip_id.credit_note else 1
         ft.beloep = factor * int(_get(line, "total"))
         self.je["sumForskuddstrekk"] += -ft.beloep
+        dato = _get(line.slip_id, "l10n_no_Loennsutbetalingsdato")
+        assert dato
+        self.je["sumForskuddstrekkPerLoennsutbetalingsdato"][dato] += -ft.beloep
         return ft
 
     def Inntekt(self, employee, payslip, line, rule, my_type):

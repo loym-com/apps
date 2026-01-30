@@ -5,12 +5,18 @@
         <field name="inherit_id" ref="payroll.hr_payslip_view_form" />
         <field name="priority" eval="20" />
         <field name="arch" type="xml">
-            <xpath
-                expr="//field[@name='dynamic_filtered_payslip_lines']/tree"
-                position="inside"
-            >
-                <field name="l10n_no_total_ytd" />
-            </xpath>
+            <data>
+                <label for="date_from" position="before">
+                    <field name="l10n_no_Loennsutbetalingsdato" />
+                </label>
+                <xpath
+                    expr="//field[@name='dynamic_filtered_payslip_lines']/tree"
+                    position="inside"
+                >
+                    <field name="l10n_no_total_ytd" />
+                </xpath>
+            </data>
+
         </field>
     </record>
 </odoo>
