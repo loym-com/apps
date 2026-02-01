@@ -15,19 +15,21 @@
             name="body_html"
         ><![CDATA[
 <div>
-    <p>Dear {{object.name}},</p>
-    <p>Thank you for supporting the work of the {{object.env.company.name}}!</p>
+    <p>Dear <span t-out="object.partner_id.name"/>,</p>
+    <p>Thank you for supporting the work of the <span t-out="object.env.company.name"/>!</p>
     <p>Please find attached the latest newsletter. I hope you will enjoy it.</p>
 
-    % if object.env.ref('donation_thanks.res_partner_category_newsletter') not in object.category_id.parent_id:
-    <p>We would like to continue sending you updates.
-        <b>Reply to this email</b> if you wish to continue receiving this newsletter.</p>
-    % endif
+    <t t-if="object.env.ref('donation_thanks.res_partner_category_newsletter') not in object.category_id.parent_id">
+        <p>
+            We would like to continue sending you updates.
+            <b>Reply to this email</b> if you wish to continue receiving this newsletter.
+        </p>
+    </t>
 
     <p>Best regards,</p>
 </div>
 <div>
-    {{user.signature | safe}}
+    <span t-out="user.signature"/>
 </div>]]></field>
         <field
             name="report_template"
@@ -50,14 +52,14 @@
             name="body_html"
         ><![CDATA[
 <div>
-    <p>Dear {{object.partner_id.name}},</p>
+    <p>Dear <span t-out="object.partner_id.name"/>,</p>
     <p>Thank you for supporting the work of the Granheim Foundation!</p>
     <p>Please find attached your tax report for last year.</p>
 
     <p>Best regards,</p>
 </div>
 <div>
-    {{user.signature | safe}}
+    <span t-out="user.signature"/>
 </div>]]></field>
         <field
             name="report_template"
