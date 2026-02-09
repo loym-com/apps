@@ -10,6 +10,7 @@
     "author": "Henrik Norlin,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-analytic",
     "depends": [
+        "analytic",
         "hr_expense",
     ],
 }
