@@ -1,8 +1,10 @@
-from odoo import models
+from odoo import api, models
 
 
 class Base(models.AbstractModel):
     _inherit = "base"
+
+    # Plan A: Change search order per model.
 
     def _setup_complete(self):
         super()._setup_complete()
@@ -13,3 +15,13 @@ class Base(models.AbstractModel):
         #     if model._fields.get('order_custom'):
         #         if model.order_custom:
         #             type(self)._order = model.order_custom  
+
+    # Plan B: Use XML field context to change the search order.
+
+    @api.model
+    def _search(self, domain, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
+        # Hvis context har 'order', bruk den
+        ctx_order = self.env.context.get('order')
+        if ctx_order:
+            order = ctx_order
+        return super(Base, self)._search(domain, offset=offset, limit=limit, order=order, count=count, access_rights_uid=access_rights_uid)

@@ -10,7 +10,8 @@
                     <attribute name="readonly">1</attribute>
                 </field>
                 <field name="order" position="after">
-                    <field name="order_custom" />
+                    <!-- Troubleshoot why custom order doesn't work in production databases, before enabling this field. -->
+                    <!-- <field name="order_custom" /> -->
                 </field>
             </data>
         </field>
