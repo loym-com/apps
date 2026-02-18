@@ -20,8 +20,7 @@ class Base(models.AbstractModel):
 
     @api.model
     def _search(self, domain, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
-        # Hvis context har 'order', bruk den
-        ctx_order = self.env.context.get('order')
+        ctx_order = self.env.context.get(f"{self._name} order")
         if ctx_order:
             order = ctx_order
         return super(Base, self)._search(domain, offset=offset, limit=limit, order=order, count=count, access_rights_uid=access_rights_uid)
