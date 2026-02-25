@@ -251,6 +251,7 @@ class AmeldingLogikk:
         return v
 
     def Inntektsmottaker(self, employee):
+        # TODO: Når inntektsmottaker får lønnsslipp, må arbeidsforholdet inkluderes selv om sluttdato er tidligere!
         use = False
         im = a.Inntektsmottaker()
         norskIdentifikator = _get(employee, "identification_id")

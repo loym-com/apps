@@ -11,21 +11,20 @@ class SaleOrderLine(models.Model):
 
     @api.model
     def _teamm2odoo(self):
-        # Set quantity to 0 (old booking) if no record found (new booking)
-        record = self._teamm2odoo_search()
-        if not record:
-            teamm_booking_id = self._teamm2odoo_get_value("teamm_booking_id")
-            lines = self.with_context(teamm_ignore_product=True)._teamm2odoo_search()
-            for line in lines:
-                if line.resource_booking_id.teamm_booking_id == teamm_booking_id:
-                    line.write({"product_uom_qty": 0})
-
         records = self._teamm2odoo_set_record()
 
         discounts = self._teamm2odoo_get_value("discounts")
         for discount in discounts:
             self = self.with_context(teamm_discount=discount)
             records |= self._teamm2odoo_set_record()
+
+        # Set quantity to 0 (old booking) if no record found (new booking)
+        # Set quantity to 0 (old discount) if the discount is not present in the booking
+        teamm_booking_id = self._teamm2odoo_get_value("teamm_booking_id")
+        if teamm_booking_id:
+            all_records = self.search([("resource_booking_id.teamm_booking_id", "=", teamm_booking_id)])
+            old_records = all_records - records
+            old_records.product_uom_qty = 0
 
         return records
 
