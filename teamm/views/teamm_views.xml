@@ -57,9 +57,25 @@
                         </h1>
                     </div>
                     <group name="main">
-                        <field name="src" />
-                        <field name="src_begin" />
-                        <field name="src_end" />
+                        <group>
+                            <field name="src_begin" />
+                            <field name="src_end" />
+                            <field name="src" />
+                            <field name="url" attrs="{'invisible': [('src', '!=', 'api')]}" />
+                        </group>
+                        <group attrs="{'invisible': [('src', 'not in', ['csv_file', 'csv_field'])]}">
+                            <p/>
+                            <p style="background-color:yellow;">
+                                <b>PLEASE CHECK THE CSV DATE FORMAT</b>
+                            </p>
+                            <field name="date_format"/>
+                        </group>
+                        <group>
+                            <field name="csv_delimiter" attrs="{'invisible': [('src', 'not in', ['csv_file', 'csv_field'])]}" />
+                            <field name="csv_file_name" invisible="1" />
+                            <field name="csv_file" filename="csv_file_name" attrs="{'invisible': [('src', '!=', 'csv_file')]}" />
+                            <field name="csv" attrs="{'invisible': [('src', '!=', 'csv_field')]}" />
+                        </group>
                         <field name="model_ids">
                             <tree editable="bottom">
                                 <field name="teamm_id" invisible="1" />
@@ -79,7 +95,6 @@
                                 <field name="aliases" />
                             </tree>
                         </field>
-                        <field name="url" attrs="{'invisible': [('src', '!=', 'api')]}" />
                         <field name="param_ids">
                             <tree editable="bottom">
                                 <field name="teamm_id" invisible="1" />
@@ -88,11 +103,6 @@
                                 <field name="value" />
                             </tree>
                         </field>
-                        <field name="date_format" attrs="{'invisible': [('src', '=', 'api')]}" />
-                        <field name="csv_delimiter" />
-                        <field name="csv_file_name" invisible="1" />
-                        <field name="csv_file" filename="csv_file_name" attrs="{'invisible': [('src', '!=', 'csv_file')]}" />
-                        <field name="csv" attrs="{'invisible': [('src', '!=', 'csv_field')]}" />
                     </group>
                 </sheet>
             </form>
