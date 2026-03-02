@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="app_menuitem_view_form" model="ir.ui.view">
+        <field name="name">app.menuitem.view.form</field>
+        <field name="model">app.menuitem</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_create_app"
+                            type="object"
+                            string="Create/Update App"
+                            class="btn-primary"
+                            attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="type" />
+                        <field name="parent_id" invisible="1" />
+                        <field name="action_id" attrs="{'invisible': [('type', '!=', 'action')]}"/>
+                        <field name="ir_model_id" attrs="{'invisible': [('type', '!=', 'model')]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Submenus" attrs="{'invisible': [('type', '!=', 'parent')]}">
+                            <field name="child_ids">
+                                <tree>
+                                    <field name="name" />
+                                    <field name="type" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Fields" attrs="{'invisible': ['|', ('type', '!=', 'model'), ('ir_model_id', '=', False)]}">
+                            <field name="field_ids" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+    <record id="app_menuitem_view_tree" model="ir.ui.view">
+        <field name="name">app.menuitem.view.tree</field>
+        <field name="model">app.menuitem</field>
+        <field name="arch" type="xml">
+            <tree>
+                        <field name="name" optional="show" />
+                        <field name="type" optional="show" />
+                        <field name="parent_id" optional="show" />
+                        <field name="child_ids" optional="show" widget="many2many_tags" />
+                        <field name="action_id" optional="show" />
+                        <field name="ir_model_id" optional="show" />
+                        <field name="field_ids" optional="show" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+    <record id="app_menuitem_view_kanban" model="ir.ui.view">
+        <field name="name">app.menuitem.view.kanban</field>
+        <field name="model">app.menuitem</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <field name="display_name" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="app_menuitem_view_pivot" model="ir.ui.view">
+        <field name="name">app.menuitem.view.pivot</field>
+        <field name="model">app.menuitem</field>
+        <field name="arch" type="xml">
+            <pivot>
+            </pivot>
+        </field>
+    </record>
+    <record id="app_menuitem_view_search" model="ir.ui.view">
+        <field name="name">app.menuitem.view.search</field>
+        <field name="model">app.menuitem</field>
+        <field name="arch" type="xml">
+            <search>
+                        <field name="name" />
+                        <field name="type" />
+                        <field name="parent_id" />
+                        <field name="child_ids" />
+                        <field name="action_id" />
+                        <field name="ir_model_id" />
+                        <field name="field_ids" />
+                <group string="Group By">
+                    <filter
+                        string="Name"
+                        name="name"
+                        context="{'group_by':'name'}"
+                    />
+                    <filter
+                        string="Type"
+                        name="type"
+                        context="{'group_by':'type'}"
+                    />
+                    <filter
+                        string="Parent Id"
+                        name="parent_id"
+                        context="{'group_by':'parent_id'}"
+                    />
+                    <filter
+                        string="Child Ids"
+                        name="child_ids"
+                        context="{'group_by':'child_ids'}"
+                    />
+                    <filter
+                        string="Action Id"
+                        name="action_id"
+                        context="{'group_by':'action_id'}"
+                    />
+                    <filter
+                        string="Ir Model Id"
+                        name="ir_model_id"
+                        context="{'group_by':'ir_model_id'}"
+                    />
+                    <filter
+                        string="Field Ids"
+                        name="field_ids"
+                        context="{'group_by':'field_ids'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="app_menuitem_action" model="ir.actions.act_window">
+        <field name="name">My Apps</field>
+        <field name="res_model">app.menuitem</field>
+        <field name="view_mode">tree,kanban,pivot,form</field>
+        <field name="domain">[('parent_id', '=', False)]</field>
+    </record>
+</odoo>

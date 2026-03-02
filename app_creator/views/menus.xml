@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="app_creator_main_menu"
+        parent=""
+        name="App Creator"
+    />
+    <menuitem
+        id="app_menuitem_menu"
+        action="app_menuitem_action"
+        parent="app_creator_main_menu"
+        name="My Apps"
+        sequence="0"
+    />
+    <menuitem
+        id="app_field_menu"
+        action="app_field_action"
+        parent="app_creator_main_menu"
+        name="App Field"
+        sequence="7"
+    />
+    <menuitem
+        id="app_field_attribute_menu"
+        action="app_field_attribute_action"
+        parent="app_creator_main_menu"
+        name="App Field Attribute"
+        sequence="11"
+    />
+    <menuitem
+        id="app_attribute_menu"
+        action="app_attribute_action"
+        parent="app_creator_main_menu"
+        name="App Attribute"
+        sequence="15"
+    />
+    <menuitem
+        id="app_datatype_menu"
+        action="app_datatype_action"
+        parent="app_creator_main_menu"
+        name="App Datatype"
+        sequence="17"
+    />
+</odoo>

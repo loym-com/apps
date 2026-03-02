@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="app_attribute_view_form" model="ir.ui.view">
+        <field name="name">app.attribute.view.form</field>
+        <field name="model">app.attribute</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="datatype_ids" />
+                    </group>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+    <record id="app_attribute_view_tree" model="ir.ui.view">
+        <field name="name">app.attribute.view.tree</field>
+        <field name="model">app.attribute</field>
+        <field name="arch" type="xml">
+            <tree>
+                        <field name="name" optional="show" />
+                        <field name="datatype_ids" optional="show" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+    <record id="app_attribute_view_kanban" model="ir.ui.view">
+        <field name="name">app.attribute.view.kanban</field>
+        <field name="model">app.attribute</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <field name="display_name" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="app_attribute_view_pivot" model="ir.ui.view">
+        <field name="name">app.attribute.view.pivot</field>
+        <field name="model">app.attribute</field>
+        <field name="arch" type="xml">
+            <pivot>
+            </pivot>
+        </field>
+    </record>
+    <record id="app_attribute_view_search" model="ir.ui.view">
+        <field name="name">app.attribute.view.search</field>
+        <field name="model">app.attribute</field>
+        <field name="arch" type="xml">
+            <search>
+                        <field name="name" />
+                        <field name="datatype_ids" />
+                <group string="Group By">
+                    <filter
+                        string="Name"
+                        name="name"
+                        context="{'group_by':'name'}"
+                    />
+                    <filter
+                        string="Datatype Ids"
+                        name="datatype_ids"
+                        context="{'group_by':'datatype_ids'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="app_attribute_action" model="ir.actions.act_window">
+        <field name="name">App Attribute</field>
+        <field name="res_model">app.attribute</field>
+        <field name="view_mode">tree,kanban,pivot,form</field>
+    </record>
+</odoo>
