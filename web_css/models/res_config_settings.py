@@ -11,9 +11,9 @@ VARIABLES = {
 Example:
 $o-brand-odoo: #714B67;
 $o-brand-primary: #017e84;
-$o-border-radius: .5rem;
-$o-view-background-color: pink;
-$o-webclient-background-color: purple;
+$o-border-radius: 10px;
+$o-view-background-color: white;
+$o-webclient-background-color: white;
 */
 """
 }
@@ -24,8 +24,10 @@ BACKEND = {
     "SCSS": """
 /*
 Example:
-div.o_kanban_renderer {
-    background-color: white;
+div.o_form_sheet, div.o_kanban_record {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2);
 }
 */
 """
