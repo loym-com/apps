@@ -57,26 +57,25 @@ class ResConfigSettings(models.TransientModel):
         res = super().set_values()
 
         for ITEM in [VARIABLES, BACKEND]:
+            new_value = (getattr(self, ITEM["FIELD"]) or "").strip()
+            new_datas = base64.b64encode(new_value.encode("utf-8"))
+
             asset = self.env["ir.asset"].search([("path", "=", PATH(ITEM))])
             attachment = self.env["ir.attachment"].search([("url", "=", PATH(ITEM))])
             if asset or attachment:
                 asset.ensure_one()
                 attachment.ensure_one()
-
-                current = (getattr(self, ITEM["FIELD"]) or "").strip()
-                existing = base64.b64decode(attachment.datas).decode("utf-8").strip()
-                if current == existing:
+                old_value = base64.b64decode(attachment.datas).decode("utf-8").strip()
+                if new_value == old_value:
                     continue
-
-                datas = base64.b64encode(current.encode("utf-8"))
-                attachment.write({"datas": datas})
+                attachment.write({"datas": new_datas})
                 self.env.registry._clear_cache()
             else:
                 attachment_values = {
                     "name": PATH(ITEM),
                     "type": "binary",
                     "mimetype": "text/scss",
-                    "datas": datas,
+                    "datas": new_datas,
                     "url": PATH(ITEM),
                 }
                 asset_values = {
