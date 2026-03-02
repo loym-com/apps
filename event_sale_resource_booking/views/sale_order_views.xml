@@ -6,8 +6,8 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']//tree//field[@name='product_template_id']" position="after">
-                <field name="resource_booking_ids" optional="hide" widget="many2many_tags"/>
-                <field name="event_registration_id" optional="hide" />
+                <field name="resource_booking_ids" optional="hide" widget="many2many_tags" groups="base.group_no_one"/>
+                <field name="event_registration_id" optional="hide" groups="base.group_no_one"/>
             </xpath>
         </field>
     </record>
