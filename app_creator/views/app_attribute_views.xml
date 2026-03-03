@@ -8,6 +8,7 @@
                 <sheet>
                     <group>
                         <field name="name" />
+                        <field name="code" />
                         <field name="datatype_ids" />
                     </group>
                 </sheet>
@@ -25,6 +26,7 @@
         <field name="arch" type="xml">
             <tree>
                         <field name="name" optional="show" />
+                        <field name="code" optional="show" />
                         <field name="datatype_ids" optional="show" widget="many2many_tags" />
             </tree>
         </field>

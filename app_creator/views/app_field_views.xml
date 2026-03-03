@@ -29,6 +29,7 @@
         <field name="model">app.field</field>
         <field name="arch" type="xml">
             <tree>
+                        <field name="sequence" widget="handle"/>
                         <field name="name" optional="show" />
                         <field name="menuitem_id" optional="show" />
                         <field name="ir_model_fields_id" optional="show" />

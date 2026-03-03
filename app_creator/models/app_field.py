@@ -4,8 +4,14 @@ class AppField(models.Model):
     _name = "app.field"
     _description = "app.field"
     _inherit = ['mail.thread', 'mail.activity.mixin']
+    _order = "sequence"
+
+    def _compute_name(self):
+        for record in self:
+            record.name = record.ir_model_fields_id.display_name if record.ir_model_fields_id else ""
 
     name = fields.Char(
+        compute="_compute_name",
     )
     menuitem_id = fields.Many2one(
         comodel_name="app.menuitem",
@@ -23,3 +29,4 @@ class AppField(models.Model):
         comodel_name="app.field.attribute",
         inverse_name="field_id",
     )
+    sequence = fields.Integer(default=10)

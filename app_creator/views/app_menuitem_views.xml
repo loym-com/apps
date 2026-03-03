@@ -16,15 +16,18 @@
                 <sheet>
                     <group>
                         <field name="name" />
+                        <field name="code" />
                         <field name="type" />
                         <field name="parent_id" invisible="1" />
                         <field name="action_id" attrs="{'invisible': [('type', '!=', 'action')]}"/>
                         <field name="ir_model_id" attrs="{'invisible': [('type', '!=', 'model')]}"/>
+                        <field name="sequence"/>
                     </group>
                     <notebook>
                         <page string="Submenus" attrs="{'invisible': [('type', '!=', 'parent')]}">
                             <field name="child_ids">
                                 <tree>
+                                    <field name="sequence" widget="handle"/>
                                     <field name="name" />
                                     <field name="type" />
                                 </tree>
@@ -48,7 +51,9 @@
         <field name="model">app.menuitem</field>
         <field name="arch" type="xml">
             <tree>
+                        <field name="sequence" widget="handle"/>
                         <field name="name" optional="show" />
+                        <field name="code" optional="show" />
                         <field name="type" optional="show" />
                         <field name="parent_id" optional="show" />
                         <field name="child_ids" optional="show" widget="many2many_tags" />

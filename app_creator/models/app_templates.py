@@ -48,6 +48,7 @@ view = """
     <record id="{_model_}_view_{view}" model="ir.ui.view">
         <field name="name">{model}.view.{view}</field>
         <field name="model">{model}</field>
+        <field name="priority" eval="100"/>
         <field name="arch" type="xml">
             <{view}>{content}
             </{view}>
@@ -95,20 +96,26 @@ action = """
         <field name="name">{model_title}</field>
         <field name="res_model">{model}</field>
         <field name="view_mode">tree,kanban,pivot,form</field>
-    </record>"""
-
-menu_main = """
-    <menuitem
-        id="{app}_main_menu"
-        parent="{parent_menu_extid}"
-        name="{app_title}"
-    />"""
-
-menu_item = """
-    <menuitem
-        id="{_model_}_menu"
-        action="{_model_}_action"
-        parent="{app}_main_menu"
-        name="{model_title}"
-        sequence="{sequence}"
-    />"""
+    </record>
+    <record id="{_model_}_action_tree" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="{_model_}_action"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="{_model_}_view_tree"/>
+    </record>
+    <record id="{_model_}_action_form" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="{_model_}_action"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="{_model_}_view_form"/>
+    </record>
+    <record id="{_model_}_action_kanban" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="{_model_}_action"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="{_model_}_view_kanban"/>
+    </record>
+    <record id="{_model_}_action_pivot" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="{_model_}_action"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="{_model_}_view_pivot"/>
+    </record>
+    
+    """
