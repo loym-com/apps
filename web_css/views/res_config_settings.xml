@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('settings')]" position="inside">
                 <div class="app_settings_block" data-string="CSS" string="CSS" data-key="web_css">
-                    <div id="css_variables" class="mt16">
+                    <div id="css_variables">
                         <h2>Variables</h2>
                         <div class="row mt16 o_settings_container" name="css_variables_setting_container">
                             <div class="col-12 o_setting_box">
@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="css_backend" class="mt16">
+                    <div id="css_backend">
                         <h2>Backend</h2>
                         <div class="row mt16 o_settings_container" name="css_backend_setting_container">
                             <div class="col-12 o_setting_box">
