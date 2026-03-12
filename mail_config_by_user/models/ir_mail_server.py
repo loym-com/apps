@@ -10,16 +10,16 @@ class IrMailServer(models.Model):
     smtp_ssl_private_key = fields.Binary(groups=False)
 
     def open_google_gmail_uri(self):
-        if self.the_user_is_accessing_its_own_mail_settings():
-            self = self.sudo()
+        if self._the_user_is_accessing_its_own_mail_settings():
+            self = self._get_admin_rights()
         return super().open_google_gmail_uri()
 
     def test_smtp_connection(self):
-        if self.the_user_is_accessing_its_own_mail_settings():
-            self = self.sudo()
+        if self._the_user_is_accessing_its_own_mail_settings():
+            self = self._get_admin_rights()
         return super().test_smtp_connection()
 
-    def the_user_is_accessing_its_own_mail_settings(self, user):
+    def _the_user_is_accessing_its_own_mail_settings(self, user):
         """
         The user is accessing its own mail settings
         if the from_filter and smtp_user are both equal to the user's login.
@@ -30,3 +30,7 @@ class IrMailServer(models.Model):
             self.env.user.login,
         )
         return len(values) == 1
+
+    def _get_admin_rights(self):
+        admin_env = self.env(user=self.env.ref('base.user_admin'))
+        return self.with_env(admin_env)
