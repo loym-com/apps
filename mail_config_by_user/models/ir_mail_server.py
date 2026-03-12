@@ -9,15 +9,24 @@ class IrMailServer(models.Model):
     smtp_ssl_certificate = fields.Binary(groups=False)
     smtp_ssl_private_key = fields.Binary(groups=False)
 
+    def open_google_gmail_uri(self):
+        if self.the_user_is_accessing_its_own_mail_settings():
+            self = self.sudo()
+        return super().open_google_gmail_uri()
+
     def test_smtp_connection(self):
+        if self.the_user_is_accessing_its_own_mail_settings():
+            self = self.sudo()
+        return super().test_smtp_connection()
+
+    def the_user_is_accessing_its_own_mail_settings(self, user):
+        """
+        The user is accessing its own mail settings
+        if the from_filter and smtp_user are both equal to the user's login.
+        """
         values = set(
             self.from_filter,
             self.smtp_user,
             self.env.user.login,
         )
-        if len(values) == 1:
-            # The user is testing its own connection.
-            # Use sudo to allow access to the credentials.
-            return super(IrMailServer, self.sudo()).test_smtp_connection()
-        else:
-            return super().test_smtp_connection()
+        return len(values) == 1
