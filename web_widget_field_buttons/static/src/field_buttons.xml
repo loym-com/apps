@@ -19,13 +19,13 @@
     <t t-name="web_widget_popover.Many2oneButtonsField" owl="1">
         <div class="o_many2one_buttons">
             <t t-foreach="records" t-as="record" t-key="record.id">
-                <!-- <button
+                <button
                     type="button"
-                    t-att-class="'btn btn-sm ' + (props.value.records.some(r => r.data.id === record.id) ? 'btn-primary' : 'btn-secondary')"
-                    t-on-click="() => this.setMany2one(record.id)"
+                    t-att-class="'btn btn-sm ' + (props.value[0] === record.id ? 'btn-primary' : 'btn-secondary')"
+                    t-on-click="() => this.setMany2one(record)"
                 >
                     <t t-esc="record.display_name" />
-                </button> -->
+                </button>
             </t>
         </div>
     </t>

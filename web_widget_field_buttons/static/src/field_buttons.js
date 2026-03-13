@@ -5,6 +5,7 @@ import { Component, useState, onMounted, onWillStart, onWillUpdateProps, useRef 
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {Many2ManyTagsField} from "@web/views/fields/many2many_tags/many2many_tags_field";
+import {Many2OneField} from "@web/views/fields/many2one/many2one_field";
 
 // Selection
 
@@ -33,7 +34,7 @@ function setupFetchRecords(context) {
 
 // Many2one
 
-export class Many2oneButtonsField extends Many2ManyTagsField {
+export class Many2oneButtonsField extends Many2OneField {
     static template = "web_widget_popover.Many2oneButtonsField";
 
     setup() {
@@ -41,8 +42,8 @@ export class Many2oneButtonsField extends Many2ManyTagsField {
         setupFetchRecords(this);
     }
 
-    setMany2one(recordId) {
-        this.props.update(recordId);
+    setMany2one(record) {
+        this.props.update([record.id, record.display_name]);
     }
 }
 registry.category("fields").add("many2one_buttons", Many2oneButtonsField);
