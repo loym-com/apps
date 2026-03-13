@@ -17,6 +17,20 @@ export class SelectionButtonsField extends Component {
 }
 registry.category("fields").add("selection_buttons", SelectionButtonsField);
 
+// Relational (Many2one and Many2many)
+
+function setupFetchRecords(context) {
+    /* Use records because props.records disappears after clicking the buttons */
+    context.records = useState([]);
+    onWillStart(() => {
+        const model = context.props.record.fields[context.props.name]?.relation;
+        context.env.services.orm.searchRead(model, [], ["id", "display_name"])
+            .then((records) => {
+                context.records.splice(0, context.records.length, ...records);
+            });
+    });
+}
+
 // Many2one
 
 export class Many2oneButtonsField extends Many2ManyTagsField {
@@ -24,21 +38,7 @@ export class Many2oneButtonsField extends Many2ManyTagsField {
 
     setup() {
         super.setup();
-        /* this.props.records fails, so we use a local state to store the records instead */
-        this.records = useState([]);
-        onWillStart(() => {
-            this.fetchRecords();
-        });
-    }
-
-    async fetchRecords() {
-        const model = this.props.record.fields[this.props.name]?.relation;
-        const records = await this.env.services.orm.searchRead(
-            model,
-            [],
-            ["id", "display_name"],
-        );
-        this.records.splice(0, this.records.length, ...records);
+        setupFetchRecords(this);
     }
 
     setMany2one(recordId) {
@@ -54,21 +54,7 @@ export class Many2manyButtonsField extends Many2ManyTagsField {
 
     setup() {
         super.setup();
-        /* this.props.records fails, so we use a local state to store the records instead */
-        this.records = useState([]);
-        onWillStart(() => {
-            this.fetchRecords();
-        });
-    }
-
-    async fetchRecords() {
-        const model = this.props.record.fields[this.props.name]?.relation;
-        const records = await this.env.services.orm.searchRead(
-            model,
-            [],
-            ["id", "display_name"],
-        );
-        this.records.splice(0, this.records.length, ...records);
+        setupFetchRecords(this);
     }
 
     toggleMany2many(recordId) {
