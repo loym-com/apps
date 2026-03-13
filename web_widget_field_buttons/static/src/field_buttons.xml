@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_widget_popover.SelectionButtonsField" owl="1">
+        <div class="o_selection_buttons">
+            <t t-foreach="props.record.fields.type.selection" t-as="option" t-key="option[0]">
+                <button
+                    type="button"
+                    t-att-class="'btn btn-sm ' + (props.value === option[0] ? 'btn-primary' : 'btn-secondary')"
+                    t-on-click="() => this.setSelection(option[0])"
+                >
+                    <t t-esc="option[1]" />
+                </button>
+                <br/>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="web_widget_popover.Many2oneButtonsField" owl="1">
+        <div class="o_many2one_buttons">
+            <t t-foreach="records" t-as="record" t-key="record.id">
+                <!-- <button
+                    type="button"
+                    t-att-class="'btn btn-sm ' + (props.value.records.some(r => r.data.id === record.id) ? 'btn-primary' : 'btn-secondary')"
+                    t-on-click="() => this.setMany2one(record.id)"
+                >
+                    <t t-esc="record.display_name" />
+                </button> -->
+            </t>
+        </div>
+    </t>
+
+    <t t-name="web_widget_popover.Many2manyButtonsField" owl="1">
+        <div class="o_many2many_buttons">
+            <t t-foreach="records" t-as="record" t-key="record.id">
+                <button
+                    type="button"
+                    t-att-class="'btn btn-sm ' + (props.value.records.some(r => r.data.id === record.id) ? 'btn-primary' : 'btn-secondary')"
+                    t-on-click="() => this.toggleMany2many(record.id)"
+                >
+                    <t t-esc="record.display_name" />
+                </button>
+            </t>
+        </div>
+    </t>
+
+</templates>
