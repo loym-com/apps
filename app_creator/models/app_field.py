@@ -8,7 +8,7 @@ class AppField(models.Model):
 
     def _compute_name(self):
         for record in self:
-            record.name = record.ir_model_fields_id.display_name if record.ir_model_fields_id else ""
+            record.name = record.ir_model_fields_id.field_description
 
     name = fields.Char(
         compute="_compute_name",
@@ -24,9 +24,16 @@ class AppField(models.Model):
     ir_model_fields_id = fields.Many2one(
         comodel_name="ir.model.fields",
         string="Field",
+        required=False, # ValueError: Field ir_model_fields_id of model app.field is defined as ondelete='restrict' while having ir.model.fields as comodel, the 'restrict' mode is not supported for this type of field as comodel.
     )
-    attribute_ids = fields.One2many(
+    form_attribute_ids = fields.One2many(
         comodel_name="app.field.attribute",
         inverse_name="field_id",
+        domain=[('viewtype', '=', 'form')],
+    )
+    list_attribute_ids = fields.One2many(
+        comodel_name="app.field.attribute",
+        inverse_name="field_id",
+        domain=[('viewtype', '=', 'list')],
     )
     sequence = fields.Integer(default=10)

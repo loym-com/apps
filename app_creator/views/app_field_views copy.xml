@@ -6,40 +6,30 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <!-- <group>
+                        <field name="name" />
+                        <field
+                            name="menuitem_id"
+                            domain="[('type', '=', 'model')]"
+                            invisible="1"
+                        />
+                        <field name="ir_model_id" invisible="1"/>
+                        <field
+                            name="ir_model_fields_id"
+                            domain="[('model_id', '=', ir_model_id)]"
+                            attrs="{'invisible': [('menuitem_id', '=', False)]}"
+                        />
+                        <field name="form_attribute_ids" attrs="{'invisible': [('ir_model_fields_id', '=', False)]}"/>
+                        <field name="list_attribute_ids" attrs="{'invisible': [('ir_model_fields_id', '=', False)]}"/>
+                    </group> -->
                     <group>
                         <field name="ir_model_id" invisible="1"/>
                         <field
                             name="ir_model_fields_id"
                             domain="[('model_id', '=', ir_model_id)]"
                         />
-                        <field
-                            name="form_attribute_ids"
-                            context="{'default_viewtype': 'form'}"
-                            attrs="{'invisible': [('ir_model_fields_id', '=', False)]}"
-                        >
-                            <tree editable="bottom">
-                                <!-- <field name="field_id" invisible="0" /> -->
-                                <field name="datatype" invisible="1" />
-                                <field name="viewtype" invisible="1" />
-                                <field name="attribute_id" />
-                                <field name="value_selection" attrs="{'readonly': [('value_char', '!=', False)]}" />
-                                <field name="value_char" attrs="{'readonly': [('value_selection', '!=', False)]}" />
-                            </tree>
-                        </field>
-                        <field
-                            name="list_attribute_ids"
-                            context="{'default_viewtype': 'list'}"
-                            attrs="{'invisible': [('ir_model_fields_id', '=', False)]}"
-                        >
-                            <tree editable="bottom">
-                                <!-- <field name="field_id" invisible="0" /> -->
-                                <field name="datatype" invisible="1" />
-                                <field name="viewtype" invisible="1" />
-                                <field name="attribute_id" />
-                                <field name="value_selection" attrs="{'readonly': [('value_char', '!=', False)]}" />
-                                <field name="value_char" attrs="{'readonly': [('value_selection', '!=', False)]}" />
-                            </tree>
-                        </field>
+                        <field name="form_attribute_ids" attrs="{'invisible': [('ir_model_fields_id', '=', False)]}"/>
+                        <field name="list_attribute_ids" attrs="{'invisible': [('ir_model_fields_id', '=', False)]}"/>
                     </group>
                 </sheet>
             </form>
@@ -51,6 +41,7 @@
         <field name="arch" type="xml">
             <tree>
                         <field name="sequence" widget="handle"/>
+                        <!-- <field name="name" optional="show" /> -->
                         <field name="menuitem_id" optional="show" />
                         <field name="ir_model_fields_id" optional="show" />
                         <field name="form_attribute_ids" optional="show" widget="many2many_tags" />
@@ -89,6 +80,22 @@
                         <field name="name" />
                         <field name="menuitem_id" />
                         <field name="ir_model_fields_id" />
+                        <field name="form_attribute_ids" context="{'default_viewtype': 'form'}">
+                            <tree editable="bottom">
+                                <field name="field_id" insvisible="0" />
+                                <!-- <field name="view" invisible="0" /> -->
+                                <field name="attribute_id" />
+                                <field name="value_char" />
+                            </tree>
+                        </field>
+                        <field name="list_attribute_ids" context="{'default_viewtype': 'list'}">
+                            <tree editable="bottom">
+                                <field name="field_id" insvisible="0" />
+                                <!-- <field name="view" invisible="0" /> -->
+                                <field name="attribute_id" />
+                                <field name="value_char" />
+                            </tree>
+                        </field>
                 <group string="Group By">
                     <filter
                         string="Name"

@@ -1,0 +1,30 @@
+<odoo>
+    <record id="app_datatype_char" model="app.datatype">
+        <field name="name">Short text</field>
+        <field name="code">char</field>
+    </record>
+    <record id="app_datatype_integer" model="app.datatype">
+        <field name="name">Number</field>
+        <field name="code">integer</field>
+    </record>
+    <record id="app_datatype_float" model="app.datatype">
+        <field name="name">Decimal</field>
+        <field name="code">float</field>
+    </record>
+    <record id="app_datatype_boolean" model="app.datatype">
+        <field name="name">Yes/No</field>
+        <field name="code">boolean</field>
+    </record>
+    <record id="app_datatype_selection" model="app.datatype">
+        <field name="name">Selection</field>
+        <field name="code">selection</field>
+    </record>
+    <record id="app_datatype_many2one" model="app.datatype">
+        <field name="name">Many2one</field>
+        <field name="code">many2one</field>
+    </record>
+    <record id="app_datatype_many2many" model="app.datatype">
+        <field name="name">Many2many</field>
+        <field name="code">many2many</field>
+    </record>
+</odoo>

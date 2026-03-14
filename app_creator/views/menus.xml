@@ -9,35 +9,35 @@
         id="app_menuitem_menu"
         action="app_menuitem_action"
         parent="app_creator_main_menu"
-        name="My Apps"
+        name="My Menus"
         sequence="0"
     />
-    <menuitem
+    <!-- <menuitem
         id="app_field_menu"
         action="app_field_action"
         parent="app_creator_main_menu"
-        name="App Field"
+        name="App Fields"
         sequence="7"
     />
     <menuitem
         id="app_field_attribute_menu"
         action="app_field_attribute_action"
         parent="app_creator_main_menu"
-        name="App Field Attribute"
+        name="App Field Attributes"
         sequence="11"
     />
     <menuitem
         id="app_attribute_menu"
         action="app_attribute_action"
         parent="app_creator_main_menu"
-        name="App Attribute"
+        name="App Attributes"
         sequence="15"
     />
     <menuitem
         id="app_datatype_menu"
         action="app_datatype_action"
         parent="app_creator_main_menu"
-        name="App Datatype"
+        name="App Datatypes"
         sequence="17"
-    />
+    /> -->
 </odoo>

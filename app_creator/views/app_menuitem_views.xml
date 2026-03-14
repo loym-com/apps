@@ -17,24 +17,33 @@
                     <group>
                         <field name="name" />
                         <field name="code" />
+                        <field name="parent_id" invisible="0" />
+                        <field name="sequence"/>
                         <field name="type" />
-                        <field name="parent_id" invisible="1" />
                         <field name="action_id" attrs="{'invisible': [('type', '!=', 'action')]}"/>
                         <field name="ir_model_id" attrs="{'invisible': [('type', '!=', 'model')]}"/>
-                        <field name="sequence"/>
                     </group>
                     <notebook>
                         <page string="Submenus" attrs="{'invisible': [('type', '!=', 'parent')]}">
-                            <field name="child_ids">
+                            <field name="child_ids" form_view_ref="app_menuitem_view_form">
                                 <tree>
                                     <field name="sequence" widget="handle"/>
                                     <field name="name" />
                                     <field name="type" />
+                                    <button name="action_open_form" type="object" string="Open Form" class="btn-primary"/>
                                 </tree>
                             </field>
                         </page>
                         <page string="Fields" attrs="{'invisible': ['|', ('type', '!=', 'model'), ('ir_model_id', '=', False)]}">
-                            <field name="field_ids" />
+                            <field name="field_ids">
+                                <tree>
+                                    <field name="sequence" widget="handle"/>
+                                    <!-- <field name="name" /> -->
+                                    <field name="ir_model_fields_id" />
+                                    <field name="form_attribute_ids" widget="many2many_tags" />
+                                    <field name="list_attribute_ids" widget="many2many_tags" />
+                                </tree>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
@@ -53,13 +62,13 @@
             <tree>
                         <field name="sequence" widget="handle"/>
                         <field name="name" optional="show" />
-                        <field name="code" optional="show" />
+                        <!-- <field name="code" optional="show" /> -->
                         <field name="type" optional="show" />
-                        <field name="parent_id" optional="show" />
-                        <field name="child_ids" optional="show" widget="many2many_tags" />
+                        <!-- <field name="parent_id" optional="show" /> -->
+                        <!-- <field name="child_ids" optional="show" widget="many2many_tags" />
                         <field name="action_id" optional="show" />
                         <field name="ir_model_id" optional="show" />
-                        <field name="field_ids" optional="show" widget="many2many_tags" />
+                        <field name="field_ids" optional="show" widget="many2many_tags" /> -->
             </tree>
         </field>
     </record>
@@ -139,7 +148,7 @@
         </field>
     </record>
     <record id="app_menuitem_action" model="ir.actions.act_window">
-        <field name="name">My Apps</field>
+        <field name="name">My Menus</field>
         <field name="res_model">app.menuitem</field>
         <field name="view_mode">tree,kanban,pivot,form</field>
         <field name="domain">[('parent_id', '=', False)]</field>

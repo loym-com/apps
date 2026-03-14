@@ -8,8 +8,10 @@
                 <sheet>
                     <group>
                         <field name="field_id" />
-                        <field name="view" />
+                        <field name="datatype" readonly="1" />
+                        <field name="viewtype" />
                         <field name="attribute_id" />
+                        <field name="value_selection" />
                         <field name="value_char" />
                     </group>
                 </sheet>
@@ -27,8 +29,9 @@
         <field name="arch" type="xml">
             <tree>
                         <field name="field_id" optional="show" />
-                        <field name="view" optional="show" />
+                        <field name="viewtype" optional="show" />
                         <field name="attribute_id" optional="show" />
+                        <field name="value_selection" optional="show" />
                         <field name="value_char" optional="show" />
             </tree>
         </field>
@@ -62,14 +65,14 @@
         <field name="arch" type="xml">
             <search>
                         <field name="field_id" />
-                        <field name="view" />
+                        <field name="viewtype" />
                         <field name="attribute_id" />
                         <field name="value_char" />
                 <group string="Group By">
                     <filter
-                        string="View"
-                        name="view"
-                        context="{'group_by':'view'}"
+                        string="Viewtype"
+                        name="viewtype"
+                        context="{'group_by':'viewtype'}"
                     />
                     <filter
                         string="Field Id"

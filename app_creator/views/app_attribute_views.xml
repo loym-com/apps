@@ -9,7 +9,17 @@
                     <group>
                         <field name="name" />
                         <field name="code" />
-                        <field name="datatype_ids" />
+                        <field name="datatype_ids">
+                            <tree editable="bottom">
+                                <field name="name" />
+                            </tree>
+                        </field>
+                        <field name="selection_ids">
+                            <tree editable="bottom">
+                                <field name="name" />
+                                <field name="code" />
+                            </tree>
+                        </field>
                     </group>
                 </sheet>
                 <!-- <div class="oe_chatter">

@@ -11,3 +11,7 @@ class AppAttribute(models.Model):
         comodel_name="app.datatype",
         relation="app_datatype_attribute_rel",
     )
+    selection_ids = fields.One2many(
+        comodel_name="app.attribute.selection",
+        inverse_name="attribute_id",
+    )

@@ -3,4 +3,5 @@ access_app_menuitem,app.menuitem,model_app_menuitem,base.group_user,1,1,1,1
 access_app_field,app.field,model_app_field,base.group_user,1,1,1,1
 access_app_field_attribute,app.field.attribute,model_app_field_attribute,base.group_user,1,1,1,1
 access_app_attribute,app.attribute,model_app_attribute,base.group_user,1,1,1,1
+access_app_attribute_selection,app.attribute.selection,model_app_attribute_selection,base.group_user,1,1,1,1
 access_app_datatype,app.datatype,model_app_datatype,base.group_user,1,1,1,1

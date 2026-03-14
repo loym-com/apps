@@ -35,6 +35,7 @@ class AppMenuitem(models.Model):
     )
     parent_id = fields.Many2one(
         comodel_name="app.menuitem",
+        domain="[('type', '=', 'parent')]",
     )
     child_ids = fields.One2many(
         comodel_name="app.menuitem",
@@ -49,8 +50,18 @@ class AppMenuitem(models.Model):
     field_ids = fields.One2many(
         comodel_name="app.field",
         inverse_name="menuitem_id",
+        string="Fields",
     )
     sequence = fields.Integer(default=10)
+
+    def action_open_form(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'app.menuitem',
+            'view_mode': 'form',
+            'res_id': self.id,
+        }
 
     def action_create_app(self):
         self.ensure_one()
