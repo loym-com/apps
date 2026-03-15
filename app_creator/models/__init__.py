@@ -1,5 +1,6 @@
 from . import app_datatype
 from . import app_menuitem
+from . import app_view
 from . import app_viewitem
 from . import app_viewitem_attr
 from . import app_xml_attr

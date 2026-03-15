@@ -11,10 +11,10 @@ class AppFieldAttribute(models.Model):
     name = fields.Char(
         compute="_compute_name",
     )
-    viewtype = fields.Selection(
+    view_type = fields.Selection(
         selection=[('form', 'Form'), ('list', 'List')],
         required=True,
-        default=lambda self: self.env.context.get('default_viewtype'),
+        default=lambda self: self.env.context.get('default_view_type'),
     )
     field_id = fields.Many2one(
         comodel_name="app.field",

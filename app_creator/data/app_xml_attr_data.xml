@@ -35,6 +35,7 @@
     <record id="attr_list_editable" model="app.xml.attr">
         <field name="name">Editable</field>
         <field name="code">editable</field>
+        <field name="xml_tag_ids" eval="[(4, ref('app_creator.tag_view_list'))]"/>
     </record>
     <record id="attr_list_editable_top" model="app.xml.attr.option">
         <field name="name">Top</field>

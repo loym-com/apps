@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="app_view_view_form" model="ir.ui.view">
+        <field name="name">app.view.view.form</field>
+        <field name="model">app.view</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="menuitem_id" invisible="1"/>
+                        <field name="view_type" />
+                    </group>
+                    <group>
+                        <group name="attrs" string="Attributes" attrs="{'invisible': [('view_type', '=', False)]}">
+                            <field name="attr_ids" nolabel="1" colspan="2">
+                                <tree editable="bottom">
+                                    <field name="xml_attr_domain_ids" invisible="1"/>
+                                    <field name="xml_attr_id" domain="[('id', 'in', xml_attr_domain_ids)]"/>
+                                    <field name="value_option" attrs="{'readonly': [('value_char', '!=', False)]}" />
+                                    <field name="value_char" attrs="{'readonly': [('value_option', '!=', False)]}" />
+                                </tree>
+                            </field>
+                            <field name="attr_char"/>
+                        </group>
+                        <group name="viewitem_ids" string="Fields/Tags" attrs="{'invisible': [('view_type', '=', False)]}">
+                            <field name="viewitem_ids" nolabel="1" colspan="2">
+                                <tree create="0" editable="bottom">
+                                    <field name="xml_tag_domain_ids" invisible="1"/>
+                                    <field name="xml_tag_id" domain="[('id', 'in', xml_tag_domain_ids)]"/>
+                                    <field name="ir_model_fields_id" />
+                                    <field name="attr_ids" widget="many2many_tags" />
+                                    <field name="id" invisible="1"/>
+                                    <button name="action_open_viewitem" type="object" string="Open" class="btn-primary" context="{'viewitem_id': id}"/>
+                                </tree>
+                            </field>
+                            <button name="action_add_viewitem" type="object" string="Add a field or xml tag" class="btn-primary" colspan="2"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

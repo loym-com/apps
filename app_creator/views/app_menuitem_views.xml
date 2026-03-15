@@ -23,11 +23,11 @@
                             <field name="ir_model_id" attrs="{'invisible': [('show', '!=', 'model')]}"/>
                         </group>
                         <group>
-                            <field name="parent_id" />
-                            <field name="sequence"/>
+                            <field name="root_menu_id" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+                            <field name="parent_id" invisible="1" />
+                            <field name="sequence" invisible="1" />
                         </group>
-                        <group name="submenus" attrs="{'invisible': [('show', '!=', 'menus')]}">
-                            <button name="action_add_submenu" type="object" string="Add Submenu" class="btn-primary" colspan="2"/>
+                        <group name="menus" attrs="{'invisible': [('show', '!=', 'menus')]}">
                             <field name="child_ids" nolabel="1" colspan="2">
                                 <tree create="0">
                                     <field name="sequence" widget="handle"/>
@@ -36,16 +36,18 @@
                                     <button name="action_open_menuitem" type="object" string="Open" class="btn-primary"/>
                                 </tree>
                             </field>
+                            <button name="action_add_menuitem" type="object" string="Add a menu" class="btn-primary" colspan="2"/>
                         </group>
                         <group name="views" attrs="{'invisible': ['|', ('show', '!=', 'model'), ('ir_model_id', '=', False)]}">
-                            <field name="viewitem_ids" nolabel="1" colspan="2">
+                            <field name="view_ids" nolabel="1" colspan="2">
                                 <tree create="0">
                                     <field name="sequence" widget="handle"/>
-                                    <field name="xml_tag_id" string="Views"/>
-                                    <field name="display_name" invisible="1"/>
-                                    <button name="action_open_viewitem" type="object" string="Open" class="btn-primary"/>
+                                    <field name="display_name" string="Views"/>
+                                    <field name="id" invisible="1"/>
+                                    <button name="action_open_view" type="object" string="Open" class="btn-primary" context="{'view_id': id}"/>
                                 </tree>
                             </field>
+                            <button name="action_add_view" type="object" string="Add a view" class="btn-primary" colspan="2"/>
                         </group>
                     </group>
                 </sheet>
@@ -62,7 +64,7 @@
             </tree>
         </field>
     </record>
-    <record id="app_menuitem_view_kanban" model="ir.ui.view">
+    <!-- <record id="app_menuitem_view_kanban" model="ir.ui.view">
         <field name="name">app.menuitem.view.kanban</field>
         <field name="model">app.menuitem</field>
         <field name="arch" type="xml">
@@ -136,9 +138,9 @@
                 </group>
             </search>
         </field>
-    </record>
+    </record> -->
     <record id="app_menuitem_action" model="ir.actions.act_window">
-        <field name="name">My Menus</field>
+        <field name="name">My Apps</field>
         <field name="res_model">app.menuitem</field>
         <field name="view_mode">tree,kanban,pivot,form</field>
         <field name="domain">[('parent_id', '=', False)]</field>

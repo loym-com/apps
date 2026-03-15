@@ -6,7 +6,7 @@ from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.convert import convert_xml_import
 
-from . import app_templates as t
+from . import xml_templates as t
 
 def iterate_recursively(record):
     """
@@ -40,6 +40,11 @@ class AppMenuitem(models.Model):
             # ('action', 'Action'),
         ],
     )
+    root_menu_id = fields.Many2one(
+        string="Root Odoo Menu",
+        comodel_name="ir.ui.menu",
+        help="Optionally link the app to an existing Odoo menu.",
+    )
     parent_id = fields.Many2one(
         comodel_name="app.menuitem",
         domain="[('show', '=', 'menus')]",
@@ -54,21 +59,29 @@ class AppMenuitem(models.Model):
     ir_model_id = fields.Many2one(
         comodel_name="ir.model",
     )
-    viewitem_ids = fields.One2many(
-        comodel_name="app.viewitem",
+    view_ids = fields.One2many(
+        comodel_name="app.view",
         inverse_name="menuitem_id",
     )
     sequence = fields.Integer(default=10)
 
-    def action_add_submenu(self):
+    def action_add_view(self):
+        self.ensure_one()
+        view = self.env["app.view"].create({
+            "menuitem_id": self.id,
+            "sequence": max(self.view_ids.mapped("sequence") or [0]) + 10,
+        })
+        return view.action_open_view()
+
+    def action_add_menuitem(self):
         self.ensure_one()
         if self.show != "menus":
             raise UserError("Only menuitems of type 'Submenus' can have submenus")
-        submenu = self.env["app.menuitem"].create({
+        menuitem = self.env["app.menuitem"].create({
             "parent_id": self.id,
             "sequence": max(self.child_ids.mapped("sequence") or [0]) + 10,
         })
-        return submenu.action_open_menuitem()
+        return menuitem.action_open_menuitem()
 
     def action_open_menuitem(self):
         self.ensure_one()

@@ -14,13 +14,13 @@
                         />
                         <field
                             name="form_attribute_ids"
-                            context="{'default_viewtype': 'form'}"
+                            context="{'default_view_type': 'form'}"
                             attrs="{'invisible': [('ir_model_fields_id', '=', False)]}"
                         >
                             <tree editable="bottom">
                                 <!-- <field name="field_id" invisible="0" /> -->
                                 <field name="datatype" invisible="1" />
-                                <field name="viewtype" invisible="1" />
+                                <field name="view_type" invisible="1" />
                                 <field name="attribute_id" />
                                 <field name="value_selection" attrs="{'readonly': [('value_char', '!=', False)]}" />
                                 <field name="value_char" attrs="{'readonly': [('value_selection', '!=', False)]}" />
@@ -28,13 +28,13 @@
                         </field>
                         <field
                             name="list_attribute_ids"
-                            context="{'default_viewtype': 'list'}"
+                            context="{'default_view_type': 'list'}"
                             attrs="{'invisible': [('ir_model_fields_id', '=', False)]}"
                         >
                             <tree editable="bottom">
                                 <!-- <field name="field_id" invisible="0" /> -->
                                 <field name="datatype" invisible="1" />
-                                <field name="viewtype" invisible="1" />
+                                <field name="view_type" invisible="1" />
                                 <field name="attribute_id" />
                                 <field name="value_selection" attrs="{'readonly': [('value_char', '!=', False)]}" />
                                 <field name="value_char" attrs="{'readonly': [('value_selection', '!=', False)]}" />

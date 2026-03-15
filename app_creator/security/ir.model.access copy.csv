@@ -1,9 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_app_datatype,app.datatype,model_app_datatype,base.group_user,1,1,1,1
 access_app_menuitem,app.menuitem,model_app_menuitem,base.group_user,1,1,1,1
-access_app_view,app.view,model_app_view,base.group_user,1,1,1,1
-access_app_viewitem,app.viewitem,model_app_viewitem,base.group_user,1,1,1,1
-access_app_viewitem_attr,app.viewitem.attr,model_app_viewitem_attr,base.group_user,1,1,1,1
+access_app_datatype,app.datatype,model_app_datatype,base.group_user,1,1,1,1
 access_app_xml_tag,app.xml.tag,model_app_xml_tag,base.group_user,1,1,1,1
 access_app_xml_attr,app.xml.attr,model_app_xml_attr,base.group_user,1,1,1,1
 access_app_xml_attr_option,app.xml.attr.option,model_app_xml_attr_option,base.group_user,1,1,1,1
+access_app_viewitem,app.viewitem,model_app_viewitem,base.group_user,1,1,1,1
+access_app_viewitem_attr,app.viewitem.attr,model_app_viewitem_attr,base.group_user,1,1,1,1

@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <menuitem
-        id="app_creator_main_menu"
-        parent=""
-        name="App Creator"
+        id="app_my_apps_menu"
+        parent="base.menu_management"
+        name="My Apps"
+        sequence="999"
     />
     <menuitem
         id="app_menuitem_menu"
         action="app_menuitem_action"
-        parent="app_creator_main_menu"
-        name="My Menus"
-        sequence="0"
+        parent="app_my_apps_menu"
+        name="My Apps"
+        sequence="10"
+    />
+    <menuitem
+        id="app_config_menu"
+        parent="app_my_apps_menu"
+        name="Configuration"
+        sequence="20"
     />
     <!-- <menuitem
-        id="app_field_menu"
-        action="app_field_action"
-        parent="app_creator_main_menu"
-        name="App Fields"
-        sequence="7"
+        id="app_xml_tag_menu"
+        action="app_xml_tag_action"
+        parent="app_config_menu"
+        name="XML Tags"
+        sequence="21"
     />
     <menuitem
-        id="app_field_attribute_menu"
-        action="app_field_attribute_action"
-        parent="app_creator_main_menu"
-        name="App Field Attributes"
-        sequence="11"
-    />
-    <menuitem
-        id="app_attribute_menu"
-        action="app_attribute_action"
-        parent="app_creator_main_menu"
-        name="App Attributes"
-        sequence="15"
+        id="app_xml_attr_menu"
+        action="app_xml_attr_action"
+        parent="app_config_menu"
+        name=" XML Attributes"
+        sequence="22"
     />
     <menuitem
         id="app_datatype_menu"
         action="app_datatype_action"
-        parent="app_creator_main_menu"
-        name="App Datatypes"
-        sequence="17"
+        parent="app_config_menu"
+        name="Data Types"
+        sequence="23"
     /> -->
 </odoo>

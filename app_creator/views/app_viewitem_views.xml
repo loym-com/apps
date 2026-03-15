@@ -7,32 +7,42 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="menuitem_id" invisible="0"/>
-                        <field name="parent_id" invisible="0"/>
+                        <field name="view_id" invisible="1"/>
+                        <field name="parent_id" invisible="1"/>
                         <field name="xml_tag_id" />
                         <field name="display_name" invisible="1"/>
-                        <field name="ir_model_fields_id" attrs="{'invisible': [('display_name', '!=', 'field')]}" />
+                        <field name="ir_model_id" invisible="1"/>
+                        <field
+                            name="ir_model_fields_id"
+                            attrs="{'invisible': [('display_name', '!=', 'Field')]}"
+                            domain="[('model_id', '=', ir_model_id)]"
+                        />
                     </group>
                     <group>
                         <group name="attrs" string="Attributes" attrs="{'invisible': [('display_name', '=', False)]}">
-                            <field name="viewitem_attr_ids" nolabel="1" colspan="2">
+                            <field name="attr_ids" nolabel="1" colspan="2">
                                 <tree editable="bottom">
-                                    <field name="xml_attr_id" />
+                                    <field name="xml_attr_domain_ids" invisible="1"/>
+                                    <field name="xml_attr_id" domain="[('id', 'in', xml_attr_domain_ids)]"/>
                                     <field name="value_option" attrs="{'readonly': [('value_char', '!=', False)]}" />
                                     <field name="value_char" attrs="{'readonly': [('value_option', '!=', False)]}" />
                                 </tree>
                             </field>
-                            <field name="viewitem_attr_char"/>
+                            <field name="attr_char"/>
                         </group>
-                        <group name="children" string="Children" attrs="{'invisible': [('display_name', '=', False)]}">
+                        <group name="child_ids" string="Fields/Tags" attrs="{'invisible': [('display_name', '=', False)]}">
                             <field name="child_ids" nolabel="1" colspan="2">
-                                <tree>
-                                    <field name="xml_tag_id" />
-                                    <field name="ir_model_fields_id" />
-                                    <field name="viewitem_attr_ids" widget="many2many_tags" />
-                                    <button name="action_open_viewitem" type="object" string="Open" class="btn-primary"/>
+                                <tree create="0">
+                                    <field name="xml_tag_domain_ids" invisible="1"/>
+                                    <field name="xml_tag_id" domain="[('id', 'in', xml_tag_domain_ids)]"/>
+                                    <field name="display_name"/>
+                                    <field name="ir_model_fields_id" attrs="{'invisible': [('display_name', '!=', 'Field')]}"/>
+                                    <field name="attr_ids" widget="many2many_tags" />
+                                    <field name="id" invisible="1"/>
+                                    <button name="action_open_viewitem" type="object" string="Open" class="btn-primary" context="{'viewitem_id': id}"/>
                                 </tree>
                             </field>
+                            <button name="action_add_viewitem" type="object" string="Add a field or xml tag" class="btn-primary" colspan="2"/>
                         </group>
                     </group>
                 </sheet>
@@ -47,7 +57,7 @@
                         <field name="sequence" widget="handle"/>
                         <field name="display_name"/>
                         <field name="ir_model_fields_id"/>
-                        <field name="viewitem_attr_ids" optional="show" widget="many2many_tags" />
+                        <field name="attr_ids" optional="show" widget="many2many_tags" />
             </tree>
         </field>
     </record>
@@ -57,7 +67,7 @@
         <field name="arch" type="xml">
             <search>
                         <field name="xml_tag_id" />
-                        <field name="menuitem_id" />
+                        <field name="view_id" />
                         <field name="ir_model_fields_id" />
                 <group string="Group By">
                     <filter
@@ -66,9 +76,9 @@
                         context="{'group_by':'xml_tag_id'}"
                     />
                     <filter
-                        string="Menuitem Id"
-                        name="menuitem_id"
-                        context="{'group_by':'menuitem_id'}"
+                        string="View"
+                        name="view_id"
+                        context="{'group_by':'view_id'}"
                     />
                     <filter
                         string="Ir Model Field Id"
@@ -77,8 +87,8 @@
                     />
                     <filter
                         string="Attributes"
-                        name="viewitem_attr_ids"
-                        context="{'group_by':'viewitem_attr_ids'}"
+                        name="attr_ids"
+                        context="{'group_by':'attr_ids'}"
                     />
                 </group>
             </search>

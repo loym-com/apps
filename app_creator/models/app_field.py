@@ -30,11 +30,11 @@ class AppField(models.Model):
     form_attribute_ids = fields.One2many(
         comodel_name="app.field.attribute",
         inverse_name="field_id",
-        domain=[('viewtype', '=', 'form')],
+        domain=[('view_type', '=', 'form')],
     )
     list_attribute_ids = fields.One2many(
         comodel_name="app.field.attribute",
         inverse_name="field_id",
-        domain=[('viewtype', '=', 'list')],
+        domain=[('view_type', '=', 'list')],
     )
     sequence = fields.Integer(default=10)
