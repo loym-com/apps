@@ -15,43 +15,40 @@
                 </header>
                 <sheet>
                     <group>
-                        <field name="name" />
-                        <field name="code" />
-                        <field name="parent_id" invisible="0" />
-                        <field name="sequence"/>
-                        <field name="type" />
-                        <field name="action_id" attrs="{'invisible': [('type', '!=', 'action')]}"/>
-                        <field name="ir_model_id" attrs="{'invisible': [('type', '!=', 'model')]}"/>
+                        <group>
+                            <field name="name" />
+                            <field name="code" invisible="1" />
+                            <field name="show" />
+                            <field name="action_id" attrs="{'invisible': [('show', '!=', 'action')]}"/>
+                            <field name="ir_model_id" attrs="{'invisible': [('show', '!=', 'model')]}"/>
+                        </group>
+                        <group>
+                            <field name="parent_id" />
+                            <field name="sequence"/>
+                        </group>
+                        <group name="submenus" attrs="{'invisible': [('show', '!=', 'menus')]}">
+                            <button name="action_add_submenu" type="object" string="Add Submenu" class="btn-primary" colspan="2"/>
+                            <field name="child_ids" nolabel="1" colspan="2">
+                                <tree create="0">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name" string="Menu"/>
+                                    <field name="show" />
+                                    <button name="action_open_menuitem" type="object" string="Open" class="btn-primary"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group name="views" attrs="{'invisible': ['|', ('show', '!=', 'model'), ('ir_model_id', '=', False)]}">
+                            <field name="viewitem_ids" nolabel="1" colspan="2">
+                                <tree create="0">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="xml_tag_id" string="Views"/>
+                                    <field name="display_name" invisible="1"/>
+                                    <button name="action_open_viewitem" type="object" string="Open" class="btn-primary"/>
+                                </tree>
+                            </field>
+                        </group>
                     </group>
-                    <notebook>
-                        <page string="Submenus" attrs="{'invisible': [('type', '!=', 'parent')]}">
-                            <field name="child_ids" form_view_ref="app_menuitem_view_form">
-                                <tree>
-                                    <field name="sequence" widget="handle"/>
-                                    <field name="name" />
-                                    <field name="type" />
-                                    <button name="action_open_form" type="object" string="Open Form" class="btn-primary"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Fields" attrs="{'invisible': ['|', ('type', '!=', 'model'), ('ir_model_id', '=', False)]}">
-                            <field name="field_ids">
-                                <tree>
-                                    <field name="sequence" widget="handle"/>
-                                    <!-- <field name="name" /> -->
-                                    <field name="ir_model_fields_id" />
-                                    <field name="form_attribute_ids" widget="many2many_tags" />
-                                    <field name="list_attribute_ids" widget="many2many_tags" />
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
                 </sheet>
-                <!-- <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
-                </div> -->
             </form>
         </field>
     </record>
@@ -61,14 +58,7 @@
         <field name="arch" type="xml">
             <tree>
                         <field name="sequence" widget="handle"/>
-                        <field name="name" optional="show" />
-                        <!-- <field name="code" optional="show" /> -->
-                        <field name="type" optional="show" />
-                        <!-- <field name="parent_id" optional="show" /> -->
-                        <!-- <field name="child_ids" optional="show" widget="many2many_tags" />
-                        <field name="action_id" optional="show" />
-                        <field name="ir_model_id" optional="show" />
-                        <field name="field_ids" optional="show" widget="many2many_tags" /> -->
+                        <field name="display_name"/>
             </tree>
         </field>
     </record>
@@ -101,12 +91,12 @@
         <field name="arch" type="xml">
             <search>
                         <field name="name" />
-                        <field name="type" />
+                        <field name="show" />
                         <field name="parent_id" />
                         <field name="child_ids" />
                         <field name="action_id" />
                         <field name="ir_model_id" />
-                        <field name="field_ids" />
+                        <field name="viewitem_ids" />
                 <group string="Group By">
                     <filter
                         string="Name"
@@ -115,8 +105,8 @@
                     />
                     <filter
                         string="Type"
-                        name="type"
-                        context="{'group_by':'type'}"
+                        name="show"
+                        context="{'group_by':'show'}"
                     />
                     <filter
                         string="Parent Id"
@@ -139,9 +129,9 @@
                         context="{'group_by':'ir_model_id'}"
                     />
                     <filter
-                        string="Field Ids"
-                        name="field_ids"
-                        context="{'group_by':'field_ids'}"
+                        string="View Items"
+                        name="viewitem_ids"
+                        context="{'group_by':'viewitem_ids'}"
                     />
                 </group>
             </search>

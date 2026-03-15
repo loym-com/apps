@@ -8,14 +8,9 @@
                 <sheet>
                     <group>
                         <field name="name" />
-                        <field name="attribute_ids" />
+                        <field name="xml_attr_ids" />
                     </group>
                 </sheet>
-                <!-- <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
-                </div> -->
             </form>
         </field>
     </record>
@@ -25,7 +20,7 @@
         <field name="arch" type="xml">
             <tree>
                         <field name="name" optional="show" />
-                        <field name="attribute_ids" optional="show" widget="many2many_tags" />
+                        <field name="xml_attr_ids" optional="show" widget="many2many_tags" />
             </tree>
         </field>
     </record>
@@ -58,7 +53,7 @@
         <field name="arch" type="xml">
             <search>
                         <field name="name" />
-                        <field name="attribute_ids" />
+                        <field name="xml_attr_ids" />
                 <group string="Group By">
                     <filter
                         string="Name"
@@ -66,9 +61,9 @@
                         context="{'group_by':'name'}"
                     />
                     <filter
-                        string="Attribute Ids"
-                        name="attribute_ids"
-                        context="{'group_by':'attribute_ids'}"
+                        string="XML Attribute Ids"
+                        name="xml_attr_ids"
+                        context="{'group_by':'xml_attr_ids'}"
                     />
                 </group>
             </search>

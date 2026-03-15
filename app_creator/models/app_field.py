@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 
+
 class AppField(models.Model):
     _name = "app.field"
     _description = "app.field"

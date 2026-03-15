@@ -1,0 +1,49 @@
+<odoo>
+    <record id="attr_char_widget" model="app.xml.attr">
+        <field name="name">Widget</field>
+        <field name="code">widget</field>
+        <field name="datatype_ids" eval="[(4, ref('app_creator.app_datatype_char'))]"/>
+    </record>
+    <record id="attr_char_widget_email" model="app.xml.attr.option">
+        <field name="name">Email</field>
+        <field name="code">email</field>
+        <field name="xml_attr_id" ref="attr_char_widget"/>
+    </record>
+
+    <record id="attr_many2many_widget" model="app.xml.attr">
+        <field name="name">Widget</field>
+        <field name="code">widget</field>
+        <field name="datatype_ids" eval="[(4, ref('app_creator.app_datatype_many2many'))]"/>
+    </record>
+    <record id="attr_many2many_widget_tags" model="app.xml.attr.option">
+        <field name="name">Tags</field>
+        <field name="code">many2many_tags</field>
+        <field name="xml_attr_id" ref="attr_many2many_widget"/>
+    </record>
+
+    <record id="attr_many2one_widget" model="app.xml.attr">
+        <field name="name">Widget</field>
+        <field name="code">widget</field>
+        <field name="datatype_ids" eval="[(4, ref('app_creator.app_datatype_many2one'))]"/>
+    </record>
+    <record id="attr_many2one_widget_tags" model="app.xml.attr.option">
+        <field name="name">Tags</field>
+        <field name="code">many2many_tags</field>
+        <field name="xml_attr_id" ref="attr_many2one_widget"/>
+    </record>
+
+    <record id="attr_list_editable" model="app.xml.attr">
+        <field name="name">Editable</field>
+        <field name="code">editable</field>
+    </record>
+    <record id="attr_list_editable_top" model="app.xml.attr.option">
+        <field name="name">Top</field>
+        <field name="code">top</field>
+        <field name="xml_attr_id" ref="attr_list_editable"/>
+    </record>
+    <record id="attr_list_editable_bottom" model="app.xml.attr.option">
+        <field name="name">Bottom</field>
+        <field name="code">bottom</field>
+        <field name="xml_attr_id" ref="attr_list_editable"/>
+    </record>
+</odoo>

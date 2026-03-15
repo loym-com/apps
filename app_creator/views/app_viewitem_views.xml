@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="app_viewitem_view_form" model="ir.ui.view">
+        <field name="name">app.viewitem.view.form</field>
+        <field name="model">app.viewitem</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="menuitem_id" invisible="0"/>
+                        <field name="parent_id" invisible="0"/>
+                        <field name="xml_tag_id" />
+                        <field name="display_name" invisible="1"/>
+                        <field name="ir_model_fields_id" attrs="{'invisible': [('display_name', '!=', 'field')]}" />
+                    </group>
+                    <group>
+                        <group name="attrs" string="Attributes" attrs="{'invisible': [('display_name', '=', False)]}">
+                            <field name="viewitem_attr_ids" nolabel="1" colspan="2">
+                                <tree editable="bottom">
+                                    <field name="xml_attr_id" />
+                                    <field name="value_option" attrs="{'readonly': [('value_char', '!=', False)]}" />
+                                    <field name="value_char" attrs="{'readonly': [('value_option', '!=', False)]}" />
+                                </tree>
+                            </field>
+                            <field name="viewitem_attr_char"/>
+                        </group>
+                        <group name="children" string="Children" attrs="{'invisible': [('display_name', '=', False)]}">
+                            <field name="child_ids" nolabel="1" colspan="2">
+                                <tree>
+                                    <field name="xml_tag_id" />
+                                    <field name="ir_model_fields_id" />
+                                    <field name="viewitem_attr_ids" widget="many2many_tags" />
+                                    <button name="action_open_viewitem" type="object" string="Open" class="btn-primary"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="app_viewitem_view_tree" model="ir.ui.view">
+        <field name="name">app.viewitem.view.tree</field>
+        <field name="model">app.viewitem</field>
+        <field name="arch" type="xml">
+            <tree>
+                        <field name="sequence" widget="handle"/>
+                        <field name="display_name"/>
+                        <field name="ir_model_fields_id"/>
+                        <field name="viewitem_attr_ids" optional="show" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+    <record id="app_viewitem_view_search" model="ir.ui.view">
+        <field name="name">app.viewitem.view.search</field>
+        <field name="model">app.viewitem</field>
+        <field name="arch" type="xml">
+            <search>
+                        <field name="xml_tag_id" />
+                        <field name="menuitem_id" />
+                        <field name="ir_model_fields_id" />
+                <group string="Group By">
+                    <filter
+                        string="Name"
+                        name="xml_tag_id"
+                        context="{'group_by':'xml_tag_id'}"
+                    />
+                    <filter
+                        string="Menuitem Id"
+                        name="menuitem_id"
+                        context="{'group_by':'menuitem_id'}"
+                    />
+                    <filter
+                        string="Ir Model Field Id"
+                        name="ir_model_fields_id"
+                        context="{'group_by':'ir_model_fields_id'}"
+                    />
+                    <filter
+                        string="Attributes"
+                        name="viewitem_attr_ids"
+                        context="{'group_by':'viewitem_attr_ids'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="app_viewitem_action" model="ir.actions.act_window">
+        <field name="name">App View Item</field>
+        <field name="res_model">app.viewitem</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

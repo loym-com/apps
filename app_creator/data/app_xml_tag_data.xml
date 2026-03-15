@@ -1,0 +1,35 @@
+<odoo>
+    <record id="tag_list" model="app.xml.tag">
+        <field name="name">List</field>
+        <field name="code">tree</field>
+        <field name="xml_attr_ids" eval="[(4, ref('attr_list_editable'))]"/>
+    </record>
+    <record id="tag_form" model="app.xml.tag">
+        <field name="name">Form</field>
+        <field name="code">form</field>
+    </record>
+    <record id="tag_kanban" model="app.xml.tag">
+        <field name="name">Kanban</field>
+        <field name="code">kanban</field>
+    </record>
+    <record id="tag_pivot" model="app.xml.tag">
+        <field name="name">Pivot</field>
+        <field name="code">pivot</field>
+    </record>
+    <record id="tag_search" model="app.xml.tag">
+        <field name="name">Search</field>
+        <field name="code">search</field>
+    </record>
+    <record id="tag_graph" model="app.xml.tag">
+        <field name="name">Graph</field>
+        <field name="code">graph</field>
+    </record>
+    <record id="tag_field" model="app.xml.tag">
+        <field name="name">Field</field>
+        <field name="code">field</field>
+    </record>
+    <record id="tag_button" model="app.xml.tag">
+        <field name="name">Button</field>
+        <field name="code">button</field>
+    </record>
+</odoo>

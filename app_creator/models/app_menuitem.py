@@ -21,21 +21,28 @@ def iterate_recursively(record):
 class AppMenuitem(models.Model):
     _name = "app.menuitem"
     _description = "app.menuitem"
-    _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = "sequence"
+
+    @api.onchange("name")
+    def _onchange_name(self):
+        if self.name:
+            # Format name to be a valid XML ID
+            self.code = "".join(
+                char.lower() if char.isalnum() else "_" for char in self.name
+            ).strip("_")
 
     name = fields.Char()
     code = fields.Char()
-    type = fields.Selection(
+    show = fields.Selection(
         selection=[
-            ('parent', 'Submenus'),
+            ('menus', 'Submenus'),
             ('model', 'Content'),
             # ('action', 'Action'),
         ],
     )
     parent_id = fields.Many2one(
         comodel_name="app.menuitem",
-        domain="[('type', '=', 'parent')]",
+        domain="[('show', '=', 'menus')]",
     )
     child_ids = fields.One2many(
         comodel_name="app.menuitem",
@@ -47,14 +54,23 @@ class AppMenuitem(models.Model):
     ir_model_id = fields.Many2one(
         comodel_name="ir.model",
     )
-    field_ids = fields.One2many(
-        comodel_name="app.field",
+    viewitem_ids = fields.One2many(
+        comodel_name="app.viewitem",
         inverse_name="menuitem_id",
-        string="Fields",
     )
     sequence = fields.Integer(default=10)
 
-    def action_open_form(self):
+    def action_add_submenu(self):
+        self.ensure_one()
+        if self.show != "menus":
+            raise UserError("Only menuitems of type 'Submenus' can have submenus")
+        submenu = self.env["app.menuitem"].create({
+            "parent_id": self.id,
+            "sequence": max(self.child_ids.mapped("sequence") or [0]) + 10,
+        })
+        return submenu.action_open_menuitem()
+
+    def action_open_menuitem(self):
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
