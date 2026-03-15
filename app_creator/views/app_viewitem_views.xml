@@ -7,8 +7,8 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="view_id" invisible="1"/>
                         <field name="parent_id" invisible="1"/>
+                        <field name="view_id" invisible="1"/>
                         <field name="xml_tag_id" />
                         <field name="display_name" invisible="1"/>
                         <field name="ir_model_id" invisible="1"/>
@@ -28,21 +28,11 @@
                                     <field name="value_char" attrs="{'readonly': [('value_option', '!=', False)]}" />
                                 </tree>
                             </field>
-                            <field name="attr_char"/>
+                            <field name="attr_text"/>
                         </group>
                         <group name="child_ids" string="Fields/Tags" attrs="{'invisible': [('display_name', '=', False)]}">
-                            <field name="child_ids" nolabel="1" colspan="2">
-                                <tree create="0">
-                                    <field name="xml_tag_domain_ids" invisible="1"/>
-                                    <field name="xml_tag_id" domain="[('id', 'in', xml_tag_domain_ids)]"/>
-                                    <field name="display_name"/>
-                                    <field name="ir_model_fields_id" attrs="{'invisible': [('display_name', '!=', 'Field')]}"/>
-                                    <field name="attr_ids" widget="many2many_tags" />
-                                    <field name="id" invisible="1"/>
-                                    <button name="action_open_viewitem" type="object" string="Open" class="btn-primary" context="{'viewitem_id': id}"/>
-                                </tree>
-                            </field>
-                            <button name="action_add_viewitem" type="object" string="Add a field or xml tag" class="btn-primary" colspan="2"/>
+                            <field name="child_ids" nolabel="1" colspan="2" />
+                            <field name="child_text" />
                         </group>
                     </group>
                 </sheet>
@@ -53,50 +43,22 @@
         <field name="name">app.viewitem.view.tree</field>
         <field name="model">app.viewitem</field>
         <field name="arch" type="xml">
-            <tree>
-                        <field name="sequence" widget="handle"/>
-                        <field name="display_name"/>
-                        <field name="ir_model_fields_id"/>
-                        <field name="attr_ids" optional="show" widget="many2many_tags" />
+            <!-- Used by view and viewitem form -->
+            <tree editable="bottom">
+                <field name="parent_id" invisible="1" />
+                <field name="view_id" invisible="1" />
+                <field name="xml_tag_domain_ids" invisible="1"/>
+                <field name="xml_tag_id" domain="[('id', 'in', xml_tag_domain_ids)]"/>
+
+                <field name="ir_model_id" invisible="1"/>
+                <field name="display_name" invisible="1"/>
+                <field name="ir_model_fields_id" domain="[('model_id', '=', ir_model_id)]" attrs="{'invisible': [('display_name', '!=', 'Field')]}"/>
+
+                <field name="attr_ids" widget="many2many_tags" readonly="1" />
+                <!-- <field name="id" invisible="1"/> -->
+                <!-- <button name="action_open_viewitem" type="object" string="Open" class="btn-primary" context="{'viewitem_id': id}"/> -->
+                <button name="action_open_viewitem" type="object" string="Open" class="btn-primary" />
             </tree>
         </field>
-    </record>
-    <record id="app_viewitem_view_search" model="ir.ui.view">
-        <field name="name">app.viewitem.view.search</field>
-        <field name="model">app.viewitem</field>
-        <field name="arch" type="xml">
-            <search>
-                        <field name="xml_tag_id" />
-                        <field name="view_id" />
-                        <field name="ir_model_fields_id" />
-                <group string="Group By">
-                    <filter
-                        string="Name"
-                        name="xml_tag_id"
-                        context="{'group_by':'xml_tag_id'}"
-                    />
-                    <filter
-                        string="View"
-                        name="view_id"
-                        context="{'group_by':'view_id'}"
-                    />
-                    <filter
-                        string="Ir Model Field Id"
-                        name="ir_model_fields_id"
-                        context="{'group_by':'ir_model_fields_id'}"
-                    />
-                    <filter
-                        string="Attributes"
-                        name="attr_ids"
-                        context="{'group_by':'attr_ids'}"
-                    />
-                </group>
-            </search>
-        </field>
-    </record>
-    <record id="app_viewitem_action" model="ir.actions.act_window">
-        <field name="name">App View Item</field>
-        <field name="res_model">app.viewitem</field>
-        <field name="view_mode">tree,form</field>
     </record>
 </odoo>

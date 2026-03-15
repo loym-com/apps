@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="app_xml_attr_view_form" model="ir.ui.view">
+        <field name="name">app.xml.attr.view.form</field>
+        <field name="model">app.xml.attr</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="xml_tag_ids" widget="many2many_tags"/>
+                            <field name="name" />
+                            <field name="code" />
+                            <field name="datatype_ids" widget="many2many_tags"/>
+                            <field name="option_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="app_xml_attr_view_tree" model="ir.ui.view">
+        <field name="name">app.xml.attr.view.tree</field>
+        <field name="model">app.xml.attr</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="xml_tag_ids" widget="many2many_tags"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="datatype_ids" widget="many2many_tags"/>
+                <field name="option_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+    <record id="app_xml_attr_action" model="ir.actions.act_window">
+        <field name="name">XML Attributes</field>
+        <field name="res_model">app.xml.attr</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

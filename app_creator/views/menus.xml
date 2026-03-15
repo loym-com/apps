@@ -19,7 +19,7 @@
         name="Configuration"
         sequence="20"
     />
-    <!-- <menuitem
+    <menuitem
         id="app_xml_tag_menu"
         action="app_xml_tag_action"
         parent="app_config_menu"
@@ -39,5 +39,5 @@
         parent="app_config_menu"
         name="Data Types"
         sequence="23"
-    /> -->
+    />
 </odoo>

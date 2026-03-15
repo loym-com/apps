@@ -9,6 +9,8 @@
         "views/app_menuitem_views.xml",
         "views/app_view_views.xml",
         "views/app_viewitem_views.xml",
+        "views/app_xml_attr_views.xml",
+        "views/app_xml_tag_views.xml",
         "views/menus.xml",
         "security/ir.model.access.csv",
     ],

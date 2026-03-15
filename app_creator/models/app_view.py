@@ -49,11 +49,11 @@ class AppView(models.Model):
             'res_id': self.id,
         }
 
-    def action_add_viewitem(self):
-        self.ensure_one()
-        viewitem = self.env["app.viewitem"].create({
-            "view_id": self.id,
-            "sequence": max(self.viewitem_ids.mapped("sequence") or [0]) + 10,
-        })
-        # viewitem = viewitem.with_context(viewitem_id=viewitem.id)
-        return viewitem.action_open_viewitem()
+    # def action_add_viewitem(self):
+    #     self.ensure_one()
+    #     viewitem = self.env["app.viewitem"].create({
+    #         "view_id": self.id,
+    #         "sequence": max(self.viewitem_ids.mapped("sequence") or [0]) + 10,
+    #     })
+    #     # viewitem = viewitem.with_context(viewitem_id=viewitem.id)
+    #     return viewitem.action_open_viewitem()

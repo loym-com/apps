@@ -7,6 +7,11 @@ class AppViewitem(models.Model):
     _description = "app.viewitem"
     _order = "sequence"
 
+    @api.onchange("parent_id")
+    def _default_view_id(self):
+        for record in self:
+            record.view_id = record.parent_id.view_id if record.parent_id else record.view_id
+
     @api.onchange("xml_tag_id", "ir_model_fields_id")
     def _onchange_xml_tag_id(self):
         # Auto-save to trigger recomputation of attr_ids.xml_attr_domain_ids
@@ -19,10 +24,12 @@ class AppViewitem(models.Model):
 
     @api.depends("view_id", "view_id.view_type")
     def _compute_xml_tag_domain_ids(self):
-        # id = self.env.context.get("viewitem_id")
-        # self = self.browse(id) if id else self
         for rec in self:
-            view_type = rec.view_id.view_type
+            if rec.view_id:
+                view_type = rec.view_id.view_type
+            elif rec.parent_id and rec.parent_id.view_id:
+                view_type = rec.parent_id.view_id.view_type
+
             if view_type == "form":
                 domain = [('code', 'in', ("group", "field", "notebook", "page"))]
             elif view_type == "tree":
@@ -36,7 +43,6 @@ class AppViewitem(models.Model):
     xml_tag_id = fields.Many2one(
         comodel_name="app.xml.tag",
         string="Name",
-        # domain=_get_xml_tag_domain,
     )
     xml_tag_domain_ids = fields.Many2many(
         comodel_name="app.xml.tag",
@@ -62,7 +68,7 @@ class AppViewitem(models.Model):
         comodel_name="app.viewitem.attr",
         inverse_name="viewitem_id",
     )
-    attr_char = fields.Char(
+    attr_text = fields.Text(
         string="Custom Attributes",
     )
     view_id = fields.Many2one(
@@ -76,15 +82,9 @@ class AppViewitem(models.Model):
         inverse_name="parent_id",
         string="Fields/Tags",
     )
-
-    def action_add_viewitem(self):
-        self.ensure_one()
-        viewitem = self.env["app.viewitem"].create({
-            "parent_id": self.id,
-            "sequence": max(self.child_ids.mapped("sequence") or [0]) + 10,
-        })
-        # viewitem = viewitem.with_context(res_id=viewitem.id)
-        return viewitem.action_open_viewitem()
+    child_text = fields.Text(
+        string="Custom XML",
+    )
 
     def action_open_viewitem(self):
         self.ensure_one()

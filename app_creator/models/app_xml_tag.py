@@ -13,3 +13,17 @@ class AppXmlTag(models.Model):
         column2="attr_id",
         string="Allowed Attributes",
     )
+    parent_ids = fields.Many2many(
+        comodel_name="app.xml.tag",
+        relation="app_xml_tag_rel",
+        column1="child_id",
+        column2="parent_id",
+        string="Allowed Parent Tags",
+    )
+    child_ids = fields.Many2many(
+        comodel_name="app.xml.tag",
+        relation="app_xml_tag_rel",
+        column1="parent_id",
+        column2="child_id",
+        string="Allowed Child Tags",
+    )

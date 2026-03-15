@@ -8,7 +8,8 @@
                 <sheet>
                     <group>
                         <field name="name" />
-                        <field name="xml_attr_ids" />
+                        <field name="code" />
+                        <field name="xml_attr_ids" widget="many2many_tags"/>
                     </group>
                 </sheet>
             </form>
@@ -19,59 +20,15 @@
         <field name="model">app.datatype</field>
         <field name="arch" type="xml">
             <tree>
-                        <field name="name" optional="show" />
-                        <field name="xml_attr_ids" optional="show" widget="many2many_tags" />
+                <field name="name" />
+                <field name="code" />
+                <field name="xml_attr_ids" widget="many2many_tags" />
             </tree>
-        </field>
-    </record>
-    <record id="app_datatype_view_kanban" model="ir.ui.view">
-        <field name="name">app.datatype.view.kanban</field>
-        <field name="model">app.datatype</field>
-        <field name="arch" type="xml">
-            <kanban>
-                <templates>
-                    <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click">
-                            <field name="display_name" />
-                        </div>
-                    </t>
-                </templates>
-            </kanban>
-        </field>
-    </record>
-    <record id="app_datatype_view_pivot" model="ir.ui.view">
-        <field name="name">app.datatype.view.pivot</field>
-        <field name="model">app.datatype</field>
-        <field name="arch" type="xml">
-            <pivot>
-            </pivot>
-        </field>
-    </record>
-    <record id="app_datatype_view_search" model="ir.ui.view">
-        <field name="name">app.datatype.view.search</field>
-        <field name="model">app.datatype</field>
-        <field name="arch" type="xml">
-            <search>
-                        <field name="name" />
-                        <field name="xml_attr_ids" />
-                <group string="Group By">
-                    <filter
-                        string="Name"
-                        name="name"
-                        context="{'group_by':'name'}"
-                    />
-                    <filter
-                        string="XML Attribute Ids"
-                        name="xml_attr_ids"
-                        context="{'group_by':'xml_attr_ids'}"
-                    />
-                </group>
-            </search>
         </field>
     </record>
     <record id="app_datatype_action" model="ir.actions.act_window">
         <field name="name">App Datatype</field>
         <field name="res_model">app.datatype</field>
-        <field name="view_mode">tree,kanban,pivot,form</field>
+        <field name="view_mode">tree,form</field>
     </record>
 </odoo>
