@@ -25,9 +25,11 @@ class IrMailServer(models.Model):
         if the from_filter and smtp_user are both equal to the user's login.
         """
         values = set(
-            self.from_filter,
-            self.smtp_user,
-            self.env.user.login,
+            [
+                self.from_filter,
+                self.smtp_user,
+                self.env.user.login,
+            ]
         )
         return len(values) == 1
 
