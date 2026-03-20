@@ -19,7 +19,7 @@ class IrMailServer(models.Model):
             self = self._get_admin_rights()
         return super().test_smtp_connection()
 
-    def _the_user_is_accessing_its_own_mail_settings(self, user):
+    def _the_user_is_accessing_its_own_mail_settings(self):
         """
         The user is accessing its own mail settings
         if the from_filter and smtp_user are both equal to the user's login.
