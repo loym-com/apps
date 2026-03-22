@@ -23,7 +23,7 @@
                                 <div class="o_row" attrs="{'invisible': [('product_self_service_step', '!=', '100')]}">
                                     <field name="quantity" widget="numeric_step" options="{'step': 100}"/>
                                 </div>
-                                <field name="product_list_price" readonly="1"/>
+                                <field name="product_variant_price" readonly="1"/>
                                 <field name="total" readonly="1"/>
                                 <field name="user_id" readonly="1"/>
                                 <field name="user_id" invisible="1"/>
@@ -47,7 +47,7 @@
                 <field name="date" />
                 <field name="quantity" />
                 <field name="product_uom_id" optional="hide" />
-                <field name="product_list_price" optional="hide" />
+                <field name="product_variant_price" optional="hide" />
                 <field name="total" />
                 <field name="user_id" optional="hide" />
             </tree>

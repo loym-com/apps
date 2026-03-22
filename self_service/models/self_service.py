@@ -20,10 +20,10 @@ class SelfService(models.Model):
         if self.product_id.self_service_step:
             self.quantity = int(self.product_id.self_service_step)
 
-    @api.depends('quantity', 'product_list_price')
+    @api.depends('quantity', 'product_variant_price')
     def _compute_total(self):
         for record in self:
-            record.total = record.quantity * record.product_list_price
+            record.total = record.quantity * record.product_variant_price
 
     display_name = fields.Char(compute='_compute_display_name')
 
@@ -39,8 +39,9 @@ class SelfService(models.Model):
         comodel_name="uom.uom",
         related="product_id.uom_id",
     )
-    product_list_price = fields.Float(
-        related="product_id.list_price",
+    product_variant_price = fields.Float(
+        related="product_id.lst_price",
+        string="Unit Price",
     )
     product_self_service_step = fields.Selection(
         related="product_id.self_service_step",
