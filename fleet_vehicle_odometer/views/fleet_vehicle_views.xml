@@ -23,4 +23,15 @@
             </xpath>
         </field>
     </record>
+    <record id="fleet_vehicle_view_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.view.form</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <label for="product_id" class="me-3"/>
+                <field name="product_id" options="{'no_create': True, 'no_edit': True}"/>
+            </field>
+        </field>
+    </record>
 </odoo>

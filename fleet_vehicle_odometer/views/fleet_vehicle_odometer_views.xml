@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <record id="fleet_vehicle_odometer_view_tree_mobile" model="ir.ui.view">
+        <field name="name">fleet.vehicle.odometer.tree.mobile</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="priority" eval="20" />
+        <field name="arch" type="xml">
+            <tree>
+                <field name="vehicle_id" />
+                <field name="date" />
+                <field name="analytic_account_distance" />
+                <field name="product_variant_price" />
+                <field name="user_ids" invisible="1" />
+            </tree>
+        </field>
+    </record>
     <record id="fleet_vehicle_odometer_view_tree" model="ir.ui.view">
         <field name="name">fleet.vehicle.odometer.tree</field>
         <field name="model">fleet.vehicle.odometer</field>
@@ -56,29 +70,36 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="vehicle_id" required="1" />
-                            <label for="analytic_account_ids"/>
-                            <div name="project" class="d-inline-flex w-100">
-                                <button
-                                    name="analytic.action_account_analytic_account_form"
-                                    type="action"
-                                    icon="fa-list"
-                                    title="Analytic Accounts"
-                                />
-                                <field
-                                    name="analytic_account_ids"
-                                    options="{'no_create': True, 'no_create_edit':True}"
-                                    widget="many2many_tags"
-                                    context="{'kanban_view_ref': 'fleet_vehicle_odometer.account_analytic_account_kanban_view_ref'}"
-                                />
-                            </div>
-                            <field name="destination" />
-                            <field name="comment" />
-                            <field name="value" widget="integer" string="Odometer Stop" />
-                            <field name="value_start" />
-                            <field name="distance" />
-                            <field name="driver_id" domain="[('is_driver', '=', True)]" />
-                            <field name="date" />
+                            <group attrs="{'invisible': [('vehicle_id', '=', False)]}">
+                                <h1 colspan="2">
+                                    <field name="vehicle_id" attrs="{'invisible': [('vehicle_id', '=', False)]}"/>
+                                </h1>
+                                <label for="analytic_account_ids"/>
+                                <div name="project" class="d-inline-flex w-100">
+                                    <button
+                                        name="analytic.action_account_analytic_account_form"
+                                        type="action"
+                                        icon="fa-list"
+                                        title="Analytic Accounts"
+                                    />
+                                    <field
+                                        name="analytic_account_ids"
+                                        options="{'no_create': True, 'no_create_edit':True}"
+                                        widget="many2many_tags"
+                                        context="{'kanban_view_ref': 'fleet_vehicle_odometer.account_analytic_account_kanban_view_ref'}"
+                                    />
+                                </div>
+
+                                <field name="value_start" />
+                                <field name="value" widget="integer" string="Odometer Stop" />
+                                <field name="distance" />
+                                <field name="destination" />
+                                <field name="comment" />
+                                <field name="driver_id" />
+                                <field name="date" />
+                            </group>
+                            <!-- The vehicle_id SELECTION must come after the vehicle_id HEADING. -->
+                            <field name="vehicle_id" widget="selection_badge" attrs="{'invisible': [('vehicle_id', '!=', False)]}" />
                         </group>
                     </group>
                 </sheet>
@@ -96,6 +117,42 @@
             </pivot>
         </field>
     </record>
+    <record id="fleet_vehicle_odometer_view_search" model="ir.ui.view">
+        <field name="name">fleet.vehicle.odometer.search</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_search" />
+        <field name="arch" type="xml">
+            <search position="inside">
+                <filter
+                    name="last_3_months"
+                    string="Last 3 Months"
+                    domain="[('date', '>=', (datetime.date(context_today().year, context_today().month, 1) - relativedelta(months=2)).strftime('%Y-%m-%d'))]"
+                />
+                <separator/>
+                <filter
+                    name="filter_user_ids"
+                    string="My Records"
+                    domain="[('user_ids', 'in', [uid])]"
+                    help="Show only records assigned to me"
+                />
+            </search>
+        </field>
+    </record>
+    <record id='fleet_vehicle_odometer_action_mobile' model='ir.actions.act_window'>
+        <field name="name">Driving Log</field>
+        <field name="res_model">fleet.vehicle.odometer</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="context">{'search_default_filter_user_ids': 1, 'search_default_last_3_months': 1}</field>
+        <field name="view_id" ref="fleet_vehicle_odometer_view_tree_mobile"/>
+    </record>
+    <menuitem
+        id="menu_fleet_vehicle_odometer_log"
+        name="Driving Log"
+        parent="fleet.menu_root"
+        action="fleet_vehicle_odometer_action_mobile"
+        sequence="1"
+    />
+
     <!-- view_mode: added 'pivot' -->
     <record id='fleet.fleet_vehicle_odometer_action' model='ir.actions.act_window'>
         <field name="name">Vehicles Odometer</field>

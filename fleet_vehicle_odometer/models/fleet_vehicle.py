@@ -7,6 +7,10 @@ class FleetVehicle(models.Model):
     state_id = fields.Many2one(group_expand="")
     driver_id = fields.Many2one('res.partner', tracking=False)
 
+    product_id = fields.Many2one(
+        comodel_name="product.product",
+    )
+
     def action_register_odometer(self):
         self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id(

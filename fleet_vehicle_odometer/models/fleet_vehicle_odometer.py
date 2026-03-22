@@ -39,6 +39,16 @@ class FleetVehicleOdometer(models.Model):
         compute="_compute_start_and_distance_and_check_date",
         store=True,
     )
+    product_variant_price = fields.Float(
+        related="vehicle_id.product_id.lst_price",
+        string="Unit Price",
+    )
+    user_ids = fields.Many2many(
+        comodel_name="res.users",
+        compute="_compute_user_ids",
+        string="Users",
+        store=True,
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -59,6 +69,20 @@ class FleetVehicleOdometer(models.Model):
         next = self._get_next()
         super().unlink()
         next.exists()._compute_start_and_distance_and_check_date()
+
+    @api.onchange("vehicle_id")
+    def _set_driver_id_to_current_user_partner(self):
+        for rec in self:
+            if rec.vehicle_id and not rec.driver_id:
+                rec.driver_id = self.env.user.partner_id
+
+    @api.depends("analytic_account_ids.partner_id")
+    def _compute_user_ids(self):
+        for record in self:
+            users = self.env["res.users"].search([
+                ("partner_id", "in", record.analytic_account_ids.mapped("partner_id.id"))
+            ])
+            record.user_ids = users
 
     @api.constrains("value")
     def _check_value(self):
