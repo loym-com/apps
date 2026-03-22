@@ -1,4 +1,3 @@
-
 {
     "name": "Self Service",
     "author": "Loym",
@@ -7,9 +6,11 @@
         "views/self_service_views.xml",
         "views/menus.xml",
         "security/ir.model.access.csv",
+        "security/self_service_rules.xml",
     ],
     "depends": [
         "product",
+        "sales_team",
         "web_widget_numeric_step",
     ],
     "license": "AGPL-3",

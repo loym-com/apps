@@ -2,27 +2,25 @@
 <odoo>
     <menuitem
         id="self_service_main_menu"
-        parent=""
         name="Self Service"
+        web_icon="self_service,static/description/icon.svg"
     />
     <menuitem
         id="self_service_menu"
         action="self_service_action"
         parent="self_service_main_menu"
         name="Self Service"
-        sequence="0"
     />
     <menuitem
         id="self_service_config_menu"
         parent="self_service_main_menu"
         name="Configuration"
-        sequence="0"
+        sequence="90"
     />
     <menuitem
         id="product_menu"
         action="product_template_action"
         parent="self_service_config_menu"
         name="Products"
-        sequence="0"
     />
 </odoo>
