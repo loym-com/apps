@@ -12,6 +12,9 @@
                         <label for="is_self_service"/>
                     </span>
                 </div>
+                <group name="group_general" position="inside">
+                    <field name="self_service_step" attrs="{'invisible': [('is_self_service', '=', False)]}"/>
+                </group>
             </data>
         </field>
     </record>

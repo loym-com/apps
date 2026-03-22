@@ -7,14 +7,25 @@ class SelfService(models.Model):
     @api.depends('create_date')
     def _compute_display_name(self):
         for record in self:
-            record.display_name = record.create_date
+            record.display_name = " ".join(
+                [
+                    record.product_id.name,
+                    str(record.create_date.date()),
+                    record.user_id.name
+                ]
+            )
+
+    @api.onchange('product_id')
+    def _onchange_product_id(self):
+        if self.product_id.self_service_step:
+            self.quantity = int(self.product_id.self_service_step)
 
     @api.depends('quantity', 'product_list_price')
     def _compute_total(self):
         for record in self:
             record.total = record.quantity * record.product_list_price
 
-    display_name = fields.Datetime(compute='_compute_display_name')
+    display_name = fields.Char(compute='_compute_display_name')
 
     product_id = fields.Many2one(
         comodel_name="product.product",
@@ -22,6 +33,7 @@ class SelfService(models.Model):
     )
     product_description_sale = fields.Text(
         related="product_id.description_sale",
+        string="Description",
     )
     product_uom_id = fields.Many2one(
         comodel_name="uom.uom",
@@ -30,10 +42,16 @@ class SelfService(models.Model):
     product_list_price = fields.Float(
         related="product_id.list_price",
     )
+    product_self_service_step = fields.Selection(
+        related="product_id.self_service_step",
+    )
     quantity = fields.Integer()
     total = fields.Float(compute='_compute_total', store=True)
 
     user_id = fields.Many2one(
         comodel_name="res.users",
+        default=lambda self: self.env.user,
     )
-    date = fields.Date()
+    date = fields.Date(
+        default=fields.Date.context_today,
+    )

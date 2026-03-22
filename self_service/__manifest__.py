@@ -1,6 +1,7 @@
 
 {
     "name": "Self Service",
+    "author": "Loym",
     "data": [
         "views/product_template_views.xml",
         "views/self_service_views.xml",
@@ -9,7 +10,9 @@
     ],
     "depends": [
         "product",
+        "web_widget_numeric_step",
     ],
+    "license": "AGPL-3",
     "version": "16.0.1.0.0",
     'images': ['static/description/icon.svg'],
 }

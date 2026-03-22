@@ -7,14 +7,32 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="product_id" widget="selection_badge"/>
-                        <field name="product_description_sale" readonly="1"/>
-                        <field name="product_uom_id" readonly="1"/>
-                        <field name="product_list_price" readonly="1"/>
-                        <field name="quantity" />
-                        <field name="total" readonly="1"/>
-                        <field name="user_id" />
-                        <field name="date" />
+                        <group>
+                            <field name="product_id" widget="selection_badge"/>
+                            <group attrs="{'invisible': [('product_id', '=', False)]}">
+                                <field name="product_description_sale" readonly="1"/>
+
+                                <field name="product_uom_id" readonly="1"/>
+                                
+                                <field name="product_self_service_step" invisible="1"/>
+                                <field name="quantity"
+                                    widget="numeric_step"
+                                    options="{'step': 1}"
+                                    attrs="{'invisible': [('product_self_service_step', '!=', '1')]}"
+                                />
+                                <field name="quantity"
+                                    widget="numeric_step"
+                                    options="{'step': 100}"
+                                    attrs="{'invisible': [('product_self_service_step', '!=', '100')]}"
+                                />
+                                <field name="product_list_price" readonly="1"/>
+                                <field name="total" readonly="1"/>
+                                <field name="user_id" readonly="1"/>
+                                <field name="user_id" invisible="1"/>
+                                <field name="date" readonly="1"/>
+                                <field name="date" invisible="1"/>
+                            </group>
+                        </group>
                     </group>
                 </sheet>
             </form>
