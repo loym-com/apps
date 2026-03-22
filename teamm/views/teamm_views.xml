@@ -130,6 +130,7 @@
     <menuitem
         id="teamm_main_menu"
         name="Team M"
+        web_icon="teamm,static/description/icon.png"
         sequence="10"
     />
     <menuitem
