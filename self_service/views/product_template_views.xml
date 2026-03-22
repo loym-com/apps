@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_template_view_form" model="ir.ui.view">
+        <field name="name">product.template.view.form.inherit.self_service</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <data>
+                <div name="options" position="inside">
+                    <span class="d-inline-block">
+                        <field name="is_self_service"/>
+                        <label for="is_self_service"/>
+                    </span>
+                </div>
+            </data>
+        </field>
+    </record>
+    <record id="product_template_view_search" model="ir.ui.view">
+        <field name="name">product.template.view.search.inherit.self_service</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <filter name="is_self_service" string="Self Service" domain="[('is_self_service', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+    <record id="product_template_action" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,kanban,pivot,form</field>
+        <field name="context">{'search_default_is_self_service': 1}</field>
+    </record>
+</odoo>

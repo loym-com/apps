@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="self_service_main_menu"
+        parent=""
+        name="Self Service"
+    />
+    <menuitem
+        id="self_service_menu"
+        action="self_service_action"
+        parent="self_service_main_menu"
+        name="Self Service"
+        sequence="0"
+    />
+    <menuitem
+        id="self_service_config_menu"
+        parent="self_service_main_menu"
+        name="Configuration"
+        sequence="0"
+    />
+    <menuitem
+        id="product_menu"
+        action="product_template_action"
+        parent="self_service_config_menu"
+        name="Products"
+        sequence="0"
+    />
+</odoo>
