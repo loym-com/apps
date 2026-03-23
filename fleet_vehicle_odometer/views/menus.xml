@@ -9,4 +9,10 @@
     <record id="fleet.fleet_vehicle_menu" model="ir.ui.menu">
         <field name="groups_id" eval="[(4, ref('fleet_vehicle_odometer.group_driver'))]"/>
     </record> -->
+    <menuitem
+        id="menu_account_analytic_account"
+        name="Analytic Accounts"
+        parent="fleet.fleet_configuration"
+        action="analytic.action_account_analytic_account_form"
+    />
 </odoo>

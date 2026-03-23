@@ -74,31 +74,18 @@
                                 <h1 colspan="2">
                                     <field name="vehicle_id" attrs="{'invisible': [('vehicle_id', '=', False)]}"/>
                                 </h1>
-                                <label for="analytic_account_ids"/>
-                                <div name="project" class="d-inline-flex w-100">
-                                    <button
-                                        name="analytic.action_account_analytic_account_form"
-                                        type="action"
-                                        icon="fa-list"
-                                        title="Analytic Accounts"
-                                    />
-                                    <field
-                                        name="analytic_account_ids"
-                                        options="{'no_create': True, 'no_create_edit':True}"
-                                        widget="many2many_tags"
-                                        context="{'kanban_view_ref': 'fleet_vehicle_odometer.account_analytic_account_kanban_view_ref'}"
-                                    />
-                                </div>
-
                                 <field name="value_start" />
                                 <field name="value" widget="integer" string="Odometer Stop" />
                                 <field name="distance" />
+                                <field name="analytic_plan_id" widget="many2one_buttons" />
+                                <field name="analytic_account_id" widget="many2one_buttons" domain="[('plan_id', '=', analytic_plan_id)]"/>
+                                <field name="analytic_account_ids" widget="many2many_buttons" domain="[('plan_id', '=', analytic_plan_id)]"/>
                                 <field name="destination" />
                                 <field name="comment" />
                                 <field name="driver_id" />
                                 <field name="date" />
                             </group>
-                            <!-- The vehicle_id SELECTION must come after the vehicle_id HEADING. -->
+                            <!-- vehicle_id cannot appear after selection_badge. Therefore this is in the end. -->
                             <field name="vehicle_id" widget="selection_badge" attrs="{'invisible': [('vehicle_id', '!=', False)]}" />
                         </group>
                     </group>

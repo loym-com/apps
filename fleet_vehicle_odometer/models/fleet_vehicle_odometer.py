@@ -9,8 +9,12 @@ _logger = logging.getLogger(__name__)
 
 
 class FleetVehicleOdometer(models.Model):
-    _name = "fleet.vehicle.odometer"
-    _inherit = ["fleet.vehicle.odometer", "analytic.plan.mixin"]
+    _inherit = "fleet.vehicle.odometer"
+    # _inherit = ["fleet.vehicle.odometer", "analytic.plan.mixin"]
+
+    analytic_plan_id = fields.Many2one(
+        comodel_name="account.analytic.plan",
+    )
 
     comment = fields.Char("Comment")
     destination = fields.Char("Destination")
@@ -75,6 +79,12 @@ class FleetVehicleOdometer(models.Model):
         for rec in self:
             if rec.vehicle_id and not rec.driver_id:
                 rec.driver_id = self.env.user.partner_id
+
+    @api.onchange("analytic_plan_id")
+    def _reset_analytic(self):
+        for rec in self:
+            rec.analytic_account_id = False
+            rec.analytic_account_ids = False
 
     @api.depends("analytic_account_ids.partner_id")
     def _compute_user_ids(self):

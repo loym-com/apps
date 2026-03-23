@@ -23,12 +23,23 @@ registry.category("fields").add("selection_buttons", SelectionButtonsField);
 function setupFetchRecords(context) {
     /* Use records because props.records disappears after clicking the buttons */
     context.records = useState([]);
-    onWillStart(() => {
+
+    const fetchRecords = () => {
         const model = context.props.record.fields[context.props.name]?.relation;
-        context.env.services.orm.searchRead(model, [], ["id", "display_name"])
+        let domain = context.domain.toList(context.context);
+
+        context.env.services.orm.searchRead(model, domain, ["id", "display_name"])
             .then((records) => {
                 context.records.splice(0, context.records.length, ...records);
             });
+    };
+
+    onWillStart(() => {
+        fetchRecords();
+    });
+
+    onWillUpdateProps(() => {
+        fetchRecords();
     });
 }
 
