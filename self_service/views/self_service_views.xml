@@ -12,7 +12,7 @@
                                 <h1 colspan="2">
                                     <field name="product_id" attrs="{'invisible': [('product_id', '=', False)]}"/>
                                 </h1>
-                                <field name="product_description_sale" readonly="1"/>
+                                <field name="product_description_sale" readonly="1" nolabel="1" colspan="2"/>
                                 <field name="product_self_service_step" invisible="1"/>
                                 <div>
                                     <field name="product_uom_id" readonly="1"/>
