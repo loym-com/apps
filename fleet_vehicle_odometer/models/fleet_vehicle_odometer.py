@@ -14,6 +14,7 @@ class FleetVehicleOdometer(models.Model):
 
     analytic_plan_id = fields.Many2one(
         comodel_name="account.analytic.plan",
+        domain="[('parent_id', '!=', False)]",
     )
 
     comment = fields.Char("Comment")
