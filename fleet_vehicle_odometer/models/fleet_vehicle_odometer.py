@@ -91,7 +91,7 @@ class FleetVehicleOdometer(models.Model):
     def _compute_user_ids(self):
         for record in self:
             users = self.env["res.users"].search([
-                ("partner_id", "in", record.analytic_account_ids.mapped("partner_id.id"))
+                ("employee_id.address_home_id", "in", record.analytic_account_ids.mapped("partner_id.id"))
             ])
             record.user_ids = users
 

@@ -8,8 +8,11 @@ class ProductTemplate(models.Model):
     )
     self_service_step = fields.Selection(
         selection=[
+            ('0.1', '0.1'),
             ('1', '1'),
+            ('10', '10'),
             ('100', '100'),
+            ('1000', '1000'),
         ],
         string="Self Service Step",
         default="1",
