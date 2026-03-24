@@ -23,4 +23,10 @@
         parent="self_service_config_menu"
         name="Products"
     />
+    <menuitem
+        id="analytic_account_menu"
+        action="analytic.action_account_analytic_account_form"
+        parent="self_service_config_menu"
+        name="Analytic Accounts"
+    />
 </odoo>
