@@ -9,9 +9,9 @@ class SelfService(models.Model):
         for record in self:
             record.display_name = " ".join(
                 [
-                    record.product_id.name,
+                    str(record.product_id.name),
                     str(record.create_date.date()),
-                    record.user_id.name
+                    str(record.user_id.name),
                 ]
             )
 
