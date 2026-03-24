@@ -86,7 +86,7 @@
                                 <field name="date" />
                             </group>
                             <!-- vehicle_id cannot appear after selection_badge. Therefore this is in the end. -->
-                            <field name="vehicle_id" widget="selection_badge" attrs="{'invisible': [('vehicle_id', '!=', False)]}" />
+                            <field name="vehicle_id" widget="many2one_buttons" attrs="{'invisible': [('vehicle_id', '!=', False)]}" />
                         </group>
                     </group>
                 </sheet>
