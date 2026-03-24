@@ -3,6 +3,7 @@ from odoo import api, fields, models
 class SelfService(models.Model):
     _name = "self.service"
     _description = "self.service"
+    _order = "date desc, create_date desc"
 
     @api.depends('create_date')
     def _compute_display_name(self):
