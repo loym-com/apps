@@ -79,13 +79,13 @@ class FleetVehicleOdometer(models.Model):
     def _set_driver_id_to_current_user_partner(self):
         for rec in self:
             if rec.vehicle_id and not rec.driver_id:
-                rec.driver_id = self.env.user.partner_id
+                rec.driver_id = self.env.user.employee_id.address_home_id
 
     @api.onchange("analytic_plan_id")
     def _reset_analytic(self):
         for rec in self:
             rec.analytic_account_id = False
-            rec.analytic_account_ids = False
+            rec.analytic_account_ids = rec.analytic_plan_id.account_ids.filtered(lambda a: a.partner_id == rec.driver_id)
 
     @api.depends("analytic_account_ids.partner_id")
     def _compute_user_ids(self):
