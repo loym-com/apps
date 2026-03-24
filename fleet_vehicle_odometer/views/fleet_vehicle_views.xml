@@ -29,8 +29,10 @@
         <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
         <field name="arch" type="xml">
             <field name="tag_ids" position="after">
-                <label for="product_id" class="me-3"/>
-                <field name="product_id" options="{'no_create': True, 'no_edit': True}"/>
+                <div>
+                    <label for="product_id" class="me-3"/>
+                    <field name="product_id" options="{'no_create': True, 'no_edit': True}"/>
+                </div>
             </field>
         </field>
     </record>

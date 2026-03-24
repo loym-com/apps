@@ -48,6 +48,11 @@ class FleetVehicleOdometer(models.Model):
         related="vehicle_id.product_id.lst_price",
         string="Unit Price",
     )
+    analytic_cost = fields.Float(
+        compute="_compute_analytic_cost",
+        store=True,
+        string="Analytic Cost",
+    )
     user_ids = fields.Many2many(
         comodel_name="res.users",
         compute="_compute_user_ids",
@@ -86,6 +91,11 @@ class FleetVehicleOdometer(models.Model):
         for rec in self:
             rec.analytic_account_id = False
             rec.analytic_account_ids = rec.analytic_plan_id.account_ids.filtered(lambda a: a.partner_id == rec.driver_id)
+
+    @api.depends("analytic_account_distance", "product_variant_price")
+    def _compute_analytic_cost(self):
+        for record in self:
+            record.analytic_cost = record.analytic_account_distance * record.product_variant_price
 
     @api.depends("analytic_account_ids.partner_id")
     def _compute_user_ids(self):
