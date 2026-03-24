@@ -18,7 +18,7 @@ class SelfService(models.Model):
     @api.onchange('product_id')
     def _onchange_product_id(self):
         if self.product_id.self_service_step:
-            self.quantity = int(self.product_id.self_service_step)
+            self.quantity = float(self.product_id.self_service_step)
 
     @api.depends('quantity', 'product_variant_price')
     def _compute_total(self):
@@ -46,7 +46,7 @@ class SelfService(models.Model):
     product_self_service_step = fields.Selection(
         related="product_id.self_service_step",
     )
-    quantity = fields.Integer()
+    quantity = fields.Float()
     total = fields.Float(compute='_compute_total', store=True)
 
     user_id = fields.Many2one(
