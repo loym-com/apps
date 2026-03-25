@@ -22,9 +22,9 @@ class SelfService(models.Model):
             self.quantity = float(self.product_id.self_service_step)
 
     @api.depends('quantity', 'product_variant_price')
-    def _compute_total(self):
+    def _compute_cost(self):
         for record in self:
-            record.total = record.quantity * record.product_variant_price
+            record.cost = record.quantity * record.product_variant_price
 
     display_name = fields.Char(compute='_compute_display_name')
 
@@ -48,7 +48,11 @@ class SelfService(models.Model):
         related="product_id.self_service_step",
     )
     quantity = fields.Float()
-    total = fields.Float(compute='_compute_total', store=True)
+    cost = fields.Float(
+        string="Cost",
+        compute='_compute_cost',
+        store=True,
+    )
 
     user_id = fields.Many2one(
         comodel_name="res.users",

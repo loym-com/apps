@@ -133,7 +133,7 @@ class TestFleetVehicleOdometer(TransactionCase):
     # Analytic distance split
     # ---------------------------------------------------------
 
-    def test_analytic_account_distance(self):
+    def test_analytic_distance(self):
         od = self.Odometer.create({
             "vehicle_id": self.vehicle.id,
             "value": 200,
@@ -142,7 +142,7 @@ class TestFleetVehicleOdometer(TransactionCase):
         })
 
         # distance = 100, count = 2 → ceil(100/2) = 50
-        self.assertEqual(od.analytic_account_distance, 50)
+        self.assertEqual(od.analytic_distance, 50)
 
     def test_analytic_no_accounts(self):
         od = self.Odometer.create({
@@ -150,7 +150,7 @@ class TestFleetVehicleOdometer(TransactionCase):
             "value": 220,
             "date": "2025-01-05",
         })
-        self.assertEqual(od.analytic_account_distance, 0)
+        self.assertEqual(od.analytic_distance, 0)
 
     # ---------------------------------------------------------
     # Prev/Next mechanics

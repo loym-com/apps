@@ -25,9 +25,9 @@ class FleetVehicleOdometer(models.Model):
     analytic_account_ids = fields.Many2many(
         "account.analytic.account", string="Analytic Accounts"
     )
-    analytic_account_distance = fields.Integer(
-        "Analytic Distance",
-        compute="_compute_analytic_account_distance",
+    analytic_distance = fields.Integer(
+        "My Distance",
+        compute="_compute_analytic_distance",
         store=True,
         help="Compute how many km for each analytic account"
     )
@@ -52,12 +52,12 @@ class FleetVehicleOdometer(models.Model):
     analytic_cost = fields.Float(
         compute="_compute_analytic_cost",
         store=True,
-        string="Analytic Cost",
+        string="My Cost",
     )
     analytic_user_ids = fields.Many2many(
+        string="Users",
         comodel_name="res.users",
         compute="_compute_analytic_user_ids",
-        string="Users",
         store=True,
         help="",
     )
@@ -105,10 +105,10 @@ class FleetVehicleOdometer(models.Model):
                 lambda a: a.partner_id == partner
             )
 
-    @api.depends("analytic_account_distance", "product_variant_price")
+    @api.depends("analytic_distance", "product_variant_price")
     def _compute_analytic_cost(self):
         for record in self:
-            record.analytic_cost = record.analytic_account_distance * record.product_variant_price
+            record.analytic_cost = record.analytic_distance * record.product_variant_price
 
     @api.depends("analytic_account_ids.partner_id")
     def _compute_analytic_user_ids(self):
@@ -132,15 +132,15 @@ class FleetVehicleOdometer(models.Model):
                 )
 
     @api.depends("analytic_account_ids", "distance")
-    def _compute_analytic_account_distance(self):
+    def _compute_analytic_distance(self):
         for record in self:
             count = len(record.analytic_account_ids)
             if count:
-                record.analytic_account_distance = math.ceil(
+                record.analytic_distance = math.ceil(
                     record.distance / count
                 )
             else:
-                record.analytic_account_distance = 0
+                record.analytic_distance = 0
 
     @api.onchange("vehicle_id", "value")
     def _compute_start_and_distance_and_check_date(self):

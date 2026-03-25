@@ -33,7 +33,7 @@
                                     <field name="quantity" widget="numeric_step" options="{'step': 1000}"/>
                                 </div>
                                 <field name="product_variant_price" readonly="1"/>
-                                <field name="total" readonly="1"/>
+                                <field name="cost" readonly="1"/>
                                 <field name="user_id" readonly="1"/>
                                 <field name="user_id" invisible="1"/>
                                 <field name="date" readonly="1"/>
@@ -57,9 +57,19 @@
                 <field name="quantity" />
                 <field name="product_uom_id" optional="hide" />
                 <field name="product_variant_price" optional="hide" />
-                <field name="total" />
+                <field name="cost" />
                 <field name="user_id" optional="hide" />
             </tree>
+        </field>
+    </record>
+    <record id="self_service_view_graph" model="ir.ui.view">
+        <field name="name">self.service.view.graph</field>
+        <field name="model">self.service</field>
+        <field name="arch" type="xml">
+            <graph>
+                <field name="date"/>
+                <field name="cost" type="measure"/>
+            </graph>
         </field>
     </record>
     <record id="self_service_view_pivot" model="ir.ui.view">
@@ -70,7 +80,7 @@
                 <field name="product_id" type="row"/>
                 <field name="date" type="col" interval="month"/>
                 <field name="quantity" type="measure"/>
-                <field name="total" type="measure"/>
+                <field name="cost" type="measure"/>
             </pivot>
         </field>
     </record>
@@ -118,7 +128,7 @@
     <record id="self_service_action" model="ir.actions.act_window">
         <field name="name">Self Service</field>
         <field name="res_model">self.service</field>
-        <field name="view_mode">tree,pivot,form</field>
+        <field name="view_mode">tree,graph,pivot,form</field>
         <field name="context">{'search_default_filter_user_id': 1, 'search_default_last_3_months': 1}</field>
     </record>
 </odoo>
