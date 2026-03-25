@@ -9,7 +9,7 @@
     "category": "Administration",
     "data": [
         # "security/security.xml",
-        # "security/ir.model.access.csv",
+        "security/ir.model.access.csv",
         "security/fleet_vehicle_odometer_rules.xml",
         "views/fleet_vehicle_views.xml",
         "views/fleet_vehicle_odometer_views.xml",

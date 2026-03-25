@@ -1,4 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_account_analytic_account_driver,analytic account access for drivers,analytic.model_account_analytic_account,fleet_vehicle_odometer.group_driver,1,0,0,0
-access_fleet_vehicle_odometer_driver,fleet.vehicle.odometer access for drivers,fleet.model_fleet_vehicle_odometer,fleet_vehicle_odometer.group_driver,1,1,1,0
-access_fleet_vehicle_driver,fleet.vehicle access for drivers,fleet.model_fleet_vehicle,fleet_vehicle_odometer.group_driver,1,0,0,0
+access_account_analytic_account,analytic account access for users,analytic.model_account_analytic_account,base.group_user,1,0,0,0
+access_fleet_vehicle_odometer,fleet.vehicle.odometer access for users,fleet.model_fleet_vehicle_odometer,base.group_user,1,1,1,0
+access_fleet_vehicle,fleet.vehicle access for users,fleet.model_fleet_vehicle,base.group_user,1,0,0,0
