@@ -47,17 +47,27 @@ class FleetVehicleOdometer(models.Model):
     product_variant_price = fields.Float(
         related="vehicle_id.product_id.lst_price",
         string="Unit Price",
+        store=True,
     )
     analytic_cost = fields.Float(
         compute="_compute_analytic_cost",
         store=True,
         string="Analytic Cost",
     )
-    user_ids = fields.Many2many(
+    analytic_user_ids = fields.Many2many(
         comodel_name="res.users",
-        compute="_compute_user_ids",
+        compute="_compute_analytic_user_ids",
         string="Users",
         store=True,
+        help="",
+    )
+    user_id = fields.Many2one(
+        comodel_name="res.users",
+        default=lambda self: self.env.user,
+        string="Driver",
+    )
+    driver_id = fields.Many2one(
+        string="Driver (vehicle setting)",
     )
 
     @api.model_create_multi
@@ -81,16 +91,19 @@ class FleetVehicleOdometer(models.Model):
         next.exists()._compute_start_and_distance_and_check_date()
 
     @api.onchange("vehicle_id")
-    def _set_driver_id_to_current_user_partner(self):
+    def _set_user_id(self):
         for rec in self:
-            if rec.vehicle_id and not rec.driver_id:
-                rec.driver_id = self.env.user.employee_id.address_home_id
+            if rec.vehicle_id and not rec.user_id:
+                rec.user_id = self.env.user
 
     @api.onchange("analytic_plan_id")
     def _reset_analytic(self):
         for rec in self:
             rec.analytic_account_id = False
-            rec.analytic_account_ids = rec.analytic_plan_id.account_ids.filtered(lambda a: a.partner_id == rec.driver_id)
+            partner = rec.user_id.employee_id.address_home_id if rec.user_id.employee_id else rec.user_id.partner_id
+            rec.analytic_account_ids = rec.analytic_plan_id.account_ids.filtered(
+                lambda a: a.partner_id == partner
+            )
 
     @api.depends("analytic_account_distance", "product_variant_price")
     def _compute_analytic_cost(self):
@@ -98,12 +111,17 @@ class FleetVehicleOdometer(models.Model):
             record.analytic_cost = record.analytic_account_distance * record.product_variant_price
 
     @api.depends("analytic_account_ids.partner_id")
-    def _compute_user_ids(self):
+    def _compute_analytic_user_ids(self):
         for record in self:
-            users = self.env["res.users"].search([
-                ("employee_id.address_home_id", "in", record.analytic_account_ids.mapped("partner_id.id"))
-            ])
-            record.user_ids = users
+            analytic_partners = record.analytic_account_ids.mapped("partner_id")
+            analytic_users = self.env["res.users"].search(
+                [
+                    "|",
+                    ("employee_id.address_home_id", "in", analytic_partners.ids),
+                    ("partner_id", "in", analytic_partners.ids),
+                ]
+            )
+            record.analytic_user_ids = analytic_users
 
     @api.constrains("value")
     def _check_value(self):
@@ -165,15 +183,13 @@ class FleetVehicleOdometer(models.Model):
     def _get_related(self, operator, order):
         result = self.env[self._name].browse()
         for rec in self:
-            if rec.value:
-                search_domain = [
-                    ('vehicle_id', '=', rec.vehicle_id.id),
-                    ('value', operator, rec.value),
-                ]
-            else:
-                search_domain = [
-                    ('vehicle_id', '=', rec.vehicle_id.id),
-                ]
+            # If NEW record with NO value: get the highest/lowest value of the vehicle
+            search_domain = [
+                ('vehicle_id', '=', rec.vehicle_id.id),
+            ]
+            # Otherwise, get the next/previous value of the vehicle
+            if rec._origin or rec.value:
+                search_domain.append(('value', operator, rec.value))
             related = self.search(
                 search_domain,
                 order=order,

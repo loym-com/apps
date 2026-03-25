@@ -9,7 +9,7 @@
     "category": "Administration",
     "data": [
         # "security/security.xml",
-        "security/ir.model.access.csv",
+        # "security/ir.model.access.csv",
         "security/fleet_vehicle_odometer_rules.xml",
         "views/fleet_vehicle_views.xml",
         "views/fleet_vehicle_odometer_views.xml",
@@ -18,7 +18,9 @@
     "depends": [
         "analytic",
         "fleet",
+        "hr", # user.employee_id.address_home_id
         # "partner_contact_driver",
+        "product",
         "web_widget_field_buttons",
     ],
     "license": "AGPL-3",
