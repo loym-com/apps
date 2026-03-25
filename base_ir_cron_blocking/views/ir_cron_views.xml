@@ -16,4 +16,28 @@
             </data>
         </field>
     </record>
+    <record id="ir_cron_view_tree" model="ir.ui.view">
+        <field name="model">ir.cron</field>
+        <field name="name">ir.cron.view.list.inherit.blocking</field>
+        <field name="inherit_id" ref="base.ir_cron_view_tree"/>
+        <field name="arch" type="xml">
+            <data>
+                <tree position="inside">
+                    <field name="blocked"/>
+                </tree>
+            </data>
+        </field>
+    </record>
+    <record id="ir_cron_view_search" model="ir.ui.view">
+        <field name="model">ir.cron</field>
+        <field name="name">ir.cron.view.search.inherit.blocking</field>
+        <field name="inherit_id" ref="base.ir_cron_view_search"/>
+        <field name="arch" type="xml">
+            <data>
+                <search position="inside">
+                    <filter name="blocked" string="Blocked" domain="[('blocked', '=', True)]"/>
+                </search>
+            </data>
+        </field>
+    </record>
 </odoo>

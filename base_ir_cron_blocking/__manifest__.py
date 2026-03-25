@@ -1,5 +1,5 @@
 {
-    "name": "Block execution of cron jobs",
+    "name": "Block cron jobs",
     "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "summary": "Module to block execution of cron jobs",
