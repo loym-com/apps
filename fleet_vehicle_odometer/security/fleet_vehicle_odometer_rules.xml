@@ -5,7 +5,7 @@
         <record id="fleet_vehicle_odometer_rule_user" model="ir.rule">
             <field name="name">Odometer: Own Records</field>
             <field name="model_id" ref="model_fleet_vehicle_odometer"/>
-            <field name="domain_force">[('user_ids', 'in', [uid])]</field>
+            <field name="domain_force">[('user_ids', 'in', [user.id])]</field>
             <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
