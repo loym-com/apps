@@ -11,4 +11,11 @@ class IrCron(models.Model):
     def _check_blocked_active(self):
         for record in self:
             if record.blocked and record.active:
-                raise models.ValidationError(f"'{record.display_name}' is blocked and cannot be active.")
+                raise models.ValidationError(
+                    f"'{record.display_name}' cannot be blocked and active at the same time."
+                )
+
+    def method_direct_trigger(self, nextcall=False):
+        if self.blocked:
+            raise models.UserError(f"'{self.display_name}' is blocked and cannot be triggered.")
+        return super().method_direct_trigger(nextcall=nextcall)
