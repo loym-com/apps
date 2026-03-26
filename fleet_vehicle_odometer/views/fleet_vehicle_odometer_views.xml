@@ -9,7 +9,7 @@
                 <field name="vehicle_id" />
                 <field name="date" />
                 <field name="analytic_distance" />
-                <field name="product_variant_price" />
+                <field name="analytic_cost" />
                 <field name="analytic_user_ids" widget="many2many_tags" optional="hide" />
                 <field name="user_id" optional="hide" />
             </tree>
