@@ -100,7 +100,9 @@ class FleetVehicleOdometer(models.Model):
     def _reset_analytic(self):
         for rec in self:
             rec.analytic_account_id = False
-            partner = rec.user_id.employee_id.address_home_id if rec.user_id.employee_id else rec.user_id.partner_id
+            # hr.employee needs sudo()
+            employee = rec.sudo().user_id.employee_id
+            partner = employee.address_home_id if employee else rec.user_id.partner_id
             rec.analytic_account_ids = rec.analytic_plan_id.account_ids.filtered(
                 lambda a: a.partner_id == partner
             )
@@ -114,7 +116,8 @@ class FleetVehicleOdometer(models.Model):
     def _compute_analytic_user_ids(self):
         for record in self:
             analytic_partners = record.analytic_account_ids.mapped("partner_id")
-            analytic_users = self.env["res.users"].search(
+            # hr.employee needs sudo()
+            analytic_users = self.env["res.users"].sudo().search(
                 [
                     "|",
                     ("employee_id.address_home_id", "in", analytic_partners.ids),
