@@ -12,7 +12,7 @@
                 </label>
                 <sheet position="inside">
                     <group name="norway" string="Norway">
-                        <field name="l10n_no_AgapliktUtenLoennsopplysningsplikt" group="base.group_no_one" />
+                        <field name="l10n_no_AgapliktUtenLoennsopplysningsplikt" groups="base.group_no_one" />
                     </group>
                 </sheet>
             </data>
