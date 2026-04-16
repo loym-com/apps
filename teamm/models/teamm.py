@@ -1,3 +1,6 @@
+# import locale
+# locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
+
 import base64
 import csv
 import logging
@@ -218,7 +221,9 @@ class TeamM(models.Model):
     def _get_date(self, key):
         datestring = self._teamm2odoo_get_value(key)
         if datestring:
-            datestring = " ".join(datestring.split()[0:3]) # 31 Dec 2025
+            datestring = " ".join(datestring.split()[0:3]) # 31. Dec 2025
+            if datestring.endswith(','):                   # 31. Dec 2025,
+                datestring = datestring[:-1]
             date_format = self.env.context["teamm"].date_format
             if not date_format:
                 err_msg = "Missing Date Format"
