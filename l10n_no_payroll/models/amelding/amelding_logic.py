@@ -276,9 +276,9 @@ class AmeldingLogikk:
             else:
                 older_period = False
             changed = (
-                contract.write_date.date() > self.date_from - relativedelta(months=3)
-                # and
-                # not contract.write_uid.has_group('base.group_system')
+                contract.write_date.date() > self.date_from - relativedelta(months=1)
+                and
+                contract.write_uid != self.env.ref("base.user_root").id
             )
             if newer_period or (older_period and not changed):
                 continue

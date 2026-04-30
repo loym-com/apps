@@ -42,15 +42,13 @@ class ResPartner(models.Model):
 
         url = self.env.context["teamm"].url
         if url and url[-12:] == "/orders/list":
-            odoo_values = {
-                # "firstname": values["mainGuest"]["firstName"],
-                # "lastname": values["mainGuest"]["lastName"],
-            }
+            pass
         else:
+            firstname = self._teamm2odoo_get_value("firstname")
+            lastname = self._teamm2odoo_get_value("lastname")
             kwargs |= {
                 "teamm_contact_id": self._teamm2odoo_get_value("teamm_contact_id"),
-                "firstname": self._teamm2odoo_get_value("firstname"),
-                "lastname": self._teamm2odoo_get_value("lastname"),
+                "name": f"{firstname} {lastname}",
                 "email": self._teamm2odoo_get_value("email"),
                 "mobile": self._teamm2odoo_get_value("phone"),
                 "street": self._teamm2odoo_get_value("street"),

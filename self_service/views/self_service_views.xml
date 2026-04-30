@@ -34,10 +34,10 @@
                                 </div>
                                 <field name="product_variant_price" readonly="1"/>
                                 <field name="cost" readonly="1"/>
-                                <field name="user_id" readonly="1"/>
-                                <field name="user_id" invisible="1"/>
-                                <field name="date" readonly="1"/>
-                                <field name="date" invisible="1"/>
+                                <field name="user_id" readonly="0"/>
+                                <!-- <field name="user_id" invisible="1"/> -->
+                                <field name="date" readonly="0"/>
+                                <!-- <field name="date" invisible="1"/> -->
                             </group>
                             <!-- The product_id SELECTION must come after the product_id HEADING. -->
                             <field name="product_id" widget="selection_badge" attrs="{'invisible': [('product_id', '!=', False)]}"/>
