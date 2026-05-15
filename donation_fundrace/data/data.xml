@@ -16,7 +16,7 @@
                             width="955"
                             height="345"
                         /> -->
-                        <p>&nbsp;</p>
+                        <p>&#160;</p>
                         <h2>Dear <span t-field="o.name" />,</h2>
 
                         <t t-if="o.sponsors">
@@ -52,9 +52,9 @@
                                             /></td>
                                     </tr>
                                     <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
+                                        <td>&#160;</td>
+                                        <td>&#160;</td>
+                                        <td>&#160;</td>
                                         <td class="text-center"><b>TOTAL:</b></td>
                                         <td class="text-center">
                                             <b><span t-field="o.sponsors_total_nok"/></b>
@@ -66,9 +66,9 @@
                         </t>
 
                         <t t-if="o.runners and o.sponsors">
-                            <p>&nbsp;</p>
+                            <p>&#160;</p>
                             <hr />
-                            <p>&nbsp;</p>
+                            <p>&#160;</p>
                         </t>
 
                         <t t-if="o.runners">
@@ -106,15 +106,15 @@
                                         <!-- <td class="text-center"><span t-field="r.payment"/></td> -->
                                     </tr>
                                     <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
+                                        <td>&#160;</td>
+                                        <td>&#160;</td>
+                                        <td>&#160;</td>
                                         <td class="text-center"><b>TOTAL:</b></td>
                                         <td class="text-center">
                                             <b><span t-field="o.runners_total_nok"/></b>
                                         </td>
                                         <td class="text-center"><b>NOK</b></td>
-                                        <td>&nbsp;</td>
+                                        <td>&#160;</td>
                                     </tr>
                                 </tbody>
                             </table>
