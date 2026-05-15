@@ -16,10 +16,10 @@ class DonationFundraceSponsorship(models.Model):
                 record.amount_per_lap * record.laps + record.amount_fixed
             )
 
-    @api.depends("amount_total", "currency_id.rate")
+    @api.depends("amount_total", "currency_id.inverse_rate")
     def _compute_amount_total_nok(self):
         for record in self:
-            record.amount_total_nok = record.amount_total * record.currency_id.rate
+            record.amount_total_nok = record.amount_total * record.currency_id.inverse_rate
 
     @api.depends("runner_id.laps")
     def _compute_laps(self):
