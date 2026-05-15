@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="action_send_fundrace_email" model="ir.actions.server">
+            <field name="name">Send Fundrace Email</field>
+            <field name="model_id" ref="donation_fundrace.model_donation_fundrace_partner"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+# Get the mail template
+mail_template = env.ref('donation_fundrace.mail_template_donation_fundrace_report')
+if mail_template:
+    for record in records:
+        # Send the email for each selected record
+        mail_template.send_mail(record.id, force_send=True)
+            ]]></field>
+        </record>
+    </data>
+</odoo>

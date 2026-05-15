@@ -9,9 +9,10 @@
     "data": [
         "security/security.xml",
         "security/ir.model.access.csv",
-        "security/ir.rule.csv",
+        # "security/ir.rule.csv",
         "views/views.xml",
         "data/data.xml",
+        "data/server_actions.xml",
     ],
     "depends": ["event"],
     "license": "AGPL-3",
