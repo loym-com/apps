@@ -80,6 +80,7 @@ def _get(record, field):
 class AmeldingLogikk:
     def __init__(self, amelding_record):
         self.amelding_record = amelding_record
+        self.env = amelding_record.env
 
         period = _get(self.amelding_record, "kalendermaaned")
         date_from = datetime.strptime(period + "-01", "%Y-%m-%d")
