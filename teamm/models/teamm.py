@@ -124,7 +124,7 @@ class TeamM(models.Model):
         }
         record_ids = []
         begin, end = self.src_begin, self.src_end
-        model_names = self.model_ids.filtered("is_active").mapped("name")
+        model_names = self.env.context.get("model_names") or self.model_ids.filtered("is_active").mapped("name")
         for model_name in model_names:
             record_ids = []
             for i, teamm_values in enumerate(teamm_values_list, start=1):
