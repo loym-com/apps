@@ -13,3 +13,6 @@ class TeamMModel(models.Model):
     description = fields.Text()
     primary_key = fields.Text()
     values = fields.Text()
+
+    def action_import(self):
+        self.teamm_id.action_import()
