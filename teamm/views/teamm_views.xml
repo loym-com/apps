@@ -91,7 +91,7 @@
                                 <field name="name" />
                                 <field name="description" />
                                 <field name="primary_key" />
-                                <field name="values" />
+                                <field name="values" optional="hide"/>
                             </tree>
                         </field>
                         <field name="alias_ids">
