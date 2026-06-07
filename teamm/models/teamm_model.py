@@ -15,4 +15,4 @@ class TeamMModel(models.Model):
     values = fields.Text()
 
     def action_import(self):
-        self.teamm_id.action_import()
+        return self.teamm_id.action_import()
