@@ -11,6 +11,7 @@ _logger = logging.getLogger(__name__)
 class FleetVehicleOdometer(models.Model):
     _inherit = "fleet.vehicle.odometer"
     # _inherit = ["fleet.vehicle.odometer", "analytic.plan.mixin"]
+    _order = "date desc, value desc"
 
     _sql_constraints = [
         (
