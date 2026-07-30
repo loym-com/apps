@@ -159,6 +159,18 @@ class FleetVehicleOdometer(models.Model):
         for rec in self:
             vehicle = rec.vehicle_id
             if vehicle:
+                value_exists = self.search_count(
+                    [
+                        ("vehicle_id", "=", vehicle.id),
+                        ("value", "=", rec.value),
+                        ("id", "!=", rec._origin.id or 0),
+                    ]
+                )
+                if value_exists:
+                    raise UserError(
+                        _("Odometer value %s already exists for vehicle %s.") % (rec.value, vehicle.display_name)
+                    )
+
                 prev = rec._get_prev()
                 if prev:
                     if rec.date and prev.date and rec.date < prev.date:
@@ -202,6 +214,7 @@ class FleetVehicleOdometer(models.Model):
             # Otherwise, get the next/previous value of the vehicle
             if rec._origin or rec.value:
                 search_domain.append(('value', operator, rec.value))
+                search_domain.append(('id', "!=", rec._origin.id or 0))
             related = self.search(
                 search_domain,
                 order=order,
