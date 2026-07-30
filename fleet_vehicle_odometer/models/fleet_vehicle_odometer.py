@@ -12,6 +12,14 @@ class FleetVehicleOdometer(models.Model):
     _inherit = "fleet.vehicle.odometer"
     # _inherit = ["fleet.vehicle.odometer", "analytic.plan.mixin"]
 
+    _sql_constraints = [
+        (
+            "fleet_vehicle_odometer_vehicle_value_uniq",
+            "unique(vehicle_id, value)",
+            "Odometer stop must be unique per vehicle.",
+        )
+    ]
+
     analytic_plan_id = fields.Many2one(
         comodel_name="account.analytic.plan",
         domain="[('parent_id', '!=', False)]",
@@ -129,7 +137,7 @@ class FleetVehicleOdometer(models.Model):
     @api.constrains("value")
     def _check_value(self):
         for rec in self:
-            if not rec.value or rec.value < 0:
+            if rec.value <= 0:
                 raise UserError(
                     _("Odometer value must be positive for vehicle %s.") % rec.vehicle_id.display_name
                 )
