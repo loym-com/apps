@@ -176,10 +176,10 @@ class FleetVehicleOdometer(models.Model):
                     if rec.date and prev.date and rec.date < prev.date:
                         raise UserError(
                             (
-                                "Date of current odometer entry is earlier than previous one.\n"
+                                "There is a mismatch between date and odometer value.\n"
                                 "Vehicle: %s\n"
-                                "Current entry -> Date: %s, Value: %s\n"
-                                "Previous entry -> Date: %s, Value: %s"
+                                "Date: %s, Value: %s\n"
+                                "Date: %s, Value: %s"
                             ) % (
                                 vehicle.display_name,
                                 rec.date,
