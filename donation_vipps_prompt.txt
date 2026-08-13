@@ -1,0 +1,280 @@
+# Oppgave
+
+Lag en komplett Odoo 16 Community-modul kalt `donation_vipps`.
+
+Målet er å lage et **Proof of Concept** for å lære hvordan Odoo mottar webhooks. Modulen skal **ikke** integrere mot Vipps API ennå. Den skal kun motta en HTTP POST, lagre innholdet i databasen og gjøre det synlig i Odoo.
+
+Modulen skal følge OCA sine retningslinjer for struktur og kodekvalitet.
+
+---
+
+# Krav
+
+## Modulnavn
+
+```
+donation_vipps
+```
+
+## Avhengigheter
+
+Kun
+
+```
+base
+```
+
+Ingen andre avhengigheter.
+
+---
+
+# Filstruktur
+
+Lag alle nødvendige filer:
+
+```
+donation_vipps/
+    __init__.py
+    __manifest__.py
+
+    controllers/
+        __init__.py
+        webhook.py
+
+    models/
+        __init__.py
+        vipps_webhook.py
+
+    views/
+        donation_vipps_menu.xml
+        vipps_webhook_views.xml
+
+    security/
+        ir.model.access.csv
+```
+
+---
+
+# Datamodell
+
+Lag modellen
+
+```
+donation.vipps.webhook
+```
+
+med følgende felter:
+
+| Felt             | Type     |
+| ---------------- | -------- |
+| name             | Char     |
+| received_at      | Datetime |
+| method           | Char     |
+| path             | Char     |
+| remote_addr      | Char     |
+| headers          | Text     |
+| payload          | Text     |
+| processed        | Boolean  |
+| processing_error | Text     |
+
+Bruk
+
+```
+received_at = fields.Datetime(default=fields.Datetime.now)
+```
+
+og
+
+```
+processed = fields.Boolean(default=False)
+```
+
+Navnet (`name`) kan automatisk genereres som
+
+```
+Webhook YYYY-MM-DD HH:MM:SS
+```
+
+eller ved hjelp av en sequence.
+
+Sorter etter
+
+```
+received_at desc
+```
+
+---
+
+# Controller
+
+Lag en HTTP-controller.
+
+Route:
+
+```
+/vipps/webhook
+```
+
+Krav:
+
+* auth="public"
+* csrf=False
+* methods=["POST"]
+* type="http"
+
+Controlleren skal
+
+1. lese request body
+2. lese alle HTTP-headere
+3. lese request path
+4. lese HTTP-metode
+5. lese klient-IP
+6. lagre alt i modellen
+7. returnere HTTP 200
+
+Ingen behandling av JSON utover lagring.
+
+Payload skal lagres nøyaktig slik den mottas.
+
+Headers kan lagres som pretty-printed JSON.
+
+Bruk Odoo sin logger.
+
+---
+
+# Visninger
+
+Lag tree view.
+
+Kolonner:
+
+* received_at
+* method
+* remote_addr
+* processed
+
+Lag form view.
+
+Vis alle felter.
+
+Payload skal være stort tekstfelt.
+
+Headers skal være stort tekstfelt.
+
+Ingen chatter.
+
+Ingen smart buttons.
+
+---
+
+# Meny
+
+Lag meny
+
+```
+Donations
+    Vipps
+        Webhooks
+```
+
+Hvis Donations-menyen ikke finnes (fordi dette er en PoC uten andre moduler), opprett en toppmeny:
+
+```
+Vipps
+    Webhooks
+```
+
+---
+
+# Action
+
+Lag standard action.
+
+Åpne tree først.
+
+Deretter form.
+
+---
+
+# Access rights
+
+Gi interne brukere full tilgang.
+
+```
+base.group_user
+```
+
+---
+
+# Manifest
+
+Manifest skal inneholde
+
+* navn
+* versjon
+* lisens LGPL-3
+* application=False
+* installable=True
+
+---
+
+# Kodekvalitet
+
+Følg OCA-standard.
+
+Bruk
+
+* logging
+* docstrings
+* type hints der det passer
+* ingen unødvendig kode
+* ingen TODO-kommentarer
+
+---
+
+# Ingen integrasjon ennå
+
+Ikke implementer:
+
+* Vipps API
+* OAuth
+* tokens
+* partner-oppslag
+* accounting
+* donation.fundrace
+* cron
+* queue_job
+* JSON-parsing
+* webhook-signatur
+* validering
+
+Kun lagring av rå HTTP-request.
+
+---
+
+# Test
+
+Etter at modulen er installert skal følgende fungere:
+
+```
+curl -X POST \
+  http://localhost:8069/vipps/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"event":"payment","amount":250}'
+```
+
+Dette skal opprette en ny post i
+
+```
+Vipps → Webhooks
+```
+
+med hele payloaden lagret.
+
+---
+
+# Leveranse
+
+Generer **alle filene med komplett innhold**, én fil om gangen, tydelig merket med filnavn.
+
+Koden skal kunne kopieres direkte inn i et Odoo 16-addon og installeres uten manuelle endringer.
