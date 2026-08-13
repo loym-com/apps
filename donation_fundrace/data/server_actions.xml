@@ -9,9 +9,9 @@
 # Get the mail template
 mail_template = env.ref('donation_fundrace.mail_template_donation_fundrace_report')
 if mail_template:
-    for record in records:
+    for rec in records:
         # Send the email for each selected record
-        mail_template.send_mail(record.id, force_send=True)
+        mail_template.send_mail(rec.id, force_send=True)
             ]]></field>
         </record>
     </data>

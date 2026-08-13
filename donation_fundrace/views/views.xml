@@ -39,7 +39,7 @@
             <field name="model">donation.fundrace.partner</field>
             <field name="priority" eval="20" />
             <field name="arch" type="xml">
-                <tree editable="top">
+                <tree editable="bottom">
                     <field name="event_id" />
                     <field name="partner_id" />
                     <field name="mobile" />
@@ -86,7 +86,7 @@
             <field name="model">donation.fundrace.sponsorship</field>
             <field name="priority" eval="20" />
             <field name="arch" type="xml">
-                <tree editable="top">
+                <tree editable="bottom">
                     <field name="event_id" />
                     <field name="runner_id" domain="[('event_id','=',event_id)]" />
                     <field name="sponsor_id" domain="[('event_id','=',event_id)]" />

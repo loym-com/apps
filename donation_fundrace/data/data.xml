@@ -25,29 +25,29 @@
                                 <thead>
                                     <tr>
                                         <th>Sponsor</th>
-                                        <th class="text-center">Runned laps</th>
-                                        <th class="text-center">Amount per lap</th>
-                                        <th class="text-center">Fixed amount</th>
-                                        <th class="text-center">Total amount</th>
-                                        <th class="text-center">Currency</th>
+                                        <th style="text-align: center;">Runned laps</th>
+                                        <th style="text-align: center;">Amount per lap</th>
+                                        <th style="text-align: center;">Fixed amount</th>
+                                        <th style="text-align: center;">Total amount</th>
+                                        <th style="text-align: center;">Currency</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr t-foreach="o.sponsors" t-as="s">
                                         <td><span t-field="s.sponsor_id" /></td>
-                                        <td class="text-center"><span
+                                        <td style="text-align: center;"><span
                                                 t-field="s.laps"
                                             /></td>
-                                        <td class="text-center"><span
+                                        <td style="text-align: center;"><span
                                                 t-field="s.amount_per_lap"
                                             /></td>
-                                        <td class="text-center"><span
+                                        <td style="text-align: center;"><span
                                                 t-field="s.amount_fixed"
                                             /></td>
-                                        <td class="text-center"><span
+                                        <td style="text-align: center;"><span
                                                 t-field="s.amount_total"
                                             /></td>
-                                        <td class="text-center"><span
+                                        <td style="text-align: center;"><span
                                                 t-field="s.currency_id"
                                             /></td>
                                     </tr>
@@ -55,11 +55,11 @@
                                         <td>&#160;</td>
                                         <td>&#160;</td>
                                         <td>&#160;</td>
-                                        <td class="text-center"><b>TOTAL:</b></td>
-                                        <td class="text-center">
+                                        <td style="text-align: center;"><b>TOTAL:</b></td>
+                                        <td style="text-align: center;">
                                             <b><span t-field="o.sponsors_total_nok"/></b>
                                         </td>
-                                        <td class="text-center"><b>NOK</b></td>
+                                        <td style="text-align: center;"><b>NOK</b></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -77,30 +77,30 @@
                                 <thead>
                                     <tr>
                                         <th>Runner</th>
-                                        <th class="text-center">Runned laps</th>
-                                        <th class="text-center">Amount per lap</th>
-                                        <th class="text-center">Fixed amount</th>
-                                        <th class="text-center">Total amount</th>
-                                        <th class="text-center">Currency</th>
+                                        <th style="text-align: center;">Runned laps</th>
+                                        <th style="text-align: center;">Amount per lap</th>
+                                        <th style="text-align: center;">Fixed amount</th>
+                                        <th style="text-align: center;">Total amount</th>
+                                        <th style="text-align: center;">Currency</th>
                                         <!-- <th class="text-center">Payment</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr t-foreach="o.runners" t-as="r">
                                         <td><span t-field="r.runner_id" /></td>
-                                        <td class="text-center"><span
+                                        <td style="text-align: center;"><span
                                                 t-field="r.laps"
                                             /></td>
-                                        <td class="text-center"><span
+                                        <td style="text-align: center;"><span
                                                 t-field="r.amount_per_lap"
                                             /></td>
-                                        <td class="text-center"><span
+                                        <td style="text-align: center;"><span
                                                 t-field="r.amount_fixed"
                                             /></td>
-                                        <td class="text-center"><span
+                                        <td style="text-align: center;"><span
                                                 t-field="r.amount_total"
                                             /></td>
-                                        <td class="text-center"><span
+                                        <td style="text-align: center;"><span
                                                 t-field="r.currency_id"
                                             /></td>
                                         <!-- <td class="text-center"><span t-field="r.payment"/></td> -->
@@ -109,11 +109,11 @@
                                         <td>&#160;</td>
                                         <td>&#160;</td>
                                         <td>&#160;</td>
-                                        <td class="text-center"><b>TOTAL:</b></td>
-                                        <td class="text-center">
+                                        <td style="text-align: center;"><b>TOTAL:</b></td>
+                                        <td style="text-align: center;">
                                             <b><span t-field="o.runners_total_nok"/></b>
                                         </td>
-                                        <td class="text-center"><b>NOK</b></td>
+                                        <td style="text-align: center;"><b>NOK</b></td>
                                         <td>&#160;</td>
                                     </tr>
                                 </tbody>
@@ -148,21 +148,21 @@
                 name="model_id"
                 ref="donation_fundrace.model_donation_fundrace_partner"
             />
-            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="partner_to">{{object.partner_id.id}}</field>
             <field
                 name="subject"
-            >Thank you for supporting the ${object.event_id.name}</field>
+            >Thank you for supporting the {{object.event_id.name}}</field>
             <field
                 name="body_html"
             ><![CDATA[
 <div>
-    <p>Dear ${object.name},</p>
-    <p>Thank you so much for supporting ${object.event_id.name}!</p>
+    <p>Dear {{object.name}},</p>
+    <p>Thank you so much for supporting {{object.event_id.name}}!</p>
     <p>For more details, see the attachment.</p>
     <p>Best regards,</p>
 </div>
 <div>
-    ${user.signature | safe}
+    {{user.signature | safe}}
 </div>]]></field>
             <field
                 name="report_template"
