@@ -1,0 +1,112 @@
+<t t-name="donation_fundrace.report_donation_fundrace">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+
+                        <h1><span t-field="o.event_id.name"/></h1>
+                        <!-- <img
+                            src="https://web.granheims.no/web/image/4937"
+                            alt="FundRace 2018"
+                            width="955"
+                            height="345"
+                        /> -->
+                        <p/>
+                        <h2>Dear <span t-field="o.name"/>,</h2>
+
+                        <t t-if="o.sponsors">
+                            <p>Thank you so much for running! This is how much people have sponsored you:</p>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Sponsor</th>
+                                        <th style="text-align: center;">Runned laps</th>
+                                        <th style="text-align: center;">Amount per lap</th>
+                                        <th style="text-align: center;">Fixed amount</th>
+                                        <th style="text-align: center;">Total amount</th>
+                                        <th style="text-align: center;">Currency</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.sponsors" t-as="s">
+                                        <td><span t-field="s.sponsor_id"/></td>
+                                        <td style="text-align: center;"><span t-field="s.laps"/></td>
+                                        <td style="text-align: center;"><span t-field="s.amount_per_lap"/></td>
+                                        <td style="text-align: center;"><span t-field="s.amount_fixed"/></td>
+                                        <td style="text-align: center;"><span t-field="s.amount_total"/></td>
+                                        <td style="text-align: center;"><span t-field="s.currency_id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td/>
+                                        <td/>
+                                        <td/>
+                                        <td style="text-align: center;"><b>TOTAL:</b></td>
+                                        <td style="text-align: center;">
+                                            <b><span t-field="o.sponsors_total_nok"/></b>
+                                        </td>
+                                        <td style="text-align: center;"><b>NOK</b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+
+                        <t t-if="o.runners and o.sponsors">
+                            <br/>
+                            <br/>
+                            
+                            <hr/>
+                            
+                            <br/>
+                            <br/>
+                        </t>
+
+                        <t t-if="o.runners">
+                            <p>Thank you so much for supporting these runners:</p>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Runner</th>
+                                        <th style="text-align: center;">Runned laps</th>
+                                        <th style="text-align: center;">Amount per lap</th>
+                                        <th style="text-align: center;">Fixed amount</th>
+                                        <th style="text-align: center;">Total amount</th>
+                                        <th style="text-align: center;">Currency</th>
+                                        <!-- <th class="text-center">Payment</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.runners" t-as="r">
+                                        <td><span t-field="r.runner_id"/></td>
+                                        <td style="text-align: center;"><span t-field="r.laps"/></td>
+                                        <td style="text-align: center;"><span t-field="r.amount_per_lap"/></td>
+                                        <td style="text-align: center;"><span t-field="r.amount_fixed"/></td>
+                                        <td style="text-align: center;"><span t-field="r.amount_total"/></td>
+                                        <td style="text-align: center;"><span t-field="r.currency_id"/></td>
+                                        <!-- <td class="text-center"><span t-field="r.payment"/></td> -->
+                                    </tr>
+                                    <tr>
+                                        <td/>
+                                        <td/>
+                                        <td/>
+                                        <td style="text-align: center;"><b>TOTAL:</b></td>
+                                        <td style="text-align: center;">
+                                            <b><span t-field="o.runners_total_nok"/></b>
+                                        </td>
+                                        <td style="text-align: center;"><b>NOK</b></td>
+                                        <td/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>PAYMENT OPTIONS:</p>
+                            <p><b>Bank</b>: 1020.07.09654
+                            <br/>IBAN: NO82 1020 0709 654
+                            <br/>BIC: EIDSNO21XXX</p>
+                            <p><b>Vipps</b>: 78973</p>
+                            <p><b>PayPal</b>: donations@granheims.no</p>
+                            <p><b>Card</b>: <a href="https://www4.solidus.no/SolidusUser/nettbutikk/granheimstiftelsen/donations" target="_blank">https://www4.solidus.no/SolidusUser/nettbutikk/granheimstiftelsen/donations</a> </p>
+                            
+                        </t>
+
+                    </div>
+                </t>
+            </t>
+        </t>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="menu_donation_vipps_root" name="Vipps" sequence="90" />
+
+    <menuitem
+        id="menu_donation_vipps_webhooks"
+        name="Webhooks"
+        parent="menu_donation_vipps_root"
+        action="action_donation_vipps_webhook"
+        sequence="10"
+    />
+</odoo>
