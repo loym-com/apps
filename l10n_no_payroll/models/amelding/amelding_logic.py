@@ -471,9 +471,6 @@ class AmeldingLogikk:
         p.beskrivelse = _get(
             leave.holiday_status_id, "l10n_no_PermisjonsOgPermitteringsBeskrivelse"
         )
-        mydate = datetime.strptime("2025-08-01", "%Y-%m-%d")
-        if leave.date_from >= mydate:
-            p.loennet = _get(leave.holiday_status_id, "l10n_no_PermisjonLoennet")
         return p
 
     def Permittering(self, leave):
