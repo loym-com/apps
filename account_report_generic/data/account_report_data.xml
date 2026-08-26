@@ -12,6 +12,21 @@
         </field>
 
         <field name="line_ids">
+            <!-- En rad per konto -->
+            <record id="account_balance_report_by_account" model="account.report.line">
+                <field name="name">Account Balance</field>
+                <!-- <field name="groupby">account_id</field> -->
+                <field name="expression_ids">
+                    <record id="account_balance_report_by_account_expr" model="account.report.expression">
+                        <field name="label">balance</field>
+                        <field name="engine">domain</field>
+                        <field name="formula" eval="[('account_id', '!=', False)]"/>
+                        <field name="subformula">sum</field>
+                    </record>
+                </field>
+            </record>
+
+            <!-- Totalrad -->
             <record id="account_balance_report_total" model="account.report.line">
                 <field name="name">Total</field>
                 <field name="expression_ids">
@@ -25,4 +40,17 @@
             </record>
         </field>
     </record>
+
+    <record id="action_account_balance_report" model="ir.actions.client">
+        <field name="name">Account Balance</field>
+        <field name="tag">account_report</field>
+        <field name="context" eval="{'report_id': ref('account_report_generic.account_balance_report')}"/>
+    </record>
+
+    <menuitem id="menu_account_balance_report"
+              name="Account Balance"
+              parent="account.menu_finance_reports"
+              action="action_account_balance_report"
+              sequence="55"
+              groups="account.group_account_readonly"/>
 </odoo>
