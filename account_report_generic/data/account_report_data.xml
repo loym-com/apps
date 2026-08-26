@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_balance_report" model="account.report">
+        <field name="name">Account Balance</field>
+        <field name="filter_date_range" eval="True"/>
+        <field name="column_ids">
+            <record id="account_balance_report_column" model="account.report.column">
+                <field name="name">Balance</field>
+                <field name="expression_label">balance</field>
+                <field name="figure_type">monetary</field>
+            </record>
+        </field>
+
+        <field name="line_ids">
+            <record id="account_balance_report_total" model="account.report.line">
+                <field name="name">Total</field>
+                <field name="expression_ids">
+                    <record id="account_balance_report_total_expr" model="account.report.expression">
+                        <field name="label">balance</field>
+                        <field name="engine">domain</field>
+                        <field name="formula" eval="[('account_id', '!=', False)]"/>
+                        <field name="subformula">sum</field>
+                    </record>
+                </field>
+            </record>
+        </field>
+    </record>
+</odoo>
