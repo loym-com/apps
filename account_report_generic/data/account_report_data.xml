@@ -9,7 +9,7 @@
     />
     <!-- PROFIT / LOSS REPORT -->
     <record id="account_report_profit_loss" model="account.report">
-        <field name="name">Profitt / Loss</field>
+        <field name="name">Profit / Loss</field>
         <field name="filter_date_range" eval="True"/>
         <field name="column_ids">
             <record id="account_report_column_profit_loss_balance" model="account.report.column">
@@ -125,16 +125,46 @@
                     </record>
                 </field>
             </record>
+            <record id="account_report_line_profit_loss_total" model="account.report.line">
+                <field name="name">Profit / Loss</field>
+                <field name="code">profit_loss_total</field>
+                <field name="expression_ids">
+                    <record id="account_report_expression_profit_loss_total_balance" model="account.report.expression">
+                        <field name="label">balance</field>
+                        <!-- <field name="engine">aggregation</field>
+                        <field name="formula">profit_loss_income.balance+profit_loss_expense.balance</field> -->
+                        <field name="engine">domain</field>
+                        <field name="formula" eval="[('account_id.internal_group', 'in', ['income', 'expense'])]"/>
+                        <field name="subformula">-sum</field>
+                    </record>
+                </field>
+                <field name="children_ids">
+                    <record id="account_report_line_profit_loss_total_detail" model="account.report.line">
+                        <field name="name">Profit / Loss</field>
+                        <field name="code">profit_loss_total_detail</field>
+                        <field name="expression_ids">
+                            <record id="account_report_expression_profit_loss_total_detail_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <!-- <field name="engine">aggregation</field>
+                                <field name="formula">profit_loss_income.balance+profit_loss_expense.balance</field> -->
+                                <field name="engine">domain</field>
+                                <field name="formula" eval="[('account_id.internal_group', 'in', ['income', 'expense'])]"/>
+                                <field name="subformula">-sum</field>
+                            </record>
+                        </field>
+                    </record>
+                </field>
+            </record>
         </field>
     </record>
     <record id="action_profit_loss_report" model="ir.actions.client">
-        <field name="name">Profitt / Loss</field>
+        <field name="name">Profit / Loss</field>
         <field name="tag">account_report</field>
         <field name="context" eval="{'report_id': ref('account_report_generic.account_report_profit_loss')}"/>
     </record>
     <menuitem
         id="account_report_menu_profit_loss"
-        name="Profitt / Loss"
+        name="Profit / Loss"
         parent="account_report_menu_generic_reports"
         action="action_profit_loss_report"
         sequence="55"
@@ -228,6 +258,36 @@
                     </record>
                 </field>
             </record>
+            <record id="account_report_line_balance_sheet_equity_liability" model="account.report.line">
+                <field name="name">Equity &amp; Liability</field>
+                <field name="code">balance_sheet_equity_liability</field>
+                <field name="expression_ids">
+                    <record id="account_report_expression_balance_sheet_equity_liability_balance" model="account.report.expression">
+                        <field name="label">balance</field>
+                        <!-- <field name="engine">aggregation</field>
+                        <field name="formula">balance_sheet_equity.balance+balance_sheet_liability.balance</field> -->
+                        <field name="engine">domain</field>
+                        <field name="formula" eval="[('account_id.internal_group', 'in', ['equity', 'liability'])]"/>
+                        <field name="subformula">-sum</field>
+                    </record>
+                </field>
+                <field name="children_ids">
+                    <record id="account_report_line_balance_sheet_equity_liability_detail" model="account.report.line">
+                        <field name="name">Equity &amp; Liability</field>
+                        <field name="code">balance_sheet_equity_liability_detail</field>
+                        <field name="expression_ids">
+                            <record id="account_report_expression_balance_sheet_equity_liability_detail_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <!-- <field name="engine">aggregation</field>
+                                <field name="formula">balance_sheet_equity.balance+balance_sheet_liability.balance</field> -->
+                                <field name="engine">domain</field>
+                                <field name="formula" eval="[('account_id.internal_group', 'in', ['equity', 'liability'])]"/>
+                                <field name="subformula">-sum</field>
+                            </record>
+                        </field>
+                    </record>
+                </field>
+            </record>
         </field>
     </record>
     <record id="action_balance_sheet_report" model="ir.actions.client">
@@ -258,7 +318,7 @@
             <record id="account_report_line_trial_balance" model="account.report.line">
                 <field name="name">Trial Balance</field>
                 <field name="code">trial_balance</field>
-                <field name="foldability">foldable</field>
+                <field name="foldability">always_unfolded</field>
                 <field name="user_groupby">account_id</field>
                 <field name="expression_ids">
                     <record id="account_report_expression_trial_balance_balance" model="account.report.expression">
