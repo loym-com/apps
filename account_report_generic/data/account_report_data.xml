@@ -19,17 +19,109 @@
             </record>
         </field>
         <field name="line_ids">
-            <record id="account_report_line_profit_loss" model="account.report.line">
-                <field name="name">Profitt / Loss</field>
-                <field name="code">profit_loss</field>
-                <field name="foldability">foldable</field>
-                <field name="user_groupby">account_id</field>
+            <record id="account_report_line_profit_loss_income" model="account.report.line">
+                <field name="name">Income</field>
+                <field name="code">profit_loss_income</field>
                 <field name="expression_ids">
-                    <record id="account_report_expression_profit_loss_balance" model="account.report.expression">
+                    <record id="account_report_expression_profit_loss_income_balance" model="account.report.expression">
                         <field name="label">balance</field>
                         <field name="engine">domain</field>
-                        <field name="formula" eval="['|', ('account_id.internal_group', '=', 'income'), ('account_id.internal_group', '=', 'expense')]"/>
+                        <field name="formula" eval="[('account_id.internal_group', '=', 'income')]"/>
                         <field name="subformula">-sum</field>
+                    </record>
+                </field>
+                <field name="children_ids">
+                    <record id="account_report_line_profit_loss_income_operating" model="account.report.line">
+                        <field name="name">Income</field>
+                        <field name="foldability">foldable</field>
+                        <field name="groupby">account_id</field>
+                        <field name="expression_ids">
+                            <record id="account_report_expression_profit_loss_income_operating_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">domain</field>
+                                <field name="formula" eval="[('account_id.account_type', '=', 'income')]"/>
+                                <field name="subformula">-sum</field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="account_report_line_profit_loss_income_other" model="account.report.line">
+                        <field name="name">Other Income</field>
+                        <field name="foldability">foldable</field>
+                        <field name="groupby">account_id</field>
+                        <field name="expression_ids">
+                            <record id="account_report_expression_profit_loss_income_other_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">domain</field>
+                                <field name="formula" eval="[('account_id.account_type', '=', 'income_other')]"/>
+                                <field name="subformula">-sum</field>
+                            </record>
+                        </field>
+                    </record>
+                </field>
+            </record>
+            <record id="account_report_line_profit_loss_expense" model="account.report.line">
+                <field name="name">Expenses</field>
+                <field name="code">profit_loss_expense</field>
+                <field name="expression_ids">
+                    <record id="account_report_expression_profit_loss_expense_balance" model="account.report.expression">
+                        <field name="label">balance</field>
+                        <field name="engine">domain</field>
+                        <field name="formula" eval="[('account_id.internal_group', '=', 'expense')]"/>
+                        <field name="subformula">-sum</field>
+                    </record>
+                </field>
+                <field name="children_ids">
+                    <record id="account_report_line_profit_loss_expense_operating" model="account.report.line">
+                        <field name="name">Expenses</field>
+                        <field name="foldability">foldable</field>
+                        <field name="groupby">account_id</field>
+                        <field name="expression_ids">
+                            <record id="account_report_expression_profit_loss_expense_operating_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">domain</field>
+                                <field name="formula" eval="[('account_id.account_type', '=', 'expense')]"/>
+                                <field name="subformula">-sum</field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="account_report_line_profit_loss_expense_other" model="account.report.line">
+                        <field name="name">Other Expenses</field>
+                        <field name="foldability">foldable</field>
+                        <field name="groupby">account_id</field>
+                        <field name="expression_ids">
+                            <record id="account_report_expression_profit_loss_expense_other_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">domain</field>
+                                <field name="formula" eval="[('account_id.account_type', '=', 'expense_other')]"/>
+                                <field name="subformula">-sum</field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="account_report_line_profit_loss_expense_depreciation" model="account.report.line">
+                        <field name="name">Depreciation</field>
+                        <field name="foldability">foldable</field>
+                        <field name="groupby">account_id</field>
+                        <field name="expression_ids">
+                            <record id="account_report_expression_profit_loss_expense_depreciation_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">domain</field>
+                                <field name="formula" eval="[('account_id.account_type', '=', 'expense_depreciation')]"/>
+                                <field name="subformula">-sum</field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="account_report_line_profit_loss_expense_direct_cost" model="account.report.line">
+                        <field name="name">Cost of Revenue</field>
+                        <field name="foldability">foldable</field>
+                        <field name="groupby">account_id</field>
+                        <field name="expression_ids">
+                            <record id="account_report_expression_profit_loss_expense_direct_cost_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">domain</field>
+                                <field name="formula" eval="[('account_id.account_type', '=', 'expense_direct_cost')]"/>
+                                <field name="subformula">-sum</field>
+                            </record>
+                        </field>
                     </record>
                 </field>
             </record>
@@ -60,17 +152,79 @@
             </record>
         </field>
         <field name="line_ids">
-            <record id="account_report_line_balance_sheet" model="account.report.line">
-                <field name="name">Balance Sheet</field>
-                <field name="code">balance_sheet</field>
-                <field name="foldability">foldable</field>
-                <field name="user_groupby">account_id</field>
+            <record id="account_report_line_balance_sheet_asset" model="account.report.line">
+                <field name="name">Assets</field>
+                <field name="code">balance_sheet_asset</field>
                 <field name="expression_ids">
-                    <record id="account_report_expression_balance_sheet_balance" model="account.report.expression">
+                    <record id="account_report_expression_balance_sheet_asset_balance" model="account.report.expression">
                         <field name="label">balance</field>
                         <field name="engine">domain</field>
-                        <field name="formula" eval="[('account_id.internal_group', '!=', 'income'), ('account_id.internal_group', '!=', 'expense')]"/>
+                        <field name="formula" eval="[('account_id.internal_group', '=', 'asset')]"/>
                         <field name="subformula">sum</field>
+                    </record>
+                </field>
+                <field name="children_ids">
+                    <record id="account_report_line_balance_sheet_asset_receivable" model="account.report.line">
+                        <field name="name">Receivable</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_receivable_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_receivable')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                    <record id="account_report_line_balance_sheet_asset_cash" model="account.report.line">
+                        <field name="name">Bank and Cash</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_cash_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_cash')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                    <record id="account_report_line_balance_sheet_asset_current" model="account.report.line">
+                        <field name="name">Current Assets</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_current_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_current')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                    <record id="account_report_line_balance_sheet_asset_non_current" model="account.report.line">
+                        <field name="name">Non-current Assets</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_non_current_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_non_current')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                    <record id="account_report_line_balance_sheet_asset_prepayments" model="account.report.line">
+                        <field name="name">Prepayments</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_prepayments_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_prepayments')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                    <record id="account_report_line_balance_sheet_asset_fixed" model="account.report.line">
+                        <field name="name">Fixed Assets</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_fixed_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_fixed')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                </field>
+            </record>
+            <record id="account_report_line_balance_sheet_equity" model="account.report.line">
+                <field name="name">Equity</field>
+                <field name="code">balance_sheet_equity</field>
+                <field name="expression_ids"><record id="account_report_expression_balance_sheet_equity_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.internal_group', '=', 'equity')]"/><field name="subformula">sum</field></record></field>
+                <field name="children_ids">
+                    <record id="account_report_line_balance_sheet_equity_regular" model="account.report.line">
+                        <field name="name">Equity</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_equity_regular_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'equity')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                    <record id="account_report_line_balance_sheet_equity_unaffected" model="account.report.line">
+                        <field name="name">Current Year Earnings</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_equity_unaffected_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'equity_unaffected')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                </field>
+            </record>
+            <record id="account_report_line_balance_sheet_liability" model="account.report.line">
+                <field name="name">Liabilities</field>
+                <field name="code">balance_sheet_liability</field>
+                <field name="expression_ids"><record id="account_report_expression_balance_sheet_liability_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.internal_group', '=', 'liability')]"/><field name="subformula">sum</field></record></field>
+                <field name="children_ids">
+                    <record id="account_report_line_balance_sheet_liability_payable" model="account.report.line">
+                        <field name="name">Payable</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_liability_payable_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'liability_payable')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                    <record id="account_report_line_balance_sheet_liability_credit_card" model="account.report.line">
+                        <field name="name">Credit Card</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_liability_credit_card_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'liability_credit_card')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                    <record id="account_report_line_balance_sheet_liability_current" model="account.report.line">
+                        <field name="name">Current Liabilities</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_liability_current_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'liability_current')]"/><field name="subformula">sum</field></record></field>
+                    </record>
+                    <record id="account_report_line_balance_sheet_liability_non_current" model="account.report.line">
+                        <field name="name">Non-current Liabilities</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="expression_ids"><record id="account_report_expression_balance_sheet_liability_non_current_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'liability_non_current')]"/><field name="subformula">sum</field></record></field>
                     </record>
                 </field>
             </record>
