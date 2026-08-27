@@ -15,7 +15,9 @@
             <!-- En rad per konto -->
             <record id="account_balance_report_by_account" model="account.report.line">
                 <field name="name">Account Balance</field>
-                <!-- <field name="groupby">account_id</field> -->
+                <field name="code">account_balance_by_account</field>
+                <field name="foldability">foldable</field>
+                <field name="user_groupby">account_id</field>
                 <field name="expression_ids">
                     <record id="account_balance_report_by_account_expr" model="account.report.expression">
                         <field name="label">balance</field>
@@ -29,6 +31,7 @@
             <!-- Totalrad -->
             <record id="account_balance_report_total" model="account.report.line">
                 <field name="name">Total</field>
+                <field name="code">account_balance_total</field>
                 <field name="expression_ids">
                     <record id="account_balance_report_total_expr" model="account.report.expression">
                         <field name="label">balance</field>
