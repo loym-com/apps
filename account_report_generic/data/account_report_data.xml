@@ -1,5 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <menuitem
+        id="account_report_menu_generic_reports"
+        name="Generic Reports"
+        parent="account.menu_finance_reports"
+        sequence="55"
+        groups="account.group_account_readonly"
+    />
+    <!-- PROFIT / LOSS REPORT -->
+    <record id="account_report_profit_loss" model="account.report">
+        <field name="name">Profitt / Loss</field>
+        <field name="filter_date_range" eval="True"/>
+        <field name="column_ids">
+            <record id="account_report_column_profit_loss_balance" model="account.report.column">
+                <field name="name">Balance</field>
+                <field name="expression_label">balance</field>
+                <field name="figure_type">monetary</field>
+            </record>
+        </field>
+        <field name="line_ids">
+            <record id="account_report_line_profit_loss" model="account.report.line">
+                <field name="name">Profitt / Loss</field>
+                <field name="code">profit_loss</field>
+                <field name="foldability">foldable</field>
+                <field name="user_groupby">account_id</field>
+                <field name="expression_ids">
+                    <record id="account_report_expression_profit_loss_balance" model="account.report.expression">
+                        <field name="label">balance</field>
+                        <field name="engine">domain</field>
+                        <field name="formula" eval="[('account_id', '!=', False)]"/>
+                        <field name="subformula">sum</field>
+                    </record>
+                </field>
+            </record>
+        </field>
+    </record>
+    <record id="action_profit_loss_report" model="ir.actions.client">
+        <field name="name">Profitt / Loss</field>
+        <field name="tag">account_report</field>
+        <field name="context" eval="{'report_id': ref('account_report_generic.account_report_profit_loss')}"/>
+    </record>
+    <menuitem
+        id="account_report_menu_profit_loss"
+        name="Profitt / Loss"
+        parent="account_report_menu_generic_reports"
+        action="action_profit_loss_report"
+        sequence="55"
+        groups="account.group_account_readonly"
+    />
+    <!-- BALANCE SHEET REPORT -->
+    <record id="account_report_balance_sheet" model="account.report">
+        <field name="name">Balance Sheet</field>
+        <field name="filter_date_range" eval="True"/>
+        <field name="column_ids">
+            <record id="account_report_column_balance_sheet_balance" model="account.report.column">
+                <field name="name">Balance</field>
+                <field name="expression_label">balance</field>
+                <field name="figure_type">monetary</field>
+            </record>
+        </field>
+        <field name="line_ids">
+            <record id="account_report_line_balance_sheet" model="account.report.line">
+                <field name="name">Balance Sheet</field>
+                <field name="code">balance_sheet</field>
+                <field name="foldability">foldable</field>
+                <field name="user_groupby">account_id</field>
+                <field name="expression_ids">
+                    <record id="account_report_expression_balance_sheet_balance" model="account.report.expression">
+                        <field name="label">balance</field>
+                        <field name="engine">domain</field>
+                        <field name="formula" eval="[('account_id', '!=', False)]"/>
+                        <field name="subformula">sum</field>
+                    </record>
+                </field>
+            </record>
+        </field>
+    </record>
+    <record id="action_balance_sheet_report" model="ir.actions.client">
+        <field name="name">Balance Sheet</field>
+        <field name="tag">account_report</field>
+        <field name="context" eval="{'report_id': ref('account_report_generic.account_report_balance_sheet')}"/>
+    </record>
+    <menuitem
+        id="account_report_menu_balance_sheet"
+        name="Balance Sheet"
+        parent="account_report_menu_generic_reports"
+        action="action_balance_sheet_report"
+        sequence="55"
+        groups="account.group_account_readonly"
+    />
+    <!-- TRIAL BALANCE REPORT -->
     <record id="account_report_trial_balance" model="account.report">
         <field name="name">Trial Balance</field>
         <field name="filter_date_range" eval="True"/>
@@ -27,17 +117,17 @@
             </record>
         </field>
     </record>
-
     <record id="action_trial_balance_report" model="ir.actions.client">
         <field name="name">Trial Balance</field>
         <field name="tag">account_report</field>
         <field name="context" eval="{'report_id': ref('account_report_generic.account_report_trial_balance')}"/>
     </record>
-
-    <menuitem id="account_report_menu_trial_balance"
-              name="Trial Balance"
-              parent="account.menu_finance_reports"
-              action="action_trial_balance_report"
-              sequence="55"
-              groups="account.group_account_readonly"/>
+    <menuitem
+        id="account_report_menu_trial_balance"
+        name="Trial Balance"
+        parent="account_report_menu_generic_reports"
+        action="action_trial_balance_report"
+        sequence="55"
+        groups="account.group_account_readonly"
+    />
 </odoo>
