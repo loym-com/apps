@@ -28,8 +28,8 @@
                     <record id="account_report_expression_profit_loss_balance" model="account.report.expression">
                         <field name="label">balance</field>
                         <field name="engine">domain</field>
-                        <field name="formula" eval="[('account_id', '!=', False)]"/>
-                        <field name="subformula">sum</field>
+                        <field name="formula" eval="['|', ('account_id.internal_group', '=', 'income'), ('account_id.internal_group', '=', 'expense')]"/>
+                        <field name="subformula">-sum</field>
                     </record>
                 </field>
             </record>
@@ -69,7 +69,7 @@
                     <record id="account_report_expression_balance_sheet_balance" model="account.report.expression">
                         <field name="label">balance</field>
                         <field name="engine">domain</field>
-                        <field name="formula" eval="[('account_id', '!=', False)]"/>
+                        <field name="formula" eval="[('account_id.internal_group', '!=', 'income'), ('account_id.internal_group', '!=', 'expense')]"/>
                         <field name="subformula">sum</field>
                     </record>
                 </field>
