@@ -131,8 +131,6 @@
                 <field name="expression_ids">
                     <record id="account_report_expression_profit_loss_total_balance" model="account.report.expression">
                         <field name="label">balance</field>
-                        <!-- <field name="engine">aggregation</field>
-                        <field name="formula">profit_loss_income.balance+profit_loss_expense.balance</field> -->
                         <field name="engine">domain</field>
                         <field name="formula" eval="[('account_id.internal_group', 'in', ['income', 'expense'])]"/>
                         <field name="subformula">-sum</field>
@@ -145,8 +143,6 @@
                         <field name="expression_ids">
                             <record id="account_report_expression_profit_loss_total_detail_balance" model="account.report.expression">
                                 <field name="label">balance</field>
-                                <!-- <field name="engine">aggregation</field>
-                                <field name="formula">profit_loss_income.balance+profit_loss_expense.balance</field> -->
                                 <field name="engine">domain</field>
                                 <field name="formula" eval="[('account_id.internal_group', 'in', ['income', 'expense'])]"/>
                                 <field name="subformula">-sum</field>
@@ -264,8 +260,6 @@
                 <field name="expression_ids">
                     <record id="account_report_expression_balance_sheet_equity_liability_balance" model="account.report.expression">
                         <field name="label">balance</field>
-                        <!-- <field name="engine">aggregation</field>
-                        <field name="formula">balance_sheet_equity.balance+balance_sheet_liability.balance</field> -->
                         <field name="engine">domain</field>
                         <field name="formula" eval="[('account_id.internal_group', 'in', ['equity', 'liability'])]"/>
                         <field name="subformula">-sum</field>
@@ -278,8 +272,6 @@
                         <field name="expression_ids">
                             <record id="account_report_expression_balance_sheet_equity_liability_detail_balance" model="account.report.expression">
                                 <field name="label">balance</field>
-                                <!-- <field name="engine">aggregation</field>
-                                <field name="formula">balance_sheet_equity.balance+balance_sheet_liability.balance</field> -->
                                 <field name="engine">domain</field>
                                 <field name="formula" eval="[('account_id.internal_group', 'in', ['equity', 'liability'])]"/>
                                 <field name="subformula">-sum</field>
