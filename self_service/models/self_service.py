@@ -61,3 +61,6 @@ class SelfService(models.Model):
     date = fields.Date(
         default=fields.Date.context_today,
     )
+    analytic_account_id = fields.Many2one(
+        "account.analytic.account", string="Analytic Account"
+    )
