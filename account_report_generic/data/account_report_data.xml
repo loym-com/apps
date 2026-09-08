@@ -33,7 +33,7 @@
                 <field name="children_ids">
                     <record id="account_report_line_profit_loss_income_operating" model="account.report.line">
                         <field name="name">Income</field>
-                        <field name="foldability">foldable</field>
+                        <field name="foldable" eval="1"/>
                         <field name="groupby">account_id</field>
                         <field name="expression_ids">
                             <record id="account_report_expression_profit_loss_income_operating_balance" model="account.report.expression">
@@ -46,7 +46,7 @@
                     </record>
                     <record id="account_report_line_profit_loss_income_other" model="account.report.line">
                         <field name="name">Other Income</field>
-                        <field name="foldability">foldable</field>
+                        <field name="foldable" eval="1"/>
                         <field name="groupby">account_id</field>
                         <field name="expression_ids">
                             <record id="account_report_expression_profit_loss_income_other_balance" model="account.report.expression">
@@ -73,7 +73,7 @@
                 <field name="children_ids">
                     <record id="account_report_line_profit_loss_expense_operating" model="account.report.line">
                         <field name="name">Expenses</field>
-                        <field name="foldability">foldable</field>
+                        <field name="foldable" eval="1"/>
                         <field name="groupby">account_id</field>
                         <field name="expression_ids">
                             <record id="account_report_expression_profit_loss_expense_operating_balance" model="account.report.expression">
@@ -86,7 +86,7 @@
                     </record>
                     <record id="account_report_line_profit_loss_expense_other" model="account.report.line">
                         <field name="name">Other Expenses</field>
-                        <field name="foldability">foldable</field>
+                        <field name="foldable" eval="1"/>
                         <field name="groupby">account_id</field>
                         <field name="expression_ids">
                             <record id="account_report_expression_profit_loss_expense_other_balance" model="account.report.expression">
@@ -99,7 +99,7 @@
                     </record>
                     <record id="account_report_line_profit_loss_expense_depreciation" model="account.report.line">
                         <field name="name">Depreciation</field>
-                        <field name="foldability">foldable</field>
+                        <field name="foldable" eval="1"/>
                         <field name="groupby">account_id</field>
                         <field name="expression_ids">
                             <record id="account_report_expression_profit_loss_expense_depreciation_balance" model="account.report.expression">
@@ -112,7 +112,7 @@
                     </record>
                     <record id="account_report_line_profit_loss_expense_direct_cost" model="account.report.line">
                         <field name="name">Cost of Revenue</field>
-                        <field name="foldability">foldable</field>
+                        <field name="foldable" eval="1"/>
                         <field name="groupby">account_id</field>
                         <field name="expression_ids">
                             <record id="account_report_expression_profit_loss_expense_direct_cost_balance" model="account.report.expression">
@@ -192,27 +192,27 @@
                 </field>
                 <field name="children_ids">
                     <record id="account_report_line_balance_sheet_asset_receivable" model="account.report.line">
-                        <field name="name">Receivable</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Receivable</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_receivable_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_receivable')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                     <record id="account_report_line_balance_sheet_asset_cash" model="account.report.line">
-                        <field name="name">Bank and Cash</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Bank and Cash</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_cash_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_cash')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                     <record id="account_report_line_balance_sheet_asset_current" model="account.report.line">
-                        <field name="name">Current Assets</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Current Assets</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_current_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_current')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                     <record id="account_report_line_balance_sheet_asset_non_current" model="account.report.line">
-                        <field name="name">Non-current Assets</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Non-current Assets</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_non_current_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_non_current')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                     <record id="account_report_line_balance_sheet_asset_prepayments" model="account.report.line">
-                        <field name="name">Prepayments</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Prepayments</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_prepayments_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_prepayments')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                     <record id="account_report_line_balance_sheet_asset_fixed" model="account.report.line">
-                        <field name="name">Fixed Assets</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Fixed Assets</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_asset_fixed_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'asset_fixed')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                 </field>
@@ -223,11 +223,11 @@
                 <field name="expression_ids"><record id="account_report_expression_balance_sheet_equity_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.internal_group', '=', 'equity')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                 <field name="children_ids">
                     <record id="account_report_line_balance_sheet_equity_regular" model="account.report.line">
-                        <field name="name">Equity</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Equity</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_equity_regular_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'equity')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                     <record id="account_report_line_balance_sheet_equity_unaffected" model="account.report.line">
-                        <field name="name">Current Year Earnings</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Current Year Earnings</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_equity_unaffected_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'equity_unaffected')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                 </field>
@@ -238,19 +238,19 @@
                 <field name="expression_ids"><record id="account_report_expression_balance_sheet_liability_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.internal_group', '=', 'liability')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                 <field name="children_ids">
                     <record id="account_report_line_balance_sheet_liability_payable" model="account.report.line">
-                        <field name="name">Payable</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Payable</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_liability_payable_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'liability_payable')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                     <record id="account_report_line_balance_sheet_liability_credit_card" model="account.report.line">
-                        <field name="name">Credit Card</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Credit Card</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_liability_credit_card_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'liability_credit_card')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                     <record id="account_report_line_balance_sheet_liability_current" model="account.report.line">
-                        <field name="name">Current Liabilities</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Current Liabilities</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_liability_current_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'liability_current')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                     <record id="account_report_line_balance_sheet_liability_non_current" model="account.report.line">
-                        <field name="name">Non-current Liabilities</field><field name="foldability">foldable</field><field name="groupby">account_id</field>
+                        <field name="name">Non-current Liabilities</field><field name="foldable" eval="1"/><field name="groupby">account_id</field>
                         <field name="expression_ids"><record id="account_report_expression_balance_sheet_liability_non_current_balance" model="account.report.expression"><field name="label">balance</field><field name="engine">domain</field><field name="formula" eval="[('account_id.account_type', '=', 'liability_non_current')]"/><field name="date_scope">from_beginning</field><field name="subformula">sum</field></record></field>
                     </record>
                 </field>
@@ -323,7 +323,7 @@
             <record id="account_report_line_trial_balance" model="account.report.line">
                 <field name="name">Trial Balance</field>
                 <field name="code">trial_balance</field>
-                <field name="foldability">always_unfolded</field>
+                <field name="foldable" eval="0"/>
                 <field name="user_groupby">account_id</field>
                 <field name="expression_ids">
                     <record id="account_report_expression_trial_balance_initial_balance" model="account.report.expression">
