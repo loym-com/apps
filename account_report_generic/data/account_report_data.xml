@@ -336,14 +336,16 @@
                     <record id="account_report_expression_trial_balance_change" model="account.report.expression">
                         <field name="label">balance</field>
                         <field name="engine">domain</field>
-                        <field name="formula" eval="[('account_id', '!=', False)]"/>
+                        <field name="formula" eval="[('account_id.internal_group', 'in', ['asset', 'liability', 'equity'])]"/>
                         <field name="date_scope">strict_range</field>
                         <field name="subformula">sum</field>
                     </record>
                     <record id="account_report_expression_trial_balance_ending_balance" model="account.report.expression">
                         <field name="label">ending_balance</field>
-                        <field name="engine">aggregation</field>
-                        <field name="formula">trial_balance.initial_balance + trial_balance.balance</field>
+                        <field name="engine">domain</field>
+                        <field name="formula" eval="[('account_id.internal_group', 'in', ['asset', 'liability', 'equity'])]"/>
+                        <field name="date_scope">from_beginning</field>
+                        <field name="subformula">sum</field>
                     </record>
                 </field>
             </record>
