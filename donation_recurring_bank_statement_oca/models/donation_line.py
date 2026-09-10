@@ -8,5 +8,5 @@ class DonationLine(models.Model):
         "donation.donation",
         string="Recurring Template",
         related="donation_id.source_recurring_id",
-        readonly=False,
+        readonly=True, # False -> empty donation.line -> empty donation.donation
     )
