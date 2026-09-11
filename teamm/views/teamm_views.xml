@@ -23,7 +23,7 @@
                     <button
                         name="action_import"
                         class="oe_highlight"
-                        string="Import"
+                        string="Import Active"
                         type="object"
                     />
                     <button
