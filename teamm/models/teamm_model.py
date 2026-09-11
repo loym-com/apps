@@ -8,7 +8,7 @@ class TeamMModel(models.Model):
 
     teamm_id = fields.Many2one("teamm", ondelete="cascade")
     sequence = fields.Integer()
-    is_active = fields.Boolean()
+    is_selected = fields.Boolean()
     name = fields.Char()
     description = fields.Text()
     primary_key = fields.Text()

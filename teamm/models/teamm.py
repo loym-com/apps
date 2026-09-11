@@ -109,11 +109,11 @@ class TeamM(models.Model):
 
     def action_select_all_models(self):
         for model in self.model_ids:
-            model.is_active = True
+            model.is_selected = True
 
     def action_deselect_all_models(self):
         for model in self.model_ids:
-            model.is_active = False
+            model.is_selected = False
 
     def _action_import(self, teamm_values_list):
         _logger.info(f"{self.name} begin import")
@@ -124,7 +124,7 @@ class TeamM(models.Model):
         }
         record_ids = []
         begin, end = self.src_begin, self.src_end
-        model_names = self.env.context.get("model_names") or self.model_ids.filtered("is_active").mapped("name")
+        model_names = self.env.context.get("model_names") or self.model_ids.filtered("is_selected").mapped("name")
         for model_name in model_names:
             record_ids = []
             for i, teamm_values in enumerate(teamm_values_list, start=1):

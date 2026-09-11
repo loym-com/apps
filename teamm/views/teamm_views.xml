@@ -23,7 +23,7 @@
                     <button
                         name="action_import"
                         class="oe_highlight"
-                        string="Import Active"
+                        string="Import To Selected Models"
                         type="object"
                     />
                     <button
@@ -80,7 +80,7 @@
                             <tree editable="bottom">
                                 <field name="teamm_id" invisible="1" />
                                 <field name="sequence" widget="handle" />
-                                <field name="is_active" />
+                                <field name="is_selected" />
                                 <button
                                     name="action_import"
                                     class="oe_highlight"

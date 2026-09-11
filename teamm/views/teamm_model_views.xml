@@ -8,7 +8,7 @@
             <tree>
                 <field name="teamm_id" />
                 <field name="sequence" />
-                <field name="is_active" />
+                <field name="is_selected" />
                 <field name="name" />
                 <field name="description" />
                 <field name="primary_key" />
@@ -23,7 +23,7 @@
             <search>
                 <field name="teamm_id" />
                 <field name="sequence" />
-                <field name="is_active" />
+                <field name="is_selected" />
                 <field name="name" />
                 <field name="description" />
                 <field name="primary_key" />
