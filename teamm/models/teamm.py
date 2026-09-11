@@ -162,8 +162,10 @@ class TeamM(models.Model):
         total_discount = teamm_values.get("total discount")
         if not total_discount or total_discount == "0":
             return []
+        elif total_discount.startswith("-"):
+            total_discount = total_discount[1:]
         else:
-            total_discount = total_discount[1:]  # remove minus
+            total_discount = "-" + total_discount
 
         # Get string
         discounts = teamm_values.get("discounts")
