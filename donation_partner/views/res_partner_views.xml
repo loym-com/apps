@@ -32,7 +32,9 @@
                 <field name="donation_tax_receipt_send" />
                 <!-- Address/Newsletter/Donation filters -->
                 <filter string="Address" name="is_valid_postal_address" domain="[('is_valid_postal_address', '=', True)]"/>
+                <filter string="No Address" name="is_valid_postal_address_no" domain="[('is_valid_postal_address', '=', False)]"/>
                 <filter string="Email" name="email" domain="[('email', '!=', False)]"/>
+                <filter string="No Email" name="email_no" domain="[('email', '=', False)]"/>
                 <filter string="Address + email" name="address_email" domain="[('is_valid_postal_address', '=', True), ('email', '!=', False)]"/>
                 <filter string="No address/email" name="no_contact_info" domain="[('is_valid_postal_address', '=', False), ('email', '=', False)]"/>
                 <separator/>
