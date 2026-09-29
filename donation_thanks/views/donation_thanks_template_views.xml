@@ -29,9 +29,10 @@
                         <field name="img_text" />
                         <field name="model" />
                         <field name="attachment_ids">
-                            <tree>
-                                <field name="lang" />
+                            <tree editable="bottom">
+                                <field name="datas" filename="name"/>
                                 <field name="name" />
+                                <field name="lang" />
                             </tree>
                         </field>
                         <field name="paragraph_ids">
